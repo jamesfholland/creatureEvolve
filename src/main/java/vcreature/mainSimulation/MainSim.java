@@ -15,14 +15,10 @@ import com.jme3.texture.Texture;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.light.DirectionalLight;
-import com.jme3.bounding.BoundingBox;
 import com.jme3.math.ColorRGBA;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.light.AmbientLight;
-import vcreature.phenotype.Creature;
 import vcreature.phenotype.Block;
-import vcreature.phenotype.EnumNeuronInput;
-import vcreature.phenotype.Neuron;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.system.AppSettings;
@@ -37,7 +33,7 @@ public class MainSim extends SimpleApplication implements ActionListener
   
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Vector3f tmpVec3; //
-  private FlappyBird myCreature;
+  private SpawnCreature myCreature;
   private boolean isCameraRotating = true;
   
 
@@ -86,7 +82,15 @@ public class MainSim extends SimpleApplication implements ActionListener
     
    
     Block.initStaticMaterials(assetManager);
-    myCreature = new FlappyBird(physicsSpace, rootNode);
+
+    /********************
+     * TableMonster4LegsFlat
+     * TableMonster4Legs
+     * TableMonster2Legs
+     * FlappyBird
+     ***********************/
+
+    myCreature = new SpawnCreature(physicsSpace, rootNode,"FlappyBird");
     initLighting();
     initKeys();
 

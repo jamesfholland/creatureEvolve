@@ -67,7 +67,7 @@ public class FlappyBird extends Creature
     
     Neuron leg2Neuron2 = new Neuron(EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
                 EnumNeuronInput.CONSTANT, null);
-    
+
     leg2Neuron2.setInputValue(Neuron.C,10);
     leg2Neuron2.setInputValue(Neuron.D,-Float.MAX_VALUE);
     

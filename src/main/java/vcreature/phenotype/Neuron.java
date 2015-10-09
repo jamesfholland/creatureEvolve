@@ -120,7 +120,7 @@ public class Neuron
   {
     String out = "Neuron: if {" + type[0] + " " + operator[0] + " " + type[1] + 
         " --> " + operator[1] + "} > {" + type[2] + 
-        " then {" + type[3] + ", " + operator[3] + " " + type[4] + " --> " + operator[4];
+        " then {" + type[3] + ", " + operator[3] + " " + type[4] + " --> "; //+ operator[4];
     return out;
   }
  
