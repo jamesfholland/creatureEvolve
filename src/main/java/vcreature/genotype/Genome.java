@@ -81,5 +81,12 @@ public class Genome
     }
   }
 
+  /**
+   * @return The Vector3f form of the root size.
+   */
+  public Vector3f getRootSize()
+  {
+    return ROOT_SIZE.getVector3f();
+  }
 
 }
