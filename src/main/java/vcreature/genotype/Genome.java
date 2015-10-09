@@ -1,35 +1,30 @@
 package vcreature.genotype;
 
+import com.jme3.math.Vector3f;
+
+import java.util.ArrayList;
+
 /**
  * This Class contains the genome of the creature.
- * This consists of the root block and all children blocks as well as mating logic.
+ * This consists of the root block and all children blocks
  */
 public class Genome
 {
 
-  /*
-  Root
-    Size
-  Block Array/List
-    Parent Block (0=root  +/- number is offset in array to parent.)
-    PivotParent (Percentage from center in each dimension)
-    PivotSelf (Percentage from center in each dimension)
-    Center Offset (Percentage of size to move to get center point. Something like offset*size/2 = center)
-    Size (3d tuple)
-
-    Parent Axis
-    Self Axis
-
-    Types (Neuron trigger [height, touch, time, constant, joint angle])
-    Input values (inputs for each type if constant)
-
-    Binary Operation AB -> X
-    Unary Operation X
-
-    Binary Operation DE -> Y
-    Unary Operation Y
-
-
-
+  /**
+   * The size of the root block. This is the head of the creature's body tree.
+   * All blocks must be attached to the root or not be included in the creature.
    */
+  private ImmutableVector rootSize;
+
+  /**
+   * This is a list of all geneBlocks in the creature. Individual blocks are immutable.
+   */
+  private ArrayList<GeneBlock> geneBlocks;
+
+  /**
+   * This is the list of all geneNeurons in the creatures. Individual neurons are immutable
+   */
+  private ArrayList<GeneNeuron> geneNeurons;
+
 }
