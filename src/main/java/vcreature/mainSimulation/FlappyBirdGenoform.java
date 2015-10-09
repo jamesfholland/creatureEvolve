@@ -12,6 +12,9 @@ public class FlappyBirdGenoform
 {
   private Genome genome;
 
+  /**
+   * Creates a genome for Flappy Bird.
+   */
   FlappyBirdGenoform()
   {
     //Sets the root node's size in Genome constructor
