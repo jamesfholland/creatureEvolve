@@ -26,6 +26,7 @@ public class SpawnCreature extends Creature
   else if(creatureName.equals("FlappyBird")) makeFlappyBird();
 
   }
+
 // 27.406
   private void makeFourLeggedTableMonsterFlat()
   {
@@ -39,22 +40,22 @@ public class SpawnCreature extends Creature
     Vector3f pivotA = new Vector3f( 5f, -.5f,  0f); //Center of hinge in the block's coordinates
     Vector3f pivotB = new Vector3f(-2.250f,  -0.5f,  .0f); //Center of hinge in the block's coordinates
 
-    Block leg1  = addBlock(leg1Center, leg1Size,torso, pivotA,  pivotB, Vector3f.UNIT_Z, Vector3f.UNIT_Z);
+    Block leg1  = addBlock(leg1Center, leg1Size,torso, pivotA,  pivotB, Vector3f.UNIT_Y, Vector3f.UNIT_Z);
 
     Vector3f pivotC = new Vector3f( -5f, -.5f,  0f); //Center of hinge in the block's coordinates
     Vector3f pivotD = new Vector3f(2.250f,  -0.5f,  .0f); //Center of hinge in the block's coordinates
 
-    Block leg2  = addBlock(leg2Center, leg2Size,torso, pivotC,  pivotD, Vector3f.UNIT_Z, Vector3f.UNIT_Z);
+    Block leg2  = addBlock(leg2Center, leg2Size,torso, pivotC,  pivotD, Vector3f.UNIT_Y, Vector3f.UNIT_Z);
 
     Vector3f pivotE = new Vector3f( 0f, -.5f,  -5f); //Center of hinge in the block's coordinates
     Vector3f pivotF = new Vector3f(0f,  -0.5f,2.250f); //Center of hinge in the block's coordinates
 
-    Block leg3  = addBlock(leg3Center, leg3Size,torso, pivotE,  pivotF, Vector3f.UNIT_X, Vector3f.UNIT_X);
+    Block leg3  = addBlock(leg3Center, leg3Size,torso, pivotE,  pivotF, Vector3f.UNIT_Y, Vector3f.UNIT_X);
 
     Vector3f pivotG = new Vector3f( 0f, -.5f,  5f); //Center of hinge in the block's coordinates
     Vector3f pivotH = new Vector3f(0f,  -0.5f,-2.250f); //Center of hinge in the block's coordinates
 
-    Block leg4  = addBlock(leg4Center, leg4Size,torso, pivotG,  pivotH, Vector3f.UNIT_X, Vector3f.UNIT_X);
+    Block leg4  = addBlock(leg4Center, leg4Size,torso, pivotG,  pivotH, Vector3f.UNIT_Y, Vector3f.UNIT_X);
 
 
     Neuron positveMax = new Neuron(EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
@@ -73,7 +74,6 @@ public class SpawnCreature extends Creature
     negativeMax.setInputValue(Neuron.D,-Float.MAX_VALUE);
     leg2.addNeuron(negativeMax);
     leg4.addNeuron(negativeMax);
-
   }
 
 
@@ -144,7 +144,6 @@ public class SpawnCreature extends Creature
     Vector3f pivotD = new Vector3f(-3.f,  .5f,  -0.5f); //Center of hinge in the block's coordinates
 
     Block leg2  =addBlock(leg2Center, leg2Size,torso, pivotC,  pivotD, Vector3f.UNIT_Z, Vector3f.UNIT_Z);
-
 
     BoundingBox box = (BoundingBox) torso.getGeometry().getWorldBound();
     // print("simpleInitApp(): torso.size=",box.getExtent(tmpVec3));
