@@ -71,6 +71,7 @@ public class SpawnRandomCreature extends Creature
         case 3: nextLeg.setMaterial(nextLeg.MATERIAL_RED);
           break;
       }
+
       Neuron positveMax = new Neuron(EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
               EnumNeuronInput.CONSTANT, null);
       positveMax.setInputValue(Neuron.C, 10);
