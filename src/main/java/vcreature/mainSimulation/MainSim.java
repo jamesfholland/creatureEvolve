@@ -28,14 +28,16 @@ public class MainSim extends SimpleApplication implements ActionListener
   
   private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
+  private Analysis goodCreature = new Analysis();
   private float cameraAngle = (float)(Math.PI/2.0);
   private float elapsedSimulationTime = 0.0f;
   
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Vector3f tmpVec3; //
-  private SpawnRandomCreature myCreature;
+  private SpawnCreature myCreature;
   private boolean isCameraRotating = true;
-  
+
+
 
 
   @Override
@@ -77,8 +79,8 @@ public class MainSim extends SimpleApplication implements ActionListener
     physicsSpace.add(floor_phy);
     floor_phy.setFriction(PhysicsConstants.GROUND_SLIDING_FRICTION);
     floor_phy.setRestitution(PhysicsConstants.GROUND_BOUNCINESS);
-    floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING, 
-            PhysicsConstants.GROUND_ANGULAR_DAMPINING);
+    floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
+        PhysicsConstants.GROUND_ANGULAR_DAMPINING);
     
    
     Block.initStaticMaterials(assetManager);
@@ -90,7 +92,9 @@ public class MainSim extends SimpleApplication implements ActionListener
      * FlappyBird
      ***********************/
 
-    myCreature = new SpawnRandomCreature(physicsSpace, rootNode,20);
+
+    myCreature = new SpawnCreature(physicsSpace, rootNode,"Squid");
+    goodCreature.CheckValidlyOfCreature(myCreature);
     initLighting();
     initKeys();
 

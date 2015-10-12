@@ -7,14 +7,24 @@ import vcreature.phenotype.Creature;
  */
 public class Analysis
 {
-
   public Analysis()
   {
-  
+
   }
-  public void CheckValidlyOfCreature(Creature creature)
+
+  public Boolean CheckValidlyOfCreature(Creature creature)
   {
+    for (int i = 0; i < creature.getNumberOfBodyBlocks(); i++)
+    {
+      System.out.println(creature.getBlockByID(i).toString());
 
+      System.out.println(creature.getBlockByID(i).getSizeX());
+
+      System.out.println(creature.getBlockByID(i).getSizeY());
+
+      System.out.println(creature.getBlockByID(i).getSizeZ());
+
+    }
+    return true;
   }
-
 }

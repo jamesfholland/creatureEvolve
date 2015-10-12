@@ -78,8 +78,7 @@ public class Creature
     
     Block block = new Block(physicsSpace, jMonkeyRootNode, body.size(), center, size);
     body.add(block);
-    
-    
+
     RigidBodyControl controlA = parent.getPhysicsControl();
     RigidBodyControl controlB = block.getPhysicsControl();
     HingeJoint joint = new HingeJoint(controlA, controlB, pivotA, pivotB, axisA, axisB);
@@ -157,7 +156,8 @@ public class Creature
   {
     return maxHeightOfLowestPoint;
   }
-  
+
+
   
   public boolean brainNeuronFire(Neuron neuron)
   {

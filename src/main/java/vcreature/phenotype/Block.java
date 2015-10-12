@@ -118,7 +118,7 @@ public class Block
   public float getSizeY() {return sizeY;}
   
 
-  public float getSize() {return sizeZ;}
+  public float getSizeZ() {return sizeZ;}
   
   public ArrayList<Neuron> getNeuronTable() { return neuronTable;}
   
