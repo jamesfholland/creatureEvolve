@@ -183,12 +183,12 @@ public class SpawnCreature extends Creature
 
   public void makeSquid()
   {
-    Vector3f torsoCenter = new Vector3f( 0.0f, 1.0f, 0.0f);     Vector3f torsoSize = new Vector3f( 1.5f, .5f, 1.5f);
-    Vector3f leg1Center  = new Vector3f( 4.0f, 0.5f, 0.0f);     Vector3f leg1Size  = new Vector3f( 3.5f, 0.5f, 1.5f);
-    Vector3f leg2Center  = new Vector3f(-4.0f, 0.5f, 0.0f);     Vector3f leg2Size  = new Vector3f( 3.5f, 0.5f, 1.5f);
+    Vector3f torsoCenter = new Vector3f( 0.0f, 1.5f, 0.0f);     Vector3f torsoSize = new Vector3f( 1.5f, .5f, 1.5f);
+    Vector3f leg1Center  = new Vector3f( 5.0f, 0.5f, 0.0f);     Vector3f leg1Size  = new Vector3f( 3.5f, 0.5f, 1.5f);
+    Vector3f leg2Center  = new Vector3f(-5.0f, 0.5f, 0.0f);     Vector3f leg2Size  = new Vector3f( 3.5f, 0.5f, 1.5f);
 
-    Vector3f leg1CenterCon  = new Vector3f( 7.0f, 4.5f, 0.0f);     Vector3f leg1SizeCon  = new Vector3f( .5f, 3.5f, 1.5f);
-    Vector3f leg2CenterCon  = new Vector3f(-7.0f, 4.5f, 0.0f);     Vector3f leg2SizeCon  = new Vector3f( .5f, 3.5f, 1.5f);
+   // Vector3f leg1CenterCon  = new Vector3f( 7.0f, 4.5f, 0.0f);     Vector3f leg1SizeCon  = new Vector3f( .5f, 3.5f, 1.5f);
+   // Vector3f leg2CenterCon  = new Vector3f(-7.0f, 4.5f, 0.0f);     Vector3f leg2SizeCon  = new Vector3f( .5f, 3.5f, 1.5f);
 
 
     Block torso = addRoot(torsoCenter, torsoSize);
@@ -210,13 +210,13 @@ public class SpawnCreature extends Creature
     Vector3f pivotE = new Vector3f(3.5f, 0.5f,  0.0f);
     Vector3f pivotF = new Vector3f(-.5f, -3.5f,  0.0f);
 
-    Block leg3 = addBlock(leg1CenterCon, leg1SizeCon, leg1, pivotE, pivotF, Vector3f.UNIT_Z, Vector3f.UNIT_Z);
+ //   Block leg3 = addBlock(leg1CenterCon, leg1SizeCon, leg1, pivotE, pivotF, Vector3f.UNIT_Z, Vector3f.UNIT_Z);
 
 
     Vector3f pivotG = new Vector3f(-3.5f, 0.5f,  0.0f);
     Vector3f pivotH = new Vector3f(.5f, -3.5f,  0.0f);
 
-    Block leg4 = addBlock(leg2CenterCon, leg2SizeCon, leg2, pivotG, pivotH, Vector3f.UNIT_Z, Vector3f.UNIT_Z);
+   // Block leg4 = addBlock(leg2CenterCon, leg2SizeCon, leg2, pivotG, pivotH, Vector3f.UNIT_Z, Vector3f.UNIT_Z);
 
     torso.setMaterial(Block.MATERIAL_GREEN);
     leg1.setMaterial(Block.MATERIAL_RED);
@@ -270,8 +270,8 @@ public class SpawnCreature extends Creature
     leg3Neuron2.setInputValue(Neuron.C,10);
     leg3Neuron2.setInputValue(Neuron.D, Float.MAX_VALUE);
 
-    leg3.addNeuron(leg3Neuron1);
-    leg3.addNeuron(leg3Neuron2);
+   // leg3.addNeuron(leg3Neuron1);
+   // leg3.addNeuron(leg3Neuron2);
 
     Neuron leg4Neuron1 = new Neuron(EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
         EnumNeuronInput.CONSTANT, null);
@@ -285,8 +285,8 @@ public class SpawnCreature extends Creature
     leg4Neuron2.setInputValue(Neuron.C,10);
     leg4Neuron2.setInputValue(Neuron.D, -Float.MAX_VALUE);
 
-    leg4.addNeuron(leg4Neuron1);
-    leg4.addNeuron(leg2Neuron2);
+  //  leg4.addNeuron(leg4Neuron1);
+  //  leg4.addNeuron(leg2Neuron2);
   }
 
 
