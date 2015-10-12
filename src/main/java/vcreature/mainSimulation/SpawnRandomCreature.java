@@ -70,7 +70,7 @@ public class SpawnRandomCreature extends Creature
       Vector3f legCenter=new Vector3f(rootCenter.getX()+tempBlock.getSizeX()+sizeX,rootCenter.getY()+
               tempBlock.getSizeY()+sizeY,0);
      // Vector3f pivotA = new Vector3f( -xSign*tempBlock.getSizeX(),-ySign*tempBlock.getSizeY(),-zSign*tempBlock.getSize());
-      Vector3f pivotA = new Vector3f(tempBlock.getSizeX()/2,tempBlock.getSizeY()/2,tempBlock.getSize()/2);
+      Vector3f pivotA = new Vector3f(tempBlock.getSizeX()/2,tempBlock.getSizeY()/2,tempBlock.getSizeZ()/2);
       Vector3f pivotB = new Vector3f(-sizeX,  -sizeY,  0);
 
       Block nextLeg=addBlock(legCenter,legSize,tempBlock,pivotA,pivotB,Vector3f.UNIT_Z,Vector3f.UNIT_Z);
