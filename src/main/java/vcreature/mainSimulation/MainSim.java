@@ -93,7 +93,7 @@ public class MainSim extends SimpleApplication implements ActionListener
      ***********************/
 
 
-    myCreature = new SpawnCreature(physicsSpace, rootNode,"Squid");
+    myCreature = new SpawnCreature(physicsSpace, rootNode,"RealSquid");
     goodCreature.CheckValidlyOfCreature(myCreature);
     initLighting();
     initKeys();

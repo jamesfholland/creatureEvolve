@@ -30,6 +30,7 @@ public class Block
   
   private final float sizeX, sizeY, sizeZ; //meters
   private final Vector3f startCenter; //meters
+  private final Vector3f[] cornerVectors = new Vector3f[8];
   private final int id; //Assigned when added to Creature. 0=root and +1 for each block added in order the blocks are added. This is used by DNA and logic curits
   
   private Block parent;
@@ -62,7 +63,15 @@ public class Block
     sizeY = size.y*2;
     sizeZ = size.z*2;
 
-    
+    cornerVectors[0] = new Vector3f(center.x-size.x, center.y+size.y,center.z-size.z); // top,front,left
+    cornerVectors[1] = new Vector3f(center.x+size.x, center.y+size.y,center.z-size.z); // top,front,right
+    cornerVectors[2] = new Vector3f(center.x-size.x, center.y-size.y,center.z-size.z); // bottom,front,left
+    cornerVectors[3] = new Vector3f(center.x+size.x, center.y-size.y,center.z-size.z); // bottom,front,right
+    cornerVectors[4] = new Vector3f(center.x-size.x, center.y+size.y,center.z+size.z); // top,back,left
+    cornerVectors[5] = new Vector3f(center.x+size.x, center.y+size.y,center.z+size.z); // top,back,right
+    cornerVectors[6] = new Vector3f(center.x-size.x, center.y-size.y,center.z+size.z); // bottom,back,left
+    cornerVectors[7] = new Vector3f(center.x+size.x, center.y-size.y,center.z+size.z); // bottom,back,right
+
     //Creates a box that has a center of 0,0,0 and extends in the out from 
     //the center by the given amount in each direction. 
     // So, for example, a box with extent of 0.5 would be the unit cube.
@@ -109,19 +118,61 @@ public class Block
   
   public int getID() {return id;}
 
+  public Block getParent(){
+   return parent;
+  }
+
   public int getIdOfParent(){
     return parent.getID();}
-  
 
+  /**
+   * gets center vector of the cube
+   * @return
+   */
   public Vector3f getCenter() {return startCenter;}
 
-  public float getBottomYOfCube() { return getCenter().y-(sizeY/2);}
-  public float getTopYOfCube() { return getCenter().y+(sizeY/2);}
-  public float getRightXOfCube() { return getCenter().x+(sizeX/2);}
-  public float getLeftXOfCube() { return getCenter().x-(sizeX/2);}
-  public float getFrontZOfCube() { return getCenter().z-(sizeZ/2);}
-  public float getBackZOfCube() { return getCenter().z+(sizeZ/2);}
+  public Vector3f getCorner1() {return cornerVectors[0];}
+  public Vector3f getCorner2() {return cornerVectors[1];}
+  public Vector3f getCorner3() {return cornerVectors[2];}
+  public Vector3f getCorner4() {return cornerVectors[3];}
+  public Vector3f getCorner5() {return cornerVectors[4];}
+  public Vector3f getCorner6() {return cornerVectors[5];}
+  public Vector3f getCorner7() {return cornerVectors[6];}
+  public Vector3f getCorner8() {return cornerVectors[7];}
 
+  // cannot use numbers greater than seven or less than zero.
+  public Vector3f getCornerVector(int cornerNumber) {return cornerVectors[cornerNumber];}
+
+  /**
+   * Gets the bottom coordinate of the Block
+   * @return
+   */
+  public float getBottomYOfCube() { return getCenter().y-(sizeY/2);}
+  /**
+   * Gets the top face coordinate of the Block
+   * @return
+   */
+  public float getTopYOfCube() { return getCenter().y+(sizeY/2);}
+  /**
+   * Gets the right face coordinate of the Block
+   * @return
+   */
+  public float getRightXOfCube() { return getCenter().x+(sizeX/2);}
+  /**
+   * Gets the left face coordinate of the Block
+   * @return
+   */
+  public float getLeftXOfCube() { return getCenter().x-(sizeX/2);}
+  /**
+   * Gets the front face coordinate of the Block
+   * @return
+   */
+  public float getFrontZOfCube() { return getCenter().z-(sizeZ/2);}
+  /**
+   * Gets the back face coordinate of the Block
+   * @return
+   */
+  public float getBackZOfCube() { return getCenter().z+(sizeZ/2);}
 
 
   public float getSizeX() {return sizeX;}
@@ -160,7 +211,7 @@ public class Block
   
   public String toString()
   {
-    String s = "Block["+id+"]: {" + sizeX + ", " + sizeY + ", " + sizeZ + "}\n";
+    String s = "Block["+id+"]: {size X, size Y, size Z} {" + sizeX + ", " + sizeY + ", " + sizeZ + "}\n";
     
     if (parent == null)
     { s += "     ROOT\n\n";
