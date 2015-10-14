@@ -295,10 +295,10 @@ public class SpawnCreature extends Creature
     Vector3f leg2Center  = new Vector3f(-6.0f, 0.5f, 0.0f);    Vector3f leg2Size  = new Vector3f( 3.5f, 0.5f, .5f);
     Vector3f leg3Center  = new Vector3f(0.0f, .5f, 5.0f);     Vector3f leg3Size = new Vector3f( .5f, .5f, 3.5f);
     Vector3f leg4Center  = new Vector3f(0.0f, .5f, -5.0f);    Vector3f leg4Size  = new Vector3f( .5f, .5f, 3.5f);
-    Vector3f leg5Center  = new Vector3f(1.5f, .5f, 5.0f);     Vector3f leg5Size = new Vector3f( .5f, .5f, 3.5f);
-    Vector3f leg6Center  = new Vector3f(1.5f, .5f, -5.0f);    Vector3f leg6Size  = new Vector3f( .5f, .5f, 3.5f);
-    Vector3f leg7Center  = new Vector3f(-1.5f, .5f, 5.0f);     Vector3f leg7Size = new Vector3f( .5f, .5f, 3.5f);
-    Vector3f leg8Center  = new Vector3f(-1.5f, .5f, -5.0f);    Vector3f leg8Size  = new Vector3f( .5f, .5f, 3.5f);
+    Vector3f leg5Center  = new Vector3f(1.51f, .5f, 5.0f);     Vector3f leg5Size = new Vector3f( .5f, .5f, 3.5f);
+    Vector3f leg6Center  = new Vector3f(1.51f, .5f, -5.0f);    Vector3f leg6Size  = new Vector3f( .5f, .5f, 3.5f);
+    Vector3f leg7Center  = new Vector3f(-1.51f, .5f, 5.0f);     Vector3f leg7Size = new Vector3f( .5f, .5f, 3.5f);
+    Vector3f leg8Center  = new Vector3f(-1.51f, .5f, -5.0f);    Vector3f leg8Size  = new Vector3f( .5f, .5f, 3.5f);
 
 
 
@@ -328,22 +328,22 @@ public class SpawnCreature extends Creature
 
     Block leg4 = addBlock(leg4Center, leg4Size, torso, pivotG, pivotH, Vector3f.UNIT_X, Vector3f.UNIT_X);
 
-    Vector3f pivotI = new Vector3f(1.0f, -9.5f,  1.5f);
+    Vector3f pivotI = new Vector3f(1.01f, -9.5f,  1.5f);
     Vector3f pivotJ = new Vector3f(0.0f, 0.5f,  -3.5f);
 
     Block leg5 = addBlock(leg5Center, leg5Size, torso, pivotI, pivotJ, Vector3f.UNIT_X, Vector3f.UNIT_X);
 
-    Vector3f pivotK = new Vector3f(1.0f, -9.5f,  -1.5f);
+    Vector3f pivotK = new Vector3f(1.01f, -9.5f,  -1.5f);
     Vector3f pivotL = new Vector3f(0.0f, 0.5f,  3.5f);
 
     Block leg6 = addBlock(leg6Center, leg6Size, torso, pivotK, pivotL, Vector3f.UNIT_X, Vector3f.UNIT_X);
 
-    Vector3f pivotM = new Vector3f(-1.0f, -9.5f,  1.5f);
+    Vector3f pivotM = new Vector3f(-1.01f, -9.5f,  1.5f);
     Vector3f pivotN = new Vector3f(0.0f, 0.5f,  -3.5f);
 
     Block leg7 = addBlock(leg7Center, leg7Size, torso, pivotM, pivotN, Vector3f.UNIT_X, Vector3f.UNIT_X);
 
-    Vector3f pivotO = new Vector3f(-1.0f, -9.5f,  -1.5f);
+    Vector3f pivotO = new Vector3f(-1.01f, -9.5f,  -1.5f);
     Vector3f pivotP = new Vector3f(0.0f, 0.5f,  3.5f);
 
     Block leg8 = addBlock(leg8Center, leg8Size, torso, pivotO, pivotP, Vector3f.UNIT_X, Vector3f.UNIT_X);
