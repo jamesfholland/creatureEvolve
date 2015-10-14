@@ -115,7 +115,7 @@ public class SpawnRandomCreature extends Creature
       {
         Block tempBlock2 = getBlockByID(j);
         BoundingBox tempBlock2Volume = new BoundingBox(tempBlock2.getCenter(), tempBlock2.getSizeX(), tempBlock2.getSizeY(), tempBlock2.getSize());
-        System.out.println(tempBlock2.getGeometry().getWorldBound().toString());
+        //System.out.println(tempBlock2.getGeometry().getWorldBound().toString());
         tempBlock.getGeometry().collideWith(tempBlock2Volume, results);
         if (results.size() > 0)
         {

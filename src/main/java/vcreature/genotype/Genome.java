@@ -38,8 +38,8 @@ public class Genome
   public Genome(ImmutableVector rootSize)
   {
     ROOT_SIZE = rootSize;
-    GENE_BLOCKS = Collections.synchronizedList(new ArrayList<>());
-    GENE_NEURONS = Collections.synchronizedList(new ArrayList<>());
+    GENE_BLOCKS = Collections.synchronizedList(new ArrayList<GeneBlock>());
+    GENE_NEURONS = Collections.synchronizedList(new ArrayList<GeneNeuron>());
   }
 
   /**
