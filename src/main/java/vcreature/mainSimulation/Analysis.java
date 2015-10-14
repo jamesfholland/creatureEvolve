@@ -34,7 +34,7 @@ public class Analysis
 //  public Vector3f getCorner8() {return cornerVectors[7];}
 
   // cannot use numbers greater than seven or less than zero.
-  public Vector3f getCornerVector(int cornerNumber) {return cornerVectors[cornerNumber];}
+//  public Vector3f getCornerVector(int cornerNumber) {return cornerVectors[cornerNumber];}
 
 
   public Analysis()
@@ -84,7 +84,7 @@ public class Analysis
     System.out.println(creature.getBlockByID(0).toString());
     for(int cornerNumber=0; cornerNumber<8;cornerNumber++)
     {
-      System.out.println("Corner Number: " +(cornerNumber+1)+ " - Vector: " + creature.getBlockByID(0).getCornerVector(cornerNumber));
+   //   System.out.println("Corner Number: " +(cornerNumber+1)+ " - Vector: " + creature.getBlockByID(0).getCornerVector(cornerNumber));
     }
 
     System.out.println(
@@ -104,7 +104,7 @@ public class Analysis
       System.out.println(creature.getBlockByID(i).toString());
       for(int cornerNumber=0; cornerNumber<8;cornerNumber++)
       {
-        System.out.println("Corner Number: " +(cornerNumber+1)+ " - Vector (x,y,z): " + creature.getBlockByID(i).getCornerVector(cornerNumber));
+  //      System.out.println("Corner Number: " +(cornerNumber+1)+ " - Vector (x,y,z): " + creature.getBlockByID(i).getCornerVector(cornerNumber));
       }
       System.out.println();
       System.out.println("Surface Area: " + getSurfaceArea(creature.getBlockByID(i)));
