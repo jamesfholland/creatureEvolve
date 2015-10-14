@@ -181,10 +181,12 @@ public class Block
   public float getSizeY() {return sizeY;}
   
 
-  public float getSizeZ() {return sizeZ;}
+  public float getSize() {return sizeZ;}
 
   public float getSurfaceArea() {return  2*sizeX*sizeY + 2*sizeX*sizeZ + 2*sizeY*sizeZ;}
-  
+
+  public Vector3f getStartCenter(){return startCenter;}
+
   public ArrayList<Neuron> getNeuronTable() { return neuronTable;}
   
   
