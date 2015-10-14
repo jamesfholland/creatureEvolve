@@ -23,7 +23,7 @@
     * Random creatures
     * Pull from server (We will cultivate which seeds we want here)
 * **Analysis**
-    * **Check Validity**
+    * **Check Validity** Tyler
         * Does the creature have intersecting blocks at start.
     * **Check fitness**
     * Determine whether to save or cull
@@ -31,7 +31,7 @@
     * Spawn creatures (either random or seeds)
     * Cull least fit creatures in pool periodically
     * Spawn replacement creatures for new genes
-* **GUI**
+* **GUI** Tess
     * **Write generic gui that will get data from our controller**
     * For each thread
        * Total fitness
