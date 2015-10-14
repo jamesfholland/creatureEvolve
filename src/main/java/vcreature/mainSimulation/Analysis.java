@@ -1,6 +1,7 @@
 package vcreature.mainSimulation;
 
 import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
+import vcreature.genotype.GenomeCreature;
 import vcreature.phenotype.Creature;
 
 /**
