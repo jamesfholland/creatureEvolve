@@ -13,7 +13,6 @@ public class Analysis
 {
 //  private final Vector3f[] cornerVectors = new Vector3f[8];
 //
-//
 //  cornerVectors[0] = new Vector3f(center.x-size.x, center.y+size.y,center.z-size.z); // top,front,left
 //  cornerVectors[1] = new Vector3f(center.x+size.x, center.y+size.y,center.z-size.z); // top,front,right
 //  cornerVectors[2] = new Vector3f(center.x-size.x, center.y-size.y,center.z-size.z); // bottom,front,left
@@ -33,7 +32,7 @@ public class Analysis
 //  public Vector3f getCorner7() {return cornerVectors[6];}
 //  public Vector3f getCorner8() {return cornerVectors[7];}
 
-  // cannot use numbers greater than seven or less than zero.
+// cannot use numbers greater than seven or less than zero.
 //  public Vector3f getCornerVector(int cornerNumber) {return cornerVectors[cornerNumber];}
 
 
@@ -119,7 +118,7 @@ public class Analysis
           "Front Z: " + getFrontZOfCube(creature.getBlockByID(i)));
       System.out.println("Back Z: " + getBackZOfCube(creature.getBlockByID(i)));
 
-      if(getLeftXOfCube(creature.getBlockByID(i)) == getRightXOfCube(creature.getBlockByID(i).getParent()))
+      if(getLeftXOfCube(creature.getBlockByID(i)) == getRightXOfCube(creature.getBlockByID(i)))
       {
         System.out.println("Connected on Left");
       }
