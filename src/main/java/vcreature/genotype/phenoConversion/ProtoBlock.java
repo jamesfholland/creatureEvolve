@@ -66,19 +66,21 @@ public class ProtoBlock
 
   /**
    * This is used for the root vector
+   *
    * @param size The size in meters of the block
    */
   public ProtoBlock(ImmutableVector size)
   {
     this.parent = null; //Null parent because we are the root.
-    this.center = new Vector3f(0,0,0); //We don't know the actual
+    this.center = new Vector3f(0, 0, 0); //We don't know the actual
     this.size = size.getVector3f();
     this.children = new LinkedList<>();
     this.neurons = new LinkedList<>();
   }
 
   /**
-   * This constructor is for initializing an empty ProtoBlock list for initial parsing.
+   * This constructor is for initializing an empty ProtoBlock list for
+   * initial parsing.
    */
   public ProtoBlock()
   {
@@ -87,15 +89,19 @@ public class ProtoBlock
   }
 
   /**
-   * Sets up parent ties and basic information for the block. Doesn't compute location or geometries.
-   * @param size the size in meters
-   * @param parent the ProtoBlock parent to be adopted by
+   * Sets up parent ties and basic information for the block. Doesn't compute
+   * location or geometries.
+   *
+   * @param size        the size in meters
+   * @param parent      the ProtoBlock parent to be adopted by
    * @param pivotParent the hinge offset on parent block
-   * @param pivot the hinge offset on this block
-   * @param axisParent the hinge's parent axis
-   * @param axis the hinge's axis
+   * @param pivot       the hinge offset on this block
+   * @param axisParent  the hinge's parent axis
+   * @param axis        the hinge's axis
    */
-  public void initializeBlock(ImmutableVector size, ProtoBlock parent, ImmutableVector pivotParent, ImmutableVector pivot, Axis axisParent, Axis axis)
+  public void initializeBlock(ImmutableVector size, ProtoBlock parent,
+                              ImmutableVector pivotParent,
+                              ImmutableVector pivot, Axis axisParent, Axis axis)
   {
     this.size = size.getVector3f();
     this.parent = parent;
@@ -106,41 +112,91 @@ public class ProtoBlock
 
     this.pivotParentOffset = pivotParent;
     this.pivotOffset = pivot;
+  }
 
+
+  /**
+   * get min corner on cube in a vector form vector
+   * @return returns a vector
+   */
+  public Vector3f getMinVector()
+  {
+    return new Vector3f(center.x - size.x, center.y - size.y,
+        center.z - size.z);
   }
 
   /**
-   * Compute the geometry and location. If not valid removes itself from the parent.
+   * get max corner on cube in a vector form vector
+   * @return returns a vector
+   */
+  public Vector3f getMaxVector()
+  {
+    return new Vector3f(center.x + size.x, center.y + size.y,
+        center.z + size.z);
+  }
+
+  /**
+   * gets the size of the cube from corner to corner in vector form.
+   * Hard to explain, if confused ask Tyler to show you the diagram.
+   * @return returns a vector
+   */
+  public Vector3f getSizeVector()
+  {
+    return new Vector3f(getMaxVector().x - getMinVector().x,
+        getMaxVector().y - getMinVector().y,
+        getMaxVector().z - getMinVector().z);
+  }
+
+  public static boolean blockIntersecting(Vector3f min, Vector3f size, ProtoBlock box)
+  {
+    if ((min.x < box.getMinVector().x + box.getSizeVector().x) &&
+        (min.y < box.getMinVector().y + box.getSizeVector().y) &&
+        (min.z < box.getMinVector().z + box.getSizeVector().z) &&
+        (box.getMinVector().x < +min.x + size.x) &&
+        (box.getMinVector().y < +min.y + size.y) &&
+        (box.getMinVector().z < +min.z + size.z))
+    {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Compute the geometry and location. If not valid removes itself from the
+   * parent.
+   *
    * @param existingBlocks
    */
-  public void computeLocation(LinkedList<BoundingBox> existingBlocks)
+  public void computeLocation(LinkedList<ProtoBlock> existingBlocks)
   {
-    if(parent != null)
+
+
+    if (parent != null)
     {
       this.pivot = this.parent.getHingeFromCenterOffset(this.pivotParentOffset);
-      this.pivotParentLocal = this.parent.getHingeLocalCoord(this.pivotParentOffset);
+      this.pivotParentLocal =
+          this.parent.getHingeLocalCoord(this.pivotParentOffset);
       setCenterFromHingeOffset();
       this.pivotLocal = getHingeLocalCoord(this.pivotOffset);
     }
-
-      this.boundingBox = new BoundingBox(this.center, size.x, size.y, size.z);
-
-      //Check collisions with existing blocks.
-      for (BoundingBox box : existingBlocks)
+    Vector3f min = getMinVector();
+    Vector3f max = getMaxVector();
+    Vector3f size = getSizeVector();
+    for (ProtoBlock box : existingBlocks)
+    //Check Block collision somehow.
+    //If collision remove child from this.parent.
+    {
+      //checks to see if two blocks are intersecting
+      if (blockIntersecting(min, size, box))
       {
-        //Check Block collision somehow.
-        //If collision remove child from this.parent.
-        if (false)
-        {
-          this.parent.removeChild(this);
-          return;
-        }
+        this.parent.removeChild(this);
+        return;
       }
+    }
 
+    existingBlocks.add(this);
 
-    existingBlocks.add(this.boundingBox);
-
-    for(ProtoBlock child: children)
+    for (ProtoBlock child : children)
     {
       child.computeLocation(existingBlocks);
     }
@@ -149,6 +205,7 @@ public class ProtoBlock
 
   /**
    * Add a child to this protoblock.
+   *
    * @param child
    */
   public void addChild(ProtoBlock child)
@@ -158,6 +215,7 @@ public class ProtoBlock
 
   /**
    * Removes an unwanted or invalid child
+   *
    * @param child to be removed.
    */
   public void removeChild(ProtoBlock child)
@@ -175,6 +233,7 @@ public class ProtoBlock
 
   /**
    * Returns the hinge point relative to the root's center.
+   *
    * @param hingeOffset offset on this block to use to find the hinge point.
    * @return the actual point relative to root.
    */
@@ -187,7 +246,8 @@ public class ProtoBlock
   }
 
   /**
-   * Calculates the center point relative to the root's center via the known pivot and pivotOffset.
+   * Calculates the center point relative to the root's center via the known
+   * pivot and pivotOffset.
    */
   private void setCenterFromHingeOffset()
   {
@@ -199,6 +259,7 @@ public class ProtoBlock
 
   /**
    * Calculate the block coordinate of hinge from size and offset
+   *
    * @param hingeOffset the locale offset percentages
    * @return locale coordinates of the hinge
    */
@@ -214,38 +275,41 @@ public class ProtoBlock
   {
     float height = -1 * center.y + size.y;
     float tempHeight;
-    for(ProtoBlock child : children)
+    for (ProtoBlock child : children)
     {
       tempHeight = child.getHeight();
-      if(tempHeight > height) height = tempHeight;
+      if (tempHeight > height) height = tempHeight;
     }
 
     return height;
   }
 
-  public void addBlocksToCreature(Creature creature,  float heightOffset, Block blockParent)
+  public void addBlocksToCreature(Creature creature, float heightOffset,
+                                  Block blockParent)
   {
-    Vector3f newCenter = new Vector3f(center.x, center.y + heightOffset, center.z);
+    Vector3f newCenter =
+        new Vector3f(center.x, center.y + heightOffset, center.z);
     Block current;
-    if(blockParent == null)
+    if (blockParent == null)
     {
       current = creature.addRoot(newCenter, size);
     }
     else
     {
-      current = creature.addBlock(newCenter, size, blockParent, pivotParentLocal, pivotLocal,axisParent, axis);
+      current = creature
+          .addBlock(newCenter, size, blockParent, pivotParentLocal, pivotLocal,
+              axisParent, axis);
 
-      for(Neuron neuron : neurons)
+      for (Neuron neuron : neurons)
       {
         current.addNeuron(neuron);
       }
     }
 
-    for(ProtoBlock child : children)
+    for (ProtoBlock child : children)
     {
       child.addBlocksToCreature(creature, heightOffset, current);
     }
 
   }
-
 }
