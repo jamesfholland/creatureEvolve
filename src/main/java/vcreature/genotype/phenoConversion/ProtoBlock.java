@@ -5,6 +5,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import vcreature.genotype.Axis;
 import vcreature.genotype.ImmutableVector;
+import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 
 import java.util.ArrayList;
@@ -25,14 +26,21 @@ public class ProtoBlock
   private Vector3f size;
   private ProtoBlock parent;
   private LinkedList<ProtoBlock> children;
-  /**
-   * The parent pivot point relative to the root.
-   */
-  private Vector3f pivotParent;
+
   /**
    * The pivot point relative to the root.
    */
   private Vector3f pivot;
+
+  /**
+   * Pivot point relative to center of Parent block.
+   */
+  private Vector3f pivotParentLocal;
+  /**
+   * Pivot point relative to center of block.
+   */
+  private Vector3f pivotLocal;
+
   private Vector3f axisParent;
   private Vector3f axis;
 
@@ -102,9 +110,12 @@ public class ProtoBlock
   {
     if(parent != null)
     {
-      this.pivotParent = this.parent.getHingeFromCenterOffset(this.pivotParentOffset);
+      this.pivot = this.parent.getHingeFromCenterOffset(this.pivotParentOffset);
+      this.pivotParentLocal = this.parent.getHingeLocalCoord(this.pivotParentOffset);
       setCenterFromHingeOffset();
+      this.pivotLocal = this.parent.getHingeLocalCoord(this.pivotOffset);
     }
+
       this.boundingBox = new BoundingBox(this.center, size.x, size.y, size.z);
 
       //Check collisions with existing blocks.
@@ -171,8 +182,49 @@ public class ProtoBlock
     this.center = new Vector3f(x, y, z);
   }
 
-  public void addBlocksToCreature(Creature creature)
+  /**
+   * Calculate the block coordinate of hinge from size and offset
+   * @param hingeOffset the locale offset percentages
+   * @return locale coordinates of the hinge
+   */
+  public Vector3f getHingeLocalCoord(ImmutableVector hingeOffset)
   {
+    float x = size.x * hingeOffset.X;
+    float y = size.y * hingeOffset.Y;
+    float z = size.z * hingeOffset.Z;
+    return new Vector3f(x, y, z);
+  }
+
+  public float getHeight()
+  {
+    float height = -1 * center.y + size.y;
+    float tempHeight;
+    for(ProtoBlock child : children)
+    {
+      tempHeight = child.getHeight();
+      if(tempHeight > height) height = tempHeight;
+    }
+
+    return height;
+  }
+
+  public void addBlocksToCreature(Creature creature,  float heightOffset, Block blockParent)
+  {
+    Vector3f newCenter = new Vector3f(center.x, center.y + heightOffset, center.z);
+    Block current;
+    if(blockParent == null)
+    {
+      current = creature.addRoot(newCenter, size);
+    }
+    else
+    {
+      current = creature.addBlock(newCenter, size, blockParent, pivotParentLocal, pivotLocal,axisParent, axis);
+    }
+
+    for(ProtoBlock child : children)
+    {
+      child.addBlocksToCreature(creature, heightOffset, current);
+    }
 
   }
 

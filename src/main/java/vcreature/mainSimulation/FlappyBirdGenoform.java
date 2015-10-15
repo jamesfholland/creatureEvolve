@@ -89,4 +89,9 @@ public class FlappyBirdGenoform
     genome.addGeneNeuron(leg2Neuron1);
     genome.addGeneNeuron(leg2Neuron2);
   }
+
+  public Genome getGenome()
+  {
+    return genome;
+  }
 }

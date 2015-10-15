@@ -51,7 +51,7 @@ public class GenomeCreature extends Creature
 
       //We have a valid parent add to block tree.
       ProtoBlock parent;
-      if (parentIndex == i)
+      if (geneBlock.PARENT_OFFSET == 0)
       {
         parent = root;
       }
@@ -68,7 +68,7 @@ public class GenomeCreature extends Creature
 
     LinkedList<BoundingBox> treeBlocks = new LinkedList<>();
     root.computeLocation(treeBlocks);
-
+    root.addBlocksToCreature(this, root.getHeight(), null);
 
 
 
