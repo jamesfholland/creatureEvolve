@@ -113,7 +113,7 @@ public class ProtoBlock
       this.pivot = this.parent.getHingeFromCenterOffset(this.pivotParentOffset);
       this.pivotParentLocal = this.parent.getHingeLocalCoord(this.pivotParentOffset);
       setCenterFromHingeOffset();
-      this.pivotLocal = this.parent.getHingeLocalCoord(this.pivotOffset);
+      this.pivotLocal = getHingeLocalCoord(this.pivotOffset);
     }
 
       this.boundingBox = new BoundingBox(this.center, size.x, size.y, size.z);
