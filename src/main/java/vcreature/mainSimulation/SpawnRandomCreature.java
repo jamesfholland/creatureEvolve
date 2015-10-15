@@ -67,7 +67,7 @@ public class SpawnRandomCreature extends Creature
       Block tempBlock = getBlockByID(rand.nextInt(getNumberOfBodyBlocks()));
       // Block tempBlock=getBlockByID(count++);//rand.nextInt(getNumberOfBodyBlocks()));
 //      Geometry tempGeometry= tempBlock.getGeometry();
-      Vector3f tempCenter = tempBlock.getStartCenter();
+      Vector3f tempCenter = rootCenter;
       Vector3f legSize = new Vector3f(sizeX, sizeY, sizeZ);
       // Vector3f legCenter=new Vector3f(tempCenter.getX()*xSign+sizeX,tempCenter.getX()+tempBlock.getSizeY()+sizeY+rootHeight,tempBlock.getSize()*zSign+sizeZ);
       Vector3f legCenter = new Vector3f(xSign * tempCenter.getX() + tempBlock.getSizeX() + sizeX, ySign * tempCenter.getY() +
@@ -76,7 +76,7 @@ public class SpawnRandomCreature extends Creature
       Vector3f pivotA = new Vector3f(tempBlock.getSizeX() / 2, tempBlock.getSizeY() / 2, tempBlock.getSize() / 2);
       Vector3f pivotB = new Vector3f(-xSign * sizeX, -ySign * sizeY, 0 - zSign * sizeZ);
 
-      if (notIntersecting())
+     // if (notIntersecting())
       {
         Block nextLeg = addBlock(legCenter, legSize, tempBlock, pivotA, pivotB, Vector3f.UNIT_Z, Vector3f.UNIT_Z);
 
@@ -105,7 +105,7 @@ public class SpawnRandomCreature extends Creature
     }
   }
 
-  public boolean notIntersecting()
+  /*public boolean notIntersecting()
   {
     CollisionResults results = new CollisionResults();
     for (int i = 0; i < getNumberOfBodyBlocks() - 1; i++)
@@ -126,6 +126,7 @@ public class SpawnRandomCreature extends Creature
     }
     return true;
   }
+*/
 
   private void translateUp(float unitsUp)
   {

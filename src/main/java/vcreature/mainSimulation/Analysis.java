@@ -13,6 +13,7 @@ public class Analysis
 {
 //  private final Vector3f[] cornerVectors = new Vector3f[8];
 //
+//
 //  cornerVectors[0] = new Vector3f(center.x-size.x, center.y+size.y,center.z-size.z); // top,front,left
 //  cornerVectors[1] = new Vector3f(center.x+size.x, center.y+size.y,center.z-size.z); // top,front,right
 //  cornerVectors[2] = new Vector3f(center.x-size.x, center.y-size.y,center.z-size.z); // bottom,front,left
@@ -32,7 +33,7 @@ public class Analysis
 //  public Vector3f getCorner7() {return cornerVectors[6];}
 //  public Vector3f getCorner8() {return cornerVectors[7];}
 
-// cannot use numbers greater than seven or less than zero.
+  // cannot use numbers greater than seven or less than zero.
 //  public Vector3f getCornerVector(int cornerNumber) {return cornerVectors[cornerNumber];}
 
 
@@ -45,32 +46,57 @@ public class Analysis
    * Gets the bottom face coordinate of the Block
    * @return
    */
-  private float getBottomYOfCube(Block inputBlock) { return inputBlock.getCenter().y-(inputBlock.getSizeY()/2);}
+  private float getBottomYOfCube(Block inputBlock)
+  {
+    return 0f;
+    //inputBlock.getCenter().y-(inputBlock.getSizeY()/2);
+    //
+  }
   /**
    * Gets the top face coordinate of the Block
    * @return
    */
-  private float getTopYOfCube(Block inputBlock) { return inputBlock.getCenter().y+(inputBlock.getSizeY()/2);}
+  private float getTopYOfCube(Block inputBlock)
+  {
+    return 0;
+    //return inputBlock.getCenter().y+(inputBlock.getSizeY()/2);
+  }
   /**
    * Gets the right face coordinate of the Block
    * @return
    */
-  private float getRightXOfCube(Block inputBlock) { return inputBlock.getCenter().x-(inputBlock.getSizeX()/2);}
+  private float getRightXOfCube(Block inputBlock)
+  {
+    return 0;
+    //return inputBlock.getCenter().x-(inputBlock.getSizeX()/2);
+  }
   /**
    * Gets the left face coordinate of the Block
    * @return
    */
-  private float getLeftXOfCube(Block inputBlock) { return inputBlock.getCenter().x+(inputBlock.getSizeX()/2);}
+  private float getLeftXOfCube(Block inputBlock)
+  {
+    return 0;
+    //return inputBlock.getCenter().x+(inputBlock.getSizeX()/2);
+  }
   /**
    * Gets the front face coordinate of the Block
    * @return
    */
-  private float getFrontZOfCube(Block inputBlock) { return inputBlock.getCenter().z-(inputBlock.getSize()/2);}
+  private float getFrontZOfCube(Block inputBlock)
+  {
+    return 0;
+    //return inputBlock.getCenter().z-(inputBlock.getSize()/2);
+  }
   /**
    * Gets the back face coordinate of the Block
    * @return
    */
-  private float getBackZOfCube(Block inputBlock) { return inputBlock.getCenter().z+(inputBlock.getSize()/2);}
+  private float getBackZOfCube(Block inputBlock)
+{
+  return 0;
+  //return inputBlock.getCenter().z+(inputBlock.getSize()/2);
+}
 
 
   private float getSurfaceArea(Block inputBlock) {
@@ -88,7 +114,7 @@ public class Analysis
 
     System.out.println(
         "Surface Area: " + getSurfaceArea(creature.getBlockByID(0)));
-    System.out.println("center: "+creature.getBlockByID(0).getCenter());
+    //System.out.println("center: "+creature.getBlockByID(0).getCenter());
     System.out.println(
         "Bottom Y: " + getBottomYOfCube(creature.getBlockByID(0)));
     System.out.println("Top Y: " + getTopYOfCube(creature.getBlockByID(0)));
@@ -107,7 +133,7 @@ public class Analysis
       }
       System.out.println();
       System.out.println("Surface Area: " + getSurfaceArea(creature.getBlockByID(i)));
-      System.out.println("center: "+creature.getBlockByID(i).getCenter());
+      //System.out.println("center: "+creature.getBlockByID(i).getCenter());
       System.out.println(
           "Bottom Y: " + getBottomYOfCube(creature.getBlockByID(i)));
       System.out.println("Top Y: " + getTopYOfCube(creature.getBlockByID(i)));
@@ -118,7 +144,7 @@ public class Analysis
           "Front Z: " + getFrontZOfCube(creature.getBlockByID(i)));
       System.out.println("Back Z: " + getBackZOfCube(creature.getBlockByID(i)));
 
-      if(getLeftXOfCube(creature.getBlockByID(i)) == getRightXOfCube(creature.getBlockByID(i)))
+      /*if(getLeftXOfCube(creature.getBlockByID(i)) == getRightXOfCube(creature.getBlockByID(i).getParent()))
       {
         System.out.println("Connected on Left");
       }
@@ -142,7 +168,7 @@ public class Analysis
       if(getBackZOfCube(creature.getBlockByID(i)) == getFrontZOfCube(creature.getBlockByID(i).getParent()))
       {
         System.out.println("Connected on Back");
-      }
+      }*/
 
       System.out.println();
     }
