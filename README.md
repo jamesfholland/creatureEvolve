@@ -4,11 +4,11 @@
 
 ###### For now if any thing is missing just make a temporary stub that returns a test value.
 
-* **Genome** James
-    * **Create classes**
-    * **Conversion to phenome**
-    * File input
-    * File output
+* **Genome**
+    * ~~Create classe James~~
+    * ~~Conversion to phenome James~~
+    * **File input**
+    * **File output**
     * Creature Identifier human readable/filename
 * **Controller**
     * **Create a basic controller**
@@ -24,7 +24,7 @@
     * Pull from server (We will cultivate which seeds we want here)
 * **Analysis**
     * **Check Validity** Tyler
-        * Does the creature have intersecting blocks at start.
+        * ~~Does the creature have intersecting blocks at start. Tyler~~
     * **Check fitness**
     * Determine whether to save or cull
 * Genetic Algorithm
@@ -39,7 +39,7 @@
 	* Autostart genetic algorithm threshold input
 	* Select number of threads
 	* Select creature to watch
-* **Hill Climbing**
+* **Hill Climbing** James
 	* **Mutate Genome**
 	   * Add Genes
        * Mutate Genes
