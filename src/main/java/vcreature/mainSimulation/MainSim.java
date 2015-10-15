@@ -34,8 +34,7 @@ public class MainSim extends SimpleApplication implements ActionListener
   
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Vector3f tmpVec3; //
-  //private SpawnCreature myCreature;
-  private SpawnRandomCreature myCreature;
+  private SpawnCreature myCreature;
   private boolean isCameraRotating = true;
 
 
@@ -94,8 +93,7 @@ public class MainSim extends SimpleApplication implements ActionListener
      ***********************/
 
 
-    //myCreature = new SpawnCreature(physicsSpace, rootNode,"Squid");
-    myCreature = new SpawnRandomCreature(physicsSpace, rootNode,12);
+    myCreature = new SpawnCreature(physicsSpace, rootNode,"Squid");
     goodCreature.CheckValidlyOfCreature(myCreature);
     initLighting();
     initKeys();

@@ -109,20 +109,8 @@ public class Block
   
   public int getID() {return id;}
 
-  public int getIdOfParent(){
-    return parent.getID();}
+  public int getIdOfParent(){ return parent.getID();}
   
-
-  public Vector3f getCenter() {return startCenter;}
-
-  public float getBottomYOfCube() { return getCenter().y-(sizeY/2);}
-  public float getTopYOfCube() { return getCenter().y+(sizeY/2);}
-  public float getRightXOfCube() { return getCenter().x+(sizeX/2);}
-  public float getLeftXOfCube() { return getCenter().x-(sizeX/2);}
-  public float getFrontZOfCube() { return getCenter().z-(sizeZ/2);}
-  public float getBackZOfCube() { return getCenter().z+(sizeZ/2);}
-
-
 
   public float getSizeX() {return sizeX;}
   
@@ -131,11 +119,7 @@ public class Block
   
 
   public float getSize() {return sizeZ;}
-
-  public float getSurfaceArea() {return  2*sizeX*sizeY + 2*sizeX*sizeZ + 2*sizeY*sizeZ;}
-
-  public Vector3f getStartCenter(){return startCenter;}
-
+  
   public ArrayList<Neuron> getNeuronTable() { return neuronTable;}
   
   
