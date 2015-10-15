@@ -2,6 +2,7 @@ package vcreature.genotype;
 
 import com.jme3.math.Vector3f;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -60,33 +61,33 @@ public class Genome
   }
 
   /**
-   * Return an unmodifiable copy of our GeneBlocks.
+   * Return an copy of our GeneBlocks.
    */
-  public List<GeneBlock> getGENE_BLOCKS()
+  public ArrayList<GeneBlock> getGENE_BLOCKS()
   {
     synchronized (GENE_BLOCKS) //Needed since it uses an iterator to create the copy.
     {
-      return Collections.unmodifiableList(new ArrayList<>(GENE_BLOCKS));
+      return new ArrayList<>(GENE_BLOCKS);
     }
   }
 
   /**
-   * Return an unmodifiable copy of our GeneBlocks.
+   * Return an copy of our GeneBlocks.
    */
-  public List<GeneNeuron> getGENE_NEURONS()
+  public ArrayList<GeneNeuron> getGENE_NEURONS()
   {
     synchronized (GENE_NEURONS) //Needed since it uses an iterator to create the copy.
     {
-      return Collections.unmodifiableList(new ArrayList<>(GENE_NEURONS));
+      return new ArrayList<>(GENE_NEURONS);
     }
   }
 
   /**
    * @return The Vector3f form of the root size.
    */
-  public Vector3f getRootSize()
+  public ImmutableVector getRootSize()
   {
-    return ROOT_SIZE.getVector3f();
+    return ROOT_SIZE;
   }
 
 }

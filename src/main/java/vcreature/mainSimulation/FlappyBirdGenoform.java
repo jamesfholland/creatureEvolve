@@ -21,8 +21,8 @@ public class FlappyBirdGenoform
     genome = new Genome(new ImmutableVector(2.0f, 1.5f, 1.5f));
 
     //Leg1 stuff
-    ImmutableVector pivotA = new ImmutableVector(2.0f, -1.5f, 0.0f); //Center of hinge in the block's coordinates
-    ImmutableVector pivotB = new ImmutableVector(-3.0f, 0.5f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotA = new ImmutableVector(1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotB = new ImmutableVector(-1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector leg1Size = new ImmutableVector(3.0f, 0.5f, 1.0f);
     Axis LegParentAxis = Axis.UNIT_Z;
     Axis LegAxis = Axis.UNIT_Z;
@@ -30,8 +30,8 @@ public class FlappyBirdGenoform
     GeneBlock leg1 = new GeneBlock(0, pivotA, pivotB, leg1Size, LegParentAxis, LegAxis);
 
     //Leg2 stuff
-    ImmutableVector pivotC = new ImmutableVector(-2.0f, -1.5f, 0.0f); //Center of hinge in the block's coordinates
-    ImmutableVector pivotD = new ImmutableVector(3.0f, 0.5f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotC = new ImmutableVector(-1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotD = new ImmutableVector(1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector leg2Size = new ImmutableVector(3.0f, 0.5f, 1.0f);
 
     GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, LegParentAxis, LegAxis);
@@ -88,5 +88,10 @@ public class FlappyBirdGenoform
 
     genome.addGeneNeuron(leg2Neuron1);
     genome.addGeneNeuron(leg2Neuron2);
+  }
+
+  public Genome getGenome()
+  {
+    return genome;
   }
 }
