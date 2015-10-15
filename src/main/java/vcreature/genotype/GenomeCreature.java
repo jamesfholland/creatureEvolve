@@ -4,6 +4,7 @@ import com.jme3.bounding.BoundingBox;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.scene.Node;
 import vcreature.genotype.phenoConversion.ProtoBlock;
+import vcreature.genotype.phenoConversion.ProtoNeuron;
 import vcreature.phenotype.Creature;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class GenomeCreature extends Creature
     this.root = new ProtoBlock(genome.getRootSize());
 
     ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
+    ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
 
     ArrayList<ProtoBlock> protoBlocks = new ArrayList<>(geneBlocks.size());
 
@@ -36,6 +38,14 @@ public class GenomeCreature extends Creature
     for (int i = 0; i < geneBlocks.size(); i++)
     {
       protoBlocks.add(new ProtoBlock());
+    }
+    //Add neurons
+    for (GeneNeuron geneNeuron : geneNeurons)
+    {
+      if(geneNeuron.BLOCK_INDEX >= 0 && geneNeuron.BLOCK_INDEX < protoBlocks.size())
+      {
+        protoBlocks.get(geneNeuron.BLOCK_INDEX).addNeuron(new ProtoNeuron(geneNeuron));
+      }
     }
 
     for (int i = 0; i < geneBlocks.size(); i++)
