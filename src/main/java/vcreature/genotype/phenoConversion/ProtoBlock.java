@@ -3,10 +3,13 @@ package vcreature.genotype.phenoConversion;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
+import sun.awt.image.ImageWatched;
 import vcreature.genotype.Axis;
+import vcreature.genotype.GeneNeuron;
 import vcreature.genotype.ImmutableVector;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
+import vcreature.phenotype.Neuron;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -59,6 +62,8 @@ public class ProtoBlock
    */
   private BoundingBox boundingBox;
 
+  private LinkedList<Neuron> neurons;
+
   /**
    * This is used for the root vector
    * @param size The size in meters of the block
@@ -69,6 +74,7 @@ public class ProtoBlock
     this.center = new Vector3f(0,0,0); //We don't know the actual
     this.size = size.getVector3f();
     this.children = new LinkedList<>();
+    this.neurons = new LinkedList<>();
   }
 
   /**
@@ -77,6 +83,7 @@ public class ProtoBlock
   public ProtoBlock()
   {
     this.children = new LinkedList<>();
+    this.neurons = new LinkedList<>();
   }
 
   /**
@@ -159,6 +166,14 @@ public class ProtoBlock
   }
 
   /**
+   *
+   */
+  public void addNeuron(Neuron neuron)
+  {
+    this.neurons.add(neuron);
+  }
+
+  /**
    * Returns the hinge point relative to the root's center.
    * @param hingeOffset offset on this block to use to find the hinge point.
    * @return the actual point relative to root.
@@ -219,6 +234,11 @@ public class ProtoBlock
     else
     {
       current = creature.addBlock(newCenter, size, blockParent, pivotParentLocal, pivotLocal,axisParent, axis);
+
+      for(Neuron neuron : neurons)
+      {
+        current.addNeuron(neuron);
+      }
     }
 
     for(ProtoBlock child : children)
