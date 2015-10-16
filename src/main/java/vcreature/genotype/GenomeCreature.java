@@ -76,7 +76,7 @@ public class GenomeCreature extends Creature
 
     //Add Neurons
 
-    LinkedList<BoundingBox> treeBlocks = new LinkedList<>();
+    LinkedList<ProtoBlock> treeBlocks = new LinkedList<>();
     root.computeLocation(treeBlocks);
     root.addBlocksToCreature(this, root.getHeight(), null);
 
