@@ -1,6 +1,8 @@
 
 package vcreature.mainSimulation;
 
+import com.jme3.system.*;
+import vcreature.phenotype.PhysicsConstants;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
@@ -24,6 +26,10 @@ import vcreature.genotype.GenomeCreature;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.PhysicsConstants;
+import com.jme3.light.AmbientLight;
+import vcreature.phenotype.Block;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.KeyTrigger;
 
 public class MainSim extends SimpleApplication implements ActionListener
 {
@@ -37,6 +43,7 @@ public class MainSim extends SimpleApplication implements ActionListener
   private Vector3f tmpVec3; //
   private Creature myCreature;
   private boolean isCameraRotating = true;
+  private static boolean runGUI = true;
 
   @Override
   public void simpleInitApp()
@@ -48,10 +55,13 @@ public class MainSim extends SimpleApplication implements ActionListener
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
     //bulletAppState.setDebugEnabled(true);
-
+    
     physicsSpace.setGravity(PhysicsConstants.GRAVITY);
     physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
     physicsSpace.setMaxSubSteps(4);
+    
+   
+
 
     //Set up inmovable floor
     Box floor = new Box(50f, 0.1f, 50f);
@@ -75,8 +85,9 @@ public class MainSim extends SimpleApplication implements ActionListener
     floor_phy.setFriction(PhysicsConstants.GROUND_SLIDING_FRICTION);
     floor_phy.setRestitution(PhysicsConstants.GROUND_BOUNCINESS);
     floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
-                         PhysicsConstants.GROUND_ANGULAR_DAMPINING);
-
+        PhysicsConstants.GROUND_ANGULAR_DAMPINING);
+    
+   
     Block.initStaticMaterials(assetManager);
 
     /********************
@@ -156,13 +167,17 @@ public class MainSim extends SimpleApplication implements ActionListener
       cameraAngle += deltaSeconds * 2.0 * Math.PI / 60.0; //rotate full circle every minute
       float x = (float) (25.0 * Math.cos(cameraAngle));
       float z = (float) (25.0 * Math.sin(cameraAngle));
-
+    
       tmpVec3 = new Vector3f(x, 10.0f, z);
       cam.setLocation(tmpVec3);
       cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }
   }
+ 
+  
+ 
 
+  
   private void print(String msg, float x)
   {
     String className = this.getClass().getSimpleName();
@@ -179,21 +194,47 @@ public class MainSim extends SimpleApplication implements ActionListener
   {
     AppSettings settings = new AppSettings(true);
     settings.setResolution(1024, 768);
-    settings.setSamples(4); //activate antialising (softer edges, may be slower.)
+    settings.setSamples(4); //activate antialising (softer edges, may be slower.) 
 
     //Set vertical syncing to true to time the frame buffer to coincide with the refresh frequency of the screen.
     //This also throttles the calls to simpleUpdate. Without this throttling, I get 1000+ pfs on my Alienware laptop
-    //   Your application will have more work to do than to spend cycles rendering faster than the
+    //   Your application will have more work to do than to spend cycles rendering faster than the 
     //   capture rate of the RED Camera used to shoot Lord of the Rings.
     settings.setVSync(true);
     settings.setFrequency(60);//Frames per second
     settings.setTitle("Flappy Bird Creature");
-
+    
     System.out.println("Starting App");
 
-    MainSim app = new MainSim();
-    app.setShowSettings(false);
-    app.setSettings(settings);
-    app.start();
+    java.awt.EventQueue.invokeLater(new Runnable()
+    {
+      @Override
+      public void run()
+      {
+        if(args.length>0)  runGUI = false;
+        AppSettings settings = new AppSettings(true);
+        settings.setResolution(1024, 768);
+        settings.setSamples(4); //activate antialising (softer edges, may be slower.)
+
+        //Set vertical syncing to true to time the frame buffer to coincide with the refresh frequency of the screen.
+        //This also throttles the calls to simpleUpdate. Without this throttling, I get 1000+ pfs on my Alienware laptop
+        //   Your application will have more work to do than to spend cycles rendering faster than the
+        //   capture rate of the RED Camera used to shoot Lord of the Rings.
+        settings.setVSync(true);
+        settings.setFrequency(60);//Frames per second
+        settings.setTitle("Flappy Bird Creature");
+        MainSim app = new MainSim();
+        if(runGUI)
+        {
+          SimFrame simFrame = new SimFrame(app);
+        }
+        else
+        {
+          app.setShowSettings(false);
+          app.setSettings(settings);
+          app.start(JmeContext.Type.Headless);
+        }
+      }
+    });
   }
 }
