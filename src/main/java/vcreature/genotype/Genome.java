@@ -43,6 +43,13 @@ public class Genome
     GENE_NEURONS = Collections.synchronizedList(new ArrayList<>());
   }
 
+  public Genome(Genome genome)
+  {
+    this(genome.ROOT_SIZE);
+    GENE_BLOCKS.addAll(genome.GENE_BLOCKS);
+    GENE_NEURONS.addAll(genome.GENE_NEURONS);
+;  }
+
   /**
    * Synchronized List, in case the list is read while inserting.
    * @param geneBlock the new GeneBlock we are adding.

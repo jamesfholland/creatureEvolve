@@ -2,16 +2,12 @@ package vcreature.genotype.phenoConversion;
 
 import com.jme3.bounding.BoundingBox;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-import sun.awt.image.ImageWatched;
 import vcreature.genotype.Axis;
-import vcreature.genotype.GeneNeuron;
 import vcreature.genotype.ImmutableVector;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.Neuron;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -64,6 +60,28 @@ public class ProtoBlock
 
   private LinkedList<Neuron> neurons;
 
+/**
+ * making deep cloning constructors
+ */
+
+
+  /**
+   *
+   * @param protoBlock
+   */
+  public ProtoBlock(ProtoBlock protoBlock)
+  {
+    this.center = new Vector3f(protoBlock.center);
+    this.size = new Vector3f(protoBlock.size);
+    this.pivot = new Vector3f(protoBlock.pivot);
+    this.pivotParentLocal = new Vector3f(protoBlock.pivotParentLocal);
+    this.pivotLocal = new Vector3f(protoBlock.pivotLocal);
+    pivotParentOffset = protoBlock.pivotParentOffset;
+    pivotOffset = protoBlock.pivotOffset;
+    children.addAll(protoBlock.children);
+    neurons.addAll(protoBlock.neurons);
+  }
+
   /**
    * This is used for the root vector
    *
@@ -114,9 +132,15 @@ public class ProtoBlock
     this.pivotOffset = pivot;
   }
 
+  public Vector3f getBlockCenter()
+  {
+    return center;
+  }
+
 
   /**
    * get min corner on cube in a vector form vector
+   *
    * @return returns a vector
    */
   public Vector3f getMinVector()
@@ -127,6 +151,7 @@ public class ProtoBlock
 
   /**
    * get max corner on cube in a vector form vector
+   *
    * @return returns a vector
    */
   public Vector3f getMaxVector()
@@ -138,20 +163,22 @@ public class ProtoBlock
   /**
    * gets the size of the cube from corner to corner in vector form.
    * Hard to explain, if confused ask Tyler to show you the diagram.
+   *
    * @return returns a vector
    */
-  public Vector3f getSizeVector()
+  public Vector3f getDimentionVector()
   {
     return new Vector3f(getMaxVector().x - getMinVector().x,
         getMaxVector().y - getMinVector().y,
         getMaxVector().z - getMinVector().z);
   }
 
-  public static boolean blockIntersecting(Vector3f min, Vector3f size, ProtoBlock box)
+  public static boolean blockIntersecting(Vector3f min, Vector3f size,
+                                          ProtoBlock box)
   {
-    if ((min.x < box.getMinVector().x + box.getSizeVector().x) &&
-        (min.y < box.getMinVector().y + box.getSizeVector().y) &&
-        (min.z < box.getMinVector().z + box.getSizeVector().z) &&
+    if ((min.x < box.getMinVector().x + box.getDimentionVector().x) &&
+        (min.y < box.getMinVector().y + box.getDimentionVector().y) &&
+        (min.z < box.getMinVector().z + box.getDimentionVector().z) &&
         (box.getMinVector().x < +min.x + size.x) &&
         (box.getMinVector().y < +min.y + size.y) &&
         (box.getMinVector().z < +min.z + size.z))
@@ -181,13 +208,13 @@ public class ProtoBlock
     }
     Vector3f min = getMinVector();
     Vector3f max = getMaxVector();
-    Vector3f size = getSizeVector();
+    Vector3f dimentionVector = getDimentionVector();
     for (ProtoBlock box : existingBlocks)
     //Check Block collision somehow.
     //If collision remove child from this.parent.
     {
       //checks to see if two blocks are intersecting
-      if (blockIntersecting(min, size, box))
+      if (blockIntersecting(min, dimentionVector, box))
       {
         this.parent.removeChild(this);
         return;
