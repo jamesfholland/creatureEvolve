@@ -86,5 +86,4 @@ public final class GeneBlock
     PARENT_HINGE_AXIS = parentHingeAxis;
     HINGE_AXIS = hingeAxis;
   }
-
 }

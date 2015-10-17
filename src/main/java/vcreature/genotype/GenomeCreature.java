@@ -16,17 +16,27 @@ import java.util.LinkedList;
  */
 public class GenomeCreature extends Creature
 {
+  private final PhysicsSpace ps_copy;
+  private final Node jMRN;
   private Genome genome;
-
   private ProtoBlock root;
 
+  public GenomeCreature(GenomeCreature creature)
+  {
+    super(creature.ps_copy,  creature.jMRN);
+    ps_copy = creature.ps_copy;
+    jMRN = creature.jMRN;
+    genome = new Genome(creature.genome);
+    this.root = creature.root;
+  }
 
-  public GenomeCreature(PhysicsSpace physicsSpace, Node jMonkeyRootNode, Genome genome)
+
+    public GenomeCreature(PhysicsSpace physicsSpace, Node jMonkeyRootNode, Genome genome)
   {
     super(physicsSpace, jMonkeyRootNode);
-
+     this.ps_copy = physicsSpace;
+      this.jMRN = jMonkeyRootNode;
     this.genome = genome;
-
     this.root = new ProtoBlock(genome.getRootSize());
 
     ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
@@ -71,19 +81,15 @@ public class GenomeCreature extends Creature
       }
 
       protoBlocks.get(i).initializeBlock(geneBlock.SIZE, parent, geneBlock.PARENT_PIVOT, geneBlock.PIVOT, geneBlock.PARENT_HINGE_AXIS, geneBlock.HINGE_AXIS);
-
     }
+
+
 
     //Add Neurons
 
     LinkedList<ProtoBlock> treeBlocks = new LinkedList<>();
     root.computeLocation(treeBlocks);
     root.addBlocksToCreature(this, root.getHeight(), null);
-
-
-
-
-
 
 
 /*
