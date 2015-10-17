@@ -173,11 +173,7 @@ public class MainSim extends SimpleApplication implements ActionListener
       cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }
   }
- 
-  
- 
 
-  
   private void print(String msg, float x)
   {
     String className = this.getClass().getSimpleName();
@@ -211,7 +207,7 @@ public class MainSim extends SimpleApplication implements ActionListener
       @Override
       public void run()
       {
-        if(args.length>0)  runGUI = false;
+        if (args.length > 0) runGUI = false;
         AppSettings settings = new AppSettings(true);
         settings.setResolution(1024, 768);
         settings.setSamples(4); //activate antialising (softer edges, may be slower.)
@@ -224,14 +220,15 @@ public class MainSim extends SimpleApplication implements ActionListener
         settings.setFrequency(60);//Frames per second
         settings.setTitle("Flappy Bird Creature");
         MainSim app = new MainSim();
-        if(runGUI)
+        app.setShowSettings(false);
+        app.setSettings(settings);
+        if (runGUI)
         {
           SimFrame simFrame = new SimFrame(app);
         }
         else
         {
-          app.setShowSettings(false);
-          app.setSettings(settings);
+
           app.start(JmeContext.Type.Headless);
         }
       }

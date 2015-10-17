@@ -1,5 +1,6 @@
 package vcreature.mainSimulation;
 
+import com.jme3.app.state.AppState;
 import com.jme3.system.AppSettings;
 import com.jme3.system.JmeCanvasContext;
 
@@ -45,11 +46,11 @@ public class SimFrame extends JFrame implements ActionListener, ItemListener
   {
     appPane=new JPanel();
     animation.createCanvas();
+    animation.startCanvas();
     ctx = (JmeCanvasContext) animation.getContext();
     ctx.setSystemListener(animation);
     Dimension dim = new Dimension(1000,725);
     ctx.getCanvas().setPreferredSize(dim);
-    animation.startCanvas();
     appPane.add(ctx.getCanvas());
     super.add(appPane, BorderLayout.CENTER);
   }
@@ -74,7 +75,6 @@ public class SimFrame extends JFrame implements ActionListener, ItemListener
   {
     JComboBox cb = (JComboBox) e.getSource();
     String thread = (String)cb.getSelectedItem();
-    System.out.println(threadSelector.getSelectedIndex());
     //updateLabel(thread);
   }
 
@@ -83,13 +83,13 @@ public class SimFrame extends JFrame implements ActionListener, ItemListener
   {
     if (showApp.getText().equals(("Show Animation")))
     {
+      addAppPane();
       showApp.setText("Hide Animation");
-      appPane.setVisible(true);
     }
     else
     {
+      animation.stop(true);
       showApp.setText("Show Animation");
-      appPane.setVisible(false);
     }
   }
 }
