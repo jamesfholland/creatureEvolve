@@ -1,6 +1,5 @@
 package vcreature.mainSimulation;
 
-import com.jme3.app.state.AppState;
 import com.jme3.system.AppSettings;
 import com.jme3.system.JmeCanvasContext;
 
@@ -12,47 +11,46 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 /**
- * Created by Tess Daughton on 10/14/15.
- * JFrame to embed BulletApp inside of
- * Add user controls
- **/
-public class SimFrame extends JFrame implements ActionListener, ItemListener
+ * Created by Tess Daughton on 10/18/2015
+ * **/
+
+public class SimFrame extends JFrame implements ItemListener, ActionListener
 {
-  private MainSim animation;
+  private SimAnimation animation =new SimAnimation();
   private JmeCanvasContext ctx;
   private JPanel threadPane;
   private JPanel appPane;
   private JToggleButton showApp;
   private JComboBox threadSelector;
   private String[] threads = {"Thread 1", "Thread 2", "Thread 3", "Thread 4",
-                              "Thread 5", "Thread 6", "Thread 7", "Thread 8",
-                              "Thread 9", "Thread 10", "Thread 11", "Thread 12",
-                              "Thread 13", "Thread 14", "Thread 15", "Thread 16"};
+      "Thread 5", "Thread 6", "Thread 7", "Thread 8",
+      "Thread 9", "Thread 10", "Thread 11", "Thread 12",
+      "Thread 13", "Thread 14", "Thread 15", "Thread 16"};
 
-  public SimFrame(MainSim animation)
+
+  public SimFrame()
   {
-    super("Creature Simulator");
+    super();
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(1000, 800));
     setSize(new Dimension(1000, 800));
-    this.animation=animation;
     this.addThreadPane();
     this.addAppPane();
-    super.pack();
-    super.setVisible(true);
+    pack();
+    setVisible(true);
   }
 
   protected void addAppPane()
   {
-    appPane=new JPanel();
+    appPane = new JPanel();
     animation.createCanvas();
     animation.startCanvas();
-    ctx = (JmeCanvasContext) animation.getContext();
+    ctx=(JmeCanvasContext) animation.getContext();
     ctx.setSystemListener(animation);
-    Dimension dim = new Dimension(1000,725);
+    Dimension dim = new Dimension(1000, 725);
     ctx.getCanvas().setPreferredSize(dim);
     appPane.add(ctx.getCanvas());
-    super.add(appPane, BorderLayout.CENTER);
+    add(appPane, BorderLayout.CENTER);
   }
 
   protected void addThreadPane()
@@ -67,20 +65,20 @@ public class SimFrame extends JFrame implements ActionListener, ItemListener
     threadPane.setSize(new Dimension(1000, 50));
     threadPane.add(threadSelector, BorderLayout.CENTER);
     threadPane.add(showApp, BorderLayout.CENTER);
-    super.add(threadPane, BorderLayout.PAGE_END);
+    add(threadPane, BorderLayout.PAGE_END);
   }
 
   @Override
   public void actionPerformed(ActionEvent e)
   {
     JComboBox cb = (JComboBox) e.getSource();
-    String thread = (String)cb.getSelectedItem();
-    //updateLabel(thread);
+    String thread = (String) cb.getSelectedItem();
   }
 
   @Override
   public void itemStateChanged(ItemEvent e)
   {
+
     if (showApp.getText().equals(("Show Animation")))
     {
       addAppPane();
@@ -88,8 +86,8 @@ public class SimFrame extends JFrame implements ActionListener, ItemListener
     }
     else
     {
-      animation.stop(true);
       showApp.setText("Show Animation");
     }
   }
 }
+
