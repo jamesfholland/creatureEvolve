@@ -102,7 +102,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
      * FlappyBird
      ***********************/
 
-    FlappyBirdGenoform flappy = new FlappyBirdGenoform();
+   // SpawnCreatureGenoform flappy = new SpawnCreatureGenoform("");
+    SpawnRandomCreatureGenoform flappy = new SpawnRandomCreatureGenoform(10);
     myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
 
     initLighting();
