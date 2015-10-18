@@ -119,10 +119,10 @@ public class Block
   
 
   public float getSize() {return sizeZ;}
-  
+  public Vector3f getStartCenter(){return startCenter;}
   public ArrayList<Neuron> getNeuronTable() { return neuronTable;}
   
-  
+
   public static void initStaticMaterials(AssetManager assetManager)
   {
     MATERIAL_RED   = initStaticMaterial(assetManager, ColorRGBA.Red);

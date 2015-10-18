@@ -97,7 +97,9 @@ public class MainSim extends SimpleApplication implements ActionListener
      * FlappyBird
      ***********************/
 
-    FlappyBirdGenoform flappy = new FlappyBirdGenoform();
+    //FlappyBirdGenoform flappy = new FlappyBirdGenoform();
+   SpawnCreatureGenoform flappy = new SpawnCreatureGenoform("SuperTableMonster");
+   // SpawnCreatureGenoform flappy = new SpawnCreatureGenoform("FlappyBird");
     myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
 
     initLighting();
@@ -190,7 +192,7 @@ public class MainSim extends SimpleApplication implements ActionListener
     System.out.format("%s.%s [%.3f, %.3f, %.3f]\n", className, msg, vector.x, vector.y, vector.z);
   }
 
-  public static void main(String[] args)
+  public static void main(final String[] args)
   {
     AppSettings settings = new AppSettings(true);
     settings.setResolution(1024, 768);
@@ -211,7 +213,7 @@ public class MainSim extends SimpleApplication implements ActionListener
       @Override
       public void run()
       {
-        if(args.length>0)  runGUI = false;
+        if (args.length > 0) runGUI = false;
         AppSettings settings = new AppSettings(true);
         settings.setResolution(1024, 768);
         settings.setSamples(4); //activate antialising (softer edges, may be slower.)
@@ -224,11 +226,10 @@ public class MainSim extends SimpleApplication implements ActionListener
         settings.setFrequency(60);//Frames per second
         settings.setTitle("Flappy Bird Creature");
         MainSim app = new MainSim();
-        if(runGUI)
+        if (runGUI)
         {
           SimFrame simFrame = new SimFrame(app);
-        }
-        else
+        } else
         {
           app.setShowSettings(false);
           app.setSettings(settings);
