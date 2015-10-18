@@ -2,7 +2,6 @@
 package vcreature.mainSimulation;
 
 import com.jme3.math.Vector3f;
-import javax.swing.JFrame;
 
 public class MainSim
 {
