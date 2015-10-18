@@ -49,15 +49,15 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     /**
      * Set up Physics
      */
-//
-//    bulletAppState = new BulletAppState();
-//    stateManager.attach(bulletAppState);
-//    physicsSpace = bulletAppState.getPhysicsSpace();
-//    //bulletAppState.setDebugEnabled(true);
-//
-//    physicsSpace.setGravity(PhysicsConstants.GRAVITY);
-//    physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
-//    physicsSpace.setMaxSubSteps(4);
+
+    bulletAppState = new BulletAppState();
+    stateManager.attach(bulletAppState);
+    physicsSpace = bulletAppState.getPhysicsSpace();
+    //bulletAppState.setDebugEnabled(true);
+
+    physicsSpace.setGravity(PhysicsConstants.GRAVITY);
+    physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
+    physicsSpace.setMaxSubSteps(4);
 
     AppSettings settings = new AppSettings(true);
     settings.setResolution(1024, 768);
@@ -69,28 +69,28 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     setSettings(settings);
 
     //Set up inmovable floor
-//    com.jme3.scene.shape.Box floor = new com.jme3.scene.shape.Box(50f, 0.1f, 50f);
-//    Material floor_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-//    Texture floorTexture = assetManager.loadTexture("Textures/FloorTile.png");
-//
-//    floorTexture.setWrap(Texture.WrapMode.Repeat);
-//    floor_mat.setTexture("ColorMap", floorTexture);
-//
-//    floor.scaleTextureCoordinates(new Vector2f(50, 50));
-//    Geometry floor_geo = new Geometry("Floor", floor);
-//    floor_geo.setMaterial(floor_mat);
-//    floor_geo.setShadowMode(RenderQueue.ShadowMode.Receive);
-//    floor_geo.setLocalTranslation(0, -0.11f, 0);
-//    rootNode.attachChild(floor_geo);
-//
-//    /* Make the floor physical with mass 0.0f */
-//    RigidBodyControl floor_phy = new RigidBodyControl(0.0f);
-//    floor_geo.addControl(floor_phy);
-//    physicsSpace.add(floor_phy);
-//    floor_phy.setFriction(PhysicsConstants.GROUND_SLIDING_FRICTION);
-//    floor_phy.setRestitution(PhysicsConstants.GROUND_BOUNCINESS);
-//    floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
-//        PhysicsConstants.GROUND_ANGULAR_DAMPINING);
+    com.jme3.scene.shape.Box floor = new com.jme3.scene.shape.Box(50f, 0.1f, 50f);
+    Material floor_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    Texture floorTexture = assetManager.loadTexture("Textures/FloorTile.png");
+
+    floorTexture.setWrap(Texture.WrapMode.Repeat);
+    floor_mat.setTexture("ColorMap", floorTexture);
+
+    floor.scaleTextureCoordinates(new Vector2f(50, 50));
+    Geometry floor_geo = new Geometry("Floor", floor);
+    floor_geo.setMaterial(floor_mat);
+    floor_geo.setShadowMode(RenderQueue.ShadowMode.Receive);
+    floor_geo.setLocalTranslation(0, -0.11f, 0);
+    rootNode.attachChild(floor_geo);
+
+    /* Make the floor physical with mass 0.0f */
+    RigidBodyControl floor_phy = new RigidBodyControl(0.0f);
+    floor_geo.addControl(floor_phy);
+    physicsSpace.add(floor_phy);
+    floor_phy.setFriction(PhysicsConstants.GROUND_SLIDING_FRICTION);
+    floor_phy.setRestitution(PhysicsConstants.GROUND_BOUNCINESS);
+    floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
+        PhysicsConstants.GROUND_ANGULAR_DAMPINING);
 
 
     Block.initStaticMaterials(assetManager);
@@ -101,12 +101,13 @@ public class SimAnimation extends SimpleApplication implements ActionListener
      * TableMonster2Legs
      * FlappyBird
      ***********************/
-//
-//    FlappyBirdGenoform flappy = new FlappyBirdGenoform();
-//    myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
+
+    FlappyBirdGenoform flappy = new FlappyBirdGenoform();
+    myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
 
     initLighting();
     initKeys();
+
     flyCam.setDragToRotate(true);
   }
 
@@ -160,7 +161,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     elapsedSimulationTime += deltaSeconds;
     //print("simpleUpdate() elapsedSimulationTime=", (float)elapsedSimulationTime);
     //print("simpleUpdate() joint1.getHingeAngle()=", joint1.getHingeAngle());
-//    myCreature.updateBrain(elapsedSimulationTime);
+    myCreature.updateBrain(elapsedSimulationTime);
 
     if (isCameraRotating)
     {
