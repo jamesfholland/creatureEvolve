@@ -18,9 +18,17 @@ public class Genepool
   private ArrayList<ArrayList<Creature>> population =
       new ArrayList<ArrayList<Creature>>();
 
+
   /**
-   * if(new creature.getfitness > getfitnessFromPopulation(x,y))
-   *  Add new creature to population
+   * if(compareMultipleCreatures(creatureFirst, creatureSecond) == 1)
+   * {
+   *     population.add(creatureFisrt);
+   *     population.removeCreatureFromPopualtion(creatureSecond));
+   * }
+   * else if(compareMultipleCreatures(creatureFirst, creatureSecond)<= 0)
+   * {
+   *
+   * }
    */
 
   /**
@@ -35,7 +43,6 @@ public class Genepool
     return population.get(creatureNumber).get(variationNumber).getFitness();
   }
 
-
   public Creature getCreatureAtIndex(int creatureNumber, int variationNumber)
   {
     return population.get(creatureNumber).get(variationNumber);
@@ -46,8 +53,25 @@ public class Genepool
 //    population.add(creature);
   }
 
-  public void removeCreatureToPopulation(Creature creature)
+  public void removeCreatureFromPopulation(Creature creature)
   {
-    population.remove(0);
+    population.remove(creature);
+  }
+
+  public int compareMultipleCreatures(Creature creatureFirst,
+                                      Creature creatureSecond)
+  {
+    if (creatureFirst.getFitness() > creatureSecond.getFitness())
+    {
+      return 1;
+    }
+    else if (creatureFirst.getFitness() < creatureSecond.getFitness())
+    {
+      return -1;
+    }
+    else
+    {
+      return 0;
+    }
   }
 }
