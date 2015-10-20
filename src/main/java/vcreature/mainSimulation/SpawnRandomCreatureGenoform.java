@@ -6,6 +6,7 @@ import com.jme3.collision.CollisionResults;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import vcreature.genotype.*;
+import vcreature.genotype.phenoConversion.ProtoBlock;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.EnumOperator;
@@ -138,9 +139,23 @@ public class SpawnRandomCreatureGenoform
     }
     return EnumNeuronInput.CONSTANT;
   }
-}
 
-//  public boolean notIntersecting()
+ public boolean notIntersecting(GeneBlock box)
+ {
+
+//   Vector3f minVector=new Vector3f(center.x - size.x, center.y - size.y, center.z - size.z);
+//   if ((min.x < box.getMinVector().x + box.getDimentionVector().x) &&
+//           (min.y < box.getMinVector().y + box.getDimentionVector().y) &&
+//           (min.z < box.getMinVector().z + box.getDimentionVector().z) &&
+//           (box.getMinVector().x < +min.x + size.x) &&
+//           (box.getMinVector().y < +min.y + size.y) &&
+//           (box.getMinVector().z < +min.z + size.z))
+//   {
+//     return false;
+//   }
+   return true;
+ }
+}
 //  {
 //    CollisionResults results = new CollisionResults();
 //    for (int i = 0; i < getNumberOfBodyBlocks() - 1; i++)

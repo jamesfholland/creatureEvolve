@@ -5,7 +5,7 @@ import vcreature.phenotype.Creature;
 import java.util.ArrayList;
 
 /**
- * Created by Tyler on 10/18/2015.
+ * Created by Tylor on 10/18/2015.
  */
 
 /**

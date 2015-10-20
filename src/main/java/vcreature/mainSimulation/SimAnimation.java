@@ -40,7 +40,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private boolean runGUI = false;
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Vector3f tmpVec3; //
-  private Creature myCreature;
+  private GenomeCreature myCreature;
   private boolean isCameraRotating = true;
 
   @Override
