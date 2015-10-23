@@ -1,5 +1,7 @@
 package vcreature.genotype;
 
+import com.jme3.math.Vector3f;
+
 /**
  * This Class contains the basic information for creating a block and hinge pair.
  * <p>
@@ -55,12 +57,16 @@ public final class GeneBlock
   /**
    * The axis on the parent to rotate upon.
    */
-  public final Axis PARENT_HINGE_AXIS;
+  public final ImmutableVector PARENT_HINGE_AXIS;
 
   /**
    * The axis on to rotate upon.
    */
-  public final Axis HINGE_AXIS;
+  public final ImmutableVector HINGE_AXIS;
+  /**
+   *
+   */
+  public final ImmutableVector EULER_ANGLES;
 
   /**
    * Create a new GeneBlock, this object is immutable.
@@ -77,7 +83,7 @@ public final class GeneBlock
    * @param hingeAxis       The axis on to rotate upon.
    */
   public GeneBlock(int parentOffset, ImmutableVector parentPivot, ImmutableVector pivot, ImmutableVector size,
-                   Axis parentHingeAxis, Axis hingeAxis)
+                   ImmutableVector parentHingeAxis, ImmutableVector hingeAxis)
   {
     PARENT_OFFSET = parentOffset;
     PARENT_PIVOT = parentPivot;
@@ -85,5 +91,20 @@ public final class GeneBlock
     SIZE = size;
     PARENT_HINGE_AXIS = parentHingeAxis;
     HINGE_AXIS = hingeAxis;
+    EULER_ANGLES=new ImmutableVector(0,0,0);
   }
+
+  public GeneBlock(int parentOffset, ImmutableVector parentPivot, ImmutableVector pivot, ImmutableVector size,
+                   ImmutableVector parentHingeAxis, ImmutableVector hingeAxis,ImmutableVector eulerAngels)
+  {
+    PARENT_OFFSET = parentOffset;
+    PARENT_PIVOT = parentPivot;
+    PIVOT = pivot;
+    SIZE = size;
+    PARENT_HINGE_AXIS = parentHingeAxis;
+    HINGE_AXIS = hingeAxis;
+    EULER_ANGLES=eulerAngels;
+  }
+
+
 }

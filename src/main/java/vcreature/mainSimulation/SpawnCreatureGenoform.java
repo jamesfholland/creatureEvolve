@@ -39,14 +39,14 @@ public class SpawnCreatureGenoform
     Axis LegParentAxis = Axis.UNIT_Z;
     Axis LegAxis = Axis.UNIT_Z;
 
-    GeneBlock leg1 = new GeneBlock(0, pivotA, pivotB, leg1Size, LegParentAxis, LegAxis);
+    GeneBlock leg1 = new GeneBlock(0, pivotA, pivotB, leg1Size, LegParentAxis.getImmutableVector(), LegAxis.getImmutableVector());
 
     //Leg2 stuff
     ImmutableVector pivotC = new ImmutableVector(-1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector pivotD = new ImmutableVector(1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector leg2Size = new ImmutableVector(3.0f, 0.5f, 1.0f);
 
-    GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, LegParentAxis, LegAxis);
+    GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, LegParentAxis.getImmutableVector(), LegAxis.getImmutableVector());
 
     genome.addGeneBlock(leg1); //Leg1 is in position 0 in the list.
     genome.addGeneBlock(leg2);
@@ -113,7 +113,7 @@ public class SpawnCreatureGenoform
 
       Axis LegParentAxis = Axis.UNIT_Z;
       Axis LegAxis = Axis.UNIT_Z;
-      GeneBlock leg1 = new GeneBlock(i-1, pivotA, pivotB, leg1Size, LegParentAxis, LegAxis);
+      GeneBlock leg1 = new GeneBlock(i-1, pivotA, pivotB, leg1Size, LegParentAxis.getImmutableVector(), LegAxis.getImmutableVector());
       genome.addGeneBlock(leg1);
       GeneNeuron leg1Neuron1 = new GeneNeuron(
               i, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
@@ -140,7 +140,7 @@ public class SpawnCreatureGenoform
 
     //Axis LegParentAxis = Axis.UNIT_Z;
     Axis Leg2Axis = Axis.UNIT_Z;
-    GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, Axis.UNIT_Z, Leg2Axis);
+    GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, Axis.UNIT_Z.getImmutableVector(), Leg2Axis.getImmutableVector());
     System.out.println(leg2.PARENT_OFFSET);
     GeneNeuron leg1Neuron1 = new GeneNeuron(
             leg2.PARENT_OFFSET, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.

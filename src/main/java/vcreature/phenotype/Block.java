@@ -24,7 +24,7 @@ public class Block
 {
   /**
    * @deprecated
-   * should use PhysicsConstants.BLOCK_DENSITY 
+   * should use PhysicsConstants.BLOCK_DENSITY
    */
   public static final float BLOCK_DENSITY = 4f;
 
@@ -90,15 +90,15 @@ public class Block
    * @param id Index of this block in the creature's body ArrayList
    * @param center location in world coordinates of the center of the box.
    *     The address of this Vector3f is copied into this blocks startCenter field.
-   *     Therefore, the address passed as center must be a new instrance of 
+   *     Therefore, the address passed as center must be a new instrance of
    *     Vector3f and not reused for other data.
    *
-   * @param size  extent of box in each direction from the box's center. 
+   * @param size  extent of box in each direction from the box's center.
    * So, for example, a box with extent of 0.5 in the x dimension
    * would have a length in the x dimension of 1.0 meters.
    * @param rotation in world coordinates of this block.
    *     The address of this Quaternion is copied into this blocks startRotation field.
-   *     Therefore, the address passed as rotation must be a new instrance of 
+   *     Therefore, the address passed as rotation must be a new instrance of
    *     Quaternion and not reused for other data.
    */
   public Block(PhysicsSpace physicsSpace, Node rootNode, int id, Vector3f center, Vector3f size, Quaternion rotation)
@@ -113,7 +113,7 @@ public class Block
 
     this.id = id;
 
-    //Copies only the address, but in the creature class, 
+    //Copies only the address, but in the creature class,
     //  this addesss was created with new and is not reused
     startCenter   = center;
     startRotation = rotation;
@@ -123,8 +123,8 @@ public class Block
     sizeZ = size.z*2;
 
 
-    //Creates a box that has a center of 0,0,0 and extends in the out from 
-    //the center by the given amount in each direction. 
+    //Creates a box that has a center of 0,0,0 and extends in the out from
+    //the center by the given amount in each direction.
     // So, for example, a box with extent of 0.5 would be the unit cube.
     Box box = new Box(size.x, size.y, size.z);
     geometry = new Geometry("Box", box);
@@ -146,8 +146,6 @@ public class Block
     physicsControl.setDamping(PhysicsConstants.LINEAR_DAMPINING,
             PhysicsConstants.ANGULAR_DAMPINING);
   }
-
-
 
 
   /**
@@ -173,11 +171,18 @@ public class Block
   }
 
   /**
-   *
-   * @param neuron
+   * Adds the given Neuron to this blocks Neuron Table.
+   * At the time this Neuron is added, if any of its
+   * blockIds is UNDEFINED, then that blockId is set to the id of this block.
+   * @param neuron to be added to Neuron Table.
    */
   public void addNeuron(Neuron neuron)
   {
+    for (int i=0; i<Neuron.TOTAL_INPUTS; i++)
+    { if (neuron.getBlockIdx(i) == Neuron.UNDEFINED)
+    { neuron.setBlockIdx(i,id);
+    }
+    }
     neuronTable.add(neuron);
   }
 
@@ -199,7 +204,7 @@ public class Block
 
   /**
    *
-   * @return a pointer to the joint to this block's parent (or null if 
+   * @return a pointer to the joint to this block's parent (or null if
    * this is the root block).
    */
   public HingeJoint getJoint(){ return jointToParent;}
@@ -208,15 +213,19 @@ public class Block
 
   /**
    *
-   * @return the current angle in the physics simulation of the joint 
-   * to this block's parent. 
+   * @return the current angle in the physics simulation of the joint
+   * to this block's parent. Returns 0 if there is no parent (if this is
+   * the root).
    */
-  public float getJointAngle() { return jointToParent.getHingeAngle(); }
+  public float getJointAngle()
+  { if (jointToParent == null) return 0;
+    return jointToParent.getHingeAngle();
+  }
 
 
   /**
    * Sets the values in the given Vector3f output to the current center of the block
-   * in world coordinates. 
+   * in world coordinates.
    *
    * @param output Vector into which the center is stored.
    * @return a pointer to the given Vector3f output for for easy chaining of calls.
@@ -226,7 +235,7 @@ public class Block
 
   /**
    * Sets the values in the given Vector3f output to the original center (before the
-   * strating the simulation) of the block in world coordinates. 
+   * strating the simulation) of the block in world coordinates.
    * @param output Vector into which the center is stored.
    * @return a pointer to the given Vector3f output for for easy chaining of calls.
    */
@@ -237,7 +246,11 @@ public class Block
     return output;
   }
 
-  public Quaternion getStartRotation(Quaternion  output)
+
+  public Quaternion getStartRotation() {return startRotation;}
+
+
+  public Quaternion getRotation(Quaternion  output)
   {
     return physicsControl.getPhysicsRotation(output);
   }
@@ -245,14 +258,16 @@ public class Block
 
   /**
    *
-   * @return the height of the lowest face of this block's the bounding box 
+   * @return the height of the lowest face of this block's the bounding box
    * in meters
    */
   public float getHeight()
   {
     BoundingBox box = (BoundingBox) geometry.getWorldBound();
     tmpVec3 = box.getMin(tmpVec3);
-    return tmpVec3.y;
+    //System.out.println("Block["+id+"].getHeight() = "+tmpVec3.y);
+    float height = Math.max(0,tmpVec3.y);
+    return height;
   }
 
 
@@ -277,7 +292,7 @@ public class Block
 
   /**
    *
-   * @return Full extent (not half extent) of the block along the x-axis of 
+   * @return Full extent (not half extent) of the block along the x-axis of
    * its local coordinates (before any rotations).
    */
   public float getSizeX() {return sizeX;}
@@ -285,7 +300,7 @@ public class Block
 
   /**
    *
-   * @return Full extent (not half extent) of the block along the y-axis of 
+   * @return Full extent (not half extent) of the block along the y-axis of
    * its local coordinates (before any rotations).
    */
   public float getSizeY() {return sizeY;}
@@ -293,14 +308,14 @@ public class Block
 
   /**
    *
-   * @return Full extent (not half extent) of the block along the z-axis of 
+   * @return Full extent (not half extent) of the block along the z-axis of
    * its local coordinates (before any rotations).
    */
   public float getSize() {return sizeZ;}
 
   /**
    * Careful when using this. It gives a pointer to the block's childList.
-   * If this is corrupted the results are continued use of the creature class 
+   * If this is corrupted the results are continued use of the creature class
    * are undefined.
    * @return
    */
@@ -308,7 +323,7 @@ public class Block
 
 
   /**
-   * @return the ArrayList of Neurons that can send an impulse to 
+   * @return the ArrayList of Neurons that can send an impulse to
    * the joint connecting this block to its parent. Returns null if this
    * block is the root block.
    */
@@ -318,7 +333,7 @@ public class Block
 
 
   /**
-   * If a program is to used any of these simple materials, then 
+   * If a program is to used any of these simple materials, then
    * this method must be called once some time before using the materials.
    * @param assetManager
    */
@@ -367,7 +382,7 @@ public class Block
 
 
   /**
-   * Return the maximium impulse that can be supplyed by a joint on the 
+   * Return the maximium impulse that can be supplyed by a joint on the
    * given parent.
    * the maximium impulse that can be applyed to a joint is proportional to the parent's surface area.
    * The maximium impulse is returned in Newton seconds.

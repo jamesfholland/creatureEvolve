@@ -8,6 +8,8 @@ import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.Neuron;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -19,6 +21,7 @@ public class ProtoBlock
    * Offset from the root's 0,0,0 center.
    */
   private Vector3f center;
+  private Vector3f eulerAngles=new Vector3f(0,0,0);
   /**
    * Size in meters.
    */
@@ -97,6 +100,20 @@ public class ProtoBlock
   }
 
   /**
+   *
+   * @param size
+   */
+  public ProtoBlock(ImmutableVector size,ImmutableVector eulerAngles)
+  {
+    this.parent = null; //Null parent because we are the root.
+    this.center = new Vector3f(0, 0, 0); //We don't know the actual
+    this.size = size.getVector3f();
+    this.children = new LinkedList<>();
+    this.neurons = new LinkedList<>();
+    this.eulerAngles=eulerAngles.getVector3f();
+  }
+
+  /**
    * This constructor is for initializing an empty ProtoBlock list for
    * initial parsing.
    */
@@ -119,7 +136,7 @@ public class ProtoBlock
    */
   public void initializeBlock(ImmutableVector size, ProtoBlock parent,
                               ImmutableVector pivotParent,
-                              ImmutableVector pivot, Axis axisParent, Axis axis)
+                              ImmutableVector pivot, ImmutableVector axisParent, ImmutableVector axis)
   {
     this.size = size.getVector3f();
     this.parent = parent;
@@ -132,6 +149,21 @@ public class ProtoBlock
     this.pivotOffset = pivot;
   }
 
+  public void initializeBlock(ImmutableVector size, ProtoBlock parent,
+                              ImmutableVector pivotParent,
+                              ImmutableVector pivot, ImmutableVector axisParent, ImmutableVector axis,ImmutableVector eulerAngles)
+  {
+    this.size = size.getVector3f();
+    this.parent = parent;
+    this.parent.addChild(this);
+
+    this.axisParent = axisParent.getVector3f();
+    this.axis = axis.getVector3f();
+
+    this.pivotParentOffset = pivotParent;
+    this.pivotOffset = pivot;
+    this.eulerAngles=eulerAngles.getVector3f();
+  }
   public Vector3f getBlockCenter()
   {
     return center;
@@ -183,7 +215,7 @@ public class ProtoBlock
         (box.getMinVector().y < +min.y + size.y) &&
         (box.getMinVector().z < +min.z + size.z))
     {
-      return true;
+      // return true;
     }
     return false;
   }
@@ -311,6 +343,39 @@ public class ProtoBlock
     return height;
   }
 
+  public void addBlocksToCreature(Creature creature,Block blockParent)
+  {
+    Block current;
+    if (blockParent == null)
+    {
+      current = creature.addRoot(eulerAngles, size);
+      creature.getBlockByID(0).setMaterial(Block.MATERIAL_RED);
+    }
+    else
+    {
+      float[] floats={eulerAngles.x,eulerAngles.y,eulerAngles.z};
+      System.out.println(Arrays.toString(floats));
+      current = creature
+              .addBlock(floats,size, blockParent, pivotParentLocal, pivotLocal,
+                      axisParent, axis);
+
+      for (Neuron neuron : neurons)
+      {
+        current.addNeuron(neuron);
+      }
+    }
+
+    for (ProtoBlock child : children)
+    {
+      child.addBlocksToCreature(creature, current);
+    }
+  }
+  public void placeCreatureOnGround(Creature creature)
+  {
+    creature.placeOnGround();
+  }
+
+  @Deprecated
   public void addBlocksToCreature(Creature creature, float heightOffset,
                                   Block blockParent)
   {
@@ -320,11 +385,13 @@ public class ProtoBlock
     if (blockParent == null)
     {
       current = creature.addRoot(newCenter, size);
+      creature.getBlockByID(0).setMaterial(Block.MATERIAL_RED);
     }
     else
     {
+      float[] eulerArray={eulerAngles.x,eulerAngles.y,eulerAngles.z};
       current = creature
-          .addBlock(newCenter, size, blockParent, pivotParentLocal, pivotLocal,
+          .addBlock(eulerArray, size, blockParent, pivotParentLocal, pivotLocal,
               axisParent, axis);
 
       for (Neuron neuron : neurons)

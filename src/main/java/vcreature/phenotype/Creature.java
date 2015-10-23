@@ -18,23 +18,23 @@ import com.jme3.scene.Geometry;
  * This is the required phenotype that is passed to the simulator.<br>
  * <br>
  *
- * The intended use of the Creature class is to be instantiated, run through the physics simulator for fitness 
+ * The intended use of the Creature class is to be instantiated, run through the physics simulator for fitness
  * evaluation and then the Creature should be destroyed. <br><br>
  *
  * The Creature class is NOT intended to be a mutable DNA structure that is kept around past is simulation
- * to navigate, mutate, and/or store static structure or other information. 
+ * to navigate, mutate, and/or store static structure or other information.
  * For those capabilities, a separate DNA or Genome structure should be used. <br><br>
  *
- * The types of getters the Creature class should provide those that return information generated during the 
+ * The types of getters the Creature class should provide those that return information generated during the
  * physics simulation. This includes: getCenter(), getFitness(), getHeight(), getJointAngle(),... <br><br><br>
  *
- * An instance of Creature is an array list of Blocks (the creature's body) 
+ * An instance of Creature is an array list of Blocks (the creature's body)
  * that form a tree structure.<br>
  * Each creature has one root block (body[0]).<br>
  * Each block may have any number of children.<br>
  * Each block (except the root) has exactly one parent to which it is connected
  * by a one-degree-of-freedom HingeJoint.<br>
- * Each hinge joint has associated with it an ArrayList of Neuron rules used 
+ * Each hinge joint has associated with it an ArrayList of Neuron rules used
  * to control when and how much impulse that to apply to that joint.
  */
 public class Creature
@@ -47,7 +47,6 @@ public class Creature
   private Vector3f tmpVec3 = new Vector3f();
   private Quaternion tmpQuat = new Quaternion();
 
-
   private float maxHeightOfLowestPoint = 0;  //fitness
 
   private float elapsedSimulationTime;
@@ -59,7 +58,7 @@ public class Creature
    * This constructor throws an IllegalArgumentException if:<br>
    * 1) Any block has a length, width or height less than 0.5 meters.<br>
    * 2) The body does not have a root block (block with jointToParent == null).<br>
-   * 3) The body has more than one root block.<br> 
+   * 3) The body has more than one root block.<br>
    *
    * The root block will always have ID=0
    *
@@ -88,9 +87,9 @@ public class Creature
 
   /**
    * This method adds the root block to this creature. The root block is different from all other
-   * blocks in that it has no parant. This means that no joint can be given an impulse that can 
+   * blocks in that it has no parant. This means that no joint can be given an impulse that can
    * directly move the root block. The root block can only move as an indirect consequence of
-   * an impulse applyed to one of its decendants, by gravity or drag. 
+   * an impulse applyed to one of its decendants, by gravity or drag.
    *
    * @
    * @param rootCenter
@@ -100,6 +99,7 @@ public class Creature
    */
   public Block addRoot(Vector3f rootCenter, Vector3f rootHalfSize, float[] eulerAngles)
   {
+    elapsedSimulationTime = 0;
     if (!body.isEmpty())
     { throw new IllegalArgumentException("This creature already has a root.");
     }
@@ -116,15 +116,17 @@ public class Creature
 
   /**
    * @deprecated
-   * @see #addBlock(float[] eulerAngles, Vector3f size, Block parent, Vector3f pivotA, Vector3f pivotB, Vector3f axisA, Vector3f axisB)
+   * @see #addBlock(float[] eulerAngles, Vector3f size, Block parent, Vector3f pivotA, Vector3f pivotB, Vector3f axisA)
    * The center parameter is ignored as it can be calculated from the other information. Also,
-   * this can only be used to add axis alligned blocks.
+   * this can only be used to add axis alligned blocks.<br>
+   * Since axisB is totally determined by the other parameters, save yourself some trouble and
+   * use the newer version of this method that calculates axisB.
    *
    *
    * @param center ignored as this is now calculated.
    * @param size
    * @param parent Block instance onto which this block will be joined.
-   * @param pivotA Location in local coordinates of the pivot point on the parent block. 
+   * @param pivotA Location in local coordinates of the pivot point on the parent block.
    * Local coordinates means the location on the block relitive to the block's center with zero rotation.
    * @param pivotB Location in local coordinates of the pivot point on this block.
    * @param axisA One-degree of freedom hinge axis in local coordinates of the parent block.
@@ -134,16 +136,21 @@ public class Creature
   public Block addBlock(Vector3f center, Vector3f size, Block parent, Vector3f pivotA, Vector3f pivotB, Vector3f axisA, Vector3f axisB)
   {
     float[] eulerAngles = {0,0,0};
-    return addBlock(eulerAngles, size, parent, pivotA, pivotB, axisA, axisB);
+    return addBlock(eulerAngles, size, parent, pivotA, pivotB, axisA);
   }
 
   /**
+   * @deprecated
+   * @see #addBlock(float[] eulerAngles, Vector3f size, Block parent, Vector3f pivotA, Vector3f pivotB, Vector3f axisA)
+   * Since axisB is totally determined by the other parameters, save yourself some trouble and
+   * use the newer version of this method that calculates axisB.
+   *
    * @param eulerAngles
-   * @param halfsize half the extent (in meters) of the block in the x, y and z direction. 
-   * For example, a block with extent in the x dimension of 0.5 would extend from 0.5 meters from 
+   * @param halfsize half the extent (in meters) of the block in the x, y and z direction.
+   * For example, a block with extent in the x dimension of 0.5 would extend from 0.5 meters from
    * the origin in the -x direction and 0.5 meters from the origin in the +x direction.
    * @param parent Block instance onto which this block will be joined.
-   * @param pivotA Location in local coordinates of the pivot point on the parent block. 
+   * @param pivotA Location in local coordinates of the pivot point on the parent block.
    * Local coordinates means the location on the block relitive to the block's center with zero rotation.
    * @param pivotB Location in local coordinates of the pivot point on this block.
    * @param axisA One-degree of freedom hinge axis in local coordinates of the parent block.
@@ -152,18 +159,48 @@ public class Creature
    */
   public Block addBlock(float[] eulerAngles, Vector3f halfsize, Block parent, Vector3f pivotA, Vector3f pivotB, Vector3f axisA, Vector3f axisB)
   {
+
+    return addBlock(eulerAngles, halfsize, parent, pivotA, pivotB, axisA);
+  }
+
+
+
+
+
+  /**
+   * Add a block to this creature with a hinge as the new block to the given parent at
+   * the given pivot points and along the given axis.
+   * The new block's center in world coordinates is calculated from the parent's world
+   * coordinates and the two local pivot points.
+   * The pivot on the new axis is calculated to match the povit axis on the parent.
+   *
+   * @param eulerAngles
+   * @param halfsize half the extent (in meters) of the block in the x, y and z direction.
+   * For example, a block with extent in the x dimension of 0.5 would extend from 0.5 meters from
+   * the origin in the -x direction and 0.5 meters from the origin in the +x direction.
+   * @param parent Block instance onto which this block will be joined.
+   * @param pivotA Location in local coordinates of the pivot point on the parent block.
+   * Local coordinates means the location on the block relitive to the block's center with zero rotation.
+   * @param pivotB Location in local coordinates of the pivot point on this block.
+   * @param axisA One-degree of freedom hinge axis in local coordinates of the parent block.
+   * @return a reference to the newly added block.
+   */
+  public Block addBlock(float[] eulerAngles, Vector3f halfsize, Block parent, Vector3f pivotA, Vector3f pivotB, Vector3f axisA)
+  {
     if (body.isEmpty())
     { throw new IllegalArgumentException("This creature does not have a root Block.");
     }
 
+    //Adding block resets the fitness of the creature.
+    elapsedSimulationTime = 0;
 
-    Quaternion rotation = new Quaternion(eulerAngles);
+    Quaternion rotationB = new Quaternion(eulerAngles);
 
     Transform parantTransform = parent.getGeometry().getWorldTransform();
     Vector3f pivotA_World = new Vector3f();
     parantTransform.transformVector(pivotA, pivotA_World);
 
-    Transform childTransform = new Transform(rotation);
+    Transform childTransform = new Transform(rotationB);
 
     Vector3f centerB = new Vector3f();
     childTransform.transformVector(pivotB, centerB);
@@ -171,14 +208,24 @@ public class Creature
 
     centerB.addLocal(pivotA_World);
 
-    Block block = new Block(physicsSpace, jMonkeyRootNode, body.size(), centerB, halfsize, rotation);
+    //print("center=",centerB);
+
+    Block block = new Block(physicsSpace, jMonkeyRootNode, body.size(), centerB, halfsize, rotationB);
     body.add(block);
 
+
+    Vector3f axisB = new Vector3f(axisA);
+    Transform parantRotation = new Transform(parent.getStartRotation());
+    parantRotation.transformVector(axisA, axisB);
+    Transform inverseChildRotation = new Transform(rotationB.inverse());
+    inverseChildRotation.transformVector(axisB, axisB);
+
+    //print("axisB=",axisB);
 
     RigidBodyControl controlA = parent.getPhysicsControl();
     RigidBodyControl controlB = block.getPhysicsControl();
     HingeJoint joint = new HingeJoint(controlA, controlB, pivotA, pivotB, axisA, axisB);
-    joint.setCollisionBetweenLinkedBodys(false);
+    joint.setCollisionBetweenLinkedBodys(true);
 
     joint.setLimit(PhysicsConstants.JOINT_ANGLE_MIN, PhysicsConstants.JOINT_ANGLE_MAX);
     block.setJointToParent(parent, joint);
@@ -191,86 +238,56 @@ public class Creature
 
   /**
    * This is a convenience method that may only be used before the simulator has started.
-   * It moves the creature so that its lowest point touches the ground. 
+   * It moves the creature so that its lowest point touches the ground.
    */
   public final void placeOnGround()
   {
     float currentHeightOfLowestPoint = getCurrentHeightOfLowestPoint();
     for (Block block : body)
     {
+      //Geometry geometry = block.getGeometry();
+      //geometry.move(tmpVec3);
       RigidBodyControl physicsControl = block.getPhysicsControl();
       physicsControl.getPhysicsLocation(tmpVec3);
       tmpVec3.y -= currentHeightOfLowestPoint;
       physicsControl.setPhysicsLocation(tmpVec3);
     }
+
+    elapsedSimulationTime  = 0;
+    System.out.println("Creature.placeOnGround() shift:"+ -currentHeightOfLowestPoint);
   }
 
 
   /**
-   * Removes all blocks (and joints) in this creature from the physics engine 
+   * Removes all blocks (and joints) in this creature from the physics engine
    * and from the render space.
    */
   public void remove()
   {
-    removeSubTree(0);
-  }
+    if (body.size() > 0)
+    { removeSubTree(body.get(0));
+    }
 
-  /**
-   * Removes the block at the specified id and all of its descendants from this creature.
-   * After the subtree has been removed, all remaining block ids are updated so that:
-   * 1) The root always has id=0.
-   * 2) Every block in the creature has an integer id from 0 through n-1 where n is the 
-   *    number of blocks in the creature.
-   * @param id of block within the creature to be removed along wiht all of its desendants. 
-   */
-  private void removeSubTree(int id)
-  {
-    Block block = body.get(id);
-    removeSubTree(block);
+    if (body.size() != 0)
+    {
+      System.out.println("ERROR: vcreature.phenotype.Creature.remove() failed");
+    }
+
+    elapsedSimulationTime  = 0;
   }
 
 
+
   /**
-   * Removes the specified block and all of its descendants from this creature.
-   * After the subtree has been removed, all remaining block ids are updated so that:
-   * 1) The root always has id=0.
-   * 2) Every block in the creature has an integer id from 0 through n-1 where n is the 
-   *    number of blocks in the creature.
-   * @param block within the creature to be removed along wiht all of its desendants. 
+   * This method should only be called by itself or remove()
+   * to remove ALL blocks from the creature.
+   * @param block
    */
   private void removeSubTree(Block block)
   {
-    removeSubTreeHelper(block);
-
-    for (int i=1; i<body.size(); i++)
-    {
-      Block myBlock = body.get(i);
-     // myBlock.setID(i);
-
-
-      //geometry.rotate(rotation);
-      //geometry.move(startCenter);
-
-      //geometry.addControl(physicsControl);
-      //RigidBodyControl physics = myBlock.getPhysicsControl();
-      //physics.setPhysicsLocation(Vector3f.ZERO);
-      //physics.setPhysicsRotation(myBlock.getStartRotation(tmpQuat));
-      //physics.setPhysicsLocation(myBlock.getStartCenter(tmpVec3));
-    }
-
-  }
-
-
-  /**
-   * This method should only be called by removeSubTree() which is needed to 
-   * update all block ids after all the removes are done.
-   * @param block
-   */
-  private void removeSubTreeHelper(Block block)
-  {
     for (Block child : block.getChildList())
     {
-      removeSubTreeHelper(child);
+      removeSubTree(child);
     }
 
     physicsSpace.remove(block.getPhysicsControl());
@@ -303,14 +320,14 @@ public class Creature
    * This method can be used to iterate through each block of the body.
    * The root always have an id=0. Each other block in the body has id from 1
    * through getNumberOfBodyBlocks()-1. The ids are assigned in the order that
-   * blocks are added. If a block (or subtree of blocks) are removed, then 
-   * all block ids greater with id numbers greater than the deleated block(s) 
+   * blocks are added. If a block (or subtree of blocks) are removed, then
+   * all block ids greater with id numbers greater than the deleated block(s)
    * are shifted to make the list continous.<br><br>
    * During the life of a creature, its blocks and connections can not be change
    * in any way other than applying forces and by the physics engine.
-   * Therefore, within the DNA, the id is useful as a way of referencing a 
+   * Therefore, within the DNA, the id is useful as a way of referencing a
    * particular block. However, when you restructure a creature, the block ids
-   * withing that creature can become meaningless. 
+   * withing that creature can become meaningless.
    * @param idx
    * @return pointer to a Block instance in creature.body.
    */
@@ -321,12 +338,15 @@ public class Creature
    * This value is calculated and returned by the bullet physics engine.<br>
    * At simulation time 0.0, the value of every angle will always be zero.
    *
-   * @param id of the child box.
-   * @return the joint angle in radians +- deflection the zero point defined by the 
+   * @param idx of the child box.
+   * @return the joint angle in radians +- deflection the zero point defined by the
    * block orientations at the time the blocks were joined.
+   * Returns 0 if there is no block at index=idx or no joint to parent.
    */
-  public final float getJointAngle(int id)
-  { return body.get(id).getJointAngle();
+  public final float getJointAngle(int idx)
+  {
+    if (idx < 0 || idx >= body.size()) return 0;
+    return body.get(idx).getJointAngle();
   }
 
   /**
@@ -353,9 +373,11 @@ public class Creature
    *
    * @param idx
    * @return the lowest y value of the bounding box of the block with the given id.
+   * Returns 0 if there is no block at index=idx.
    */
   public final float getHeight(int idx)
   {
+    if (idx < 0 || idx >= body.size()) return 0;
     return body.get(idx).getHeight();
   }
 
@@ -372,6 +394,16 @@ public class Creature
    */
   public float updateBrain(float elapsedSimulationTime)
   {
+    if (body.size() < 1) return 0;
+    if (this.elapsedSimulationTime == 0f)
+    {
+      physicsSpace.update(0);
+      maxHeightOfLowestPoint = 0;
+      System.out.println("Creature.updateBrain() start");
+      this.elapsedSimulationTime = elapsedSimulationTime;
+      return 0;
+    }
+
     this.elapsedSimulationTime = elapsedSimulationTime;
     for (Block block : body)
     {
@@ -407,12 +439,15 @@ public class Creature
   //===========================================================================
   private float getCurrentHeightOfLowestPoint()
   {
+    if (body.size() < 1) return 0;
+
     float currentHeightOfLowestPoint = Float.MAX_VALUE;
     for (Block block : body)
     {
       float height = block.getHeight();
       if (height < currentHeightOfLowestPoint) currentHeightOfLowestPoint = height;
     }
+    //System.out.println("getCurrentHeightOfLowestPoint(): " + currentHeightOfLowestPoint);
     return currentHeightOfLowestPoint;
 
   }
@@ -472,7 +507,7 @@ public class Creature
   }
 
 
-  //It seems like this method belongs in the Neuron class, but the Neuron class does not 
+  //It seems like this method belongs in the Neuron class, but the Neuron class does not
   //   know block heights, joints nor elapsed time.
   /**
    *

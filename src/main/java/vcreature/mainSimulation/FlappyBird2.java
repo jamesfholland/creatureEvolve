@@ -30,7 +30,7 @@ public class FlappyBird2 extends Creature
 
     //Euler rotation angles (x,y,z) aka (pitch, yaw, rall)). 
     //Note: Euler angles are applying in order: (y, z, x) aka (yaw, roll, pitch).
-    float[] eulerAngles = {PI/4, PI/3, 2*PI};
+    float[] eulerAngles = {0, PI/2, 0};
 
     Block torso = addRoot(torsoCenter, torsoSize, eulerAngles);
 
