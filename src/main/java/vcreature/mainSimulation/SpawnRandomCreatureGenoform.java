@@ -42,7 +42,7 @@ public class SpawnRandomCreatureGenoform
     float rootSizeY = rand.nextFloat() * (max - min) + min;
     float rootSizeZ = rand.nextFloat() * (max - min) + min;
     ImmutableVector rootSize = new ImmutableVector(rootSizeX, rootSizeY, rootSizeZ);
-    genome = new Genome(rootSize);
+    genome = new Genome(rootSize, new ImmutableVector(0f,0f,0f));
     //Axis legParentAxis = Axis.UNIT_Z;
     //Axis legAxis = Axis.UNIT_Z;
     ImmutableVector legParentAxis =new ImmutableVector(0,0,0);

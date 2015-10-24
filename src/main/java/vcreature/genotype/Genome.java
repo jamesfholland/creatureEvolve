@@ -39,29 +39,16 @@ public class Genome
   private final List<GeneNeuron> GENE_NEURONS;
 
   /**
-   * Setup a new Genome for a creature. Blocks and neurons are add later.
-   * @param rootSize The size of the root node.
+   * Creates
+   * @param rootSize
+   * @param rootEulerAngles
    */
-  public Genome(ImmutableVector rootSize)
+  public Genome(ImmutableVector rootSize,ImmutableVector rootEulerAngles)
   {
     ROOT_SIZE = rootSize;
     GENE_BLOCKS = Collections.synchronizedList(new ArrayList<GeneBlock>());
     GENE_NEURONS = Collections.synchronizedList(new ArrayList<GeneNeuron>());
-    ROOT_EULER_ANGLES=new ImmutableVector(0,0,0);
-  }
-
-  public Genome(Genome genome)
-  {
-    this(genome.ROOT_SIZE);
-    GENE_BLOCKS.addAll(genome.GENE_BLOCKS);
-    GENE_NEURONS.addAll(genome.GENE_NEURONS);
-  }
-  public Genome(ImmutableVector rootSize,ImmutableVector eulerAngles)
-  {
-    ROOT_SIZE = rootSize;
-    GENE_BLOCKS = Collections.synchronizedList(new ArrayList<GeneBlock>());
-    GENE_NEURONS = Collections.synchronizedList(new ArrayList<GeneNeuron>());
-    ROOT_EULER_ANGLES=eulerAngles;
+    ROOT_EULER_ANGLES=rootEulerAngles;
   }
 
   /**

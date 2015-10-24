@@ -22,14 +22,7 @@ public class GenomeCreature extends Creature
   private Genome genome;
   private ProtoBlock root;
 
-  public GenomeCreature(GenomeCreature creature)
-  {
-    super(creature.ps_copy,  creature.jMRN);
-    ps_copy = creature.ps_copy;
-    jMRN = creature.jMRN;
-    genome = new Genome(creature.genome);
-    this.root = creature.root;
-  }
+
 
 
     public GenomeCreature(PhysicsSpace physicsSpace, Node jMonkeyRootNode, Genome genome)

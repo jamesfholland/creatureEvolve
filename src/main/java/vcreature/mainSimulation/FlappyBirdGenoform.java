@@ -18,7 +18,7 @@ public class FlappyBirdGenoform
   FlappyBirdGenoform()
   {
     //Sets the root node's size in Genome constructor
-    genome = new Genome(new ImmutableVector(2.0f, 1.5f, 1.5f));
+    genome = new Genome(new ImmutableVector(2.0f, 1.5f, 1.5f), new ImmutableVector(0f,0f,0f));
 
     //Leg1 stuff
     ImmutableVector pivotA = new ImmutableVector(1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
