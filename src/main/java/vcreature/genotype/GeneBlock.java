@@ -94,6 +94,21 @@ public final class GeneBlock
     EULER_ANGLES=new ImmutableVector(0,0,0);
   }
 
+  /**
+   * Create a new GeneBlock, this object is immutable.
+   *
+   * @param parentOffset    The index offset to the parent block.
+   *                        i is the PARENT_OFFSET
+   *                        i = 0 means parent is the root block.
+   *                        i > 0 means parent is located i places after the current index.
+   *                        i < 0 means parent is located i places before the current index.
+   * @param parentPivot     The parent block's hinge location in percentage from center.
+   * @param pivot           The block's hinge location in percentage from center.
+   * @param size            The blocks size in distance
+   * @param parentHingeAxis The axis on the parent to rotate upon.
+   * @param hingeAxis       The axis on to rotate upon.
+   * @param eulerAngels
+   */
   public GeneBlock(int parentOffset, ImmutableVector parentPivot, ImmutableVector pivot, ImmutableVector size,
                    ImmutableVector parentHingeAxis, ImmutableVector hingeAxis,ImmutableVector eulerAngels)
   {
