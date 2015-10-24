@@ -19,6 +19,7 @@ import com.jme3.system.AppSettings;
 import com.jme3.system.JmeCanvasContext;
 import com.jme3.texture.Texture;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.scene.Node;
 import vcreature.genotype.GenomeCreature;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
@@ -36,75 +37,51 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private PhysicsSpace physicsSpace;
   private Analysis goodCreature = new Analysis();
   private float cameraAngle = (float) (Math.PI / 2.0);
-  private float elapsedSimulationTime = 0.0f;
-  private boolean runGUI = false;
+  private FlappyBirdGenoform flappy = new FlappyBirdGenoform();
+
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Vector3f tmpVec3; //
-  private Creature myCreature;
   private boolean isCameraRotating = true;
+  private Creature myCreature;
+  private float elapsedSimulationTime;
 
   @Override
   public void simpleInitApp()
   {
-    /**
-     * Set up Physics
-     */
-//
-//    bulletAppState = new BulletAppState();
-//    stateManager.attach(bulletAppState);
-//    physicsSpace = bulletAppState.getPhysicsSpace();
-//    //bulletAppState.setDebugEnabled(true);
-//
-//    physicsSpace.setGravity(PhysicsConstants.GRAVITY);
-//    physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
-//    physicsSpace.setMaxSubSteps(4);
-
+    bulletAppState = new BulletAppState();
+    stateManager.attach(bulletAppState);
+    physicsSpace = bulletAppState.getPhysicsSpace();
+    physicsSpace.setGravity(PhysicsConstants.GRAVITY);
+    physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
+    physicsSpace.setMaxSubSteps(4);
+    this.speed=4;
     AppSettings settings = new AppSettings(true);
-    settings.setResolution(1024, 768);
-    settings.setSamples(4); //activate antialising (softer edges, may be slower.)
-    settings.setVSync(true);
-    settings.setFrequency(60);//Frames per second
-    settings.setTitle("Flappy Bird Creature");
-    setShowSettings(false);
     setSettings(settings);
-
+    settings.setResolution(1024,768);
     //Set up inmovable floor
-//    com.jme3.scene.shape.Box floor = new com.jme3.scene.shape.Box(50f, 0.1f, 50f);
-//    Material floor_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-//    Texture floorTexture = assetManager.loadTexture("Textures/FloorTile.png");
-//
-//    floorTexture.setWrap(Texture.WrapMode.Repeat);
-//    floor_mat.setTexture("ColorMap", floorTexture);
-//
-//    floor.scaleTextureCoordinates(new Vector2f(50, 50));
-//    Geometry floor_geo = new Geometry("Floor", floor);
-//    floor_geo.setMaterial(floor_mat);
-//    floor_geo.setShadowMode(RenderQueue.ShadowMode.Receive);
-//    floor_geo.setLocalTranslation(0, -0.11f, 0);
-//    rootNode.attachChild(floor_geo);
-//
-//    /* Make the floor physical with mass 0.0f */
-//    RigidBodyControl floor_phy = new RigidBodyControl(0.0f);
-//    floor_geo.addControl(floor_phy);
-//    physicsSpace.add(floor_phy);
-//    floor_phy.setFriction(PhysicsConstants.GROUND_SLIDING_FRICTION);
-//    floor_phy.setRestitution(PhysicsConstants.GROUND_BOUNCINESS);
-//    floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
-//        PhysicsConstants.GROUND_ANGULAR_DAMPINING);
+    com.jme3.scene.shape.Box floor = new com.jme3.scene.shape.Box(50f, 0.1f, 50f);
+    Material floor_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    Texture floorTexture = assetManager.loadTexture("Textures/FloorTile.png");
+    floorTexture.setWrap(Texture.WrapMode.Repeat);
+    floor_mat.setTexture("ColorMap", floorTexture);
+    floor.scaleTextureCoordinates(new Vector2f(50, 50));
+    Geometry floor_geo = new Geometry("Floor",floor);
+    floor_geo.setMaterial(floor_mat);
+    floor_geo.setShadowMode(RenderQueue.ShadowMode.Receive);
+    floor_geo.setLocalTranslation(0, -0.11f, 0);
+    rootNode.attachChild(floor_geo);
 
+    RigidBodyControl floor_phy = new RigidBodyControl(0.0f);
+    floor_geo.addControl(floor_phy);
+    physicsSpace.add(floor_phy);
+    floor_phy.setFriction(PhysicsConstants.GROUND_SLIDING_FRICTION);
+    floor_phy.setRestitution(PhysicsConstants.GROUND_BOUNCINESS);
+    floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
+        PhysicsConstants.GROUND_ANGULAR_DAMPINING);
 
     Block.initStaticMaterials(assetManager);
 
-    /********************
-     * TableMonster4LegsFlat
-     * TableMonster4Legs
-     * TableMonster2Legs
-     * FlappyBird
-     ***********************/
-//
-//    FlappyBirdGenoform flappy = new FlappyBirdGenoform();
-//    myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
-
+    myCreature = new GenomeCreature(physicsSpace,rootNode,flappy.getGenome());
     initLighting();
     initKeys();
     flyCam.setDragToRotate(true);
@@ -158,10 +135,12 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void simpleUpdate(float deltaSeconds)
   {
     elapsedSimulationTime += deltaSeconds;
-    //print("simpleUpdate() elapsedSimulationTime=", (float)elapsedSimulationTime);
-    //print("simpleUpdate() joint1.getHingeAngle()=", joint1.getHingeAngle());
-//    myCreature.updateBrain(elapsedSimulationTime);
-
+    if (elapsedSimulationTime>15)
+    {
+      elapsedSimulationTime = 0;
+      myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
+    }
+    myCreature.updateBrain(elapsedSimulationTime);
     if (isCameraRotating)
     {
       //Move camera continously in circle of radius 25 meters centered 10 meters

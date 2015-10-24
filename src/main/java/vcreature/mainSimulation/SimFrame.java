@@ -16,7 +16,7 @@ import java.awt.event.ItemListener;
 
 public class SimFrame extends JFrame implements ItemListener, ActionListener
 {
-  private SimAnimation animation =new SimAnimation();
+  private SimAnimation animation;
   private JmeCanvasContext ctx;
   private JPanel threadPane;
   private JPanel appPane;
@@ -31,6 +31,7 @@ public class SimFrame extends JFrame implements ItemListener, ActionListener
   public SimFrame()
   {
     super();
+    animation = new SimAnimation();
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(1000, 800));
     setSize(new Dimension(1000, 800));
@@ -45,7 +46,7 @@ public class SimFrame extends JFrame implements ItemListener, ActionListener
     appPane = new JPanel();
     animation.createCanvas();
     animation.startCanvas();
-    ctx=(JmeCanvasContext) animation.getContext();
+    ctx= (JmeCanvasContext) animation.getContext();
     ctx.setSystemListener(animation);
     Dimension dim = new Dimension(1000, 725);
     ctx.getCanvas().setPreferredSize(dim);
