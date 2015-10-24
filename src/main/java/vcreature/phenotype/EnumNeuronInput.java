@@ -6,17 +6,17 @@ package vcreature.phenotype;
 public enum EnumNeuronInput
 {
   /** Height (distance above ground) of center of specified block. **/
-  HEIGHT,
-
+  HEIGHT, 
+  
   /** 0.0 iff nothing is touching specified block. **/
-  TOUCH,
-
+  TOUCH, 
+  
   /** Angle of specified DOF of specified block. **/
-  JOINT,
-
+  JOINT,  
+  
   /** Floating point constant. **/
-  CONSTANT,
-
+  CONSTANT, 
+  
   /** Simulation seconds since start. **/
-  TIME,
+  TIME, 
 }

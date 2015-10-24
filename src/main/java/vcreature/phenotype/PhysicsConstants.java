@@ -11,8 +11,8 @@ public class PhysicsConstants
   /**
    * Killograms per cubic meter.
    */
-  public static final float BLOCK_DENSITY = 4f;
-
+  public static final float BLOCK_DENSITY = 4f; 
+  
   /**
    *
    */
@@ -29,7 +29,7 @@ public class PhysicsConstants
    *
    */
   public static final float GROUND_SLIDING_FRICTION = 1.0f;
-
+  
   /**
    *
    */
@@ -38,7 +38,7 @@ public class PhysicsConstants
    *
    */
   public static final float ANGULAR_DAMPINING = 0.1f;
-
+  
   /**
    *
    */
@@ -51,20 +51,20 @@ public class PhysicsConstants
   /**
    * meters/sec^2
    */
-  public static final Vector3f GRAVITY = new Vector3f(0, -9.81f, 0);
+  public static final Vector3f GRAVITY = new Vector3f(0, -9.81f, 0); 
   /**
    *
    */
   public static final float PHYSICS_UPDATE_RATE = 1f/80f;
-
-
+  
+  
   /**
    * Maxinium angular speed of the hinge joint in Radians per second. 
    * This value is so high that almost always the limiting factor will be the
    * supplied impulse with acting on the block mass.
    */
-  public static final float JOINT_MAX_ANGULAR_SPEED = 1000f;
-
+  public static final float JOINT_MAX_ANGULAR_SPEED = 1000f; 
+  
   /**
    *
    */
