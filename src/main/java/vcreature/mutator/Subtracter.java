@@ -5,4 +5,5 @@ package vcreature.mutator;
  */
 public class Subtracter
 {
+
 }

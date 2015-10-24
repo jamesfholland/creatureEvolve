@@ -49,7 +49,7 @@ public class Randomizer
   /**
    * This is where the magic happens
    */
-  private static  Genome randomize(Genome genome)
+  protected static Genome randomize(Genome genome)
   {
 
     geneBlocks=genome.getGENE_BLOCKS();

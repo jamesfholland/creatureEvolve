@@ -3,6 +3,10 @@ package vcreature.mainSimulation;
 
 import com.jme3.math.Vector3f;
 
+/**
+ * Entry point to the program
+ * Creates a JFrame, which takes care of embedding SimpleApplication inside of itself
+ */
 public class MainSim
 {
   private void print(String msg, float x)

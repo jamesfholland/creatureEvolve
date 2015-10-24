@@ -21,30 +21,43 @@ import com.jme3.texture.Texture;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.scene.Node;
 import vcreature.genotype.GenomeCreature;
+import vcreature.mutator.MutationManager;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.PhysicsConstants;
+import vcreature.genotype.Genome;
 import java.awt.*;
 
 /**
  * Created by Tess Daughton on 10/14/15.
- * JFrame to embed BulletApp inside of
- * Add user controls
+ * Joel's code with minor changes
  **/
 public class SimAnimation extends SimpleApplication implements ActionListener
 {
+  public static GenePool genePool = new GenePool();
   private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
   private Analysis goodCreature = new Analysis();
   private float cameraAngle = (float) (Math.PI / 2.0);
-  private FlappyBirdGenoform flappy = new FlappyBirdGenoform();
+  private Genome flappy = (new FlappyBirdGenoform()).getGenome();
+
+
 
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Vector3f tmpVec3; //
   private boolean isCameraRotating = true;
   private Creature myCreature;
   private float elapsedSimulationTime;
+  private MutationManager mutationManager = new MutationManager();
 
+  /**
+   * Initalizes a BulletAppState and a Physics Space
+   * Sets relevant Physics constants
+   * Creates AppSettings for this SimpleApp
+   * Gets the materials for the graphics
+   * Creates a new Creature
+   * Sets lighting and camera rotation
+   */
   @Override
   public void simpleInitApp()
   {
@@ -81,12 +94,16 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
     Block.initStaticMaterials(assetManager);
 
-    myCreature = new GenomeCreature(physicsSpace,rootNode,flappy.getGenome());
+    myCreature = new GenomeCreature(physicsSpace,rootNode,flappy);
+    genePool.addCreatureToPopulation(flappy);
     initLighting();
     initKeys();
     flyCam.setDragToRotate(true);
   }
 
+  /**
+   * Creates lighting for SimpleApp
+   */
   private void initLighting()
   {
     //  ust add a light to make the lit object visible!
@@ -107,6 +124,12 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     viewPort.addProcessor(dlsr);
   }
 
+  /**
+   * Basically the "actionPerformed" of SimpleApplication
+   * @param name
+   * @param isPressed
+   * @param timePerFrame
+   */
   public void onAction(String name, boolean isPressed, float timePerFrame)
   {
     if (isPressed && name.equals("Toggle Camera Rotation"))
@@ -120,6 +143,9 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     }
   }
 
+  /**
+   * Sets useful keybindings for user
+   */
   private void initKeys()
   {
     inputManager.addMapping("Quit", new KeyTrigger(KeyInput.KEY_Q));
@@ -130,15 +156,19 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     inputManager.addListener(this, "Toggle Camera Rotation");
   }
 
-  /* Use the main event loop to trigger repeating actions. */
+  /**
+   *  Use the main event loop to trigger repeating actions.
+   */
   @Override
   public void simpleUpdate(float deltaSeconds)
   {
     elapsedSimulationTime += deltaSeconds;
     if (elapsedSimulationTime>15)
     {
+      myCreature.remove();
       elapsedSimulationTime = 0;
-      myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
+      flappy = mutationManager.mutate(flappy);
+      myCreature = new GenomeCreature(physicsSpace, rootNode, flappy);
 
     }
     myCreature.updateBrain(elapsedSimulationTime);
