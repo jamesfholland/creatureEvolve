@@ -55,7 +55,7 @@ public class Genome
     this(genome.ROOT_SIZE);
     GENE_BLOCKS.addAll(genome.GENE_BLOCKS);
     GENE_NEURONS.addAll(genome.GENE_NEURONS);
-;  }
+  }
   public Genome(ImmutableVector rootSize,ImmutableVector eulerAngles)
   {
     ROOT_SIZE = rootSize;
