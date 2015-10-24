@@ -49,7 +49,7 @@ public class Randomizer
   /**
    * This is where the magic happens
    */
-  private static  void randomize(Genome genome)
+  private static  Genome randomize(Genome genome)
   {
 
     geneBlocks=genome.getGENE_BLOCKS();
@@ -83,6 +83,7 @@ public class Randomizer
     }
     if(checkForIntersections(newGenome)) genome=newGenome;
     else randomize(genome);
+    return newGenome;
   }
   //Checks if the creature is valid after mutation
   private static  boolean checkForIntersections(Genome genome)
