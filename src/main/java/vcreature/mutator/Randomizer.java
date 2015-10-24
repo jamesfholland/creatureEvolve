@@ -2,6 +2,7 @@ package vcreature.mutator;
 
 import com.jme3.math.Vector3f;
 import vcreature.genotype.*;
+import vcreature.genotype.phenoConversion.ProtoBlock;
 import vcreature.phenotype.Block;
 
 import java.util.ArrayList;
@@ -12,45 +13,49 @@ import java.util.Random;
  */
 public class Randomizer
 {
-  Genome genome;
-  ArrayList<GeneBlock> geneBlocks;
-  ArrayList<GeneNeuron> geneNeurons;
-  Random rand=new Random();
-  private float min = .5f;
-  private float max = 5f;
+  static Genome genome;
+  static ArrayList<GeneBlock> geneBlocks;
+  static ArrayList<GeneNeuron> geneNeurons;
+  static Random rand=new Random();
+  static private float min = .5f;
+  static private float max = 5f;
 
-  /**
-   * This will Randomize the genome at a random index
-   * @param genome
-   */
-  public Randomizer(Genome genome)
-  {
-    this.genome=genome;
-    this.geneBlocks=genome.getGENE_BLOCKS();
-    this.geneNeurons=genome.getGENE_NEURONS();
-    int index=rand.nextInt(geneBlocks.size());
-    randomize(index);
-  }
-
-  /**
-   * Randomize genome at specific point
-   * @param genome
-   * @param index index of leg
-   */
-  public Randomizer(Genome genome,int index)
-  {
-    this.genome=genome;
-    this.geneBlocks=genome.getGENE_BLOCKS();
-    this.geneNeurons=genome.getGENE_NEURONS();
-    randomize(index);
-  }
+//  /**
+//   * This will Randomize the genome at a random index
+//   * @param genome
+//   *//*
+//  public Randomizer(Genome genome)
+//  {
+//    this.genome=genome;
+//    this.geneBlocks=genome.getGENE_BLOCKS();
+//    this.geneNeurons=genome.getGENE_NEURONS();
+//    int index=rand.nextInt(geneBlocks.size());
+//    randomize(index);
+//  }
+//
+//  *//**
+//   * Randomize genome at specific point
+//   * @param genome
+//   * @param index index of leg
+//   *//*
+//  public Randomizer(Genome genome,int index)
+//  {
+//    this.genome=genome;
+//    this.geneBlocks=genome.getGENE_BLOCKS();
+//    this.geneNeurons=genome.getGENE_NEURONS();
+//    randomize(index);
+//  }*/
 
   /**
    * This is where the magic happens
-   * @param index
    */
-  private void randomize(int index)
+  private static  void randomize(Genome genome)
   {
+
+    geneBlocks=genome.getGENE_BLOCKS();
+    geneNeurons=genome.getGENE_NEURONS();
+    int index=rand.nextInt(geneBlocks.size());
+
     GeneBlock block=geneBlocks.get(index);
     GeneBlock randBlock;
     float sizeX = rand.nextFloat() * (max - min) + min;
@@ -77,13 +82,18 @@ public class Randomizer
       newGenome.addGeneBlock(geneBlocks.get(i));
     }
     if(checkForIntersections(newGenome)) genome=newGenome;
-    else randomize(index);
+    else randomize(genome);
   }
   //Checks if the creature is valid after mutation
-  private boolean checkForIntersections(Genome genome)
+  private static  boolean checkForIntersections(Genome genome)
   {
+    for (int i = 0; i <geneBlocks.size() ; i++)
+      {
 
+      }
     return true;
   }
   public Genome getGenome(){return genome;}
+
+
 }
