@@ -137,6 +137,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     elapsedSimulationTime += deltaSeconds;
     if (elapsedSimulationTime>15)
     {
+      myCreature.remove();
       elapsedSimulationTime = 0;
       myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
     }
