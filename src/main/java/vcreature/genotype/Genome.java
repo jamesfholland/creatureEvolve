@@ -21,6 +21,12 @@ public class Genome
   private final ImmutableVector ROOT_SIZE;
 
   /**
+   * The euler angles of the root block. This is the head of the creature's body tree.
+   * All blocks must be attached to the root or not be included in the creature.
+   */
+  private final ImmutableVector ROOT_EULER_ANGLES;
+
+  /**
    * This is a list of all geneBlocks in the creature. Individual blocks are immutable.
    * This list is Synchronized.
    */
@@ -39,8 +45,9 @@ public class Genome
   public Genome(ImmutableVector rootSize)
   {
     ROOT_SIZE = rootSize;
-    GENE_BLOCKS = Collections.synchronizedList(new ArrayList<>());
-    GENE_NEURONS = Collections.synchronizedList(new ArrayList<>());
+    GENE_BLOCKS = Collections.synchronizedList(new ArrayList<GeneBlock>());
+    GENE_NEURONS = Collections.synchronizedList(new ArrayList<GeneNeuron>());
+    ROOT_EULER_ANGLES=new ImmutableVector(0,0,0);
   }
 
   public Genome(Genome genome)
@@ -49,6 +56,13 @@ public class Genome
     GENE_BLOCKS.addAll(genome.GENE_BLOCKS);
     GENE_NEURONS.addAll(genome.GENE_NEURONS);
 ;  }
+  public Genome(ImmutableVector rootSize,ImmutableVector eulerAngles)
+  {
+    ROOT_SIZE = rootSize;
+    GENE_BLOCKS = Collections.synchronizedList(new ArrayList<GeneBlock>());
+    GENE_NEURONS = Collections.synchronizedList(new ArrayList<GeneNeuron>());
+    ROOT_EULER_ANGLES=eulerAngles;
+  }
 
   /**
    * Synchronized List, in case the list is read while inserting.
@@ -97,4 +111,11 @@ public class Genome
     return ROOT_SIZE;
   }
 
+  /**
+   * @return The Vector3f form of the root euler angles.
+   */
+  public ImmutableVector getRootEulerAngles()
+  {
+    return ROOT_EULER_ANGLES;
+  }
 }

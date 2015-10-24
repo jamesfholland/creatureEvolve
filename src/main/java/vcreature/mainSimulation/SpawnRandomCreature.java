@@ -8,6 +8,7 @@ import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 //import javafx.geometry.BoundingBox;
 import com.jme3.bounding.BoundingBox;
@@ -67,7 +68,9 @@ public class SpawnRandomCreature extends Creature
       Block tempBlock = getBlockByID(rand.nextInt(getNumberOfBodyBlocks()));
       // Block tempBlock=getBlockByID(count++);//rand.nextInt(getNumberOfBodyBlocks()));
 //      Geometry tempGeometry= tempBlock.getGeometry();
-      Vector3f tempCenter = rootCenter;
+      Vector3f tempCenter=new Vector3f(0,0,0);
+       tempCenter = tempBlock.getCenter(tempCenter);
+      //System.out.println(tempBlock.getStartCenter().toString());
       Vector3f legSize = new Vector3f(sizeX, sizeY, sizeZ);
       // Vector3f legCenter=new Vector3f(tempCenter.getX()*xSign+sizeX,tempCenter.getX()+tempBlock.getSizeY()+sizeY+rootHeight,tempBlock.getSize()*zSign+sizeZ);
       Vector3f legCenter = new Vector3f(xSign * tempCenter.getX() + tempBlock.getSizeX() + sizeX, ySign * tempCenter.getY() +
@@ -76,7 +79,7 @@ public class SpawnRandomCreature extends Creature
       Vector3f pivotA = new Vector3f(tempBlock.getSizeX() / 2, tempBlock.getSizeY() / 2, tempBlock.getSize() / 2);
       Vector3f pivotB = new Vector3f(-xSign * sizeX, -ySign * sizeY, 0 - zSign * sizeZ);
 
-     // if (notIntersecting())
+      if (notIntersecting())
       {
         Block nextLeg = addBlock(legCenter, legSize, tempBlock, pivotA, pivotB, Vector3f.UNIT_Z, Vector3f.UNIT_Z);
 
@@ -105,17 +108,20 @@ public class SpawnRandomCreature extends Creature
     }
   }
 
-  /*public boolean notIntersecting()
+  public boolean notIntersecting()
   {
     CollisionResults results = new CollisionResults();
+    Vector3f tempVector =new Vector3f(0,0,0);
     for (int i = 0; i < getNumberOfBodyBlocks() - 1; i++)
     {
       Block tempBlock = getBlockByID(i);
       for (int j = 1; j < getNumberOfBodyBlocks(); j++)
       {
         Block tempBlock2 = getBlockByID(j);
-        BoundingBox tempBlock2Volume = new BoundingBox(tempBlock2.getCenter(), tempBlock2.getSizeX(), tempBlock2.getSizeY(), tempBlock2.getSize());
-        System.out.println(tempBlock2.getGeometry().getWorldBound().toString());
+
+        BoundingBox tempBlock2Volume = new BoundingBox(tempBlock2.getStartCenter(tempVector), tempBlock2.getSizeX(), tempBlock2.getSizeY(), tempBlock2.getSize());
+        System.out.println(tempBlock2.getGeometry().getLocalTranslation().toString());
+        if(tempBlock.getGeometry()==null) System.out.println("DKLS:JFDSA");
         tempBlock.getGeometry().collideWith(tempBlock2Volume, results);
         if (results.size() > 0)
         {
@@ -126,7 +132,7 @@ public class SpawnRandomCreature extends Creature
     }
     return true;
   }
-*/
+
 
   private void translateUp(float unitsUp)
   {
