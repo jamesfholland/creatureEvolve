@@ -40,7 +40,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private boolean runGUI = false;
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Vector3f tmpVec3; //
-  private FlappyBird2 myCreature;
+  private GenomeCreature myCreature;
   private boolean isCameraRotating = true;
 
   @Override
@@ -103,9 +103,9 @@ public class SimAnimation extends SimpleApplication implements ActionListener
      ***********************/
 
     //SpawnCreatureGenoform flappy = new SpawnCreatureGenoform("");
-   SpawnRandomCreatureGenoform flappy = new SpawnRandomCreatureGenoform(4);
-    //myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
-    myCreature = new FlappyBird2(physicsSpace, rootNode);
+  SpawnRandomCreatureGenoform flappy = new SpawnRandomCreatureGenoform(5);
+    myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
+    //myCreature = new FlappyBird2(physicsSpace, rootNode);
 
     initLighting();
     initKeys();

@@ -82,7 +82,6 @@ public class GenomeCreature extends Creature
 
       //if(geneBlock.EULER_ANGLES==null) protoBlocks.get(i).initializeBlock(geneBlock.SIZE, parent, geneBlock.PARENT_PIVOT, geneBlock.PIVOT, geneBlock.PARENT_HINGE_AXIS, geneBlock.HINGE_AXIS);
        protoBlocks.get(i).initializeBlock(geneBlock.SIZE, parent, geneBlock.PARENT_PIVOT, geneBlock.PIVOT, geneBlock.PARENT_HINGE_AXIS, geneBlock.HINGE_AXIS,geneBlock.EULER_ANGLES);
-      System.out.println(geneBlock.EULER_ANGLES.getVector3f());
     }
 
     //Add Neurons

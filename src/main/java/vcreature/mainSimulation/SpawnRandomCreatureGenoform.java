@@ -89,7 +89,7 @@ public class SpawnRandomCreatureGenoform
       //System.out.println(genome.getGENE_BLOCKS().toString());
       if(numOfBlocks>1) randBlockIndex=genome.getGENE_BLOCKS().get(rand.nextInt(numOfBlocks)).hashCode();
       int offset=-rand.nextInt(i);
-      System.out.println(offset);
+      //System.out.println(offset);
       ImmutableVector randAngle=new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
       ImmutableVector axis=new ImmutableVector(0,0,0);//new ImmutableVector(0,0,randAngle.X*randAngle.Y);//=new ImmutableVector(0,randAngle.Y*randAngle.Z,0);
       GeneBlock leg = new GeneBlock(offset, pivotA, pivotB, leg1Size, axis, axis,randAngle);

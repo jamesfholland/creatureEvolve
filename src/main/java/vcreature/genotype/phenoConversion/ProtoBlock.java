@@ -215,7 +215,7 @@ public class ProtoBlock
         (box.getMinVector().y < +min.y + size.y) &&
         (box.getMinVector().z < +min.z + size.z))
     {
-      // return true;
+     //  return true;
     }
     return false;
   }
@@ -228,8 +228,6 @@ public class ProtoBlock
    */
   public void computeLocation(LinkedList<ProtoBlock> existingBlocks)
   {
-
-
     if (parent != null)
     {
       this.pivot = this.parent.getHingeFromCenterOffset(this.pivotParentOffset);
@@ -249,7 +247,7 @@ public class ProtoBlock
       if (blockIntersecting(min, dimentionVector, box))
       {
         this.parent.removeChild(this);
-        return;
+        break;
       }
     }
 
@@ -346,18 +344,17 @@ public class ProtoBlock
   public void addBlocksToCreature(Creature creature,Block blockParent)
   {
     Block current;
+    float[] floats={eulerAngles.x,eulerAngles.y,eulerAngles.z};
     if (blockParent == null)
     {
-      current = creature.addRoot(eulerAngles, size);
+      current = creature.addRoot(new Vector3f(0,100,0),size,floats);
       creature.getBlockByID(0).setMaterial(Block.MATERIAL_RED);
     }
     else
     {
-      float[] floats={eulerAngles.x,eulerAngles.y,eulerAngles.z};
-      System.out.println(Arrays.toString(floats));
       current = creature
               .addBlock(floats,size, blockParent, pivotParentLocal, pivotLocal,
-                      axisParent, axis);
+                       axis);
 
       for (Neuron neuron : neurons)
       {
