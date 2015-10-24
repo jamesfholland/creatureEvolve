@@ -20,6 +20,7 @@ import com.jme3.system.JmeCanvasContext;
 import com.jme3.texture.Texture;
 import com.jme3.input.controls.ActionListener;
 import vcreature.genotype.GenomeCreature;
+import vcreature.mutator.Randomizer;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.PhysicsConstants;
@@ -102,8 +103,11 @@ public class SimAnimation extends SimpleApplication implements ActionListener
      * FlappyBird
      ***********************/
 
-    //SpawnCreatureGenoform flappy = new SpawnCreatureGenoform("");
-  SpawnRandomCreatureGenoform flappy = new SpawnRandomCreatureGenoform(5);
+    SpawnCreatureGenoform flappy = new SpawnCreatureGenoform("");
+    Randomizer randomizer=new Randomizer(flappy.genome);
+    flappy.genome=randomizer.getGenome();
+
+  //SpawnRandomCreatureGenoform flappy = new SpawnRandomCreatureGenoform(5);
     myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
     //myCreature = new FlappyBird2(physicsSpace, rootNode);
 
