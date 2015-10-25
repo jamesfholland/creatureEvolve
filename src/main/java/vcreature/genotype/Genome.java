@@ -46,19 +46,21 @@ public class Genome
 
   /**
    * Creates a genome based on a root and its angles.
-   * @param rootSize The size of the creature's root.
+   *
+   * @param rootSize        The size of the creature's root.
    * @param rootEulerAngles The orientation of the root.
    */
-  public Genome(ImmutableVector rootSize,ImmutableVector rootEulerAngles)
+  public Genome(ImmutableVector rootSize, ImmutableVector rootEulerAngles)
   {
     ROOT_SIZE = rootSize;
-    ROOT_EULER_ANGLES=rootEulerAngles;
+    ROOT_EULER_ANGLES = rootEulerAngles;
     GENE_BLOCKS = Collections.synchronizedList(new ArrayList<GeneBlock>());
     GENE_NEURONS = Collections.synchronizedList(new ArrayList<GeneNeuron>());
   }
 
   /**
    * Constructs a full Genome from an input file.
+   *
    * @param fileIn BufferedReader containing the Genome data.
    * @throws IOException this is handled in GenoFile or by whatever called this constructor.
    */
@@ -71,17 +73,17 @@ public class Genome
     fileIn.readLine();
     fileIn.readLine(); //Read #ROOT
     ROOT_SIZE = new ImmutableVector(fileIn);
-    ROOT_EULER_ANGLES= new ImmutableVector(fileIn);
+    ROOT_EULER_ANGLES = new ImmutableVector(fileIn);
 
     fileIn.readLine(); //Read #BLOCKS
     String header = fileIn.readLine();
-    while(!Objects.equals(header, "") && header != null)
+    while (!Objects.equals(header, "") && header != null)
     {
-      if(Objects.equals(header, "#Block"))
+      if (Objects.equals(header, "#Block"))
       {
         GENE_BLOCKS.add(new GeneBlock(fileIn));
       }
-      else if(Objects.equals(header, "#Neuron"))
+      else if (Objects.equals(header, "#Neuron"))
       {
         GENE_NEURONS.add(new GeneNeuron(fileIn));
       }
@@ -91,11 +93,12 @@ public class Genome
 
   /**
    * Synchronized List, in case the list is read while inserting.
+   *
    * @param geneBlock the new GeneBlock we are adding.
    */
   public void addGeneBlock(GeneBlock geneBlock)
   {
-      GENE_BLOCKS.add(geneBlock); //Synchronized list takes care of thread safety.
+    GENE_BLOCKS.add(geneBlock); //Synchronized list takes care of thread safety.
   }
 
   /**
@@ -103,7 +106,7 @@ public class Genome
    */
   public void addGeneNeuron(GeneNeuron geneNeuron)
   {
-      GENE_NEURONS.add(geneNeuron);  //Synchronized list takes care of thread safety.
+    GENE_NEURONS.add(geneNeuron);  //Synchronized list takes care of thread safety.
   }
 
   /**
@@ -146,6 +149,7 @@ public class Genome
 
   /**
    * Set the fitness as determined by the physics testing.
+   *
    * @param fitness in meters
    */
   public void setFitness(float fitness)
@@ -164,14 +168,19 @@ public class Genome
 
   /**
    * Generates a filename based on the fitness and hashcode of object.
+   *
    * @return the file name formatted as [fitness]_[hashcodeInHex]
    */
   public String getFileName()
   {
     return String.format("%.2f_%04X.geno", this.fitness, this.hashCode());
   }
+
   /**
    * Writes the genome to the FileOutputStream.
+   * It first writes the root block information,
+   * then loops over GENE_BLOCKS, and lastly loops over GENE_NEURONS.
+   *
    * @param fileOut the outputstream we are writing to.
    * @return the file name based on the fitness.
    */
@@ -203,6 +212,7 @@ public class Genome
 
   /**
    * This is overridden to maintain stability in genome hashes between runs.
+   *
    * @return an integer that is the hash.
    */
   @Override

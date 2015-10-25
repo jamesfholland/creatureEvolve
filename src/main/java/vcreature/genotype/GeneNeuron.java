@@ -133,6 +133,11 @@ public final class GeneNeuron
     UNARY_DE = unaryDE;
   }
 
+  /**
+   * Constructs a GeneNeuron from file input.
+   * @param fileIn the stream we are reading from
+   * @throws IOException handled in GenoFile
+   */
   public GeneNeuron(BufferedReader fileIn) throws IOException
   {
     BLOCK_INDEX = Integer.parseInt(fileIn.readLine());
@@ -153,6 +158,11 @@ public final class GeneNeuron
     UNARY_DE = Enum.valueOf(EnumOperator.class, fileIn.readLine());
   }
 
+  /**
+   * Writes a GeneNeuron to a file output stream
+   * @param fileOut our output stream
+   * @throws IOException handled in GenoFile
+   */
   public void toFile(BufferedWriter fileOut) throws IOException
   {
     fileOut.write("#Neuron\n");

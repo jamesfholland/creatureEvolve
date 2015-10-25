@@ -1,7 +1,5 @@
 package vcreature.genotype;
 
-import com.jme3.math.Vector3f;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -89,7 +87,7 @@ public final class GeneBlock
    * @param eulerAngles
    */
   public GeneBlock(int parentOffset, ImmutableVector parentPivot, ImmutableVector pivot, ImmutableVector size,
-                   ImmutableVector parentHingeAxis, ImmutableVector hingeAxis,ImmutableVector eulerAngles)
+                   ImmutableVector parentHingeAxis, ImmutableVector hingeAxis, ImmutableVector eulerAngles)
   {
     PARENT_OFFSET = parentOffset;
     PARENT_PIVOT = parentPivot;
@@ -102,6 +100,7 @@ public final class GeneBlock
 
   /**
    * Constructs based on file input.
+   *
    * @param fileIn The Reader we parse from.
    * @throws IOException handled in GeneFile
    */
@@ -113,21 +112,11 @@ public final class GeneBlock
     SIZE = new ImmutableVector(fileIn);
     PARENT_HINGE_AXIS = new ImmutableVector(fileIn);
     HINGE_AXIS = new ImmutableVector(fileIn);
-    EULER_ANGLES= new ImmutableVector(fileIn);
+    EULER_ANGLES = new ImmutableVector(fileIn);
   }
 
   /**
    * Writes to an output stream.
-   * The output format is:
-   * #Block\n
-   * [parentOffset]\n
-   * [parentPivot]
-   * [pivot]
-   * [size]
-   * [parentHingeAxis]
-   * [hingeAxis]
-   * [eulerAngles]
-   *
    * Note that each vector written takes 3 lines.
    *
    * @param fileOut the stream we write to.
@@ -147,6 +136,7 @@ public final class GeneBlock
 
   /**
    * This is overridden to maintain stability in genome hashes between runs.
+   *
    * @return an integer that is the hash.
    */
   @Override

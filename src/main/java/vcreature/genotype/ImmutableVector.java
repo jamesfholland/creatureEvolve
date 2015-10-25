@@ -4,7 +4,6 @@ import com.jme3.math.Vector3f;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -23,6 +22,7 @@ public class ImmutableVector
 
   /**
    * Basic vector constructor
+   *
    * @param x the x value, unit determined by user
    * @param y the y value, unit determined by user
    * @param z the z value, unit determined by user
@@ -36,6 +36,7 @@ public class ImmutableVector
 
   /**
    * Constructs a ImmutableVector from a BufferedReader. Used when parsing a genome file.
+   *
    * @param fileIn The stream to parse a vector from.
    * @throws IOException handled in GenoFile
    */
@@ -48,6 +49,7 @@ public class ImmutableVector
 
   /**
    * Converts the vector back to Vector3f
+   *
    * @return a new Vector3f
    */
   public Vector3f getVector3f()
@@ -61,6 +63,7 @@ public class ImmutableVector
    * [X value]\n
    * [Y value]\n
    * [Z value]\n
+   *
    * @param fileOut the BufferedWriter we will write into.
    * @throws IOException handled in GenoFile
    */
@@ -71,6 +74,7 @@ public class ImmutableVector
 
   /**
    * This is overridden to maintain stability in genome hashes between runs.
+   *
    * @return an integer that is the hash.
    */
   @Override
