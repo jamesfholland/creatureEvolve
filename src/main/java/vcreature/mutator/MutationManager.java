@@ -1,9 +1,7 @@
 package vcreature.mutator;
 
 import vcreature.genotype.Genome;
-
-import java.util.LinkedList;
-import java.util.Random;
+import vcreature.mainSimulation.FlappyBirdGenoform;
 
 /**
  * This will manage finding mutated genomes.
@@ -11,19 +9,42 @@ import java.util.Random;
 public class MutationManager
 {
 
-  public static LinkedList<Genome> getMutants(Genome seed)
+  private Genome parentGenome;
+  private Genome testingGenome;
+
+  /**
+   * Sets up the mutation manager. Currently always seeds with FlappyBird.
+   * In the future will be handed a GenEpoOl, that it picks a creature from.
+   */
+  public MutationManager()
   {
-    LinkedList<Genome> mutants = new LinkedList<>();
-
-    //Do a bunch of mutations and store in mutants.
-
-    return mutants;
+    testingGenome = FlappyBirdGenoform.getFlappyBirdGenoform();
+    parentGenome = testingGenome;
   }
 
-  public Genome mutate(Genome currentCreature)
+  /**
+   * This returns the next mutant based on the current creature we are hill climbing from.
+   * @param testedFitness the calculated fitness in meters.
+   *                      If this is -1, this means we are just starting and need to test the seed.
+   * @return the next genome to test.
+   */
+  public Genome getNextCreature(float testedFitness)
   {
-    Genome randomGenome = Randomizer.randomize(currentCreature);
-    return randomGenome;
+    //Check if first run.
+    if (testedFitness == -1)
+    {
+      return testingGenome;
+    }
+
+    if (testedFitness > parentGenome.getFitness())
+    {
+      System.out.println("Better Creature found, Fitness: "+ testedFitness);
+      testingGenome.setFitness(testedFitness);
+      parentGenome = testingGenome;
+    }
+
+    testingGenome = Randomizer.randomize(parentGenome);
+    return testingGenome;
   }
 }
 

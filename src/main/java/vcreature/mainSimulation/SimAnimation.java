@@ -16,17 +16,13 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.system.AppSettings;
-import com.jme3.system.JmeCanvasContext;
 import com.jme3.texture.Texture;
 import com.jme3.input.controls.ActionListener;
-import com.jme3.scene.Node;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.MutationManager;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.PhysicsConstants;
-import vcreature.genotype.Genome;
-import java.awt.*;
 
 /**
  * Created by Tess Daughton on 10/14/15.
@@ -38,7 +34,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
   private float cameraAngle = (float) (Math.PI / 2.0);
-  private Genome flappy = (new FlappyBirdGenoform()).getGenome();
 
 
 
@@ -48,6 +43,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private Creature myCreature;
   private float elapsedSimulationTime;
   private MutationManager mutationManager = new MutationManager();
+  private float currentFitness = 0;
 
   /**
    * Initalizes a BulletAppState and a Physics Space
@@ -93,8 +89,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
     Block.initStaticMaterials(assetManager);
 
-    myCreature = new GenomeCreature(physicsSpace,rootNode,flappy);
-    genePool.addCreatureToPopulation(flappy);
+    myCreature = new GenomeCreature(physicsSpace,rootNode, mutationManager.getNextCreature(-1));
+    //genePool.addCreatureToPopulation();
     initLighting();
     initKeys();
     flyCam.setDragToRotate(true);
@@ -161,16 +157,17 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   @Override
   public void simpleUpdate(float deltaSeconds)
   {
+    this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
     if (elapsedSimulationTime>15)
     {
       myCreature.remove();
       elapsedSimulationTime = 0;
-      flappy = mutationManager.mutate(flappy);
-      myCreature = new GenomeCreature(physicsSpace, rootNode, flappy);
+
+      myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(this.currentFitness));
 
     }
-    myCreature.updateBrain(elapsedSimulationTime);
+
     if (isCameraRotating)
     {
       //Move camera continously in circle of radius 25 meters centered 10 meters

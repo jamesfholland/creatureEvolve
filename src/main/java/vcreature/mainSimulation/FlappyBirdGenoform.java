@@ -10,13 +10,13 @@ import vcreature.phenotype.EnumOperator;
  */
 public class FlappyBirdGenoform
 {
-  private Genome genome;
 
   /**
    * Creates a genome for Flappy Bird.
    */
-  FlappyBirdGenoform()
+  public static Genome getFlappyBirdGenoform()
   {
+    Genome genome;
     //Sets the root node's size in Genome constructor
     genome = new Genome(new ImmutableVector(2.0f, 1.5f, 1.5f), new ImmutableVector(0f,0f,0f));
 
@@ -88,10 +88,7 @@ public class FlappyBirdGenoform
 
     genome.addGeneNeuron(leg2Neuron1);
     genome.addGeneNeuron(leg2Neuron2);
-  }
 
-  public Genome getGenome()
-  {
     return genome;
   }
 }
