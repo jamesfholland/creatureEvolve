@@ -2,6 +2,10 @@ package vcreature.genotype;
 
 import com.jme3.math.Vector3f;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.Objects;
+
 /**
  * This Class contains the basic information for creating a block and hinge pair.
  * <p>
@@ -96,4 +100,24 @@ public final class GeneBlock
   }
 
 
+  public void toFile(BufferedWriter fileOut) throws IOException
+  {
+    fileOut.write(String.format("%d\n", PARENT_OFFSET));
+    PARENT_PIVOT.toFile(fileOut);
+    PIVOT.toFile(fileOut);
+    SIZE.toFile(fileOut);
+    PARENT_HINGE_AXIS.toFile(fileOut);
+    HINGE_AXIS.toFile(fileOut);
+    EULER_ANGLES.toFile(fileOut);
+  }
+
+  /**
+   * This is overridden to maintain stability in genome hashes between runs.
+   * @return an integer that is the hash.
+   */
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(PARENT_OFFSET, PARENT_PIVOT, PIVOT, SIZE, PARENT_HINGE_AXIS, HINGE_AXIS, EULER_ANGLES);
+  }
 }

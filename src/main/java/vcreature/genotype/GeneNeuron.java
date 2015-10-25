@@ -3,6 +3,10 @@ package vcreature.genotype;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.EnumOperator;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.Objects;
+
 /**
  * This class contains data required for building a neuron.
  * This is immutable all members are final.
@@ -106,11 +110,17 @@ public final class GeneNeuron
                     EnumOperator binaryAB, EnumOperator unaryAB, EnumOperator binaryDE, EnumOperator unaryDE)
   {
     BLOCK_INDEX = blockIndex;
-    A_TYPE = aType;
-    B_TYPE = bType;
-    C_TYPE = cType;
-    D_TYPE = dType;
-    E_TYPE = eType;
+    if(aType == null) A_TYPE = EnumNeuronInput.CONSTANT;
+    else A_TYPE = aType;
+    if(bType == null) B_TYPE = EnumNeuronInput.CONSTANT;
+    else B_TYPE = bType;
+    if(cType == null) C_TYPE = EnumNeuronInput.CONSTANT;
+    else C_TYPE = cType;
+    if(dType == null) D_TYPE = EnumNeuronInput.CONSTANT;
+    else D_TYPE = dType;
+    if(eType == null) E_TYPE = EnumNeuronInput.CONSTANT;
+    else E_TYPE = eType;
+
     A_VALUE = aValue;
     B_VALUE = bValue;
     C_VALUE = cValue;
@@ -120,5 +130,34 @@ public final class GeneNeuron
     UNARY_AB = unaryAB;
     BINARY_DE = binaryDE;
     UNARY_DE = unaryDE;
+  }
+
+  public void toFile(BufferedWriter fileOut) throws IOException
+  {
+    fileOut.write(String.format("%d\n", BLOCK_INDEX));
+    fileOut.write(A_TYPE.name() + "\n");
+    fileOut.write(B_TYPE.name() + "\n");
+    fileOut.write(C_TYPE.name() + "\n");
+    fileOut.write(D_TYPE.name() + "\n");
+    fileOut.write(E_TYPE.name() + "\n");
+    fileOut.write(String.format("%f\n", A_VALUE));
+    fileOut.write(String.format("%f\n", B_VALUE));
+    fileOut.write(String.format("%f\n", C_VALUE));
+    fileOut.write(String.format("%f\n", D_VALUE));
+    fileOut.write(String.format("%f\n", E_VALUE));
+    fileOut.write(BINARY_AB.name() + "\n");
+    fileOut.write(UNARY_AB.name() + "\n");
+    fileOut.write(BINARY_DE.name() + "\n");
+    fileOut.write(UNARY_DE.name() + "\n");
+  }
+
+   /**
+   * This is overridden to maintain stability in genome hashes between runs.
+   * @return an integer that is the hash.
+   */
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(BLOCK_INDEX, A_TYPE, B_TYPE, C_TYPE, D_TYPE, E_TYPE, A_VALUE, B_VALUE, C_VALUE, D_VALUE, E_VALUE, BINARY_AB, UNARY_AB, BINARY_DE, UNARY_DE);
   }
 }

@@ -1,5 +1,6 @@
 package vcreature.mutator;
 
+import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.FlappyBirdGenoform;
 
@@ -20,6 +21,7 @@ public class MutationManager
   {
     testingGenome = FlappyBirdGenoform.getFlappyBirdGenoform();
     parentGenome = testingGenome;
+    //GenoFile.writeGenome(testingGenome);
   }
 
   /**

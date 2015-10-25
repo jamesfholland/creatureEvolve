@@ -1,9 +1,11 @@
 package vcreature.genotype;
 
-import java.io.FileOutputStream;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This Class contains the genome of the creature.
@@ -127,5 +129,69 @@ public class Genome
     return this.fitness;
   }
 
+  /**
+   * Generates a filename based on the fitness and hashcode of object.
+   * @return the file name formatted as [fitness]_[hashcodeInHex]
+   */
+  public String getFileName()
+  {
+    return String.format("%.2f_%04X.geno", this.fitness, this.hashCode());
+  }
+  /**
+   * Writes the genome to the FileOutputStream.
+   * @param fileOut the outputstream we are writing to.
+   * @return the file name based on the fitness.
+   */
+  public void toFile(BufferedWriter fileOut) throws IOException
+  {
+    fileOut.write(getFileName() + "\n");
+    fileOut.write("#ROOT\n");
+    ROOT_SIZE.toFile(fileOut);
+    ROOT_EULER_ANGLES.toFile(fileOut);
 
+    fileOut.write("#BLOCKS\n");
+    synchronized (this.GENE_BLOCKS)
+    {
+      for (GeneBlock block : GENE_BLOCKS)
+      {
+        block.toFile(fileOut);
+      }
+    }
+
+    fileOut.write("#NEURONS\n");
+    synchronized (this.GENE_NEURONS)
+    {
+      for (GeneNeuron neuron : GENE_NEURONS)
+      {
+        neuron.toFile(fileOut);
+      }
+    }
+  }
+
+  /**
+   * This is overridden to maintain stability in genome hashes between runs.
+   * @return an integer that is the hash.
+   */
+  @Override
+  public int hashCode()
+  {
+    int result = ROOT_SIZE.hashCode();
+    result = 31 * result + ROOT_EULER_ANGLES.hashCode();
+    synchronized (GENE_BLOCKS)
+    {
+      for (GeneBlock block : GENE_BLOCKS)
+      {
+        result = 31 * result + block.hashCode();
+      }
+    }
+    synchronized (GENE_NEURONS)
+    {
+      for (GeneNeuron neuron : GENE_NEURONS)
+      {
+        result = 31 * result + neuron.hashCode();
+      }
+    }
+    result = 31 * result + (fitness != +0.0f ? Float.floatToIntBits(fitness) : 0);
+    return result;
+  }
 }
