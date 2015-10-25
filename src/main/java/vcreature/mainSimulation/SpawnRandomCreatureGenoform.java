@@ -38,6 +38,7 @@ public class SpawnRandomCreatureGenoform
 
   private void createCreature(int numberOfBlocks)
   {
+    ImmutableVector zeroVector = new ImmutableVector(0f, 0f, 0f);
     float rootSizeX = rand.nextFloat() * (max - min) + min;
     float rootSizeY = rand.nextFloat() * (max - min) + min;
     float rootSizeZ = rand.nextFloat() * (max - min) + min;
@@ -55,7 +56,7 @@ public class SpawnRandomCreatureGenoform
     ImmutableVector pivotC = new ImmutableVector(-1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector pivotD = new ImmutableVector(1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector leg2Size = new ImmutableVector(sizeX,sizeY,sizeZ);
-    GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, legParentAxis, legAxis);
+    GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, legParentAxis, legAxis, zeroVector);
     genome.addGeneBlock(leg2);
 
     for (int i = 1; i <numberOfBlocks ; i++)
