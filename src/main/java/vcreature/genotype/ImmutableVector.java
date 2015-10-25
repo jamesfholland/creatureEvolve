@@ -15,13 +15,6 @@ public class ImmutableVector
 
   public final float Z;
 
-  public ImmutableVector(Vector3f vector3f)
-  {
-    this.X = vector3f.x;
-    this.Y = vector3f.y;
-    this.Z = vector3f.z;
-  }
-
   public ImmutableVector(float x, float y, float z)
   {
     this.X = x;
@@ -33,20 +26,4 @@ public class ImmutableVector
   {
     return new Vector3f(this.X, this.Y, this.Z);
   }
-
-  public ImmutableVector getChangedX(float x)
-  {
-    return new ImmutableVector(x, this.Y, this.Z);
-  }
-
-  public ImmutableVector getChangedY(float y)
-  {
-    return new ImmutableVector(this.X, y, this.Z);
-  }
-
-  public ImmutableVector getChangedZ(float z)
-  {
-    return new ImmutableVector(this.X, this.Y, z);
-  }
-
 }
