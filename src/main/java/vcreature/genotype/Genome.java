@@ -1,8 +1,5 @@
 package vcreature.genotype;
 
-import com.jme3.math.Vector3f;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,9 +36,14 @@ public class Genome
   private final List<GeneNeuron> GENE_NEURONS;
 
   /**
-   * Creates
-   * @param rootSize
-   * @param rootEulerAngles
+   * The determined fitness of the genome.
+   */
+  private float fitness;
+
+  /**
+   * Creates a genome based on a root and its angles.
+   * @param rootSize The size of the creature's root.
+   * @param rootEulerAngles The orientation of the root.
    */
   public Genome(ImmutableVector rootSize,ImmutableVector rootEulerAngles)
   {
@@ -104,5 +106,22 @@ public class Genome
   public ImmutableVector getRootEulerAngles()
   {
     return ROOT_EULER_ANGLES;
+  }
+
+  /**
+   * Set the fitness as determined by the physics testing.
+   * @param fitness in meters
+   */
+  public void setFitness(float fitness)
+  {
+    this.fitness = fitness;
+  }
+
+  /**
+   * Get the fitness in meters of the creature.
+   */
+  public float getFitness()
+  {
+    return this.fitness;
   }
 }

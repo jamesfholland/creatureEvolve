@@ -2,14 +2,11 @@ package vcreature.genotype.phenoConversion;
 
 import com.jme3.bounding.BoundingBox;
 import com.jme3.math.Vector3f;
-import vcreature.genotype.Axis;
 import vcreature.genotype.ImmutableVector;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.Neuron;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -193,12 +190,12 @@ public class ProtoBlock
   }
 
   /**
-   * gets the size of the cube from corner to corner in vector form.
+   * Gets the size of the cube from corner to corner in vector form.
    * Hard to explain, if confused ask Tyler to show you the diagram.
    *
    * @return returns a vector
    */
-  public Vector3f getDimentionVector()
+  public Vector3f getDimensionVector()
   {
     return new Vector3f(getMaxVector().x - getMinVector().x,
         getMaxVector().y - getMinVector().y,
@@ -208,9 +205,9 @@ public class ProtoBlock
   public static boolean blockIntersecting(Vector3f min, Vector3f size,
                                           ProtoBlock box)
   {
-    if ((min.x < box.getMinVector().x + box.getDimentionVector().x) &&
-        (min.y < box.getMinVector().y + box.getDimentionVector().y) &&
-        (min.z < box.getMinVector().z + box.getDimentionVector().z) &&
+    if ((min.x < box.getMinVector().x + box.getDimensionVector().x) &&
+        (min.y < box.getMinVector().y + box.getDimensionVector().y) &&
+        (min.z < box.getMinVector().z + box.getDimensionVector().z) &&
         (box.getMinVector().x < +min.x + size.x) &&
         (box.getMinVector().y < +min.y + size.y) &&
         (box.getMinVector().z < +min.z + size.z))
@@ -238,7 +235,7 @@ public class ProtoBlock
     }
     Vector3f min = getMinVector();
     Vector3f max = getMaxVector();
-    Vector3f dimentionVector = getDimentionVector();
+    Vector3f dimentionVector = getDimensionVector();
     for (ProtoBlock box : existingBlocks)
     //Check Block collision somehow.
     //If collision remove child from this.parent.

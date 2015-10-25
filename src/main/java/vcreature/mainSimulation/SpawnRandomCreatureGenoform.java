@@ -152,9 +152,9 @@ public class SpawnRandomCreatureGenoform
  {
 
 //   Vector3f minVector=new Vector3f(center.x - size.x, center.y - size.y, center.z - size.z);
-//   if ((min.x < box.getMinVector().x + box.getDimentionVector().x) &&
-//           (min.y < box.getMinVector().y + box.getDimentionVector().y) &&
-//           (min.z < box.getMinVector().z + box.getDimentionVector().z) &&
+//   if ((min.x < box.getMinVector().x + box.getDimensionVector().x) &&
+//           (min.y < box.getMinVector().y + box.getDimensionVector().y) &&
+//           (min.z < box.getMinVector().z + box.getDimensionVector().z) &&
 //           (box.getMinVector().x < +min.x + size.x) &&
 //           (box.getMinVector().y < +min.y + size.y) &&
 //           (box.getMinVector().z < +min.z + size.z))
