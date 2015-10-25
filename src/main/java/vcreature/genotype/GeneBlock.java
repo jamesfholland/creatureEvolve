@@ -100,6 +100,11 @@ public final class GeneBlock
     EULER_ANGLES = eulerAngles;
   }
 
+  /**
+   * Constructs based on file input.
+   * @param fileIn The Reader we parse from.
+   * @throws IOException handled in GeneFile
+   */
   public GeneBlock(BufferedReader fileIn) throws IOException
   {
     PARENT_OFFSET = Integer.parseInt(fileIn.readLine());
@@ -111,7 +116,23 @@ public final class GeneBlock
     EULER_ANGLES= new ImmutableVector(fileIn);
   }
 
-
+  /**
+   * Writes to an output stream.
+   * The output format is:
+   * #Block\n
+   * [parentOffset]\n
+   * [parentPivot]
+   * [pivot]
+   * [size]
+   * [parentHingeAxis]
+   * [hingeAxis]
+   * [eulerAngles]
+   *
+   * Note that each vector written takes 3 lines.
+   *
+   * @param fileOut the stream we write to.
+   * @throws IOException handled in GenoFile
+   */
   public void toFile(BufferedWriter fileOut) throws IOException
   {
     fileOut.write("#Block\n");

@@ -21,6 +21,12 @@ public class ImmutableVector
 
   public final float Z;
 
+  /**
+   * Basic vector constructor
+   * @param x the x value, unit determined by user
+   * @param y the y value, unit determined by user
+   * @param z the z value, unit determined by user
+   */
   public ImmutableVector(float x, float y, float z)
   {
     this.X = x;
@@ -28,6 +34,11 @@ public class ImmutableVector
     this.Z = z;
   }
 
+  /**
+   * Constructs a ImmutableVector from a BufferedReader. Used when parsing a genome file.
+   * @param fileIn The stream to parse a vector from.
+   * @throws IOException handled in GenoFile
+   */
   public ImmutableVector(BufferedReader fileIn) throws IOException
   {
     this.X = Float.parseFloat(fileIn.readLine());
@@ -35,11 +46,24 @@ public class ImmutableVector
     this.Z = Float.parseFloat(fileIn.readLine());
   }
 
+  /**
+   * Converts the vector back to Vector3f
+   * @return a new Vector3f
+   */
   public Vector3f getVector3f()
   {
     return new Vector3f(this.X, this.Y, this.Z);
   }
 
+  /**
+   * Stores the vector into an output stream.
+   * The format of the output is
+   * [X value]\n
+   * [Y value]\n
+   * [Z value]\n
+   * @param fileOut the BufferedWriter we will write into.
+   * @throws IOException handled in GenoFile
+   */
   public void toFile(BufferedWriter fileOut) throws IOException
   {
     fileOut.write(String.format("%f\n%f\n%f\n", this.X, this.Y, this.Z));
