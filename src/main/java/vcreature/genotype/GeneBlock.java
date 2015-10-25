@@ -2,6 +2,7 @@ package vcreature.genotype;
 
 import com.jme3.math.Vector3f;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Objects;
@@ -85,10 +86,10 @@ public final class GeneBlock
    * @param size            The blocks size in distance
    * @param parentHingeAxis The axis on the parent to rotate upon.
    * @param hingeAxis       The axis on to rotate upon.
-   * @param eulerAngels
+   * @param eulerAngles
    */
   public GeneBlock(int parentOffset, ImmutableVector parentPivot, ImmutableVector pivot, ImmutableVector size,
-                   ImmutableVector parentHingeAxis, ImmutableVector hingeAxis,ImmutableVector eulerAngels)
+                   ImmutableVector parentHingeAxis, ImmutableVector hingeAxis,ImmutableVector eulerAngles)
   {
     PARENT_OFFSET = parentOffset;
     PARENT_PIVOT = parentPivot;
@@ -96,12 +97,24 @@ public final class GeneBlock
     SIZE = size;
     PARENT_HINGE_AXIS = parentHingeAxis;
     HINGE_AXIS = hingeAxis;
-    EULER_ANGLES=eulerAngels;
+    EULER_ANGLES = eulerAngles;
+  }
+
+  public GeneBlock(BufferedReader fileIn) throws IOException
+  {
+    PARENT_OFFSET = Integer.parseInt(fileIn.readLine());
+    PARENT_PIVOT = new ImmutableVector(fileIn);
+    PIVOT = new ImmutableVector(fileIn);
+    SIZE = new ImmutableVector(fileIn);
+    PARENT_HINGE_AXIS = new ImmutableVector(fileIn);
+    HINGE_AXIS = new ImmutableVector(fileIn);
+    EULER_ANGLES= new ImmutableVector(fileIn);
   }
 
 
   public void toFile(BufferedWriter fileOut) throws IOException
   {
+    fileOut.write("#Block\n");
     fileOut.write(String.format("%d\n", PARENT_OFFSET));
     PARENT_PIVOT.toFile(fileOut);
     PIVOT.toFile(fileOut);

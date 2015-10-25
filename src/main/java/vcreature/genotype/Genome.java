@@ -1,5 +1,6 @@
 package vcreature.genotype;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,9 +52,41 @@ public class Genome
   public Genome(ImmutableVector rootSize,ImmutableVector rootEulerAngles)
   {
     ROOT_SIZE = rootSize;
+    ROOT_EULER_ANGLES=rootEulerAngles;
     GENE_BLOCKS = Collections.synchronizedList(new ArrayList<GeneBlock>());
     GENE_NEURONS = Collections.synchronizedList(new ArrayList<GeneNeuron>());
-    ROOT_EULER_ANGLES=rootEulerAngles;
+  }
+
+  /**
+   * Constructs a full Genome from an input file.
+   * @param fileIn BufferedReader containing the Genome data.
+   * @throws IOException this is handled in GenoFile or by whatever called this constructor.
+   */
+  public Genome(BufferedReader fileIn) throws IOException
+  {
+    GENE_BLOCKS = Collections.synchronizedList(new ArrayList<GeneBlock>());
+    GENE_NEURONS = Collections.synchronizedList(new ArrayList<GeneNeuron>());
+
+    //Read in file name (if we want to store the fitness we can parse it here.)
+    fileIn.readLine();
+    fileIn.readLine(); //Read #ROOT
+    ROOT_SIZE = new ImmutableVector(fileIn);
+    ROOT_EULER_ANGLES= new ImmutableVector(fileIn);
+
+    fileIn.readLine(); //Read #BLOCKS
+    String header = fileIn.readLine();
+    while(!Objects.equals(header, "") && header != null)
+    {
+      if(Objects.equals(header, "#Block"))
+      {
+        GENE_BLOCKS.add(new GeneBlock(fileIn));
+      }
+      else if(Objects.equals(header, "#Neuron"))
+      {
+        GENE_NEURONS.add(new GeneNeuron(fileIn));
+      }
+      header = fileIn.readLine();
+    }
   }
 
   /**

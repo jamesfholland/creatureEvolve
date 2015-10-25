@@ -2,6 +2,7 @@ package vcreature.genotype;
 
 import com.jme3.math.Vector3f;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,6 +28,13 @@ public class ImmutableVector
     this.Z = z;
   }
 
+  public ImmutableVector(BufferedReader fileIn) throws IOException
+  {
+    this.X = Float.parseFloat(fileIn.readLine());
+    this.Y = Float.parseFloat(fileIn.readLine());
+    this.Z = Float.parseFloat(fileIn.readLine());
+  }
+
   public Vector3f getVector3f()
   {
     return new Vector3f(this.X, this.Y, this.Z);
@@ -34,12 +42,7 @@ public class ImmutableVector
 
   public void toFile(BufferedWriter fileOut) throws IOException
   {
-    fileOut.write(String.format("%f,%f,%f\n", this.X, this.Y, this.Z));
-  }
-
-  public static ImmutableVector parseImmutableVector(String line)
-  {
-    return null;
+    fileOut.write(String.format("%f\n%f\n%f\n", this.X, this.Y, this.Z));
   }
 
   /**

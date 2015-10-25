@@ -3,6 +3,7 @@ package vcreature.genotype;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.EnumOperator;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Objects;
@@ -132,8 +133,29 @@ public final class GeneNeuron
     UNARY_DE = unaryDE;
   }
 
+  public GeneNeuron(BufferedReader fileIn) throws IOException
+  {
+    BLOCK_INDEX = Integer.parseInt(fileIn.readLine());
+    A_TYPE = Enum.valueOf(EnumNeuronInput.class, fileIn.readLine());
+    B_TYPE = Enum.valueOf(EnumNeuronInput.class, fileIn.readLine());
+    C_TYPE = Enum.valueOf(EnumNeuronInput.class, fileIn.readLine());
+    D_TYPE = Enum.valueOf(EnumNeuronInput.class, fileIn.readLine());
+    E_TYPE = Enum.valueOf(EnumNeuronInput.class, fileIn.readLine());
+
+    A_VALUE = Float.parseFloat(fileIn.readLine());
+    B_VALUE = Float.parseFloat(fileIn.readLine());
+    C_VALUE = Float.parseFloat(fileIn.readLine());
+    D_VALUE = Float.parseFloat(fileIn.readLine());
+    E_VALUE = Float.parseFloat(fileIn.readLine());
+    BINARY_AB = Enum.valueOf(EnumOperator.class, fileIn.readLine());
+    UNARY_AB = Enum.valueOf(EnumOperator.class, fileIn.readLine());
+    BINARY_DE = Enum.valueOf(EnumOperator.class, fileIn.readLine());
+    UNARY_DE = Enum.valueOf(EnumOperator.class, fileIn.readLine());
+  }
+
   public void toFile(BufferedWriter fileOut) throws IOException
   {
+    fileOut.write("#Neuron\n");
     fileOut.write(String.format("%d\n", BLOCK_INDEX));
     fileOut.write(A_TYPE.name() + "\n");
     fileOut.write(B_TYPE.name() + "\n");

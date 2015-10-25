@@ -19,9 +19,9 @@ public class MutationManager
    */
   public MutationManager()
   {
-    testingGenome = FlappyBirdGenoform.getFlappyBirdGenoform();
+    testingGenome = GenoFile.readGenome("-1.00_Flappy.geno");
     parentGenome = testingGenome;
-    //GenoFile.writeGenome(testingGenome);
+   // GenoFile.writeGenome(testingGenome);
   }
 
   /**
