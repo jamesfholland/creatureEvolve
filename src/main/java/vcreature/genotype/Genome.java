@@ -1,5 +1,6 @@
 package vcreature.genotype;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +39,7 @@ public class Genome
   /**
    * The determined fitness of the genome.
    */
-  private float fitness;
+  private float fitness = -1;
 
   /**
    * Creates a genome based on a root and its angles.
@@ -119,9 +120,12 @@ public class Genome
 
   /**
    * Get the fitness in meters of the creature.
+   * A fitness of -1 indicates the creature has not been tested.
    */
   public float getFitness()
   {
     return this.fitness;
   }
+
+
 }
