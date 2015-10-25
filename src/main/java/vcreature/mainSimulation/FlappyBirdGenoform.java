@@ -33,7 +33,7 @@ public class FlappyBirdGenoform
     //Leg2 stuff
     ImmutableVector pivotC = new ImmutableVector(-1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector pivotD = new ImmutableVector(1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
-    ImmutableVector leg2Size = new ImmutableVector(.50f, 0.5f, .50f);
+    ImmutableVector leg2Size = new ImmutableVector(3.0f, 0.5f, 1.0f);
 
     GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, LegParentAxis.getImmutableVector(), LegAxis.getImmutableVector(), zeroVector);
 
