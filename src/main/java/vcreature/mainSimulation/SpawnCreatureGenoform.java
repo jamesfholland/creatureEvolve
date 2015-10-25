@@ -27,13 +27,11 @@ public class SpawnCreatureGenoform
     return genome;
   }
 
-  public void makeFlappyBird()
-  {genome = new Genome(new ImmutableVector(2.0f, 1.5f, 1.5f), new ImmutableVector(0f,0f,0f));
-    ImmutableVector zeroVector = new ImmutableVector(0f, 0f, 0f);
-
   public static Genome makeFlappyBird()
   {
     Genome genome = new Genome(new ImmutableVector(2.0f, 1.5f, 1.5f), new ImmutableVector(0f,0f,0f));
+    ImmutableVector zeroVector = new ImmutableVector(0f, 0f, 0f);
+
     //Leg1 stuff
     ImmutableVector pivotA = new ImmutableVector(1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector pivotB = new ImmutableVector(-1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
@@ -171,6 +169,7 @@ public class SpawnCreatureGenoform
   static public Genome makeTableMonster()
   {
     Genome genome=new Genome(new ImmutableVector(5f,.5f,5f), new ImmutableVector(0f,0f,0f));
+    ImmutableVector zeroVector = new ImmutableVector(0f, 0f, 0f);
 
     {
       ImmutableVector pivotA = new ImmutableVector(1.0f, -1f, 0.0f); //Center of hinge in the block's coordinates
@@ -179,7 +178,7 @@ public class SpawnCreatureGenoform
 
       Axis LegParentAxis = Axis.UNIT_Z;
       Axis LegAxis = Axis.UNIT_Z;
-      GeneBlock leg1 = new GeneBlock(0, pivotA, pivotB, leg1Size, LegParentAxis.getImmutableVector(), LegAxis.getImmutableVector());
+      GeneBlock leg1 = new GeneBlock(0, pivotA, pivotB, leg1Size, LegParentAxis.getImmutableVector(), LegAxis.getImmutableVector(), zeroVector);
       genome.addGeneBlock(leg1);
 
 //      GeneNeuron leg1Neuron1 = new GeneNeuron(
@@ -207,7 +206,7 @@ public class SpawnCreatureGenoform
 
     //Axis LegParentAxis = Axis.UNIT_Z;
     Axis Leg2Axis = Axis.UNIT_Z;
-    GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, Axis.UNIT_Z.getImmutableVector(), Leg2Axis.getImmutableVector());
+    GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, Axis.UNIT_Z.getImmutableVector(), Leg2Axis.getImmutableVector(), zeroVector);
     System.out.println(leg2.PARENT_OFFSET);
     GeneNeuron leg1Neuron1 = new GeneNeuron(
             leg2.PARENT_OFFSET, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
