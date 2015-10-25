@@ -37,7 +37,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public static GenePool genePool = new GenePool();
   private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
-  private Analysis goodCreature = new Analysis();
   private float cameraAngle = (float) (Math.PI / 2.0);
   private Genome flappy = (new FlappyBirdGenoform()).getGenome();
 
