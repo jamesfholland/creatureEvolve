@@ -67,19 +67,20 @@ public class Randomizer
     int xSign = (rand.nextBoolean()) ? 1 : -1;
     int ySign =(rand.nextBoolean()) ? 1 : -1;
     int zSign = (rand.nextBoolean()) ? 1 : -1;
-    ImmutableVector randPivot= new ImmutableVector(1, 0, 0);;
+    ImmutableVector randPivot= new ImmutableVector(1, 0, 0);
     int randomFace=rand.nextInt(2);
     if(randomFace==0) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign*rand.nextFloat());
     else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign*rand.nextFloat());
     else if(randomFace==2) randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign*rand.nextFloat(),zSign);
     ImmutableVector parentPivot=new ImmutableVector(-randPivot.X,-randPivot.Y,-randPivot.Z);
-    randBlock=new GeneBlock(parentOffset, randPivot,parentPivot,size,Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
+    randBlock=new GeneBlock(parentOffset, parentPivot,randPivot,size,Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
     geneBlocks.remove(index);
     geneBlocks.add(index,randBlock);
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
     for (int i = 0; i <geneBlocks.size() ; i++)
     {
       newGenome.addGeneBlock(geneBlocks.get(i));
+      newGenome.addGeneNeuron(geneNeurons.get(i));
     }
     if(checkForIntersections(newGenome)) genome=newGenome;
     else randomize(genome);
