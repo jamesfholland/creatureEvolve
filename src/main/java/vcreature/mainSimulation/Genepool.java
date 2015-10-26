@@ -1,5 +1,6 @@
 package vcreature.mainSimulation;
 
+import vcreature.genotype.Genome;
 import vcreature.phenotype.Creature;
 
 import java.util.ArrayList;
@@ -15,8 +16,8 @@ import java.util.ArrayList;
  */
 public class Genepool
 {
-  private ArrayList<ArrayList<Creature>> population =
-      new ArrayList<ArrayList<Creature>>();
+  private ArrayList<ArrayList<Genome>> population =
+      new ArrayList<ArrayList<Genome>>();
 
 
   /**
@@ -31,6 +32,17 @@ public class Genepool
    * }
    */
 
+
+  public void removeGenome(int creatureNumber)
+  {
+    population.remove(creatureNumber);
+  }
+
+
+  public Genome getGenome(int creatureNumber, int variationNumber)
+  {
+    return population.get(creatureNumber).get(variationNumber);
+  }
   /**
    * Gets the fitness of a creature
    *
@@ -38,6 +50,8 @@ public class Genepool
    * @param variationNumber how many times has it been recreated
    * @return
    */
+
+  /**
   public float getFitnessFromPopulation(int creatureNumber, int variationNumber)
   {
     return population.get(creatureNumber).get(variationNumber).getFitness();
@@ -52,7 +66,7 @@ public class Genepool
   {
 //    population.add(creature);
   }
-
+*/
   public void removeCreatureFromPopulation(Creature creature)
   {
     population.remove(creature);
