@@ -4,6 +4,8 @@ import com.jme3.system.AppSettings;
 import com.jme3.system.JmeCanvasContext;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,18 +17,15 @@ import java.awt.event.ItemListener;
  * JFrame containing SimpleApp
  * **/
 
-public class SimFrame extends JFrame implements ItemListener, ActionListener
+public class SimFrame extends JFrame
 {
   private SimAnimation animation;
   private JmeCanvasContext ctx;
   private JPanel threadPane;
   private JPanel appPane;
-  private JToggleButton showApp;
-  private JComboBox threadSelector;
-  private String[] threads = {"Thread 1", "Thread 2", "Thread 3", "Thread 4",
-      "Thread 5", "Thread 6", "Thread 7", "Thread 8",
-      "Thread 9", "Thread 10", "Thread 11", "Thread 12",
-      "Thread 13", "Thread 14", "Thread 15", "Thread 16"};
+  private static final int TOP_SPEED = 10;
+  private static final int LOW_SPEED = 0;
+  private JSlider speed = new JSlider(JSlider.HORIZONTAL, LOW_SPEED, TOP_SPEED, 3);
 
   /**
    * Class Constructor:
@@ -55,7 +54,7 @@ public class SimFrame extends JFrame implements ItemListener, ActionListener
     appPane = new JPanel();
     animation.createCanvas();
     animation.startCanvas();
-    ctx= (JmeCanvasContext) animation.getContext();
+    ctx = (JmeCanvasContext) animation.getContext();
     ctx.setSystemListener(animation);
     Dimension dim = new Dimension(1000, 725);
     ctx.getCanvas().setPreferredSize(dim);
@@ -71,47 +70,27 @@ public class SimFrame extends JFrame implements ItemListener, ActionListener
   protected void addThreadPane()
   {
     threadPane = new JPanel();
-    showApp = new JToggleButton("Hide Animation");
-    threadSelector = new JComboBox(threads);
-    threadSelector.setSelectedIndex(0);
-    threadSelector.addActionListener(this);
-    showApp.addItemListener(this);
-    threadPane.setPreferredSize(new Dimension(1000, 50));
-    threadPane.setSize(new Dimension(1000, 50));
-    threadPane.add(threadSelector, BorderLayout.CENTER);
-    threadPane.add(showApp, BorderLayout.CENTER);
+    speed.setMajorTickSpacing(2);
+    speed.setPaintTicks(true);
+    speed.setPaintLabels(true);
+    speed.addChangeListener(new ChangeListener()
+    {
+      @Override
+      public void stateChanged(ChangeEvent e)
+      {
+        JSlider source = (JSlider) e.getSource();
+        if (source.getValueIsAdjusting())
+        {
+          int fps = (int) source.getValue();
+          animation.setSpeed(fps);
+        }
+
+      }
+    });
+    JLabel speedLabel = new JLabel(("Speed: "));
+    threadPane.add(speedLabel);
+    threadPane.add(speed);
     add(threadPane, BorderLayout.PAGE_END);
-  }
-
-  /**
-   * updates the JComboBox threadSelector to show that current thread user has selected
-   * @param e
-   */
-  @Override
-  public void actionPerformed(ActionEvent e)
-  {
-    JComboBox cb = (JComboBox) e.getSource();
-    String thread = (String) cb.getSelectedItem();
-  }
-
-  /**
-   * Used to toggle the text on the showApp button depending on whether the user wants to
-   * show the animation or hide the animation
-   * @param e
-   */
-  @Override
-  public void itemStateChanged(ItemEvent e)
-  {
-
-    if (showApp.getText().equals(("Show Animation")))
-    {
-      addAppPane();
-      showApp.setText("Hide Animation");
-    }
-    else
-    {
-      showApp.setText("Show Animation");
-    }
   }
 }
 
