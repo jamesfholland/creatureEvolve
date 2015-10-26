@@ -1,13 +1,26 @@
 package vcreature.genotype.phenoConversion;
 
 import com.jme3.bounding.BoundingBox;
+import com.jme3.bounding.BoundingVolume;
+import com.jme3.math.Matrix4f;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.sun.javafx.geom.PickRay;
+import com.sun.javafx.scene.input.PickResultChooser;
+import javafx.geometry.Point3D;
+import javafx.scene.Node;
+import javafx.scene.shape.CullFace;
+import javafx.scene.shape.Mesh;
 import vcreature.genotype.ImmutableVector;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.Neuron;
 
+import javax.vecmath.Point3d;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This is a ProtoBlock for the genotype to phenotype conversion.
@@ -202,6 +215,32 @@ public class ProtoBlock
         getMaxVector().z - getMinVector().z);
   }
 
+  public static boolean checkIntersection(List<ProtoBlock> children)
+  {
+    ArrayList<BoundingBox> boundingBoxes=new ArrayList<>();
+    for (int i = 0; i <children.size() ; i++)
+    {
+      BoundingBox temp= toBoundingBox(children.get(i));
+      for (int j = 0; j <boundingBoxes.size() ; j++)
+      {
+        if(temp.intersects(boundingBoxes.get(i))) return true;
+      }
+      boundingBoxes.add(temp);
+    }
+    return false;
+  }
+  public static BoundingBox toBoundingBox(ProtoBlock protoBlock)
+  {
+
+    BoundingBox box=new BoundingBox(protoBlock.getMinVector(),protoBlock.getMaxVector());
+    float[] floats={protoBlock.eulerAngles.x,protoBlock.eulerAngles.y,protoBlock.eulerAngles.x};
+    Quaternion rotation=new Quaternion(floats);
+    Matrix4f result=null;
+    Matrix4f rotateMatrix=new Matrix4f(rotation.toRotationMatrix(result));
+    box.transform(rotateMatrix,box);
+
+    return box;
+  }
   public static boolean blockIntersecting(Vector3f min, Vector3f size,
                                           ProtoBlock box)
   {
@@ -212,7 +251,7 @@ public class ProtoBlock
         (box.getMinVector().y < +min.y + size.y) &&
         (box.getMinVector().z < +min.z + size.z))
     {
-     //  return true;
+       return true;
     }
     return false;
   }
@@ -243,6 +282,7 @@ public class ProtoBlock
       //checks to see if two blocks are intersecting
       if (blockIntersecting(min, dimentionVector, box))
       {
+        System.out.println("Hello");
         this.parent.removeChild(this);
         break;
       }
@@ -254,7 +294,6 @@ public class ProtoBlock
     {
       child.computeLocation(existingBlocks);
     }
-
   }
 
   /**
