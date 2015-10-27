@@ -16,7 +16,8 @@ public class MutationManager
   private Genome parentGenome;
   private Genome testingGenome;
 
-  /**
+  static private float min = .5f;
+  static private float max = 5f;  /**
    * Sets up the mutation manager. Currently always seeds with FlappyBird.
    * In the future will be handed a GenEpoOl, that it picks a creature from.
    */
@@ -38,7 +39,7 @@ public class MutationManager
    */
   public Genome getNextCreature(float testedFitness)
   {
-    int numberOfMutationMethods = 4;
+    int numberOfMutationMethods = 6;
     int randomMethodPicker;
     randomMethodPicker = rand.nextInt(numberOfMutationMethods);
     //Check if first run.
@@ -53,28 +54,45 @@ public class MutationManager
       testingGenome.setFitness(testedFitness);
       parentGenome = testingGenome;
     }
+    boolean override= true;
 
-    if (randomMethodPicker == 0)
+    if(override)
     {
       testingGenome = Adder.addBlock(parentGenome);
     }
-    else if (randomMethodPicker == 1)
+    else
     {
-      testingGenome = Randomizer.randomize(parentGenome);
+      if (randomMethodPicker == 0)
+      {
+        testingGenome = Adder.addBlock(parentGenome);
+      }
+      else if (randomMethodPicker == 1)
+      {
+        testingGenome = Randomizer.randomize(parentGenome);
+      }
+      else if (randomMethodPicker == 2)
+      {
+        testingGenome = Subtracter.subtractBlock(parentGenome);
+      }
+      else if (randomMethodPicker == 3)
+      {
+        float scaler;
+        scaler = rand.nextFloat() * 3;
+        testingGenome = Scaler.scale(parentGenome, scaler);
+      }
+      else if (randomMethodPicker == 4)
+      {
+        testingGenome = Duplicator.duplicateLimb(parentGenome);
+      }
+      else if (randomMethodPicker == 5)
+      {
+        testingGenome = Mover.moveLimbs(testingGenome);
+      }
     }
-    else if (randomMethodPicker == 2)
-    {
-      testingGenome = Subtracter.subtractBlock(parentGenome);
-    }
-    else if (randomMethodPicker == 3)
-    {
-      testingGenome = Scaler.scale(parentGenome, 2f);
-    }
+
 
 //    testingGenome = Randomizer.randomize(parentGenome);
-//    testingGenome = Mover.moveLimbs(testingGenome);
-    testingGenome = Duplicator.duplicateLimb(parentGenome);
-
+//
     //testingGenome = Scaler.scale(parentGenome, 1.1f);
     //testingGenome = Subtracter.subtractBlocks(parentGenome);
     return testingGenome;
