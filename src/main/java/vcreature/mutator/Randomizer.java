@@ -84,8 +84,6 @@ public class Randomizer
       {
         if(geneNeurons.get(j).BLOCK_INDEX==i)newGenome.addGeneNeuron(geneNeurons.get(i));
       }
-
-
     }
     if(checkForIntersections(newGenome)) genome=newGenome;
     else randomize(genome);
