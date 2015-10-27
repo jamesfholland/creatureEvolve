@@ -2,7 +2,6 @@ package vcreature.genotype.phenoConversion;
 
 import com.jme3.bounding.BoundingBox;
 import com.jme3.math.Vector3f;
-import vcreature.genotype.Axis;
 import vcreature.genotype.ImmutableVector;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
@@ -19,6 +18,7 @@ public class ProtoBlock
    * Offset from the root's 0,0,0 center.
    */
   private Vector3f center;
+  private Vector3f eulerAngles=new Vector3f(0,0,0);
   /**
    * Size in meters.
    */
@@ -97,6 +97,20 @@ public class ProtoBlock
   }
 
   /**
+   *
+   * @param size
+   */
+  public ProtoBlock(ImmutableVector size,ImmutableVector eulerAngles)
+  {
+    this.parent = null; //Null parent because we are the root.
+    this.center = new Vector3f(0, 0, 0); //We don't know the actual
+    this.size = size.getVector3f();
+    this.children = new LinkedList<>();
+    this.neurons = new LinkedList<>();
+    this.eulerAngles=eulerAngles.getVector3f();
+  }
+
+  /**
    * This constructor is for initializing an empty ProtoBlock list for
    * initial parsing.
    */
@@ -119,7 +133,7 @@ public class ProtoBlock
    */
   public void initializeBlock(ImmutableVector size, ProtoBlock parent,
                               ImmutableVector pivotParent,
-                              ImmutableVector pivot, Axis axisParent, Axis axis)
+                              ImmutableVector pivot, ImmutableVector axisParent, ImmutableVector axis)
   {
     this.size = size.getVector3f();
     this.parent = parent;
@@ -132,6 +146,21 @@ public class ProtoBlock
     this.pivotOffset = pivot;
   }
 
+  public void initializeBlock(ImmutableVector size, ProtoBlock parent,
+                              ImmutableVector pivotParent,
+                              ImmutableVector pivot, ImmutableVector axisParent, ImmutableVector axis,ImmutableVector eulerAngles)
+  {
+    this.size = size.getVector3f();
+    this.parent = parent;
+    this.parent.addChild(this);
+
+    this.axisParent = axisParent.getVector3f();
+    this.axis = axis.getVector3f();
+
+    this.pivotParentOffset = pivotParent;
+    this.pivotOffset = pivot;
+    this.eulerAngles=eulerAngles.getVector3f();
+  }
   public Vector3f getBlockCenter()
   {
     return center;
@@ -161,12 +190,12 @@ public class ProtoBlock
   }
 
   /**
-   * gets the size of the cube from corner to corner in vector form.
+   * Gets the size of the cube from corner to corner in vector form.
    * Hard to explain, if confused ask Tyler to show you the diagram.
    *
    * @return returns a vector
    */
-  public Vector3f getDimentionVector()
+  public Vector3f getDimensionVector()
   {
     return new Vector3f(getMaxVector().x - getMinVector().x,
         getMaxVector().y - getMinVector().y,
@@ -176,14 +205,14 @@ public class ProtoBlock
   public static boolean blockIntersecting(Vector3f min, Vector3f size,
                                           ProtoBlock box)
   {
-    if ((min.x < box.getMinVector().x + box.getDimentionVector().x) &&
-        (min.y < box.getMinVector().y + box.getDimentionVector().y) &&
-        (min.z < box.getMinVector().z + box.getDimentionVector().z) &&
+    if ((min.x < box.getMinVector().x + box.getDimensionVector().x) &&
+        (min.y < box.getMinVector().y + box.getDimensionVector().y) &&
+        (min.z < box.getMinVector().z + box.getDimensionVector().z) &&
         (box.getMinVector().x < +min.x + size.x) &&
         (box.getMinVector().y < +min.y + size.y) &&
         (box.getMinVector().z < +min.z + size.z))
     {
-      return true;
+     //  return true;
     }
     return false;
   }
@@ -196,8 +225,6 @@ public class ProtoBlock
    */
   public void computeLocation(LinkedList<ProtoBlock> existingBlocks)
   {
-
-
     if (parent != null)
     {
       this.pivot = this.parent.getHingeFromCenterOffset(this.pivotParentOffset);
@@ -208,7 +235,7 @@ public class ProtoBlock
     }
     Vector3f min = getMinVector();
     Vector3f max = getMaxVector();
-    Vector3f dimentionVector = getDimentionVector();
+    Vector3f dimentionVector = getDimensionVector();
     for (ProtoBlock box : existingBlocks)
     //Check Block collision somehow.
     //If collision remove child from this.parent.
@@ -217,7 +244,7 @@ public class ProtoBlock
       if (blockIntersecting(min, dimentionVector, box))
       {
         this.parent.removeChild(this);
-        return;
+        break;
       }
     }
 
@@ -311,6 +338,38 @@ public class ProtoBlock
     return height;
   }
 
+  public void addBlocksToCreature(Creature creature,Block blockParent)
+  {
+    Block current;
+    float[] floats={eulerAngles.x,eulerAngles.y,eulerAngles.z};
+    if (blockParent == null)
+    {
+      current = creature.addRoot(new Vector3f(0,100,0),size,floats);
+      creature.getBlockByID(0).setMaterial(Block.MATERIAL_RED);
+    }
+    else
+    {
+      current = creature
+              .addBlock(floats,size, blockParent, pivotParentLocal, pivotLocal,
+                       axis);
+
+      for (Neuron neuron : neurons)
+      {
+        current.addNeuron(neuron);
+      }
+    }
+
+    for (ProtoBlock child : children)
+    {
+      child.addBlocksToCreature(creature, current);
+    }
+  }
+  public void placeCreatureOnGround(Creature creature)
+  {
+    creature.placeOnGround();
+  }
+
+  @Deprecated
   public void addBlocksToCreature(Creature creature, float heightOffset,
                                   Block blockParent)
   {
@@ -320,11 +379,13 @@ public class ProtoBlock
     if (blockParent == null)
     {
       current = creature.addRoot(newCenter, size);
+      creature.getBlockByID(0).setMaterial(Block.MATERIAL_RED);
     }
     else
     {
+      float[] eulerArray={eulerAngles.x,eulerAngles.y,eulerAngles.z};
       current = creature
-          .addBlock(newCenter, size, blockParent, pivotParentLocal, pivotLocal,
+          .addBlock(eulerArray, size, blockParent, pivotParentLocal, pivotLocal,
               axisParent, axis);
 
       for (Neuron neuron : neurons)

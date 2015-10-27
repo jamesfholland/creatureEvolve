@@ -12,11 +12,12 @@ import java.awt.event.ItemListener;
 
 /**
  * Created by Tess Daughton on 10/18/2015
+ * JFrame containing SimpleApp
  * **/
 
 public class SimFrame extends JFrame implements ItemListener, ActionListener
 {
-  private SimAnimation animation =new SimAnimation();
+  private SimAnimation animation;
   private JmeCanvasContext ctx;
   private JPanel threadPane;
   private JPanel appPane;
@@ -27,10 +28,14 @@ public class SimFrame extends JFrame implements ItemListener, ActionListener
       "Thread 9", "Thread 10", "Thread 11", "Thread 12",
       "Thread 13", "Thread 14", "Thread 15", "Thread 16"};
 
-
+  /**
+   * Class Constructor:
+   * Sets up the JFrame to contain the SimpleApp canvas
+   */
   public SimFrame()
   {
     super();
+    animation = new SimAnimation();
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(1000, 800));
     setSize(new Dimension(1000, 800));
@@ -40,12 +45,17 @@ public class SimFrame extends JFrame implements ItemListener, ActionListener
     setVisible(true);
   }
 
+  /**
+   * Creates a JPanel that contains the SimpleAppliation
+   * Creates and starts the SimpleApplication Canvas (which is what actually gets embedded in panel)
+   * Gets the context of the simple application
+   */
   protected void addAppPane()
   {
     appPane = new JPanel();
     animation.createCanvas();
     animation.startCanvas();
-    ctx=(JmeCanvasContext) animation.getContext();
+    ctx= (JmeCanvasContext) animation.getContext();
     ctx.setSystemListener(animation);
     Dimension dim = new Dimension(1000, 725);
     ctx.getCanvas().setPreferredSize(dim);
@@ -53,6 +63,11 @@ public class SimFrame extends JFrame implements ItemListener, ActionListener
     add(appPane, BorderLayout.CENTER);
   }
 
+  /**
+   * Creates a Jpanel that contains user controls
+   * JButton showApp to allow the user to hide/show the creature animation
+   * JComboBox threadSelector allows the user to view the creatures running on each thread
+   */
   protected void addThreadPane()
   {
     threadPane = new JPanel();
@@ -68,6 +83,10 @@ public class SimFrame extends JFrame implements ItemListener, ActionListener
     add(threadPane, BorderLayout.PAGE_END);
   }
 
+  /**
+   * updates the JComboBox threadSelector to show that current thread user has selected
+   * @param e
+   */
   @Override
   public void actionPerformed(ActionEvent e)
   {
@@ -75,6 +94,11 @@ public class SimFrame extends JFrame implements ItemListener, ActionListener
     String thread = (String) cb.getSelectedItem();
   }
 
+  /**
+   * Used to toggle the text on the showApp button depending on whether the user wants to
+   * show the animation or hide the animation
+   * @param e
+   */
   @Override
   public void itemStateChanged(ItemEvent e)
   {

@@ -10,15 +10,16 @@ import vcreature.phenotype.EnumOperator;
  */
 public class FlappyBirdGenoform
 {
-  private Genome genome;
 
   /**
    * Creates a genome for Flappy Bird.
    */
-  FlappyBirdGenoform()
+  public static Genome getFlappyBirdGenoform()
   {
+    Genome genome;
     //Sets the root node's size in Genome constructor
-    genome = new Genome(new ImmutableVector(2.0f, 1.5f, 1.5f));
+    genome = new Genome(new ImmutableVector(2.0f, 1.5f, 1.5f), new ImmutableVector(0f,0f,0f));
+    ImmutableVector zeroVector = new ImmutableVector(0f, 0f, 0f);
 
     //Leg1 stuff
     ImmutableVector pivotA = new ImmutableVector(1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
@@ -27,14 +28,14 @@ public class FlappyBirdGenoform
     Axis LegParentAxis = Axis.UNIT_Z;
     Axis LegAxis = Axis.UNIT_Z;
 
-    GeneBlock leg1 = new GeneBlock(0, pivotA, pivotB, leg1Size, LegParentAxis, LegAxis);
+    GeneBlock leg1 = new GeneBlock(0, pivotA, pivotB, leg1Size, LegParentAxis.getImmutableVector(), LegAxis.getImmutableVector(), zeroVector);
 
     //Leg2 stuff
     ImmutableVector pivotC = new ImmutableVector(-1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector pivotD = new ImmutableVector(1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector leg2Size = new ImmutableVector(3.0f, 0.5f, 1.0f);
 
-    GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, LegParentAxis, LegAxis);
+    GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, LegParentAxis.getImmutableVector(), LegAxis.getImmutableVector(), zeroVector);
 
     genome.addGeneBlock(leg1); //Leg1 is in position 0 in the list.
     genome.addGeneBlock(leg2);
@@ -88,10 +89,7 @@ public class FlappyBirdGenoform
 
     genome.addGeneNeuron(leg2Neuron1);
     genome.addGeneNeuron(leg2Neuron2);
-  }
 
-  public Genome getGenome()
-  {
     return genome;
   }
 }

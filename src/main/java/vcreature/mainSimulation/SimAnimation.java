@@ -16,74 +16,69 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.system.AppSettings;
-import com.jme3.system.JmeCanvasContext;
 import com.jme3.texture.Texture;
 import com.jme3.input.controls.ActionListener;
 import vcreature.genotype.GenomeCreature;
+import vcreature.mutator.MutationManager;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.PhysicsConstants;
-import java.awt.*;
 
 /**
  * Created by Tess Daughton on 10/14/15.
- * JFrame to embed BulletApp inside of
- * Add user controls
+ * Joel's code with minor changes
  **/
 public class SimAnimation extends SimpleApplication implements ActionListener
 {
+  public static GenePool genePool = new GenePool();
   private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
-  private Analysis goodCreature = new Analysis();
   private float cameraAngle = (float) (Math.PI / 2.0);
-  private float elapsedSimulationTime = 0.0f;
-  private boolean runGUI = false;
+
+
+
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Vector3f tmpVec3; //
-  private Creature myCreature;
   private boolean isCameraRotating = true;
+  private Creature myCreature;
+  private float elapsedSimulationTime;
+  private MutationManager mutationManager = new MutationManager();
+  private float currentFitness = 0;
 
+  /**
+   * Initalizes a BulletAppState and a Physics Space
+   * Sets relevant Physics constants
+   * Creates AppSettings for this SimpleApp
+   * Gets the materials for the graphics
+   * Creates a new Creature
+   * Sets lighting and camera rotation
+   */
   @Override
   public void simpleInitApp()
   {
-    /**
-     * Set up Physics
-     */
-
     bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
-    //bulletAppState.setDebugEnabled(true);
-
     physicsSpace.setGravity(PhysicsConstants.GRAVITY);
     physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
     physicsSpace.setMaxSubSteps(4);
-
+    this.speed=4;
     AppSettings settings = new AppSettings(true);
-    settings.setResolution(1024, 768);
-    settings.setSamples(4); //activate antialising (softer edges, may be slower.)
-    settings.setVSync(true);
-    settings.setFrequency(60);//Frames per second
-    settings.setTitle("Flappy Bird Creature");
-    setShowSettings(false);
     setSettings(settings);
-
+    settings.setResolution(1024,768);
     //Set up inmovable floor
     com.jme3.scene.shape.Box floor = new com.jme3.scene.shape.Box(50f, 0.1f, 50f);
     Material floor_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
     Texture floorTexture = assetManager.loadTexture("Textures/FloorTile.png");
-
     floorTexture.setWrap(Texture.WrapMode.Repeat);
     floor_mat.setTexture("ColorMap", floorTexture);
-
     floor.scaleTextureCoordinates(new Vector2f(50, 50));
-    Geometry floor_geo = new Geometry("Floor", floor);
+    Geometry floor_geo = new Geometry("Floor",floor);
     floor_geo.setMaterial(floor_mat);
     floor_geo.setShadowMode(RenderQueue.ShadowMode.Receive);
     floor_geo.setLocalTranslation(0, -0.11f, 0);
     rootNode.attachChild(floor_geo);
 
-    /* Make the floor physical with mass 0.0f */
     RigidBodyControl floor_phy = new RigidBodyControl(0.0f);
     floor_geo.addControl(floor_phy);
     physicsSpace.add(floor_phy);
@@ -92,26 +87,18 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
         PhysicsConstants.GROUND_ANGULAR_DAMPINING);
 
-
     Block.initStaticMaterials(assetManager);
 
-    /********************
-     * TableMonster4LegsFlat
-     * TableMonster4Legs
-     * TableMonster2Legs
-     * FlappyBird
-     ***********************/
-
-   // SpawnCreatureGenoform flappy = new SpawnCreatureGenoform("");
-    SpawnRandomCreatureGenoform flappy = new SpawnRandomCreatureGenoform(10);
-    myCreature = new GenomeCreature(physicsSpace, rootNode, flappy.getGenome());
-
+    myCreature = new GenomeCreature(physicsSpace,rootNode, mutationManager.getNextCreature(-1));
+    //genePool.addCreatureToPopulation();
     initLighting();
     initKeys();
-
     flyCam.setDragToRotate(true);
   }
 
+  /**
+   * Creates lighting for SimpleApp
+   */
   private void initLighting()
   {
     //  ust add a light to make the lit object visible!
@@ -132,6 +119,12 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     viewPort.addProcessor(dlsr);
   }
 
+  /**
+   * Basically the "actionPerformed" of SimpleApplication
+   * @param name
+   * @param isPressed
+   * @param timePerFrame
+   */
   public void onAction(String name, boolean isPressed, float timePerFrame)
   {
     if (isPressed && name.equals("Toggle Camera Rotation"))
@@ -145,6 +138,9 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     }
   }
 
+  /**
+   * Sets useful keybindings for user
+   */
   private void initKeys()
   {
     inputManager.addMapping("Quit", new KeyTrigger(KeyInput.KEY_Q));
@@ -155,14 +151,22 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     inputManager.addListener(this, "Toggle Camera Rotation");
   }
 
-  /* Use the main event loop to trigger repeating actions. */
+  /**
+   *  Use the main event loop to trigger repeating actions.
+   */
   @Override
   public void simpleUpdate(float deltaSeconds)
   {
+    this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
-    //print("simpleUpdate() elapsedSimulationTime=", (float)elapsedSimulationTime);
-    //print("simpleUpdate() joint1.getHingeAngle()=", joint1.getHingeAngle());
-    myCreature.updateBrain(elapsedSimulationTime);
+    if (elapsedSimulationTime>15)
+    {
+      myCreature.remove();
+      elapsedSimulationTime = 0;
+
+      myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(this.currentFitness));
+
+    }
 
     if (isCameraRotating)
     {

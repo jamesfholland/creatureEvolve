@@ -68,7 +68,8 @@ public class SpawnRandomCreature extends Creature
       Block tempBlock = getBlockByID(rand.nextInt(getNumberOfBodyBlocks()));
       // Block tempBlock=getBlockByID(count++);//rand.nextInt(getNumberOfBodyBlocks()));
 //      Geometry tempGeometry= tempBlock.getGeometry();
-      Vector3f tempCenter = tempBlock.getStartCenter();
+      Vector3f tempCenter=new Vector3f(0,0,0);
+       tempCenter = tempBlock.getCenter(tempCenter);
       //System.out.println(tempBlock.getStartCenter().toString());
       Vector3f legSize = new Vector3f(sizeX, sizeY, sizeZ);
       // Vector3f legCenter=new Vector3f(tempCenter.getX()*xSign+sizeX,tempCenter.getX()+tempBlock.getSizeY()+sizeY+rootHeight,tempBlock.getSize()*zSign+sizeZ);
@@ -110,6 +111,7 @@ public class SpawnRandomCreature extends Creature
   public boolean notIntersecting()
   {
     CollisionResults results = new CollisionResults();
+    Vector3f tempVector =new Vector3f(0,0,0);
     for (int i = 0; i < getNumberOfBodyBlocks() - 1; i++)
     {
       Block tempBlock = getBlockByID(i);
@@ -117,7 +119,7 @@ public class SpawnRandomCreature extends Creature
       {
         Block tempBlock2 = getBlockByID(j);
 
-        BoundingBox tempBlock2Volume = new BoundingBox(tempBlock2.getStartCenter(), tempBlock2.getSizeX(), tempBlock2.getSizeY(), tempBlock2.getSize());
+        BoundingBox tempBlock2Volume = new BoundingBox(tempBlock2.getStartCenter(tempVector), tempBlock2.getSizeX(), tempBlock2.getSizeY(), tempBlock2.getSize());
         System.out.println(tempBlock2.getGeometry().getLocalTranslation().toString());
         if(tempBlock.getGeometry()==null) System.out.println("DKLS:JFDSA");
         tempBlock.getGeometry().collideWith(tempBlock2Volume, results);

@@ -1,5 +1,10 @@
 package vcreature.genotype;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.Objects;
+
 /**
  * This Class contains the basic information for creating a block and hinge pair.
  * <p>
@@ -55,12 +60,16 @@ public final class GeneBlock
   /**
    * The axis on the parent to rotate upon.
    */
-  public final Axis PARENT_HINGE_AXIS;
+  public final ImmutableVector PARENT_HINGE_AXIS;
 
   /**
    * The axis on to rotate upon.
    */
-  public final Axis HINGE_AXIS;
+  public final ImmutableVector HINGE_AXIS;
+  /**
+   *
+   */
+  public final ImmutableVector EULER_ANGLES;
 
   /**
    * Create a new GeneBlock, this object is immutable.
@@ -75,9 +84,10 @@ public final class GeneBlock
    * @param size            The blocks size in distance
    * @param parentHingeAxis The axis on the parent to rotate upon.
    * @param hingeAxis       The axis on to rotate upon.
+   * @param eulerAngles
    */
   public GeneBlock(int parentOffset, ImmutableVector parentPivot, ImmutableVector pivot, ImmutableVector size,
-                   Axis parentHingeAxis, Axis hingeAxis)
+                   ImmutableVector parentHingeAxis, ImmutableVector hingeAxis, ImmutableVector eulerAngles)
   {
     PARENT_OFFSET = parentOffset;
     PARENT_PIVOT = parentPivot;
@@ -85,5 +95,53 @@ public final class GeneBlock
     SIZE = size;
     PARENT_HINGE_AXIS = parentHingeAxis;
     HINGE_AXIS = hingeAxis;
+    EULER_ANGLES = eulerAngles;
+  }
+
+  /**
+   * Constructs based on file input.
+   *
+   * @param fileIn The Reader we parse from.
+   * @throws IOException handled in GeneFile
+   */
+  public GeneBlock(BufferedReader fileIn) throws IOException
+  {
+    PARENT_OFFSET = Integer.parseInt(fileIn.readLine());
+    PARENT_PIVOT = new ImmutableVector(fileIn);
+    PIVOT = new ImmutableVector(fileIn);
+    SIZE = new ImmutableVector(fileIn);
+    PARENT_HINGE_AXIS = new ImmutableVector(fileIn);
+    HINGE_AXIS = new ImmutableVector(fileIn);
+    EULER_ANGLES = new ImmutableVector(fileIn);
+  }
+
+  /**
+   * Writes to an output stream.
+   * Note that each vector written takes 3 lines.
+   *
+   * @param fileOut the stream we write to.
+   * @throws IOException handled in GenoFile
+   */
+  public void toFile(BufferedWriter fileOut) throws IOException
+  {
+    fileOut.write("#Block\n");
+    fileOut.write(String.format("%d\n", PARENT_OFFSET));
+    PARENT_PIVOT.toFile(fileOut);
+    PIVOT.toFile(fileOut);
+    SIZE.toFile(fileOut);
+    PARENT_HINGE_AXIS.toFile(fileOut);
+    HINGE_AXIS.toFile(fileOut);
+    EULER_ANGLES.toFile(fileOut);
+  }
+
+  /**
+   * This is overridden to maintain stability in genome hashes between runs.
+   *
+   * @return an integer that is the hash.
+   */
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(PARENT_OFFSET, PARENT_PIVOT, PIVOT, SIZE, PARENT_HINGE_AXIS, HINGE_AXIS, EULER_ANGLES);
   }
 }

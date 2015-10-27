@@ -1,7 +1,5 @@
 package vcreature.genotype;
 
-import com.jme3.math.Vector3f;
-
 /**
  * This is enum contains axes that correspond to JMonkey's Vector3f axis.
  * This enum is to aid in making genes immutable and final.
@@ -10,26 +8,26 @@ public enum Axis
 {
   UNIT_X
       {
-        public Vector3f getVector3f()
+        public ImmutableVector getImmutableVector()
         {
-          return Vector3f.UNIT_X;
+          return new ImmutableVector(1, 0, 0);
         }
       },
   UNIT_Y
       {
-        public Vector3f getVector3f()
+        public ImmutableVector getImmutableVector()
         {
-          return Vector3f.UNIT_Y;
+          return new ImmutableVector(0, 1, 0);
         }
       },
   UNIT_Z
       {
-        public Vector3f getVector3f()
+        public ImmutableVector getImmutableVector()
         {
-          return Vector3f.UNIT_Z;
+          return new ImmutableVector(0, 0, 1);
         }
       };
 
-  public abstract Vector3f getVector3f();
+  public abstract ImmutableVector getImmutableVector();
 
 }
