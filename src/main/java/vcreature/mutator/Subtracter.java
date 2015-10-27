@@ -30,6 +30,7 @@ public static Genome subtractBlocks(Genome genome,int index)
 
 
   Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
+  System.out.println(geneBlocks.get(0));
   for (int i = 0; i <geneBlocks.size(); i++)
   {
     if(i!=index)

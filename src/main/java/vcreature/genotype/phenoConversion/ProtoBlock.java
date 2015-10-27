@@ -282,7 +282,7 @@ public class ProtoBlock
       //checks to see if two blocks are intersecting
       if (blockIntersecting(min, dimentionVector, box))
       {
-        System.out.println("Hello");
+        System.out.println("Intersects");
         this.parent.removeChild(this);
         break;
       }

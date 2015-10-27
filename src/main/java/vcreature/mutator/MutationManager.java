@@ -45,9 +45,9 @@ public class MutationManager
       parentGenome = testingGenome;
     }
 
-    //testingGenome = Randomizer.randomize(parentGenome);
-    //testingGenome = Scaler.scale(parentGenome, 1.05f);
-    testingGenome = Subtracter.subtractBlocks(parentGenome);
+    testingGenome = Randomizer.randomize(parentGenome);
+    testingGenome = Scaler.scale(parentGenome, 2f);
+//    testingGenome = Subtracter.subtractBlockfs(parentGenome);
     return testingGenome;
   }
 }
