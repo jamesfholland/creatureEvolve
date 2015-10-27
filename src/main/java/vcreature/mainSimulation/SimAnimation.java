@@ -34,7 +34,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
   private float cameraAngle = (float) (Math.PI / 2.0);
-
+  private boolean gamePause;
 
 
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
@@ -62,10 +62,11 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     physicsSpace.setGravity(PhysicsConstants.GRAVITY);
     physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
     physicsSpace.setMaxSubSteps(4);
-    this.speed=4;
+    this.speed = 4;
     AppSettings settings = new AppSettings(true);
     setSettings(settings);
-    settings.setResolution(1024,768);
+    settings.setResolution(1024, 768);
+    this.setPauseOnLostFocus(false);
     //Set up inmovable floor
     com.jme3.scene.shape.Box floor = new com.jme3.scene.shape.Box(50f, 0.1f, 50f);
     Material floor_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -73,7 +74,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     floorTexture.setWrap(Texture.WrapMode.Repeat);
     floor_mat.setTexture("ColorMap", floorTexture);
     floor.scaleTextureCoordinates(new Vector2f(50, 50));
-    Geometry floor_geo = new Geometry("Floor",floor);
+    Geometry floor_geo = new Geometry("Floor", floor);
     floor_geo.setMaterial(floor_mat);
     floor_geo.setShadowMode(RenderQueue.ShadowMode.Receive);
     floor_geo.setLocalTranslation(0, -0.11f, 0);
@@ -89,7 +90,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
     Block.initStaticMaterials(assetManager);
 
-    myCreature = new GenomeCreature(physicsSpace,rootNode, mutationManager.getNextCreature(-1));
+    myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
     //genePool.addCreatureToPopulation();
     initLighting();
     initKeys();
@@ -121,6 +122,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
   /**
    * Basically the "actionPerformed" of SimpleApplication
+   *
    * @param name
    * @param isPressed
    * @param timePerFrame
@@ -134,8 +136,15 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     else if (name.equals("Quit"))
     {
       System.out.format("Creature Fitness (Maximium height of lowest point) = %.3f meters]\n", myCreature.getFitness());
+
       System.exit(0);
     }
+  }
+
+  public void setSpeed(int speed)
+  {
+    this.speed=speed;
+    this.restart();
   }
 
   /**
@@ -151,15 +160,20 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     inputManager.addListener(this, "Toggle Camera Rotation");
   }
 
+  protected void setGamePause(boolean paused)
+  {
+    gamePause = paused;
+  }
+
   /**
-   *  Use the main event loop to trigger repeating actions.
+   * Use the main event loop to trigger repeating actions.
    */
   @Override
   public void simpleUpdate(float deltaSeconds)
   {
     this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
-    if (elapsedSimulationTime>15)
+    if (elapsedSimulationTime > 15)
     {
       myCreature.remove();
       elapsedSimulationTime = 0;

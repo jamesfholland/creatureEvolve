@@ -23,18 +23,21 @@ public class MutationManager
   {
     testingGenome = GenoFile.readGenome("-1.00_Flappy.geno");
     parentGenome = testingGenome;
-   // GenoFile.writeGenome(testingGenome);
+    // GenoFile.writeGenome(testingGenome);
   }
 
   /**
-   * This returns the next mutant based on the current creature we are hill climbing from.
+   * This returns the next mutant based on the current creature we are hill
+   * climbing from.
+   *
    * @param testedFitness the calculated fitness in meters.
-   *                      If this is -1, this means we are just starting and need to test the seed.
+   *                      If this is -1, this means we are just starting and
+   *                      need to test the seed.
    * @return the next genome to test.
    */
   public Genome getNextCreature(float testedFitness)
   {
-    int numberOfMutationMethods=3;
+    int numberOfMutationMethods = 4;
     int randomMethodPicker;
     randomMethodPicker = rand.nextInt(numberOfMutationMethods);
     //Check if first run.
@@ -45,23 +48,29 @@ public class MutationManager
 
     if (testedFitness > parentGenome.getFitness())
     {
-      System.out.println("Better Creature found, Fitness: "+ testedFitness);
+      System.out.println("Better Creature found, Fitness: " + testedFitness);
       testingGenome.setFitness(testedFitness);
       parentGenome = testingGenome;
     }
-    if(randomMethodPicker==0)
+
+    if (randomMethodPicker == 0)
     {
       testingGenome = Adder.addBlock(parentGenome);
     }
-    else if(randomMethodPicker==1)
+    else if (randomMethodPicker == 1)
     {
       testingGenome = Randomizer.randomize(parentGenome);
     }
-    else if(randomMethodPicker==2)
+    else if (randomMethodPicker == 2)
     {
       testingGenome = Subtracter.subtractBlock(parentGenome);
     }
-      return testingGenome;
+    else if (randomMethodPicker == 3)
+    {
+      testingGenome = Scaler.scale(parentGenome, 2f);
+    }
+
+    return testingGenome;
   }
 }
 

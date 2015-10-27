@@ -3,6 +3,14 @@ package vcreature.mutator;
 import vcreature.genotype.*;
 
 import java.util.ArrayList;
+import com.jme3.math.Vector3f;
+import vcreature.genotype.*;
+import vcreature.genotype.phenoConversion.ProtoBlock;
+import vcreature.phenotype.Block;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import java.util.Random;
 
 /**
@@ -10,7 +18,6 @@ import java.util.Random;
  */
 public class Subtracter
 {
-
   static Genome genome;
   static ArrayList<GeneBlock> geneBlocks;
   static ArrayList<GeneNeuron> geneNeurons;
@@ -87,6 +94,42 @@ public class Subtracter
   public Genome getGenome()
   {
     return genome;
+  }
+
+  public static Genome subtractBlocks(Genome genome)
+  {
+    Random rand = new Random();
+    System.out.println(Arrays.toString(genome.getGENE_BLOCKS().toArray()));
+    Genome newGenome =
+        subtractBlocks(genome, rand.nextInt(genome.getGENE_BLOCKS().size()));
+    return newGenome;
+  }
+
+  public static Genome subtractBlocks(Genome genome, int index)
+  {
+    ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
+    ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
+    geneBlocks.remove(index);
+
+
+    Genome newGenome =
+        new Genome(genome.getRootSize(), genome.getRootEulerAngles());
+    System.out.println(geneBlocks.get(0));
+    for (int i = 0; i < geneBlocks.size(); i++)
+    {
+      if (i != index)
+      {
+        System.out.println("test");
+        newGenome.addGeneBlock(geneBlocks.get(i));
+
+        for (int j = 0; j < geneNeurons.size(); j++)
+        {
+          if (geneNeurons.get(j).BLOCK_INDEX == i)
+            newGenome.addGeneNeuron(geneNeurons.get(i));
+        }
+      }
+    }
+    return newGenome;
   }
 }
 
