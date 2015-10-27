@@ -1,5 +1,6 @@
 package vcreature.mutator;
 
+import com.sun.org.apache.bcel.internal.generic.DUP;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.FlappyBirdGenoform;
@@ -45,9 +46,12 @@ public class MutationManager
       parentGenome = testingGenome;
     }
 
-    testingGenome = Randomizer.randomize(parentGenome);
-    testingGenome = Scaler.scale(parentGenome, 2f);
-//    testingGenome = Subtracter.subtractBlockfs(parentGenome);
+//    testingGenome = Randomizer.randomize(parentGenome);
+//    testingGenome = Mover.moveLimbs(testingGenome);
+    testingGenome = Duplicator.duplicateLimb(parentGenome);
+
+    //testingGenome = Scaler.scale(parentGenome, 1.1f);
+    //testingGenome = Subtracter.subtractBlocks(parentGenome);
     return testingGenome;
   }
 }
