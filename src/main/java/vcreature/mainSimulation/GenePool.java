@@ -23,7 +23,7 @@ public class GenePool
   {
     synchronized (genomes)
     {
-      int index = rand.nextInt() % genomes.size();
+      int index = Math.abs(rand.nextInt()) % genomes.size();
       return genomes.get(index);
     }
   }
