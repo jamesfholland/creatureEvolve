@@ -18,6 +18,8 @@ public class MutationManager
   private Genome parentGenome;
   private Genome testingGenome;
 
+  private boolean retesting = false;
+
   /**
    * Sets up the mutation manager. Currently always seeds with FlappyBird.
    * In the future will be handed a GenEpoOl, that it picks a creature from.
@@ -48,15 +50,25 @@ public class MutationManager
     //Check if first run.
     if (testedFitness == -1)
     {
+      retesting = true; //We want to verify this one well.
       return testingGenome;
     }
 
     if (testedFitness > parentGenome.getFitness())
     {
-      System.out.println("Better Creature found, Fitness: " + testedFitness);
-      testingGenome.setFitness(testedFitness);
-      parentGenome = testingGenome;
-      GenoFile.writeGenome(parentGenome);
+      if(retesting)
+      {
+        retesting = false; //Want to double check that it wasn't a flawed test.
+        System.out.println("Better Creature found, Fitness: " + testedFitness);
+        testingGenome.setFitness(testedFitness);
+        parentGenome = testingGenome;
+        GenoFile.writeGenome(parentGenome);
+      }
+      else
+      {
+        retesting = true;
+        return testingGenome;
+      }
     }
 
     boolean overRide =false;
