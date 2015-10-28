@@ -35,6 +35,13 @@ public class Scaler
     {
       System.out.println(i);
       block = geneBlocks.get(i);
+
+      if(block.SIZE.getX()*scale<.5f || block.SIZE.getX()>10*block.SIZE.getY() ||block.SIZE.getX()>10*block.SIZE.getZ() ||
+          block.SIZE.getY()*scale<.5f || block.SIZE.getY() >10*block.SIZE.getX() ||block.SIZE.getY()>10*block.SIZE.getZ() ||
+          block.SIZE.getZ()*scale<.5f || block.SIZE.getZ() >10*block.SIZE.getX() ||block.SIZE.getZ()>10*block.SIZE.getY())
+      {
+        return genome;
+      }
       scaledSize = new ImmutableVector(block.SIZE.getX() * scale, block.SIZE.getY() * scale, block.SIZE.getZ() * scale);
       scaledBlock = new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT, scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
           block.EULER_ANGLES);
