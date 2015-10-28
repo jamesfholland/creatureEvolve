@@ -25,7 +25,7 @@ public class MutationManager
   public MutationManager()
   {
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
-    testingGenome = GenePool.getRandom(); //GenoFile.readGenome("-1.00_Flappy.geno");
+    testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     parentGenome = testingGenome;
      //GenoFile.writeGenome(testingGenome);
@@ -64,7 +64,7 @@ public class MutationManager
     {
       float scaler;
       scaler = rand.nextFloat() + 1;
-      testingGenome = ScaleSingleBlock.scaleBlock(parentGenome,scaler);
+      testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
     }
     else
     {
