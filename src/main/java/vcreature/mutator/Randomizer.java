@@ -68,27 +68,37 @@ public class Randomizer
     return newGenome;
   }
 
-  public static Genome randomizeNeuron(Genome genome)
+  public static Genome randomizeNeuron(Genome genome,int index)
   {
     Genome newGenome =new Genome(genome.getRootSize(),genome.getRootEulerAngles());
+    geneBlocks=genome.getGENE_BLOCKS();
+    geneNeurons=genome.getGENE_NEURONS();
 
-    GeneNeuron randNeuron=null;
     int sign = (rand.nextBoolean()) ? 1 : -1;
-    int randNeuronEnum=rand.nextInt(5);
+
     EnumNeuronInput aInput=EnumNeuronInput.TIME;
     EnumNeuronInput bInput=EnumNeuronInput.CONSTANT;
     EnumNeuronInput cInput=EnumNeuronInput.CONSTANT;
     EnumNeuronInput dInput=EnumNeuronInput.CONSTANT;
     EnumNeuronInput eInput=EnumNeuronInput.CONSTANT;
-    randNeuron = new GeneNeuron(
-            1, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+    GeneNeuron randNeuron = new GeneNeuron(
+            index, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
             aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
-            0, 0,rand.nextInt(5)+1, sign*Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+            0, 0,10, sign*Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
             EnumOperator.ADD, //Binary operator for merging A and B
             EnumOperator.IDENTITY, //Unary operator for after A and B are merged
             EnumOperator.ADD, //Binary operator for merging D and E
             EnumOperator.IDENTITY); //Unary operator for after D and E are merged
 
+    for (int i = 0; i <geneBlocks.size() ; i++)
+    {
+      newGenome.addGeneBlock(geneBlocks.get(i));
+    }
+    for (int j = 0; j <geneNeurons.size() ; j++)
+    {
+      newGenome.addGeneNeuron(geneNeurons.get(j));
+    }
+    newGenome.addGeneNeuron(randNeuron);
     return newGenome;
   }
   //Checks if the creature is valid after mutation

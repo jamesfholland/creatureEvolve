@@ -7,14 +7,14 @@
 * **Genome**
     * ~~Create classe James~~
     * ~~Conversion to phenome James~~
-    * **File input**
-    * **File output**
-    * Creature Identifier human readable/filename
+    * ~~File input~~
+    * ~~File output~~
+    * ~~Creature Identifier human readable/filename~~
 * **Controller**
-    * **Create a basic controller**
-        * Spawns a creature
-        * Test Validity
-        * Test fitness
+    * ~~Create a basic controller~~
+        * ~~Spawns a creature~~
+        * ~~Test Validity~~
+        * ~~Test fitness~~
 * Mating (mixing two creatures)
     * Crosscutting (Splicing) mixing two genomes into one
     * Stacking duplicating some genes multiple times.
@@ -33,14 +33,10 @@
     * Spawn replacement creatures for new genes
 * **GUI** Tess
     * **Write generic gui that will get data from our controller**
-    * For each thread
-       * Total fitness
-       * setting for min fit/min
+    * Total fitness
+    * setting for min fit/min
 	* Autostart genetic algorithm threshold input
-	* Select number of threads
-	* Select creature to watch
 * **Hill Climbing** James
 	* **Mutate Genome**
 	   * Add Genes
        * Mutate Genes
-    * MulitThread
