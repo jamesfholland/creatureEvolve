@@ -60,7 +60,7 @@ public class Adder
     float sizeY = rand.nextFloat() * (max - min) + min;
     float sizeZ = rand.nextFloat() * (max - min) + min;
     ImmutableVector size=new ImmutableVector(sizeX,sizeY,sizeZ);
-    ImmutableVector randAngle=new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
+    ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
     int parentOffset=1;
     int xSign = (rand.nextBoolean()) ? 1 : -1;
     int ySign =(rand.nextBoolean()) ? 1 : -1;
