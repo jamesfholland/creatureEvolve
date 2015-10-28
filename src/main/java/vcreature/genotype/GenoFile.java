@@ -1,6 +1,7 @@
 package vcreature.genotype;
 
 import java.io.*;
+import java.util.LinkedList;
 
 /**
  * GenoFile handles all input and output of genome files.
@@ -8,6 +9,9 @@ import java.io.*;
 public class GenoFile
 {
   private static final String SAVE_LOCATION = "creatures/";
+  /**
+   * The location of the GenePool relative to the execution location.
+   */
   private static final String GENE_POOL_LOCATION = "GenePool/";
 
   /**
@@ -78,5 +82,27 @@ public class GenoFile
       {
       }
     }
+  }
+
+  /**
+   * Loads all genomes into a LinkedList.
+   * @return List of genomes in starter GenePool.
+   */
+  public static LinkedList<Genome> loadGenePool()
+  {
+    LinkedList<Genome> genomes = new LinkedList<>();
+    File folder = new File(GenoFile.GENE_POOL_LOCATION);
+
+    File[] files = folder.listFiles();
+
+    for( int i = 0; i < files.length; i++)
+    {
+      if(files[i].isFile() && files[i].getName().endsWith(".geno"))
+      {
+        genomes.add(GenoFile.readGenome(files[i].getName()));
+      }
+    }
+
+    return genomes;
   }
 }
