@@ -17,6 +17,7 @@ public class MutationManager
   Random rand = new Random();
   private Genome parentGenome;
   private Genome testingGenome;
+  private Mutators mutator;
 
   private boolean retesting = false;
 
@@ -70,56 +71,57 @@ public class MutationManager
         return testingGenome;
       }
     }
-
-    boolean overRide =false;
-    if(overRide)
+    mutator = mutator.getCurrentMutator();
+    switch (mutator)
     {
+      case ADDER:
+        testingGenome = Adder.addBlock(parentGenome);
+        mutator.setCurrentMutator(Mutators.ADDER);
+        break;
+      case DUPLICATOR:
+        testingGenome = Duplicator.duplicateLimb(parentGenome);
+        mutator.setCurrentMutator(Mutators.DUPLICATOR);
+        break;
+      case INVERTER:
+        // implement
+        mutator.setCurrentMutator(Mutators.INVERTER);
+        break;
+      case MOVER:
+        //implement
+        mutator.setCurrentMutator(Mutators.INVERTER);
+        break;
+      case RANDOMIZER:
+        testingGenome = Randomizer.randomize(parentGenome);
+        mutator.setCurrentMutator(Mutators.RANDOMIZER);
+        break;
+      case ROTATOR:
+        //implement
+        mutator.setCurrentMutator(Mutators.ROTATOR);
+        break;
+      case SCALER:
+        testingGenome = Scaler.scale(parentGenome, 1.1f);
+        mutator.setCurrentMutator(Mutators.SCALER);
+        break;
+      case SUBSTRACTOR:
+        //implement
+        mutator.setCurrentMutator(Mutators.SUBSTRACTOR);
+      case SYMMETRIZER:
+        //implement
+        mutator.setCurrentMutator(Mutators.SYMMETRIZER);
+        break;
+      default:
+        //implement
+        mutator.setCurrentMutator(Mutators.RANDOMIZER);
       float scaler;
       scaler = rand.nextFloat() + 1;
       testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
-    }
-    else
-    {
-      if (randomMethodPicker == 0)
-      {
-        testingGenome = Adder.addBlock(parentGenome);
-      }
-      else if (randomMethodPicker == 1)
-      {
-        testingGenome = Randomizer.randomize(parentGenome);
-      }
-      else if (randomMethodPicker == 2)
-      {
 
-        float scaler;
-        scaler = rand.nextFloat()+1;
-        testingGenome = Scaler.scale(parentGenome, scaler);
+//    testingGenome = Randomizer.randomize(parentGenome);
+//    testingGenome = Mover.moveLimbs(testingGenome);
+   // testingGenome = Duplicator.duplicateLimb(parentGenome);
 
-      }
-      else if (randomMethodPicker == 3)
-      {
-        float scaler;
-        scaler = rand.nextFloat() + 1;
-        testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
-      }
-      else if(randomMethodPicker == 4)
-      {
-    //    testingGenome = Mover.moveLimbs(parentGenome);
-      }
-      else if(randomMethodPicker == 5)
-      {
-    //    testingGenome = Duplicator.duplicateLimb(parentGenome);
-      }
-      else if(randomMethodPicker == 6)
-      {
-        testingGenome = Subtracter.subtractBlock(parentGenome);
-      }
-      else if(randomMethodPicker==7)
-      {
-        testingGenome=Inverter.basicInverter(parentGenome);
-      }
-    }
+    //testingGenome = Scaler.scale(parentGenome, 1.1f);
+    //testingGenome = Subtracter.subtractBlocks(parentGenome);
     return testingGenome;
   }
 }
-
