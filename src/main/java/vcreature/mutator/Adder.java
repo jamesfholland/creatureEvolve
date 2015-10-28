@@ -76,7 +76,7 @@ public class Adder
     ImmutableVector parentPivot=new ImmutableVector(-randPivot.X,-randPivot.Y,-randPivot.Z);
     randBlock=new GeneBlock(parentOffset, randPivot,parentPivot,size, Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
     //geneBlocks.remove(index);
-    geneBlocks.add(randBlock);
+    //geneBlocks.add(randBlock);
 
     geneBlocks.add(randBlock);
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
@@ -90,10 +90,9 @@ public class Adder
     }
     for (int j = 0; j <geneNeurons.size(); j++)
     {
-      System.out.println(j);
       newGenome.addGeneNeuron(geneNeurons.get(j));
     }
-    newGenome=Randomizer.randomizeNeuron(newGenome,geneBlocks.size());
+    newGenome=Randomizer.randomizeNeuron(newGenome,geneBlocks.size()-1);
     return newGenome;
   }
 }

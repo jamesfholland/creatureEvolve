@@ -4,6 +4,7 @@ import com.sun.org.apache.bcel.internal.generic.DUP;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.FlappyBirdGenoform;
+import vcreature.mainSimulation.SpawnCreatureGenoform;
 
 import java.util.Random;
 
@@ -23,6 +24,7 @@ public class MutationManager
   public MutationManager()
   {
     testingGenome = GenoFile.readGenome("-1.00_Flappy.geno");
+    //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     parentGenome = testingGenome;
     // GenoFile.writeGenome(testingGenome);
   }

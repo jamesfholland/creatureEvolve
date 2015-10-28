@@ -1,5 +1,6 @@
 package vcreature.mutator;
 
+import vcreature.genotype.GeneBlock;
 import vcreature.genotype.Genome;
 
 /**
@@ -10,7 +11,7 @@ public class Symmetrizer
   public static Genome Sysmmetrize(Genome genome)
   {
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
-
     return newGenome;
   }
+
 }
