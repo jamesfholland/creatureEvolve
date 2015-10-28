@@ -52,8 +52,11 @@ public class Adder
 
     geneBlocks=genome.getGENE_BLOCKS();
     geneNeurons=genome.getGENE_NEURONS();
-    int index = rand.nextInt(1);
+    int index = rand.nextInt(geneBlocks.size()/2);
+    int signChooser = (rand.nextBoolean()) ? 1 : -1;
 
+    index = 0;
+    //index = signChooser;
     GeneBlock block=geneBlocks.get(index);
     GeneBlock randBlock;
     float sizeX = rand.nextFloat() * (max - min) + min;
@@ -61,19 +64,19 @@ public class Adder
     float sizeZ = rand.nextFloat() * (max - min) + min;
     ImmutableVector size=new ImmutableVector(sizeX,sizeY,sizeZ);
     ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
-    int parentOffset=1;
+    int parentOffset=index;
     int xSign = (rand.nextBoolean()) ? 1 : -1;
     int ySign =(rand.nextBoolean()) ? 1 : -1;
     int zSign = (rand.nextBoolean()) ? 1 : -1;
     ImmutableVector randPivot= new ImmutableVector(0, 0, 0);
     int randomFace=rand.nextInt(2);
-    if(randomFace==0) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign*rand.nextFloat());
-    else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign*rand.nextFloat());
-    else if(randomFace==2) randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign*rand.nextFloat(),zSign);
+    if(randomFace==0) randPivot=new ImmutableVector(xSign,ySign,zSign*rand.nextFloat());
+    else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign);
+    else if(randomFace==2) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign);
     ImmutableVector parentPivot=new ImmutableVector(-randPivot.X,-randPivot.Y,-randPivot.Z);
     randBlock=new GeneBlock(parentOffset, randPivot,parentPivot,size, Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
     //geneBlocks.remove(index);
-    geneBlocks.add(index,randBlock);
+    geneBlocks.add(randBlock);
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
     for (int i = 0; i <geneBlocks.size() ; i++)
     {
