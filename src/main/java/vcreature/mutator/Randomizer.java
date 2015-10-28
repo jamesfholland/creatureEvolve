@@ -4,6 +4,8 @@ import com.jme3.math.Vector3f;
 import vcreature.genotype.*;
 import vcreature.genotype.phenoConversion.ProtoBlock;
 import vcreature.phenotype.Block;
+import vcreature.phenotype.EnumNeuronInput;
+import vcreature.phenotype.EnumOperator;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -62,7 +64,7 @@ public class Randomizer
     float sizeY = rand.nextFloat() * (max - min) + min;
     float sizeZ = rand.nextFloat() * (max - min) + min;
     ImmutableVector size=new ImmutableVector(sizeX,sizeY,sizeZ);
-    ImmutableVector randAngle=new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
+    ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
     int parentOffset=block.PARENT_OFFSET;
     int xSign = (rand.nextBoolean()) ? 1 : -1;
     int ySign =(rand.nextBoolean()) ? 1 : -1;
@@ -87,6 +89,29 @@ public class Randomizer
     }
     if(checkForIntersections(newGenome)) genome=newGenome;
     else randomize(genome);
+    return newGenome;
+  }
+
+  public static Genome randomizeNeuron(Genome genome)
+  {
+    Genome newGenome =new Genome(genome.getRootSize(),genome.getRootEulerAngles());
+
+    GeneNeuron randNeuron=null;
+    int randNeuronEnum=rand.nextInt(5);
+    EnumNeuronInput aInput=EnumNeuronInput.TIME;
+    EnumNeuronInput bInput=EnumNeuronInput.CONSTANT;
+    EnumNeuronInput cInput=EnumNeuronInput.CONSTANT;
+    EnumNeuronInput dInput=EnumNeuronInput.CONSTANT;
+    EnumNeuronInput eInput=EnumNeuronInput.CONSTANT;
+    randNeuron = new GeneNeuron(
+            1, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+            aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
+            rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+            EnumOperator.ADD, //Binary operator for merging A and B
+            EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+            EnumOperator.ADD, //Binary operator for merging D and E
+            EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+
     return newGenome;
   }
   //Checks if the creature is valid after mutation
