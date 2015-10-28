@@ -75,7 +75,9 @@ public class Randomizer
     geneNeurons=genome.getGENE_NEURONS();
 
     int sign = (rand.nextBoolean()) ? 1 : -1;
-
+    ImmutableVector pivot=geneBlocks.get(index).PIVOT;
+    if(Math.abs(pivot.X)==1) sign=(int)pivot.X;
+    else if(Math.abs(pivot.Z)==1) sign=(int)pivot.Z;
     EnumNeuronInput aInput=EnumNeuronInput.TIME;
     EnumNeuronInput bInput=EnumNeuronInput.CONSTANT;
     EnumNeuronInput cInput=EnumNeuronInput.CONSTANT;

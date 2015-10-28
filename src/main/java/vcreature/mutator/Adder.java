@@ -16,7 +16,7 @@ public class Adder
   static ArrayList<GeneNeuron> geneNeurons;
   static Random rand=new Random();
   static private float min = .5f;
-  static private float max = 5f;
+  static private float max = 3f;
 
 //  /**
 //   * This will Randomize the genome at a random index

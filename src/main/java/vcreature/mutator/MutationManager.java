@@ -100,6 +100,10 @@ public class MutationManager
       {
         testingGenome = Subtracter.subtractBlock(parentGenome);
       }
+      else if(randomMethodPicker==7)
+      {
+        testingGenome=Inverter.basicInverter(parentGenome);
+      }
     }
     return testingGenome;
   }
