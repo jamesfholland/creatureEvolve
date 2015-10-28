@@ -22,31 +22,7 @@ public class Randomizer
   static private float min = .5f;
   static private float max = 5f;
 
-//  /**
-//   * This will Randomize the genome at a random index
-//   * @param genome
-//   *//*
-//  public Randomizer(Genome genome)
-//  {
-//    this.genome=genome;
-//    this.geneBlocks=genome.getGENE_BLOCKS();
-//    this.geneNeurons=genome.getGENE_NEURONS();
-//    int index=rand.nextInt(geneBlocks.size());
-//    randomize(index);
-//  }
-//
-//  *//**
-//   * Randomize genome at specific point
-//   * @param genome
-//   * @param index index of leg
-//   *//*
-//  public Randomizer(Genome genome,int index)
-//  {
-//    this.genome=genome;
-//    this.geneBlocks=genome.getGENE_BLOCKS();
-//    this.geneNeurons=genome.getGENE_NEURONS();
-//    randomize(index);
-//  }*/
+
 
   /**
    * This is where the magic happens
@@ -97,6 +73,7 @@ public class Randomizer
     Genome newGenome =new Genome(genome.getRootSize(),genome.getRootEulerAngles());
 
     GeneNeuron randNeuron=null;
+    rand.nextBoolean();
     int randNeuronEnum=rand.nextInt(5);
     EnumNeuronInput aInput=EnumNeuronInput.TIME;
     EnumNeuronInput bInput=EnumNeuronInput.CONSTANT;
@@ -106,7 +83,7 @@ public class Randomizer
     randNeuron = new GeneNeuron(
             1, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
             aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
-            rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+            0, 0,rand.nextInt(5)+1, rand.nextInt(10), rand.nextInt(10), //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
             EnumOperator.ADD, //Binary operator for merging A and B
             EnumOperator.IDENTITY, //Unary operator for after A and B are merged
             EnumOperator.ADD, //Binary operator for merging D and E
