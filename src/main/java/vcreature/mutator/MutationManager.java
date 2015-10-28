@@ -54,10 +54,10 @@ public class MutationManager
       parentGenome = testingGenome;
     }
 
-    boolean overRide =false;
+    boolean overRide =true;
     if(overRide)
     {
-
+      testingGenome = Adder.addBlock(parentGenome);
     }
     else
     {
