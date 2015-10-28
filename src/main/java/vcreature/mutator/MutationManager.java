@@ -59,6 +59,7 @@ public class MutationManager
     if(override)
     {
       testingGenome = Adder.addBlock(parentGenome);
+
     }
     else
     {
@@ -77,7 +78,7 @@ public class MutationManager
       else if (randomMethodPicker == 3)
       {
         float scaler;
-        scaler = rand.nextFloat() * 3;
+        scaler = rand.nextFloat() + 1;
         testingGenome = Scaler.scale(parentGenome, scaler);
       }
       else if (randomMethodPicker == 4)

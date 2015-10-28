@@ -52,7 +52,7 @@ public class Adder
 
     geneBlocks=genome.getGENE_BLOCKS();
     geneNeurons=genome.getGENE_NEURONS();
-    int index = rand.nextInt(2);
+    int index = rand.nextInt(0);
 
     GeneBlock block=geneBlocks.get(index);
     GeneBlock randBlock;
@@ -61,11 +61,11 @@ public class Adder
     float sizeZ = rand.nextFloat() * (max - min) + min;
     ImmutableVector size=new ImmutableVector(sizeX,sizeY,sizeZ);
     ImmutableVector randAngle=new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
-    int parentOffset=1;
+    int parentOffset=-1;
     int xSign = (rand.nextBoolean()) ? 1 : -1;
     int ySign =(rand.nextBoolean()) ? 1 : -1;
     int zSign = (rand.nextBoolean()) ? 1 : -1;
-    ImmutableVector randPivot= new ImmutableVector(1, 0, 0);;
+    ImmutableVector randPivot= new ImmutableVector(0, 0, 0);
     int randomFace=rand.nextInt(2);
     if(randomFace==0) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign*rand.nextFloat());
     else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign*rand.nextFloat());
