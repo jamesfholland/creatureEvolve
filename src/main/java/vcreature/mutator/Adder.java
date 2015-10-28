@@ -52,7 +52,7 @@ public class Adder
 
     geneBlocks=genome.getGENE_BLOCKS();
     geneNeurons=genome.getGENE_NEURONS();
-    int index = rand.nextInt(0);
+    int index = rand.nextInt(1);
 
     GeneBlock block=geneBlocks.get(index);
     GeneBlock randBlock;
