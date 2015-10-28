@@ -1,11 +1,8 @@
 package vcreature.mutator;
 
-import com.sun.org.apache.bcel.internal.generic.DUP;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
-import vcreature.mainSimulation.FlappyBirdGenoform;
 import vcreature.mainSimulation.GenePool;
-import vcreature.mainSimulation.SpawnCreatureGenoform;
 
 import java.util.Random;
 
@@ -31,7 +28,7 @@ public class MutationManager
     testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     parentGenome = testingGenome;
-     //GenoFile.writeGenome(testingGenome);
+    //GenoFile.writeGenome(testingGenome);
   }
 
   /**
@@ -57,7 +54,7 @@ public class MutationManager
 
     if (testedFitness > parentGenome.getFitness())
     {
-      if(retesting)
+      if (retesting)
       {
         retesting = false; //Want to double check that it wasn't a flawed test.
         System.out.println("Better Creature found, Fitness: " + testedFitness);
@@ -112,16 +109,10 @@ public class MutationManager
       default:
         //implement
         mutator.setCurrentMutator(Mutators.RANDOMIZER);
-      float scaler;
-      scaler = rand.nextFloat() + 1;
-      testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
-
-//    testingGenome = Randomizer.randomize(parentGenome);
-//    testingGenome = Mover.moveLimbs(testingGenome);
-   // testingGenome = Duplicator.duplicateLimb(parentGenome);
-
-    //testingGenome = Scaler.scale(parentGenome, 1.1f);
-    //testingGenome = Subtracter.subtractBlocks(parentGenome);
+        float scaler;
+        scaler = rand.nextFloat() + 1;
+        testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
+    }
     return testingGenome;
   }
 }
