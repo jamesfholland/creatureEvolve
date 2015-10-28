@@ -77,26 +77,23 @@ public class Adder
     randBlock=new GeneBlock(parentOffset, randPivot,parentPivot,size, Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
     //geneBlocks.remove(index);
     geneBlocks.add(randBlock);
+
+    geneBlocks.add(randBlock);
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
     for (int i = 0; i <geneBlocks.size() ; i++)
     {
       newGenome.addGeneBlock(geneBlocks.get(i));
+//      for (int j = 0; j <geneNeurons.size() ; j++)
+//      {
+//        if(geneNeurons.get(j).BLOCK_INDEX==i)newGenome.addGeneNeuron(geneNeurons.get(j));
+//      }
     }
-    if(checkForIntersections(newGenome)) genome=newGenome;
-    else addBlock(genome);
+    for (int j = 0; j <geneNeurons.size(); j++)
+    {
+      System.out.println(j);
+      newGenome.addGeneNeuron(geneNeurons.get(j));
+    }
+    newGenome=Randomizer.randomizeNeuron(newGenome,geneBlocks.size());
     return newGenome;
   }
-  //Checks if the creature is valid after mutation
-  private static  boolean checkForIntersections(Genome genome)
-  {
-    for (int i = 0; i <geneBlocks.size() ; i++)
-    {
-
-    }
-    return true;
-  }
-  public Genome getGenome(){return genome;}
-
-
-
 }
