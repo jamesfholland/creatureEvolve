@@ -7,15 +7,15 @@ public enum Mutators
 {
   ADDER, DUPLICATOR, INVERTER, MOVER, RANDOMIZER, ROTATOR, SCALER, SUBSTRACTOR, SYMMETRIZER;
 
-  private Mutators currentMutator = null;
+  private static Mutators currentMutator = null;
 
-  protected void setCurrentMutator(Mutators mutator)
+  protected static void setCurrentMutator(Mutators mutator)
   {
     currentMutator = mutator;
   }
 
-  protected Mutators getCurrentMutator()
+  protected static Mutators getCurrentMutator()
   {
-    return this.currentMutator;
+    return currentMutator;
   }
 }
