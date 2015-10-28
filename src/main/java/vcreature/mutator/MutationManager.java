@@ -24,7 +24,8 @@ public class MutationManager
    */
   public MutationManager()
   {
-    testingGenome = GenePool.getRandom(); //GenoFile.readGenome("-1.00_Flappy.geno");
+    testingGenome=SpawnCreatureGenoform.makeTableMonster();
+    //testingGenome = GenePool.getRandom(); //GenoFile.readGenome("-1.00_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     parentGenome = testingGenome;
     // GenoFile.writeGenome(testingGenome);
