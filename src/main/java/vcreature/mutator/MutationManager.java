@@ -54,6 +54,7 @@ public class MutationManager
       System.out.println("Better Creature found, Fitness: " + testedFitness);
       testingGenome.setFitness(testedFitness);
       parentGenome = testingGenome;
+      GenoFile.writeGenome(parentGenome);
     }
 
     boolean overRide =false;
