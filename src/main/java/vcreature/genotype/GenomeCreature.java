@@ -72,7 +72,8 @@ public class GenomeCreature extends Creature
       {
         parent = protoBlocks.get(parentIndex);
       }
-
+if(geneBlock.PARENT_PIVOT == null)
+  System.out.println("BLARRG");
       //if(geneBlock.EULER_ANGLES==null) protoBlocks.get(i).initializeBlock(geneBlock.SIZE, parent, geneBlock.PARENT_PIVOT, geneBlock.PIVOT, geneBlock.PARENT_HINGE_AXIS, geneBlock.HINGE_AXIS);
        protoBlocks.get(i).initializeBlock(geneBlock.SIZE, parent, geneBlock.PARENT_PIVOT, geneBlock.PIVOT, geneBlock.PARENT_HINGE_AXIS, geneBlock.HINGE_AXIS,geneBlock.EULER_ANGLES);
     }
@@ -81,7 +82,7 @@ public class GenomeCreature extends Creature
 
     LinkedList<ProtoBlock> treeBlocks = new LinkedList<>();
     root.computeLocation(treeBlocks);
-    root.addBlocksToCreature(this, null);
+    root.addBlocksToCreature(this, null, treeBlocks);
     root.placeCreatureOnGround(this);
   }
 

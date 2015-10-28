@@ -146,21 +146,6 @@ public class ProtoBlock
    */
   public void initializeBlock(ImmutableVector size, ProtoBlock parent,
                               ImmutableVector pivotParent,
-                              ImmutableVector pivot, ImmutableVector axisParent, ImmutableVector axis)
-  {
-    this.size = size.getVector3f();
-    this.parent = parent;
-    this.parent.addChild(this);
-
-    this.axisParent = axisParent.getVector3f();
-    this.axis = axis.getVector3f();
-
-    this.pivotParentOffset = pivotParent;
-    this.pivotOffset = pivot;
-  }
-
-  public void initializeBlock(ImmutableVector size, ProtoBlock parent,
-                              ImmutableVector pivotParent,
                               ImmutableVector pivot, ImmutableVector axisParent, ImmutableVector axis,ImmutableVector eulerAngles)
   {
     this.size = size.getVector3f();
@@ -284,7 +269,7 @@ public class ProtoBlock
      // if(checkIntersection(children))
       {
         System.out.println("Intersects");
-        this.parent.removeChild(this);
+        //this.parent.removeChild(this);
         return;
       }
     }
@@ -378,7 +363,7 @@ public class ProtoBlock
     return height;
   }
 
-  public void addBlocksToCreature(Creature creature,Block blockParent)
+  public void addBlocksToCreature(Creature creature,Block blockParent, LinkedList<ProtoBlock> existingBlocks)
   {
     Block current;
     float[] floats={eulerAngles.x,eulerAngles.y,eulerAngles.z};
@@ -389,6 +374,11 @@ public class ProtoBlock
     }
     else
     {
+      if(pivotLocal==null)
+      {
+        System.out.println("blarrg");
+      }
+      System.out.println(floats +"" + pivotLocal + pivotParentLocal + blockParent + axis + size);
       current = creature
               .addBlock(floats,size, blockParent, pivotParentLocal, pivotLocal,
                        axis);
@@ -401,7 +391,10 @@ public class ProtoBlock
 
     for (ProtoBlock child : children)
     {
-      child.addBlocksToCreature(creature, current);
+      if (existingBlocks.contains(child))
+      {
+        child.addBlocksToCreature(creature, current, existingBlocks);
+      }
     }
   }
   public void placeCreatureOnGround(Creature creature)
