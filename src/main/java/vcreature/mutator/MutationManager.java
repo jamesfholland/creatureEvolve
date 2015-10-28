@@ -1,5 +1,6 @@
 package vcreature.mutator;
 
+import com.sun.tools.javac.jvm.Gen;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
@@ -42,16 +43,18 @@ public class MutationManager
    */
   public Genome getNextCreature(float testedFitness)
   {
-    int numberOfMutationMethods = 4;
-    int randomMethodPicker;
-    randomMethodPicker = rand.nextInt(numberOfMutationMethods);
     //Check if first run.
     if (testedFitness == -1)
     {
       retesting = true; //We want to verify this one well.
       return testingGenome;
     }
+    this.chooseMutationMethod(testedFitness);
+    return this.mutateGenome();
+  }
 
+  private void chooseMutationMethod(float testedFitness)
+  {
     if (testedFitness > parentGenome.getFitness())
     {
       if (retesting)
@@ -65,13 +68,21 @@ public class MutationManager
       else
       {
         retesting = true;
-        return testingGenome;
+
       }
     }
+    else Mutators.setCurrentMutator(Mutators.getRandomMutator());
+  }
+
+
+  private Genome mutateGenome()
+  {
     switch (Mutators.getCurrentMutator())
     {
       case ADDER:
         testingGenome = Adder.addBlock(parentGenome);
+        testingGenome = Adder.addBlock(testingGenome);
+
         Mutators.setCurrentMutator(Mutators.ADDER);
         break;
       case DUPLICATOR:

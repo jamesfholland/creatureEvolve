@@ -2,6 +2,7 @@ package vcreature.mainSimulation;
 
 import com.jme3.system.AppSettings;
 import com.jme3.system.JmeCanvasContext;
+import com.jme3.system.JmeContext;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -60,6 +61,7 @@ public class SimFrame extends JFrame
     ctx.getCanvas().setPreferredSize(dim);
     appPane.add(ctx.getCanvas());
     add(appPane, BorderLayout.CENTER);
+
   }
 
   /**

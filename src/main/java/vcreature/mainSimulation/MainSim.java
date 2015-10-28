@@ -2,6 +2,7 @@
 package vcreature.mainSimulation;
 
 import com.jme3.math.Vector3f;
+import com.jme3.system.JmeContext;
 
 /**
  * Entry point to the program
@@ -34,6 +35,7 @@ public class MainSim
         {
           System.out.println("Starting App");
           new SimFrame();
+          //new ThreadController().start(JmeContext.Type.Headless);
         }
       }
     });
