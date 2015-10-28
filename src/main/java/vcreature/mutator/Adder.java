@@ -53,18 +53,18 @@ public class Adder
     geneBlocks=genome.getGENE_BLOCKS();
     geneNeurons=genome.getGENE_NEURONS();
     int index = rand.nextInt(geneBlocks.size());
-    int signChooser = (rand.nextBoolean()) ? 0 : 1;
+    int signChooser = (rand.nextBoolean()) ? -1 : 1;
 
 
-    index = signChooser;
-    GeneBlock block=geneBlocks.get(index);
+
+   // GeneBlock block=geneBlocks.get(index);
     GeneBlock randBlock;
     float sizeX = rand.nextFloat() * (max - min) + min;
     float sizeY = rand.nextFloat() * (max - min) + min;
     float sizeZ = rand.nextFloat() * (max - min) + min;
     ImmutableVector size=new ImmutableVector(sizeX,sizeY,sizeZ);
     ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
-    int parentOffset=0;
+    int parentOffset=-1 * index;
     int xSign = (rand.nextBoolean()) ? 1 : -1;
     int ySign =(rand.nextBoolean()) ? 1 : -1;
     int zSign = (rand.nextBoolean()) ? 1 : -1;
