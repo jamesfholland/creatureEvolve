@@ -53,7 +53,7 @@ public class Adder
     geneBlocks=genome.getGENE_BLOCKS();
     geneNeurons=genome.getGENE_NEURONS();
     int index = rand.nextInt(geneBlocks.size());
-    int signChooser = (rand.nextBoolean()) ? 0 : 2;
+    int signChooser = (rand.nextBoolean()) ? 0 : 1;
 
 
     index = signChooser;
