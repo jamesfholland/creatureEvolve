@@ -21,6 +21,12 @@ public class Scaler
   {
     ImmutableVector rootSize = genome.getRootSize();
     scaledSize = new ImmutableVector(rootSize.getX() * scale, rootSize.getY() * scale, rootSize.getZ() * scale);
+    if(rootSize.getX()*scale<0.5f || rootSize.getY()*scale<0.5f || scaledSize.getZ()*scale<0.5f)
+    {
+      return genome;
+    }
+
+
     newGenome = new Genome(scaledSize, genome.getRootEulerAngles());
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
@@ -40,8 +46,6 @@ public class Scaler
       }
 
     }
-
-
     return newGenome;
   }
 }

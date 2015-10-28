@@ -3,6 +3,7 @@ package vcreature.mutator;
 import vcreature.genotype.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Tyler on 10/28/2015.
@@ -15,24 +16,48 @@ public class ScaleSingleBlock
 
   private static GeneBlock scaledBlock;
   private static GeneBlock block;
+  private static GeneBlock choosenBlock;
   private static ImmutableVector scaledSize;
   private static Genome newGenome;
 
+
   protected static Genome scaleBlock(Genome genome, float scale)
   {
+    Random rand = new Random();
     ImmutableVector rootSize = genome.getRootSize();
-    scaledSize = new ImmutableVector(rootSize.getX() * scale, rootSize.getY() * scale, rootSize.getZ() * scale);
+    scaledSize = new ImmutableVector(rootSize.getX(), rootSize.getY(), rootSize.getZ());
     newGenome = new Genome(scaledSize, genome.getRootEulerAngles());
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
 
-    for (int i = 0; i < geneBlocks.size(); i++)
+    int pickRandom = rand.nextInt(geneBlocks.size()-1);
+
+    for (int i =0; i<geneBlocks.size();i++)
     {
-      System.out.println(i);
       block = geneBlocks.get(i);
-      scaledSize = new ImmutableVector(block.SIZE.getX(), block.SIZE.getY(), block.SIZE.getZ());
-      scaledBlock = new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT, scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
-          block.EULER_ANGLES);
+      if(i==pickRandom)
+      {
+        scaledSize = new ImmutableVector(block.SIZE.getX() * scale,
+            block.SIZE.getY() * scale, block.SIZE.getZ() * scale);
+
+        if(block.SIZE.getX()*scale<.5f || block.SIZE.getY()*scale<.5f || block.SIZE.getZ()*scale<.5f)
+        {
+          return genome;
+        }
+        scaledBlock =
+            new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
+                scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
+                block.EULER_ANGLES);
+      }
+      else
+      {
+        scaledSize = new ImmutableVector(block.SIZE.getX(),
+            block.SIZE.getY(), block.SIZE.getZ());
+        scaledBlock =
+            new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
+                scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
+                block.EULER_ANGLES);
+      }
       geneBlocks.set(i, scaledBlock);
       newGenome.addGeneBlock(scaledBlock);
       for(GeneNeuron geneNeuron: geneNeurons)
@@ -41,8 +66,40 @@ public class ScaleSingleBlock
       }
 
     }
+    return newGenome;
+  }
 
+  protected static Genome scaleRoot(Genome genome, float scale)
+  {
 
+    Random rand = new Random();
+    ImmutableVector rootSize = genome.getRootSize();
+    scaledSize = new ImmutableVector(rootSize.getX()*scale, rootSize.getY()*scale, rootSize.getZ()*scale);
+    if(rootSize.getX()*scale<0.5f || rootSize.getY()*scale<0.5f || scaledSize.getZ()*scale<0.5f)
+    {
+      return genome;
+    }
+    newGenome = new Genome(scaledSize, genome.getRootEulerAngles());
+    geneBlocks = genome.getGENE_BLOCKS();
+    geneNeurons = genome.getGENE_NEURONS();
+
+    for (int i =0; i<geneBlocks.size();i++)
+    {
+      block = geneBlocks.get(i);
+        scaledSize = new ImmutableVector(block.SIZE.getX(),
+            block.SIZE.getY(), block.SIZE.getZ());
+        scaledBlock =
+            new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
+                scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
+                block.EULER_ANGLES);
+      geneBlocks.set(i, scaledBlock);
+      newGenome.addGeneBlock(scaledBlock);
+      for(GeneNeuron geneNeuron: geneNeurons)
+      {
+        if(geneNeuron.BLOCK_INDEX==i) newGenome.addGeneNeuron(geneNeuron);
+      }
+
+    }
     return newGenome;
   }
 }
