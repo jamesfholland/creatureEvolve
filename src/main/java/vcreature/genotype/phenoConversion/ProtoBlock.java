@@ -280,12 +280,12 @@ public class ProtoBlock
     //If collision remove child from this.parent.
     {
       //checks to see if two blocks are intersecting
-     // if (blockIntersecting(min, dimentionVector, box))
-      if(checkIntersection(children))
+     if (blockIntersecting(min, dimentionVector, box))
+     // if(checkIntersection(children))
       {
         System.out.println("Intersects");
         this.parent.removeChild(this);
-        break;
+        return;
       }
     }
 
