@@ -40,7 +40,7 @@ public class MutationManager
    */
   public Genome getNextCreature(float testedFitness)
   {
-    int numberOfMutationMethods = 6;
+    int numberOfMutationMethods = 4;
     int randomMethodPicker;
     randomMethodPicker = rand.nextInt(numberOfMutationMethods);
     //Check if first run.
@@ -56,12 +56,12 @@ public class MutationManager
       parentGenome = testingGenome;
     }
 
-    boolean overRide =true;
+    boolean overRide =false;
     if(overRide)
     {
-
-      testingGenome = Adder.addBlock(parentGenome);
-
+      float scaler;
+      scaler = rand.nextFloat() + 1;
+      testingGenome = ScaleSingleBlock.scaleBlock(parentGenome,scaler);
     }
     else
     {
@@ -75,21 +75,29 @@ public class MutationManager
       }
       else if (randomMethodPicker == 2)
       {
-        testingGenome = Subtracter.subtractBlock(parentGenome);
+
+        float scaler;
+        scaler = rand.nextFloat()+1;
+        testingGenome = Scaler.scale(parentGenome, scaler);
+
       }
       else if (randomMethodPicker == 3)
       {
         float scaler;
-        scaler = rand.nextFloat()+1;
-        testingGenome = Scaler.scale(parentGenome, scaler);
+        scaler = rand.nextFloat() + 1;
+        testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
       }
       else if(randomMethodPicker == 4)
       {
-        testingGenome = Mover.moveLimbs(parentGenome);
+    //    testingGenome = Mover.moveLimbs(parentGenome);
       }
       else if(randomMethodPicker == 5)
       {
-        testingGenome = Duplicator.duplicateLimb(parentGenome);
+    //    testingGenome = Duplicator.duplicateLimb(parentGenome);
+      }
+      else if(randomMethodPicker == 6)
+      {
+        testingGenome = Subtracter.subtractBlock(parentGenome);
       }
     }
     return testingGenome;
