@@ -4,6 +4,7 @@ import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * GenePool manages the list of creatures that exist.
@@ -12,6 +13,7 @@ import java.util.LinkedList;
 public class GenePool
 {
   private static LinkedList<Genome> genomes;
+  private static Random rand=new Random();
   static
   {
     genomes = GenoFile.loadGenePool();
@@ -21,7 +23,8 @@ public class GenePool
   {
     synchronized (genomes)
     {
-      return genomes.getFirst();
+      int index = rand.nextInt() % genomes.size();
+      return genomes.get(index);
     }
   }
 
