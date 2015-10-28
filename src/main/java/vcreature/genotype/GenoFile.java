@@ -8,7 +8,7 @@ import java.io.*;
 public class GenoFile
 {
   private static final String SAVE_LOCATION = "creatures/";
-  private static final String GENE_POOL_LOCATION = "../../GenePool/";
+  private static final String GENE_POOL_LOCATION = "GenePool/";
 
   /**
    * Simply pass a Genome and it will write it to the creatures folder.
@@ -53,9 +53,10 @@ public class GenoFile
    */
   public static Genome readGenome(String filePath)
   {
-    BufferedReader fileIn = new BufferedReader(new InputStreamReader(GenoFile.class.getResourceAsStream(GENE_POOL_LOCATION + filePath)));
+    BufferedReader fileIn = null;
     try
     {
+      fileIn = new BufferedReader(new FileReader(new File(GENE_POOL_LOCATION + filePath)));
       Genome genome = new Genome(fileIn);
       return genome;
     }
@@ -68,7 +69,10 @@ public class GenoFile
     {
       try
       {
-        fileIn.close();
+        if (fileIn != null)
+        {
+          fileIn.close();
+        }
       }
       catch (IOException ignored)
       {
