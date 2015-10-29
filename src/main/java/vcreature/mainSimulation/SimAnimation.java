@@ -176,7 +176,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void simpleUpdate(float deltaSeconds)
   {
     this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
-    myCreature2.updateBrain(elapsedSimulationTime);
+    //myCreature2.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
     if (elapsedSimulationTime > 15)
     {
