@@ -5,8 +5,7 @@ import java.util.Random;
  */
 public enum Mutators
 {
-  ADDER, DUPLICATOR, INVERTER, MOVER, RANDOMIZER, ROTATOR, SCALER, SUBSTRACTOR, SYMMETRIZER,
-  SCALE_ROOT,SCALE_BLOCK;
+  ADDER, DUPLICATOR, INVERTER, MOVER, RANDOMIZER, ROTATOR, SCALER, SUBTRACTOR, SYMMETRIZER;
 
   private static Mutators currentMutator = null;
   private static Mutators [] mutatorsList = Mutators.values();

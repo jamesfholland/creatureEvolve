@@ -121,13 +121,12 @@ public class MutationManager
         scaler = rand.nextFloat() *3;
         testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
         Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
-      case SUBSTRACTOR:
+      case SUBTRACTOR:
         //implement
-        Mutators.setCurrentMutator(Mutators.SUBSTRACTOR);
+        Mutators.setCurrentMutator(Mutators.SUBTRACTOR);
       case SYMMETRIZER:
         //implement
         Mutators.setCurrentMutator(Mutators.SYMMETRIZER);
-        break;
       default:
         //implement
         testingGenome = Randomizer.randomize(parentGenome);
