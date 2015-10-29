@@ -9,16 +9,18 @@ import java.util.ArrayList;
 public class Scaler
 {
 
-  private static ArrayList<GeneBlock> geneBlocks;
-  private static ArrayList<GeneNeuron> geneNeurons;
-
-  private static GeneBlock scaledBlock;
-  private static GeneBlock block;
-  private static ImmutableVector scaledSize;
-  private static Genome newGenome;
 
   protected static Genome scale(Genome genome, float scale)
   {
+    ArrayList<GeneBlock> geneBlocks;
+    ArrayList<GeneNeuron> geneNeurons;
+
+    GeneBlock scaledBlock;
+    GeneBlock block;
+    ImmutableVector scaledSize;
+    Genome newGenome;
+
+
     ImmutableVector rootSize = genome.getRootSize();
     if(rootSize.getX()*scale<0.5f || rootSize.getX()* scale>10*rootSize.getY()*scale || rootSize.getX()* scale>10*rootSize.getZ()*scale ||
         rootSize.getY()*scale<0.5f ||  rootSize.getY()* scale>10*rootSize.getX()*scale || rootSize.getY()* scale>10*rootSize.getZ()*scale ||

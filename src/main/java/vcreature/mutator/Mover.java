@@ -13,14 +13,17 @@ import java.util.ArrayList;
  */
 public class Mover
 {
-  static Genome newGenome;
-  static GeneBlock limb;
-  static GeneBlock nextLimb;
-  static ArrayList<GeneBlock> geneBlocks;
-  static ArrayList<GeneNeuron> geneNeurons;
 
   protected static Genome moveLimbs(Genome genome)
   {
+    Genome newGenome;
+    GeneBlock limb;
+    GeneBlock nextLimb;
+    ArrayList<GeneBlock> geneBlocks;
+    ArrayList<GeneNeuron> geneNeurons;
+
+
+
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
     newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());

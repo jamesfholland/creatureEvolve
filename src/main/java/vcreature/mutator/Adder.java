@@ -10,45 +10,18 @@ import java.util.Random;
  */
 public class Adder
 {
-
-  static Genome genome;
-  static ArrayList<GeneBlock> geneBlocks;
-  static ArrayList<GeneNeuron> geneNeurons;
-  static Random rand=new Random();
-  static private float min = .5f;
-  static private float max = 3f;
-
-//  /**
-//   * This will Randomize the genome at a random index
-//   * @param genome
-//   *//*
-//  public Randomizer(Genome genome)
-//  {
-//    this.genome=genome;
-//    this.geneBlocks=genome.getGENE_BLOCKS();
-//    this.geneNeurons=genome.getGENE_NEURONS();
-//    int index=rand.nextInt(geneBlocks.size());
-//    randomize(index);
-//  }
-//
-//  *//**
-//   * Randomize genome at specific point
-//   * @param genome
-//   * @param index index of leg
-//   *//*
-//  public Randomizer(Genome genome,int index)
-//  {
-//    this.genome=genome;
-//    this.geneBlocks=genome.getGENE_BLOCKS();
-//    this.geneNeurons=genome.getGENE_NEURONS();
-//    randomize(index);
-//  }*/
+  Genome genome;
 
   /**
    * This is where the magic happens
    */
   protected static Genome addBlock(Genome genome)
   {
+    ArrayList<GeneBlock> geneBlocks;
+    ArrayList<GeneNeuron> geneNeurons;
+    Random rand=new Random();
+    float min = .5f;
+    float max = 3f;
 
     geneBlocks=genome.getGENE_BLOCKS();
     geneNeurons=genome.getGENE_NEURONS();

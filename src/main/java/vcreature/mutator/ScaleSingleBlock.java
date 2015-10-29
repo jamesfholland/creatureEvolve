@@ -11,18 +11,18 @@ import java.util.Random;
 public class ScaleSingleBlock
 {
 
-  private static ArrayList<GeneBlock> geneBlocks;
-  private static ArrayList<GeneNeuron> geneNeurons;
-
-  private static GeneBlock scaledBlock;
-  private static GeneBlock block;
-  private static GeneBlock choosenBlock;
-  private static ImmutableVector scaledSize;
-  private static Genome newGenome;
 
 
   protected static Genome scaleBlock(Genome genome, float scale)
   {
+    ArrayList<GeneBlock> geneBlocks;
+    ArrayList<GeneNeuron> geneNeurons;
+    GeneBlock scaledBlock;
+    GeneBlock block;
+
+    ImmutableVector scaledSize;
+    Genome newGenome;
+
     Random rand = new Random();
     ImmutableVector rootSize = genome.getRootSize();
     scaledSize = new ImmutableVector(rootSize.getX(), rootSize.getY(), rootSize.getZ());
@@ -72,6 +72,14 @@ public class ScaleSingleBlock
 
   protected static Genome scaleRoot(Genome genome, float scale)
   {
+    ArrayList<GeneBlock> geneBlocks;
+    ArrayList<GeneNeuron> geneNeurons;
+    GeneBlock scaledBlock;
+    GeneBlock block;
+
+    ImmutableVector scaledSize;
+    Genome newGenome;
+
 
     Random rand = new Random();
     ImmutableVector rootSize = genome.getRootSize();

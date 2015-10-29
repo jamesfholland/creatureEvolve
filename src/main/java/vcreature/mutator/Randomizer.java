@@ -15,20 +15,18 @@ import java.util.Random;
  */
 public class Randomizer
 {
-  static Genome genome;
-  static ArrayList<GeneBlock> geneBlocks;
-  static ArrayList<GeneNeuron> geneNeurons;
-  static Random rand=new Random();
-  static private float min = .5f;
-  static private float max = 5f;
-
-
-
   /**
    * This is where the magic happens
    */
   protected static Genome randomize(Genome genome)
   {
+    ArrayList<GeneNeuron> geneNeurons;
+    ArrayList<GeneBlock> geneBlocks;
+
+    Random rand=new Random();
+    float min = .5f;
+    float max = 5f;
+
 
     geneBlocks=genome.getGENE_BLOCKS();
     geneNeurons=genome.getGENE_NEURONS();
@@ -70,6 +68,10 @@ public class Randomizer
 
   public static Genome randomizeNeuron(Genome genome,int index)
   {
+    ArrayList<GeneBlock> geneBlocks;
+    Random rand = new Random();
+    ArrayList<GeneNeuron> geneNeurons;
+
     Genome newGenome =new Genome(genome.getRootSize(),genome.getRootEulerAngles());
     geneBlocks=genome.getGENE_BLOCKS();
     geneNeurons=genome.getGENE_NEURONS();
@@ -106,14 +108,13 @@ public class Randomizer
   //Checks if the creature is valid after mutation
   private static  boolean checkForIntersections(Genome genome)
   {
+    ArrayList<GeneBlock> geneBlocks;
+    geneBlocks=genome.getGENE_BLOCKS();
+
     for (int i = 0; i < geneBlocks.size(); i++)
     {
 
     }
     return true;
   }
-
-  public Genome getGenome(){return genome;}
-
-
 }

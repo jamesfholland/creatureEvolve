@@ -77,11 +77,12 @@ public class MutationManager
 
   private Genome mutateGenome()
   {
+    float scaler;
     switch (Mutators.getCurrentMutator())
     {
       case ADDER:
         testingGenome = Adder.addBlock(parentGenome);
-        testingGenome = Adder.addBlock(testingGenome);
+//        testingGenome = Adder.addBlock(testingGenome);
 
         Mutators.setCurrentMutator(Mutators.ADDER);
         break;
@@ -91,6 +92,7 @@ public class MutationManager
         break;
       case INVERTER:
         // implement
+        testingGenome = Inverter.basicInverter(parentGenome);
         Mutators.setCurrentMutator(Mutators.INVERTER);
         break;
       case MOVER:
@@ -106,9 +108,19 @@ public class MutationManager
         Mutators.setCurrentMutator(Mutators.ROTATOR);
         break;
       case SCALER:
-        testingGenome = Scaler.scale(parentGenome, 1.1f);
+        scaler = rand.nextFloat() *2;
+        testingGenome = Scaler.scale(parentGenome, scaler);
         Mutators.setCurrentMutator(Mutators.SCALER);
         break;
+      case SCALE_ROOT:
+        scaler = rand.nextFloat() *3;
+        testingGenome = ScaleSingleBlock.scaleRoot(parentGenome, scaler);
+        Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
+        break;
+      case SCALE_BLOCK:
+        scaler = rand.nextFloat() *3;
+        testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
+        Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
       case SUBSTRACTOR:
         //implement
         Mutators.setCurrentMutator(Mutators.SUBSTRACTOR);
@@ -120,9 +132,7 @@ public class MutationManager
         //implement
         testingGenome = Randomizer.randomize(parentGenome);
         Mutators.setCurrentMutator(Mutators.RANDOMIZER);
-//        float scaler;
-//        scaler = rand.nextFloat() + 1;
-//        testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
+
     }
     return testingGenome;
   }
