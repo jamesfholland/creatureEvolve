@@ -1,5 +1,6 @@
 package vcreature.phenotype;
 
+import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.math.Vector3f;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.scene.Node;
@@ -225,8 +226,7 @@ public class Creature
 
     RigidBodyControl controlA = parent.getPhysicsControl();
     RigidBodyControl controlB = block.getPhysicsControl();
-    controlA.removeCollideWithGroup(controlA.getCollisionGroup());
-    controlB.removeCollideWithGroup(controlB.getCollisionGroup());
+
     HingeJoint joint = new HingeJoint(controlA, controlB, pivotA, pivotB, axisA, axisB);
     joint.setCollisionBetweenLinkedBodys(true);
 

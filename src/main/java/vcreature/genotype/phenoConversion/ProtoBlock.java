@@ -255,7 +255,7 @@ public class ProtoBlock
      if (blockIntersecting(min, dimentionVector, box))
      // if(checkIntersection(children))
       {
-        System.out.println("Intersects");
+       // System.out.println("Intersects");
         //this.parent.removeChild(this);
         return;
       }
