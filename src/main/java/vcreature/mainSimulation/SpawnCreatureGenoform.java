@@ -168,7 +168,7 @@ public class SpawnCreatureGenoform
   }
   static public Genome makeTableMonster()
   {
-    Genome genome=new Genome(new ImmutableVector(5f,.5f,5f), new ImmutableVector(0f,0f,0f));
+    Genome genome=new Genome(new ImmutableVector(5f,.75f,5f), new ImmutableVector(0f,0f,0f));
     ImmutableVector zeroVector = new ImmutableVector(0f, 0f, 0f);
 
     {
@@ -204,24 +204,48 @@ public class SpawnCreatureGenoform
     ImmutableVector pivotD = new ImmutableVector(1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector leg2Size = new ImmutableVector(5f, .75f, .75f);
 
-    //Axis LegParentAxis = Axis.UNIT_Z;
     Axis Leg2Axis = Axis.UNIT_Z;
     GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, Axis.UNIT_Z.getImmutableVector(), Leg2Axis.getImmutableVector(), zeroVector);
-    System.out.println(leg2.PARENT_OFFSET);
+    GeneNeuron leg1Neuron2 = new GeneNeuron(
+            leg2.PARENT_OFFSET, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+            EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT, EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+            0, 0, 12, -Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+            EnumOperator.ADD, //Binary operator for merging A and B
+            EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+            EnumOperator.ADD, //Binary operator for merging D and E
+            EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+    genome.addGeneNeuron(leg1Neuron2);
+
+
+    //Axis LegParentAxis = Axis.UNIT_Z;
+
+
+
     GeneNeuron leg1Neuron1 = new GeneNeuron(
             leg2.PARENT_OFFSET, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
             EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT, EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
-            0, 0, 5, Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+            0, 0, 10, Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
             EnumOperator.ADD, //Binary operator for merging A and B
             EnumOperator.IDENTITY, //Unary operator for after A and B are merged
             EnumOperator.ADD, //Binary operator for merging D and E
             EnumOperator.IDENTITY); //Unary operator for after D and E are merged
     genome.addGeneNeuron(leg1Neuron1);
 
+
+    GeneNeuron leg2Neuron2 = new GeneNeuron(
+            1, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+            EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT, EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+            0, 0, 12, Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+            EnumOperator.ADD, //Binary operator for merging A and B
+            EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+            EnumOperator.ADD, //Binary operator for merging D and E
+            EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+    genome.addGeneNeuron(leg2Neuron2);
+
     GeneNeuron leg2Neuron1 = new GeneNeuron(
             1, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
             EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT, EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
-            0, 0, 5, -Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+            0, 0, 10, -Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
             EnumOperator.ADD, //Binary operator for merging A and B
             EnumOperator.IDENTITY, //Unary operator for after A and B are merged
             EnumOperator.ADD, //Binary operator for merging D and E

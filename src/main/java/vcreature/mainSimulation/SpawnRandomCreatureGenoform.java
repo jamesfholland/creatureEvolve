@@ -7,6 +7,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import vcreature.genotype.*;
 import vcreature.genotype.phenoConversion.ProtoBlock;
+import vcreature.mutator.Randomizer;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.EnumOperator;
@@ -20,10 +21,10 @@ import java.util.Random;
 
 public class SpawnRandomCreatureGenoform
 {
-  private Random rand = new Random();
-  private float min = 1f;
-  private float max = 3f;
-  private Genome genome;
+  private static Random rand = new Random();
+  private static float min = .5f;
+  private static float max = 3f;
+  private static Genome genome;
 
 
   public SpawnRandomCreatureGenoform(int numberOfBlocks)
@@ -36,7 +37,7 @@ public class SpawnRandomCreatureGenoform
     return genome;
   }
 
-  private void createCreature(int numberOfBlocks)
+  public static Genome createCreature(int numberOfBlocks)
   {
     ImmutableVector zeroVector = new ImmutableVector(0f, 0f, 0f);
     float rootSizeX = rand.nextFloat() * (max - min) + min;
@@ -46,8 +47,8 @@ public class SpawnRandomCreatureGenoform
     genome = new Genome(rootSize, new ImmutableVector(0f,0f,0f));
     //Axis legParentAxis = Axis.UNIT_Z;
     //Axis legAxis = Axis.UNIT_Z;
-    ImmutableVector legParentAxis =new ImmutableVector(0,0,0);
-    ImmutableVector legAxis = new ImmutableVector(0,0,0);
+    ImmutableVector legParentAxis =new ImmutableVector(0,0,1);;
+    ImmutableVector legAxis = new ImmutableVector(0,0,1);;
     //Axis legAxis=new Axis();
 
     float sizeX = rand.nextFloat() * (max - min) + min;
@@ -69,9 +70,9 @@ public class SpawnRandomCreatureGenoform
       int xSign = (rand.nextBoolean()) ? 1 : -1;
       int ySign =(rand.nextBoolean()) ? 1 : -1;
       int zSign = (rand.nextBoolean()) ? 1 : -1;
-      if(randomFace==0) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign*rand.nextFloat());
-      else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign*rand.nextFloat());
-      else if(randomFace==2) randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign*rand.nextFloat(),zSign);
+      if(randomFace==0) randPivot=new ImmutableVector(xSign,ySign,zSign*rand.nextFloat());
+      else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign);
+      else if(randomFace==2) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign);
 
      // System.out.println(randPivot.getVector3f().toString());
        ImmutableVector pivotA =new ImmutableVector(-randPivot.X,-randPivot.Y,-randPivot.Z);//new ImmutableVector(1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
@@ -91,26 +92,29 @@ public class SpawnRandomCreatureGenoform
       if(numOfBlocks>1) randBlockIndex=genome.getGENE_BLOCKS().get(rand.nextInt(numOfBlocks)).hashCode();
       int offset=-rand.nextInt(i);
       //System.out.println(offset);
-      ImmutableVector randAngle=new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
-      ImmutableVector axis=new ImmutableVector(0,0,0);//new ImmutableVector(0,0,randAngle.X*randAngle.Y);//=new ImmutableVector(0,randAngle.Y*randAngle.Z,0);
+      ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
+      ImmutableVector axis=new ImmutableVector(0,0,0);
+      if(rand.nextBoolean())  axis=new ImmutableVector(0,0,1);//new ImmutableVector(0,0,randAngle.X*randAngle.Y);//=new ImmutableVector(0,randAngle.Y*randAngle.Z,0);
+      else  axis=new ImmutableVector(1,0,0);//new ImmutableVector(0,0,randAngle.X*randAngle.Y);//=new ImmutableVector(0,randAngle.Y*randAngle.Z,0);
       GeneBlock leg = new GeneBlock(offset, pivotA, pivotB, leg1Size, axis, axis,randAngle);
 
-      if(notIntersecting(leg)) genome.addGeneBlock(leg); //Leg1 is in position 0 in the list.
-     GeneNeuron leg1Neuron1= new GeneNeuron(
-              i, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
-              EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT, EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
-              0, 0, 5, -Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
-              EnumOperator.ADD, //Binary operator for merging A and B
-              EnumOperator.IDENTITY, //Unary operator for after A and B are merged
-              EnumOperator.ADD, //Binary operator for merging D and E
-              EnumOperator.IDENTITY); //Unary operator for after D and E are merged
-      genome.addGeneNeuron(leg1Neuron1);
+      genome.addGeneBlock(leg); //Leg1 is in position 0 in the list.
+//     GeneNeuron leg1Neuron1= new GeneNeuron(
+//              i, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+//              EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT, EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+//              0, 0, 5, -Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+//              EnumOperator.ADD, //Binary operator for merging A and B
+//              EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+//              EnumOperator.ADD, //Binary operator for merging D and E
+//              EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome=Randomizer.randomizeNeuron(genome,i-1);
+//      genome.addGeneNeuron(leg1Neuron1);
     }
     //Leg1 stuff
 
     //Leg2 stuff
 
-
+  return  genome;
   }
   private GeneNeuron randNeuron(int index)
   {

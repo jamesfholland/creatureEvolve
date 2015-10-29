@@ -225,6 +225,8 @@ public class Creature
 
     RigidBodyControl controlA = parent.getPhysicsControl();
     RigidBodyControl controlB = block.getPhysicsControl();
+    controlA.removeCollideWithGroup(controlA.getCollisionGroup());
+    controlB.removeCollideWithGroup(controlB.getCollisionGroup());
     HingeJoint joint = new HingeJoint(controlA, controlB, pivotA, pivotB, axisA, axisB);
     joint.setCollisionBetweenLinkedBodys(true);
 

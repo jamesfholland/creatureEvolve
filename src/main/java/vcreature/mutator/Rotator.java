@@ -20,10 +20,14 @@ public class Rotator
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
     ArrayList<GeneBlock> geneBlocks=genome.getGENE_BLOCKS();
     ArrayList<GeneNeuron> geneNeurons=genome.getGENE_NEURONS();
+    GeneBlock tempBlock=geneBlocks.get(index);
     GeneBlock rotatedBlock=geneBlocks.get(index);
+
     //rotatedBlock.EULER_ANGLES=new ImmutableVector(rand.nextFloat()*2*(float)Math.PI,rand.nextFloat()*2*(float)Math.PI,rand.nextFloat()*2*(float)Math.PI);
+
     for (int i = 0; i < geneBlocks.size(); i++)
     {
+
     }
   return newGenome;
   }

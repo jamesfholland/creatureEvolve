@@ -22,9 +22,6 @@ public class GenomeCreature extends Creature
   private Genome genome;
   private ProtoBlock root;
 
-
-
-
     public GenomeCreature(PhysicsSpace physicsSpace, Node jMonkeyRootNode, Genome genome)
   {
     super(physicsSpace, jMonkeyRootNode);

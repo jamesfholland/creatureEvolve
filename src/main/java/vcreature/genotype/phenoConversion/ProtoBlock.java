@@ -96,22 +96,9 @@ public class ProtoBlock
   }
 
   /**
-   * This is used for the root vector
-   *
-   * @param size The size in meters of the block
-   */
-  public ProtoBlock(ImmutableVector size)
-  {
-    this.parent = null; //Null parent because we are the root.
-    this.center = new Vector3f(0, 0, 0); //We don't know the actual
-    this.size = size.getVector3f();
-    this.children = new LinkedList<>();
-    this.neurons = new LinkedList<>();
-  }
-
-  /**
    *
    * @param size
+   * @param eulerAngles
    */
   public ProtoBlock(ImmutableVector size,ImmutableVector eulerAngles)
   {
@@ -378,7 +365,7 @@ public class ProtoBlock
       {
         System.out.println("blarrg");
       }
-      System.out.println(floats +"" + pivotLocal + pivotParentLocal + blockParent + axis + size);
+      //System.out.println(floats +"" + pivotLocal + pivotParentLocal + blockParent + axis + size);
       current = creature
               .addBlock(floats,size, blockParent, pivotParentLocal, pivotLocal,
                        axis);
@@ -402,35 +389,4 @@ public class ProtoBlock
     creature.placeOnGround();
   }
 
-  @Deprecated
-  public void addBlocksToCreature(Creature creature, float heightOffset,
-                                  Block blockParent)
-  {
-    Vector3f newCenter =
-        new Vector3f(center.x, center.y + heightOffset, center.z);
-    Block current;
-    if (blockParent == null)
-    {
-      current = creature.addRoot(newCenter, size);
-      creature.getBlockByID(0).setMaterial(Block.MATERIAL_RED);
-    }
-    else
-    {
-      float[] eulerArray={eulerAngles.x,eulerAngles.y,eulerAngles.z};
-      current = creature
-          .addBlock(eulerArray, size, blockParent, pivotParentLocal, pivotLocal,
-              axisParent, axis);
-
-      for (Neuron neuron : neurons)
-      {
-        current.addNeuron(neuron);
-      }
-    }
-
-    for (ProtoBlock child : children)
-    {
-      child.addBlocksToCreature(creature, heightOffset, current);
-    }
-
-  }
 }
