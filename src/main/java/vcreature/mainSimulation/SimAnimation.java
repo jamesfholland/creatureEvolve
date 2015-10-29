@@ -93,7 +93,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     Block.initStaticMaterials(assetManager);
 
     myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
-    myCreature2 = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
+    //myCreature2 = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
 
     //genePool.addCreatureToPopulation();
     initLighting();
