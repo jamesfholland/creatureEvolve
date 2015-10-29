@@ -378,7 +378,7 @@ public class ProtoBlock
       {
         System.out.println("blarrg");
       }
-      System.out.println(floats +"" + pivotLocal + pivotParentLocal + blockParent + axis + size);
+      //System.out.println(floats +"" + pivotLocal + pivotParentLocal + blockParent + axis + size);
       current = creature
               .addBlock(floats,size, blockParent, pivotParentLocal, pivotLocal,
                        axis);

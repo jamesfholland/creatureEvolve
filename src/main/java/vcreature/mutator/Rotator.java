@@ -24,6 +24,7 @@ public class Rotator
     //rotatedBlock.EULER_ANGLES=new ImmutableVector(rand.nextFloat()*2*(float)Math.PI,rand.nextFloat()*2*(float)Math.PI,rand.nextFloat()*2*(float)Math.PI);
     for (int i = 0; i < geneBlocks.size(); i++)
     {
+
     }
   return newGenome;
   }

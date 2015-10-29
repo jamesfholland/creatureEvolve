@@ -1,5 +1,6 @@
 package vcreature.mutator;
 import vcreature.genotype.*;
+import vcreature.phenotype.Block;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class Scaler
   {
     ImmutableVector rootSize = genome.getRootSize();
     scaledSize = new ImmutableVector(rootSize.getX() * scale, rootSize.getY() * scale, rootSize.getZ() * scale);
+
     if(rootSize.getX()*scale<0.5f || rootSize.getY()*scale<0.5f || scaledSize.getZ()*scale<0.5f)
     {
       return genome;
@@ -36,9 +38,10 @@ public class Scaler
       System.out.println(i);
       block = geneBlocks.get(i);
 
-      if(block.SIZE.getX()*scale<.5f || block.SIZE.getX()>10*block.SIZE.getY() ||block.SIZE.getX()>10*block.SIZE.getZ() ||
-          block.SIZE.getY()*scale<.5f || block.SIZE.getY() >10*block.SIZE.getX() ||block.SIZE.getY()>10*block.SIZE.getZ() ||
-          block.SIZE.getZ()*scale<.5f || block.SIZE.getZ() >10*block.SIZE.getX() ||block.SIZE.getZ()>10*block.SIZE.getY())
+//      if(block.SIZE.getX()*scale<.5f || block.SIZE.getX()>10*block.SIZE.getY() ||block.SIZE.getX()>10*block.SIZE.getZ() ||
+//          block.SIZE.getY()*scale<.5f || block.SIZE.getY() >10*block.SIZE.getX() ||block.SIZE.getY()>10*block.SIZE.getZ() ||
+//          block.SIZE.getZ()*scale<.5f || block.SIZE.getZ() >10*block.SIZE.getX() ||block.SIZE.getZ()>10*block.SIZE.getY())
+      if (Block.max(block.SIZE.getVector3f()) > 10*Block.min(block.SIZE.getVector3f()))
       {
         return genome;
       }
