@@ -41,7 +41,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private Vector3f tmpVec3; //
   private boolean isCameraRotating = true;
   private Creature myCreature;
-  private Creature myCreature2;
   private float elapsedSimulationTime;
   private MutationManager mutationManager = new MutationManager();
   private float currentFitness = 0;
@@ -93,7 +92,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     Block.initStaticMaterials(assetManager);
 
     myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
-    //myCreature2 = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
 
     //genePool.addCreatureToPopulation();
     initLighting();
@@ -148,6 +146,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void setSpeed(int speed)
   {
     this.speed=speed;
+    settings.setFrequency(speed*60);
     this.restart();
   }
 
@@ -164,10 +163,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     inputManager.addListener(this, "Toggle Camera Rotation");
   }
 
-  protected void setGamePause(boolean paused)
-  {
-    gamePause = paused;
-  }
 
   /**
    * Use the main event loop to trigger repeating actions.
@@ -176,16 +171,14 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void simpleUpdate(float deltaSeconds)
   {
     this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
-    //myCreature2.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
     if (elapsedSimulationTime > 15)
     {
       myCreature.remove();
-      //myCreature2.remove();
       elapsedSimulationTime = 0;
 
       myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(this.currentFitness));
-      //myCreature2=new FlappyBird2(physicsSpace,rootNode);
+
     }
 
     if (isCameraRotating)
