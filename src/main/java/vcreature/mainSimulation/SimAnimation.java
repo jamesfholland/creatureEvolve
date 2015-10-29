@@ -41,6 +41,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private Vector3f tmpVec3; //
   private boolean isCameraRotating = true;
   private Creature myCreature;
+  private Creature myCreature2;
   private float elapsedSimulationTime;
   private MutationManager mutationManager = new MutationManager();
   private float currentFitness = 0;
@@ -92,6 +93,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     Block.initStaticMaterials(assetManager);
 
     myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
+    myCreature2 = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
+
     //genePool.addCreatureToPopulation();
     initLighting();
     initKeys();
