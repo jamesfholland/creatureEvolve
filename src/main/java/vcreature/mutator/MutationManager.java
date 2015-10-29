@@ -1,6 +1,6 @@
 package vcreature.mutator;
 
-import com.sun.tools.javac.jvm.Gen;
+
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
@@ -41,15 +41,16 @@ public class MutationManager
    *                      need to test the seed.
    * @return the next genome to test.
    */
-  public Genome getNextCreature(float testedFitness)
+  public synchronized Genome getNextCreature(float testedFitness)
   {
     //Check if first run.
     if (testedFitness == -1)
     {
-      retesting = true; //We want to verify this one well.
       return testingGenome;
     }
     this.chooseMutationMethod(testedFitness);
+
+    if(retesting) return testingGenome;
     return this.mutateGenome();
   }
 
@@ -68,7 +69,6 @@ public class MutationManager
       else
       {
         retesting = true;
-
       }
     }
     else Mutators.setCurrentMutator(Mutators.getRandomMutator());
