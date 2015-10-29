@@ -6,12 +6,17 @@ import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * Symmetrizer (real word) makes a creature or block symmetrical.
  */
 public class Symmetrizer
 {
+  private static ArrayList<GeneBlock> geneBlocks;
+  private static ArrayList<GeneNeuron> geneNeurons;
+  private static Random rand = new Random();
   public static Genome basicSymmetrize(Genome genome)
   {
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
@@ -36,6 +41,20 @@ public class Symmetrizer
   private static ImmutableVector invertXZ(ImmutableVector immutableVector)
   {
     return new ImmutableVector(-1*immutableVector.X,immutableVector.Y,-1*immutableVector.Z);
+  }
 
+  public static ArrayList<Genome> symmetrizedList(Genome genome)
+  {
+    ArrayList<Genome> symmetrizedCreatures=new ArrayList<>();
+   ArrayList<GeneBlock> geneBlocks=genome.getGENE_BLOCKS();
+    ArrayList<GeneNeuron> geneNeurons=genome.getGENE_NEURONS();
+    ArrayList<GeneBlock> childrenOfRoot=new ArrayList<>();
+
+
+    for (GeneBlock block:geneBlocks)
+    {
+      if(block.PARENT_OFFSET==0) childrenOfRoot.add(block);
+    }
+    return symmetrizedCreatures;
   }
 }
