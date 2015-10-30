@@ -15,7 +15,7 @@ public class Adder
   /**
    * This is where the magic happens
    */
-  protected static Genome addBlock(Genome genome)
+  public static Genome addBlock(Genome genome)
   {
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;

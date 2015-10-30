@@ -72,7 +72,7 @@ genes2=GeneticTools.getParentsGenes(parent1,parent2)[1];
   }
 
   child2=new Genome(parent2.getRootSize(),parent2.getRootEulerAngles());
-  for (int i = 0; i <genes2.size(); i++)
+  for (int i = 0; i <genes1.size(); i++)
   {
     if(i<crossoverPoint)
     {

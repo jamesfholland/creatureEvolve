@@ -6,6 +6,7 @@ import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
 import vcreature.mainSimulation.SpawnCreatureGenoform;
+import vcreature.mainSimulation.SpawnRandomCreatureGenoform;
 import vcreature.mutator.geneticMerger.SingleCrossover;
 
 import java.util.Random;
@@ -28,7 +29,8 @@ public class MutationManager
   public MutationManager()
   {
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
-    testingGenome= SingleCrossover.singleCrossOver(SpawnCreatureGenoform.makeTableMonster(),SpawnCreatureGenoform.makeFlappyBird()).get(0);
+//    testingGenome= SpawnRandomCreatureGenoform.createRandomCreature(100);
+    testingGenome= SingleCrossover.singleCrossOver(SpawnCreatureGenoform.makeTableMonster(),SpawnRandomCreatureGenoform.createRandomCreature(2)).get(0);
     //testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     parentGenome = testingGenome;
