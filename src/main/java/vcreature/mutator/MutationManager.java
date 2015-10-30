@@ -78,7 +78,7 @@ public class MutationManager
   private Genome mutateGenome()
   {
 
-    boolean override =true;
+    boolean override =false;
     if(override)
     {
       testingGenome = Mover.moveLimbs(parentGenome);
@@ -105,7 +105,8 @@ public class MutationManager
           break;
         case MOVER:
           //implement
-          Mutators.setCurrentMutator(Mutators.INVERTER);
+          testingGenome = Mover.moveLimbs(parentGenome);
+          Mutators.setCurrentMutator(Mutators.MOVER);
           break;
         case RANDOMIZER:
           testingGenome = Randomizer.randomize(parentGenome);

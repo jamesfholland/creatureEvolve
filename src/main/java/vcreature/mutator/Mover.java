@@ -43,7 +43,22 @@ public class Mover
     GeneBlock block = geneBlocks.get(randomLimb);
     int parentOffset = block.PARENT_OFFSET;
     ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
-    limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy, Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
+    randomFace = rand.nextInt(2);
+    if(randomFace==0)
+    {
+      limb = new GeneBlock(parentOffset, randPivot, parentPivot, sizeCopy,
+          Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
+          randAngle);
+    }
+    else if(randomFace ==1 )
+    {
+      limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy,Axis.UNIT_Y.getImmutableVector(),Axis.UNIT_Y.getImmutableVector(),randAngle);
+    }
+    else
+    {
+      limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy,Axis.UNIT_X.getImmutableVector(),Axis.UNIT_X.getImmutableVector(),randAngle);
+    }
+    //limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy, Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
 
 
     geneBlocks.remove(randomLimb);
