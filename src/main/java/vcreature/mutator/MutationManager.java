@@ -25,7 +25,8 @@ public class MutationManager
   public MutationManager()
   {
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
-    testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
+    //testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
+    testingGenome = GenoFile.readGenome("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     parentGenome = testingGenome;
     Mutators.setCurrentMutator(Mutators.RANDOMIZER);
@@ -88,6 +89,8 @@ public class MutationManager
         break;
       case DUPLICATOR:
         testingGenome = Duplicator.duplicateLimb(parentGenome);
+        testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
+
         Mutators.setCurrentMutator(Mutators.DUPLICATOR);
         break;
       case INVERTER:
@@ -125,7 +128,7 @@ public class MutationManager
         //implement
         Mutators.setCurrentMutator(Mutators.SUBTRACTOR);
       case SYMMETRIZER:
-        //implement
+        testingGenome = Symmetrizer.basicSymmetrize(parentGenome);
         Mutators.setCurrentMutator(Mutators.SYMMETRIZER);
       default:
         //implement
