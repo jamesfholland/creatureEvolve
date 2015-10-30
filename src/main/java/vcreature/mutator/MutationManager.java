@@ -78,11 +78,20 @@ public class MutationManager
 
   private Genome mutateGenome()
   {
-    float scaler;
-    switch (Mutators.getCurrentMutator())
+    boolean override=true;
+    if(override)
     {
-      case ADDER:
-        testingGenome = Adder.addBlock(parentGenome);
+      testingGenome = Mover.moveLimbs(parentGenome);
+      Mutators.setCurrentMutator(Mutators.INVERTER);
+
+    }
+    else
+    {
+      float scaler;
+      switch (Mutators.getCurrentMutator())
+      {
+        case ADDER:
+          testingGenome = Adder.addBlock(parentGenome);
 //        testingGenome = Adder.addBlock(testingGenome);
 
         Mutators.setCurrentMutator(Mutators.ADDER);

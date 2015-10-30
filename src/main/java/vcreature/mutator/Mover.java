@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class Mover
 {
-
   protected static Genome moveLimbs(Genome genome)
   {
     Genome newGenome;
@@ -21,8 +20,6 @@ public class Mover
     GeneBlock nextLimb;
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
-
-
 
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
