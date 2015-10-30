@@ -1,5 +1,9 @@
 package vcreature.mutator;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
+import vcreature.mainSimulation.SpawnCreatureGenoform;
+import vcreature.mainSimulation.SpawnRandomCreatureGenoform;
+import vcreature.mutator.geneticMerger.SingleCrossover;
 
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
@@ -77,11 +81,12 @@ public class MutationManager
 
   private Genome mutateGenome()
   {
-
-    boolean override =true;
+    boolean override=true;
     if(override)
     {
       testingGenome = Mover.moveLimbs(parentGenome);
+      Mutators.setCurrentMutator(Mutators.INVERTER);
+
     }
     else
     {
@@ -105,6 +110,7 @@ public class MutationManager
           break;
         case MOVER:
           //implement
+          testingGenome = Mover.moveLimbs(parentGenome);
           Mutators.setCurrentMutator(Mutators.INVERTER);
           break;
         case RANDOMIZER:
@@ -129,17 +135,17 @@ public class MutationManager
           scaler = rand.nextFloat() * 3;
           testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
           Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
-        case SUBTRACTOR:
+        case SUBSTRACTOR:
           //implement
-          Mutators.setCurrentMutator(Mutators.SUBTRACTOR);
+          Mutators.setCurrentMutator(Mutators.SUBSTRACTOR);
         case SYMMETRIZER:
           //implement
           Mutators.setCurrentMutator(Mutators.SYMMETRIZER);
+          break;
         default:
           //implement
           testingGenome = Randomizer.randomize(parentGenome);
           Mutators.setCurrentMutator(Mutators.RANDOMIZER);
-
       }
     }
     return testingGenome;
