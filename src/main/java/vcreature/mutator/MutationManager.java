@@ -77,12 +77,11 @@ public class MutationManager
 
   private Genome mutateGenome()
   {
-    boolean override=true;
+
+    boolean override =true;
     if(override)
     {
       testingGenome = Mover.moveLimbs(parentGenome);
-      Mutators.setCurrentMutator(Mutators.INVERTER);
-
     }
     else
     {
@@ -106,7 +105,6 @@ public class MutationManager
           break;
         case MOVER:
           //implement
-          testingGenome = Mover.moveLimbs(parentGenome);
           Mutators.setCurrentMutator(Mutators.INVERTER);
           break;
         case RANDOMIZER:
@@ -131,17 +129,17 @@ public class MutationManager
           scaler = rand.nextFloat() * 3;
           testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
           Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
-        case SUBSTRACTOR:
+        case SUBTRACTOR:
           //implement
-          Mutators.setCurrentMutator(Mutators.SUBSTRACTOR);
+          Mutators.setCurrentMutator(Mutators.SUBTRACTOR);
         case SYMMETRIZER:
           //implement
           Mutators.setCurrentMutator(Mutators.SYMMETRIZER);
-          break;
         default:
           //implement
           testingGenome = Randomizer.randomize(parentGenome);
           Mutators.setCurrentMutator(Mutators.RANDOMIZER);
+
       }
     }
     return testingGenome;
