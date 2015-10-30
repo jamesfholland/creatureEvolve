@@ -7,6 +7,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import vcreature.genotype.*;
 import vcreature.genotype.phenoConversion.ProtoBlock;
+import vcreature.mutator.Adder;
 import vcreature.mutator.Randomizer;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.EnumNeuronInput;
@@ -44,11 +45,13 @@ public class SpawnRandomCreatureGenoform
     float rootSizeY = rand.nextFloat() * (max - min) + min;
     float rootSizeZ = rand.nextFloat() * (max - min) + min;
     ImmutableVector rootSize = new ImmutableVector(rootSizeX, rootSizeY, rootSizeZ);
-    genome = new Genome(rootSize, new ImmutableVector(0f,0f,0f));
+    genome = new Genome(rootSize, new ImmutableVector(0f, 0f, 0f));
     //Axis legParentAxis = Axis.UNIT_Z;
     //Axis legAxis = Axis.UNIT_Z;
-    ImmutableVector legParentAxis =new ImmutableVector(0,0,1);;
-    ImmutableVector legAxis = new ImmutableVector(0,0,1);;
+    ImmutableVector legParentAxis = new ImmutableVector(0, 0, 1);
+    ;
+    ImmutableVector legAxis = new ImmutableVector(0, 0, 1);
+    ;
     //Axis legAxis=new Axis();
 
     float sizeX = rand.nextFloat() * (max - min) + min;
@@ -56,47 +59,49 @@ public class SpawnRandomCreatureGenoform
     float sizeZ = rand.nextFloat() * (max - min) + min;
     ImmutableVector pivotC = new ImmutableVector(-1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector pivotD = new ImmutableVector(1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
-    ImmutableVector leg2Size = new ImmutableVector(sizeX,sizeY,sizeZ);
+    ImmutableVector leg2Size = new ImmutableVector(sizeX, sizeY, sizeZ);
     GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, legParentAxis, legAxis, zeroVector);
     genome.addGeneBlock(leg2);
 
-    for (int i = 1; i <numberOfBlocks ; i++)
+    for (int i = 1; i < numberOfBlocks; i++)
     {
-       sizeX = rand.nextFloat() * (max - min) + min;
-       sizeY = rand.nextFloat() * (max - min) + min;
-       sizeZ = rand.nextFloat() * (max - min) + min;
+      sizeX = rand.nextFloat() * (max - min) + min;
+      sizeY = rand.nextFloat() * (max - min) + min;
+      sizeZ = rand.nextFloat() * (max - min) + min;
       int randomFace = rand.nextInt(2);
       ImmutableVector randPivot = new ImmutableVector(1, -1, 0);
       int xSign = (rand.nextBoolean()) ? 1 : -1;
-      int ySign =(rand.nextBoolean()) ? 1 : -1;
+      int ySign = (rand.nextBoolean()) ? 1 : -1;
       int zSign = (rand.nextBoolean()) ? 1 : -1;
-      if(randomFace==0) randPivot=new ImmutableVector(xSign,ySign,zSign*rand.nextFloat());
-      else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign);
-      else if(randomFace==2) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign);
+      if (randomFace == 0) randPivot = new ImmutableVector(xSign, ySign, zSign * rand.nextFloat());
+      else if (randomFace == 1) randPivot = new ImmutableVector(xSign * rand.nextFloat(), ySign, zSign);
+      else if (randomFace == 2) randPivot = new ImmutableVector(xSign, ySign * rand.nextFloat(), zSign);
 
-     // System.out.println(randPivot.getVector3f().toString());
-       ImmutableVector pivotA =new ImmutableVector(-randPivot.X,-randPivot.Y,-randPivot.Z);//new ImmutableVector(1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
+      // System.out.println(randPivot.getVector3f().toString());
+      ImmutableVector pivotA = new ImmutableVector(-randPivot.X, -randPivot.Y, -randPivot.Z);//new ImmutableVector(1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
       //ImmutableVector pivotA =new ImmutableVector(1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
-      ImmutableVector pivotB =randPivot;// new ImmutableVector(-1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
+      ImmutableVector pivotB = randPivot;// new ImmutableVector(-1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
       //ImmutableVector pivotB =new ImmutableVector(-1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
-      ImmutableVector leg1Size = new ImmutableVector(sizeX,sizeY,sizeZ);
+      ImmutableVector leg1Size = new ImmutableVector(sizeX, sizeY, sizeZ);
 
 //      if(numberOfBlocks!=0) numberOfBlocks=rand.nextInt(numberOfBlocks);
 //      int randBlockIndex=genome.getGENE_BLOCKS().get(numberOfBlocks).PARENT_OFFSET;
 //      if(randBlockIndex<1) randBlockIndex=1;
-      int numOfBlocks=genome.getGENE_BLOCKS().size();
+      int numOfBlocks = genome.getGENE_BLOCKS().size();
 
-      int randBlockIndex=1;
+      int randBlockIndex = 1;
       //System.out.println(numOfBlocks);
       //System.out.println(genome.getGENE_BLOCKS().toString());
-      if(numOfBlocks>1) randBlockIndex=genome.getGENE_BLOCKS().get(rand.nextInt(numOfBlocks)).hashCode();
-      int offset=-rand.nextInt(i);
+      if (numOfBlocks > 1) randBlockIndex = genome.getGENE_BLOCKS().get(rand.nextInt(numOfBlocks)).hashCode();
+      int offset = -rand.nextInt(i);
       //System.out.println(offset);
-      ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
-      ImmutableVector axis=new ImmutableVector(0,0,0);
-      if(rand.nextBoolean())  axis=new ImmutableVector(0,0,1);//new ImmutableVector(0,0,randAngle.X*randAngle.Y);//=new ImmutableVector(0,randAngle.Y*randAngle.Z,0);
-      else  axis=new ImmutableVector(1,0,0);//new ImmutableVector(0,0,randAngle.X*randAngle.Y);//=new ImmutableVector(0,randAngle.Y*randAngle.Z,0);
-      GeneBlock leg = new GeneBlock(offset, pivotA, pivotB, leg1Size, axis, axis,randAngle);
+      ImmutableVector randAngle = new ImmutableVector(0, 0, 0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
+      ImmutableVector axis = new ImmutableVector(0, 0, 0);
+      if (rand.nextBoolean())
+        axis = new ImmutableVector(0, 0, 1);//new ImmutableVector(0,0,randAngle.X*randAngle.Y);//=new ImmutableVector(0,randAngle.Y*randAngle.Z,0);
+      else
+        axis = new ImmutableVector(1, 0, 0);//new ImmutableVector(0,0,randAngle.X*randAngle.Y);//=new ImmutableVector(0,randAngle.Y*randAngle.Z,0);
+      GeneBlock leg = new GeneBlock(offset, pivotA, pivotB, leg1Size, axis, axis, randAngle);
 
       genome.addGeneBlock(leg); //Leg1 is in position 0 in the list.
 //     GeneNeuron leg1Neuron1= new GeneNeuron(
@@ -107,24 +112,25 @@ public class SpawnRandomCreatureGenoform
 //              EnumOperator.IDENTITY, //Unary operator for after A and B are merged
 //              EnumOperator.ADD, //Binary operator for merging D and E
 //              EnumOperator.IDENTITY); //Unary operator for after D and E are merged
-      genome=Randomizer.randomizeNeuron(genome,i-1);
+      genome = Randomizer.randomizeNeuron(genome, i - 1);
 //      genome.addGeneNeuron(leg1Neuron1);
     }
     //Leg1 stuff
 
     //Leg2 stuff
 
-  return  genome;
+    return genome;
   }
+
   private GeneNeuron randNeuron(int index)
   {
-    GeneNeuron randNeuron=null;
-    int randNeuronEnum=rand.nextInt(5);
-    EnumNeuronInput aInput=randEnumNeuron();
-    EnumNeuronInput bInput=randEnumNeuron();
-    EnumNeuronInput cInput=randEnumNeuron();
-    EnumNeuronInput dInput=randEnumNeuron();
-    EnumNeuronInput eInput=randEnumNeuron();
+    GeneNeuron randNeuron = null;
+    int randNeuronEnum = rand.nextInt(5);
+    EnumNeuronInput aInput = randEnumNeuron();
+    EnumNeuronInput bInput = randEnumNeuron();
+    EnumNeuronInput cInput = randEnumNeuron();
+    EnumNeuronInput dInput = randEnumNeuron();
+    EnumNeuronInput eInput = randEnumNeuron();
     randNeuron = new GeneNeuron(
             index, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
             aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
@@ -135,10 +141,12 @@ public class SpawnRandomCreatureGenoform
             EnumOperator.IDENTITY); //Unary operator for after D and E are merged
     return randNeuron;
   }
+
   private EnumNeuronInput randEnumNeuron()
   {
-    int enumIndex=rand.nextInt(3);
-    switch (enumIndex){
+    int enumIndex = rand.nextInt(3);
+    switch (enumIndex)
+    {
       case 0:
         return EnumNeuronInput.CONSTANT;
       case 1:
@@ -153,8 +161,8 @@ public class SpawnRandomCreatureGenoform
     return EnumNeuronInput.CONSTANT;
   }
 
- public boolean notIntersecting(GeneBlock box)
- {
+  public boolean notIntersecting(GeneBlock box)
+  {
 
 //   Vector3f minVector=new Vector3f(center.x - size.x, center.y - size.y, center.z - size.z);
 //   if ((min.x < box.getMinVector().x + box.getDimensionVector().x) &&
@@ -166,8 +174,40 @@ public class SpawnRandomCreatureGenoform
 //   {
 //     return false;
 //   }
-   return true;
- }
+    return true;
+  }
+
+
+  public static Genome createRandomCreature(int numOfBlocks)
+  {
+    ImmutableVector zeroVector = new ImmutableVector(0f, 0f, 0f);
+    float rootSizeX = rand.nextFloat() * (max - min) + min;
+    float rootSizeY = rand.nextFloat() * (max - min) + min;
+    float rootSizeZ = rand.nextFloat() * (max - min) + min;
+    ImmutableVector rootSize = new ImmutableVector(rootSizeX, rootSizeY, rootSizeZ);
+    Genome genome = new Genome(rootSize, new ImmutableVector(0f, 0f, 0f));
+
+    ImmutableVector legParentAxis = new ImmutableVector(0, 0, 1);
+    ;
+    ImmutableVector legAxis = new ImmutableVector(0, 0, 1);
+    ;
+    //Axis legAxis=new Axis();
+
+    float sizeX = rand.nextFloat() * (max - min) + min;
+    float sizeY = rand.nextFloat() * (max - min) + min;
+    float sizeZ = rand.nextFloat() * (max - min) + min;
+    ImmutableVector pivotC = new ImmutableVector(-1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotD = new ImmutableVector(1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector leg2Size = new ImmutableVector(sizeX, sizeY, sizeZ);
+    GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, legParentAxis, legAxis, zeroVector);
+    genome.addGeneBlock(leg2);
+    for (int i = 0; i <numOfBlocks ; i++)
+    {
+      genome= Adder.addBlock(genome);
+    }
+
+    return genome;
+  }
 }
 //  {
 //    CollisionResults results = new CollisionResults();

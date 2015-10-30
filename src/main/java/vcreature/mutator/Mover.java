@@ -1,9 +1,8 @@
 package vcreature.mutator;
-import vcreature.genotype.GeneBlock;
-import vcreature.genotype.GeneNeuron;
-import vcreature.genotype.Genome;
+import vcreature.genotype.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Moves genes around either randomly or smartly (eg pass a parent node and reattaches to it).
@@ -15,38 +14,65 @@ public class Mover
 {
   protected static Genome moveLimbs(Genome genome)
   {
-    Genome newGenome;
     GeneBlock limb;
-    GeneBlock nextLimb;
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
-
+    Random rand = new Random();
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
-    newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
+
+
+    int xSign = (rand.nextBoolean()) ? 1 : -1;
+    int ySign =(rand.nextBoolean()) ? 1 : -1;
+    int zSign = (rand.nextBoolean()) ? 1 : -1;
+
+    ImmutableVector randPivot= new ImmutableVector(1, 0, 0);;
+
+    int randomFace=rand.nextInt(2);
+    if(randomFace==0) randPivot=new ImmutableVector(xSign,ySign,zSign*rand.nextFloat());
+    else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign);
+    else if(randomFace==2) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign);
+
+
+    int randomLimb = rand.nextInt(geneBlocks.size()-1);
+
+    ImmutableVector sizeCopy =new ImmutableVector(geneBlocks.get(randomLimb).SIZE.getX(),geneBlocks.get(randomLimb).SIZE.getY(),geneBlocks.get(randomLimb).SIZE.getZ());
+
+    ImmutableVector parentPivot=new ImmutableVector(-randPivot.X,-randPivot.Y,-randPivot.Z);
+
+    GeneBlock block = geneBlocks.get(randomLimb);
+    int parentOffset = block.PARENT_OFFSET;
+    ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
+    limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy, Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
+
+
+    geneBlocks.remove(randomLimb);
+    geneBlocks.add(randomLimb, limb);
+
+
+    Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
+    for (int i = 0; i <geneBlocks.size() ; i++)
+    {
+      newGenome.addGeneBlock(geneBlocks.get(i));
+      for (int j = 0; j <geneNeurons.size() ; j++)
+      {
+        if(geneNeurons.get(j).BLOCK_INDEX==i)newGenome.addGeneNeuron(geneNeurons.get(i));
+      }
+    }
+    if(checkForIntersections(newGenome)) genome=newGenome;
+    else moveLimbs(genome);
+    return newGenome;
+  }
+
+  private static  boolean checkForIntersections(Genome genome)
+  {
+    ArrayList<GeneBlock> geneBlocks;
+    geneBlocks=genome.getGENE_BLOCKS();
 
     for (int i = 0; i < geneBlocks.size(); i++)
     {
-      limb = geneBlocks.get(i);
-      if(i+1<geneBlocks.size())
-      {
-        nextLimb = geneBlocks.get(i + 1);
-        if (limb.HINGE_AXIS != nextLimb.HINGE_AXIS)
-        {
-          nextLimb = new GeneBlock(nextLimb.PARENT_OFFSET, nextLimb.PARENT_PIVOT, nextLimb.PIVOT,
-              nextLimb.SIZE, nextLimb.PARENT_HINGE_AXIS, limb.HINGE_AXIS,
-              nextLimb.EULER_ANGLES);
-          geneBlocks.set(i + 1, nextLimb);
-        }
-      }
-      geneBlocks.set(i, limb);
-      newGenome.addGeneBlock(limb);
-      for (GeneNeuron geneNeuron : geneNeurons)
-      {
-        if (geneNeuron.BLOCK_INDEX == i) newGenome.addGeneNeuron(geneNeuron);
-      }
-    }
 
-    return newGenome;
+    }
+    return true;
   }
 }

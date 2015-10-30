@@ -25,8 +25,7 @@ public class MutationManager
   public MutationManager()
   {
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
-    //testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
-    testingGenome = GenoFile.readGenome("7.20_Flappy.geno");
+    testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     parentGenome = testingGenome;
     Mutators.setCurrentMutator(Mutators.RANDOMIZER);
@@ -51,7 +50,7 @@ public class MutationManager
     }
     this.chooseMutationMethod(testedFitness);
 
-    if (retesting) return testingGenome;
+    if(retesting) return testingGenome;
     return this.mutateGenome();
   }
 
@@ -78,15 +77,14 @@ public class MutationManager
 
   private Genome mutateGenome()
   {
-    //boolean override = true;
-    //if (override)
-   // {
-    //  testingGenome = Mover.moveLimbs(parentGenome);
-     // Mutators.setCurrentMutator(Mutators.INVERTER);
 
-//    }
-  //  else
-   // {
+    boolean override =true;
+    if(override)
+    {
+      testingGenome = Mover.moveLimbs(parentGenome);
+    }
+    else
+    {
       float scaler;
       switch (Mutators.getCurrentMutator())
       {
@@ -99,8 +97,6 @@ public class MutationManager
           break;
         case DUPLICATOR:
           testingGenome = Duplicator.duplicateLimb(parentGenome);
-          testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
-
           Mutators.setCurrentMutator(Mutators.DUPLICATOR);
           break;
         case INVERTER:
@@ -139,20 +135,24 @@ public class MutationManager
           Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
           testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
 
+          break;
         case SUBTRACTOR:
           //implement
           Mutators.setCurrentMutator(Mutators.SUBTRACTOR);
+          break;
         case SYMMETRIZER:
-          testingGenome = Symmetrizer.basicSymmetrize(parentGenome);
+          //implement
           Mutators.setCurrentMutator(Mutators.SYMMETRIZER);
+          break;
         default:
           //implement
           testingGenome = Randomizer.randomize(parentGenome);
           testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
           Mutators.setCurrentMutator(Mutators.RANDOMIZER);
+          break;
 
       }
-    //}
+    }
     return testingGenome;
   }
 }

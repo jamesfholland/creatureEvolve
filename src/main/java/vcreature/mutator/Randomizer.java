@@ -58,7 +58,7 @@ public class Randomizer
       newGenome.addGeneBlock(geneBlocks.get(i));
       for (int j = 0; j <geneNeurons.size() ; j++)
       {
-        if(geneNeurons.get(j).BLOCK_INDEX==i)newGenome.addGeneNeuron(geneNeurons.get(i));
+        if(geneNeurons.get(j).BLOCK_INDEX==i)newGenome.addGeneNeuron(geneNeurons.get(j));
       }
     }
     if(checkForIntersections(newGenome)) genome=newGenome;
@@ -85,6 +85,14 @@ public class Randomizer
     EnumNeuronInput cInput=EnumNeuronInput.CONSTANT;
     EnumNeuronInput dInput=EnumNeuronInput.CONSTANT;
     EnumNeuronInput eInput=EnumNeuronInput.CONSTANT;
+    GeneNeuron randNeuron2 = new GeneNeuron(
+            index, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+            aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
+            0, 0,12, -1*sign*Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+            EnumOperator.ADD, //Binary operator for merging A and B
+            EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+            EnumOperator.ADD, //Binary operator for merging D and E
+            EnumOperator.IDENTITY); //Unary operator for after D and E are merged
     GeneNeuron randNeuron = new GeneNeuron(
             index, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
             aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
@@ -103,6 +111,7 @@ public class Randomizer
       newGenome.addGeneNeuron(geneNeurons.get(j));
     }
     newGenome.addGeneNeuron(randNeuron);
+    newGenome.addGeneNeuron(randNeuron2);
     return newGenome;
   }
   //Checks if the creature is valid after mutation
