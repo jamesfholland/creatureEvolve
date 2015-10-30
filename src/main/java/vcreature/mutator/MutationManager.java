@@ -51,7 +51,7 @@ public class MutationManager
     }
     this.chooseMutationMethod(testedFitness);
 
-    if(retesting) return testingGenome;
+    if (retesting) return testingGenome;
     return this.mutateGenome();
   }
 
@@ -78,15 +78,15 @@ public class MutationManager
 
   private Genome mutateGenome()
   {
-    boolean override=true;
-    if(override)
-    {
-      testingGenome = Mover.moveLimbs(parentGenome);
-      Mutators.setCurrentMutator(Mutators.INVERTER);
+    //boolean override = true;
+    //if (override)
+   // {
+    //  testingGenome = Mover.moveLimbs(parentGenome);
+     // Mutators.setCurrentMutator(Mutators.INVERTER);
 
-    }
-    else
-    {
+//    }
+  //  else
+   // {
       float scaler;
       switch (Mutators.getCurrentMutator())
       {
@@ -94,57 +94,58 @@ public class MutationManager
           testingGenome = Adder.addBlock(parentGenome);
 //        testingGenome = Adder.addBlock(testingGenome);
 
-        Mutators.setCurrentMutator(Mutators.ADDER);
-        break;
-      case DUPLICATOR:
-        testingGenome = Duplicator.duplicateLimb(parentGenome);
-        testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
+          Mutators.setCurrentMutator(Mutators.ADDER);
+          break;
+        case DUPLICATOR:
+          testingGenome = Duplicator.duplicateLimb(parentGenome);
+          testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
 
-        Mutators.setCurrentMutator(Mutators.DUPLICATOR);
-        break;
-      case INVERTER:
-        // implement
-        testingGenome = Inverter.basicInverter(parentGenome);
-        Mutators.setCurrentMutator(Mutators.INVERTER);
-        break;
-      case MOVER:
-        //implement
-        Mutators.setCurrentMutator(Mutators.INVERTER);
-        break;
-      case RANDOMIZER:
-        testingGenome = Randomizer.randomize(parentGenome);
-        Mutators.setCurrentMutator(Mutators.RANDOMIZER);
-        break;
-      case ROTATOR:
-        //implement
-        Mutators.setCurrentMutator(Mutators.ROTATOR);
-        break;
-      case SCALER:
-        scaler = rand.nextFloat() *2;
-        testingGenome = Scaler.scale(parentGenome, scaler);
-        Mutators.setCurrentMutator(Mutators.SCALER);
-        break;
-      case SCALE_ROOT:
-        scaler = rand.nextFloat() *3;
-        testingGenome = ScaleSingleBlock.scaleRoot(parentGenome, scaler);
-        Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
-        break;
-      case SCALE_BLOCK:
-        scaler = rand.nextFloat() *3;
-        testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
-        Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
-      case SUBTRACTOR:
-        //implement
-        Mutators.setCurrentMutator(Mutators.SUBTRACTOR);
-      case SYMMETRIZER:
-        testingGenome = Symmetrizer.basicSymmetrize(parentGenome);
-        Mutators.setCurrentMutator(Mutators.SYMMETRIZER);
-      default:
-        //implement
-        testingGenome = Randomizer.randomize(parentGenome);
-        Mutators.setCurrentMutator(Mutators.RANDOMIZER);
+          Mutators.setCurrentMutator(Mutators.DUPLICATOR);
+          break;
+        case INVERTER:
+          // implement
+          testingGenome = Inverter.basicInverter(parentGenome);
+          Mutators.setCurrentMutator(Mutators.INVERTER);
+          break;
+        case MOVER:
+          //implement
+          Mutators.setCurrentMutator(Mutators.INVERTER);
+          break;
+        case RANDOMIZER:
+          testingGenome = Randomizer.randomize(parentGenome);
+          Mutators.setCurrentMutator(Mutators.RANDOMIZER);
+          break;
+        case ROTATOR:
+          //implement
+          Mutators.setCurrentMutator(Mutators.ROTATOR);
+          break;
+        case SCALER:
+          scaler = rand.nextFloat() * 2;
+          testingGenome = Scaler.scale(parentGenome, scaler);
+          Mutators.setCurrentMutator(Mutators.SCALER);
+          break;
+        case SCALE_ROOT:
+          scaler = rand.nextFloat() * 3;
+          testingGenome = ScaleSingleBlock.scaleRoot(parentGenome, scaler);
+          Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
+          break;
+        case SCALE_BLOCK:
+          scaler = rand.nextFloat() * 3;
+          testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
+          Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
+        case SUBTRACTOR:
+          //implement
+          Mutators.setCurrentMutator(Mutators.SUBTRACTOR);
+        case SYMMETRIZER:
+          testingGenome = Symmetrizer.basicSymmetrize(parentGenome);
+          Mutators.setCurrentMutator(Mutators.SYMMETRIZER);
+        default:
+          //implement
+          testingGenome = Randomizer.randomize(parentGenome);
+          Mutators.setCurrentMutator(Mutators.RANDOMIZER);
 
-    }
+      }
+    //}
     return testingGenome;
   }
 }
