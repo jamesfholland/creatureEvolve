@@ -90,6 +90,7 @@ public class MutationManager
       {
         case ADDER:
           testingGenome = Adder.addBlock(parentGenome);
+          testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
 //        testingGenome = Adder.addBlock(testingGenome);
 
           Mutators.setCurrentMutator(Mutators.ADDER);
@@ -110,11 +111,14 @@ public class MutationManager
           break;
         case RANDOMIZER:
           testingGenome = Randomizer.randomize(parentGenome);
+
           Mutators.setCurrentMutator(Mutators.RANDOMIZER);
           break;
         case ROTATOR:
           //implement
           Mutators.setCurrentMutator(Mutators.ROTATOR);
+          testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
+
           break;
         case SCALER:
           scaler = rand.nextFloat() * 2;
@@ -130,6 +134,8 @@ public class MutationManager
           scaler = rand.nextFloat() * 3;
           testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
           Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
+          testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
+
           break;
         case SUBTRACTOR:
           //implement
@@ -142,6 +148,7 @@ public class MutationManager
         default:
           //implement
           testingGenome = Randomizer.randomize(parentGenome);
+          testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
           Mutators.setCurrentMutator(Mutators.RANDOMIZER);
           break;
 

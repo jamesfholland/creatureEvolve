@@ -49,7 +49,8 @@ public class Duplicator
     geneBlocks = genome.getGENE_BLOCKS();
     for (GeneBlock geneBlock : geneBlocks) newGenome.addGeneBlock(geneBlock);
     geneNeurons = genome.getGENE_NEURONS();
-    block = geneBlocks.get(rand.nextInt(geneBlocks.size()));
+    int randIndex = rand.nextInt(geneBlocks.size());
+    block = geneBlocks.get(randIndex);
     placementPivotParent = findAvailablePivot(block.PARENT_PIVOT);
     if (placementPivotParent == null)
     {
@@ -62,15 +63,17 @@ public class Duplicator
           hingeAxis, hingeAxis, block.EULER_ANGLES);
 
       newGenome.addGeneBlock(duplicateBlock);
-      for(int i = geneNeurons.size()-1; i>0; i--) newGenome.addGeneNeuron(geneNeurons.get(i));
       for (int i = 0; i < geneBlocks.size(); i++)
       {
-        for (GeneNeuron geneNeuron : geneNeurons)
+        for (int j = geneNeurons.size() - 1; j > 0; j--)
         {
-          if (geneNeuron.BLOCK_INDEX == i) newGenome.addGeneNeuron(geneNeuron);
+          if (geneNeurons.get(j).BLOCK_INDEX == i) newGenome.addGeneNeuron(geneNeurons.get(j));
+          if (i == geneBlocks.size() - 1)
+          {
+            if (geneNeurons.get(j).BLOCK_INDEX == randIndex) newGenome.addGeneNeuron(geneNeurons.get(j));
+          }
         }
       }
-
     }
     return newGenome;
   }
