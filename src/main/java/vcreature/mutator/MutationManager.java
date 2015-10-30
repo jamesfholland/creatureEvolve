@@ -1,9 +1,12 @@
 package vcreature.mutator;
 
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
+import vcreature.mainSimulation.SpawnCreatureGenoform;
+import vcreature.mutator.geneticMerger.SingleCrossover;
 
 import java.util.Random;
 
@@ -25,8 +28,8 @@ public class MutationManager
   public MutationManager()
   {
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
+    testingGenome= SingleCrossover.singleCrossOver(SpawnCreatureGenoform.makeTableMonster(),SpawnCreatureGenoform.makeFlappyBird()).get(0);
     //testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
-    testingGenome = GenoFile.readGenome("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     parentGenome = testingGenome;
     Mutators.setCurrentMutator(Mutators.RANDOMIZER);
@@ -109,6 +112,7 @@ public class MutationManager
           break;
         case MOVER:
           //implement
+          testingGenome = Mover.moveLimbs(parentGenome);
           Mutators.setCurrentMutator(Mutators.INVERTER);
           break;
         case RANDOMIZER:
