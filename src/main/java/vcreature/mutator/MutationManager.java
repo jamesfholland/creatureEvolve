@@ -3,6 +3,7 @@ package vcreature.mutator;
 
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
+import vcreature.genotype.ImmutableVector;
 import vcreature.mainSimulation.GenePool;
 import vcreature.mainSimulation.SpawnCreature;
 import vcreature.mainSimulation.SpawnCreatureGenoform;
@@ -28,10 +29,12 @@ public class MutationManager
   public MutationManager()
   {
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
-    //testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
+    //testingGenome=new Genome(new ImmutableVector(Float.MAX_VALUE,Float.MAX_VALUE,Float.MAX_VALUE),new ImmutableVector(0,0,0));
+    //testingGenome = GenoFile.readGenome("16289946.00_764D76EF.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
     parentGenome = testingGenome;
+    GenoFile.writeGenome(testingGenome);
     Mutators.setCurrentMutator(Mutators.RANDOMIZER);
     //GenoFile.writeGenome(testingGenome);
   }
@@ -48,14 +51,15 @@ public class MutationManager
   public synchronized Genome getNextCreature(float testedFitness)
   {
     //Check if first run.
-    if (testedFitness == -1)
-    {
-      return testingGenome;
-    }
-    this.chooseMutationMethod(testedFitness);
-
-    if(retesting) return testingGenome;
-    return this.mutateGenome();
+    return testingGenome;
+//    if (testedFitness == -1)
+//    {
+//      return testingGenome;
+//    }
+//    this.chooseMutationMethod(testedFitness);
+//
+//    if(retesting) return testingGenome;
+//    return this.mutateGenome();
   }
 
   private void chooseMutationMethod(float testedFitness)

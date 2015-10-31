@@ -172,7 +172,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   {
     this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
-    if (elapsedSimulationTime > 15)
+    if (elapsedSimulationTime > 10)
     {
       myCreature.remove();
       elapsedSimulationTime = 0;
