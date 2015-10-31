@@ -4,6 +4,9 @@ package vcreature.mutator;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
+import vcreature.mainSimulation.SpawnCreature;
+import vcreature.mainSimulation.SpawnCreatureGenoform;
+import vcreature.mutator.geneticMerger.CutAndSplice;
 
 import java.util.Random;
 
@@ -25,8 +28,9 @@ public class MutationManager
   public MutationManager()
   {
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
-    testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
+    //testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
+    testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
     parentGenome = testingGenome;
     Mutators.setCurrentMutator(Mutators.RANDOMIZER);
     //GenoFile.writeGenome(testingGenome);
@@ -78,7 +82,7 @@ public class MutationManager
   private Genome mutateGenome()
   {
 
-    boolean override =true;
+    boolean override =false;
     if(override)
     {
       testingGenome = Mover.moveLimbs(parentGenome);
