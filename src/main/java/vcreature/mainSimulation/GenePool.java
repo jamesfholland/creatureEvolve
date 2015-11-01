@@ -89,11 +89,27 @@ public class GenePool
     }
   }
 
+  /**
+   * Returns a copy of the GenePool.
+   * @return The GenePool as a LinkedList.
+   */
   public static LinkedList<Genome> getCopy()
   {
     synchronized (GENOMES)
     {
       return new LinkedList<Genome>(GENOMES);
+    }
+  }
+
+  /**
+   * Returns the current size of the pool
+   * @return number of elements in the pool
+   */
+  public static int getPoolSize()
+  {
+    synchronized (GENOMES)
+    {
+      return GENOMES.size();
     }
   }
 

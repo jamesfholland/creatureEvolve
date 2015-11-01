@@ -20,6 +20,7 @@ import com.jme3.texture.Texture;
 import com.jme3.input.controls.ActionListener;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.HillClimbingManager;
+import vcreature.mutator.Manager;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.PhysicsConstants;
 
@@ -42,7 +43,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
 
-  private HillClimbingManager hillClimbingManager = new HillClimbingManager();
+  private Manager manager = new Manager();
   private float fitnessUpdater = 0;
   private float elapsedMinutes = 0;
   private float currentFitness = 0;
@@ -97,7 +98,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
     Block.initStaticMaterials(assetManager);
 
-    myCreature = new GenomeCreature(physicsSpace, rootNode, hillClimbingManager.getNextCreature(-1));
+    myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(-1));
     //genePool.addCreatureToPopulation();
     initLighting();
     initKeys();
@@ -198,7 +199,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     if(elapsedSimulationTime<1 && this.currentFitness>0.01)
     {
       myCreature.remove();
-      myCreature = new GenomeCreature(physicsSpace, rootNode, hillClimbingManager.getNextCreature(0));
+      myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0));
       return;
     }
     if (elapsedSimulationTime > 15)
@@ -206,7 +207,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
       myCreature.remove();
       elapsedSimulationTime = 0;
 
-      myCreature = new GenomeCreature(physicsSpace, rootNode, hillClimbingManager.getNextCreature(this.currentFitness));
+      myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(this.currentFitness));
     }
 
     //This is the timer for updating the fitness per minute in the GUI.
