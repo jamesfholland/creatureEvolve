@@ -85,7 +85,7 @@ public class GenePool
     synchronized (GENOMES)
     {
       GENOMES.sort(new GenomeComparator());
-      return GENOMES.getFirst();
+      return GENOMES.getLast();
     }
   }
 
