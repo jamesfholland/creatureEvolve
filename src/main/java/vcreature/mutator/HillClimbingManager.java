@@ -28,10 +28,7 @@ public class HillClimbingManager
    */
   public HillClimbingManager()
   {
-    //testingGenome=SpawnCreatureGenoform.makeTableMonster();
     testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
-
-
     //testingGenome = new TessMonster(rootSize, eulerAngles, jointSize, 4);
     //testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
@@ -57,33 +54,24 @@ public class HillClimbingManager
     {
       return testingGenome;
     }
-    //this.chooseMutationMethod(testedFitness);
-
-    if (retesting)
-    { retesting = false;
-      return testingGenome;
-    }
-    return MainSim.MUTATION_TESTER.getBestCreatureGenome();
-  }
-
-  private void chooseMutationMethod(float testedFitness)
-  {
     if (testedFitness > parentGenome.getFitness())
     {
       if (retesting)
       {
-        retesting = false; //Want to double check that it wasn't a flawed test.
+        retesting = false;
         System.out.println("Better Creature found, Fitness: " + testedFitness);
         testingGenome.setFitness(testedFitness);
         parentGenome = testingGenome;
         GenoFile.writeGenome(parentGenome);
+        return MainSim.MUTATION_TESTER.getBestCreatureGenome();
       }
       else
       {
         retesting = true;
+        return testingGenome;
       }
     }
-    else Mutators.setCurrentMutator(Mutators.getRandomMutator());
+    return parentGenome;
   }
 }
 

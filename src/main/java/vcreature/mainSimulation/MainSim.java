@@ -2,6 +2,7 @@
 package vcreature.mainSimulation;
 
 import com.jme3.math.Vector3f;
+import com.jme3.system.AppSettings;
 import com.jme3.system.JmeContext;
 
 import java.util.Random;
@@ -35,12 +36,20 @@ public class MainSim
     {
       @Override
       public void run()
-      {
-       // if (args.length== 0)
+      { //starting up headless Simple Application for testing creatures inside of
+        AppSettings settings = new AppSettings(true);
+        settings.setResolution(1024,768);
+        settings.setSamples(4);
+        settings.setVSync(true);
+        settings.setFrequency(60);
+        settings.setTitle("Creatures Evolution");
+        MUTATION_TESTER.setShowSettings(false);
+        MUTATION_TESTER.setSettings(settings);
+        MUTATION_TESTER.start();//(JmeContext.Type.Headless);
+       if (args.length== 0) // if the user enters ANY command line argument, the GUI will NOT run
         {
           System.out.println("Starting App");
-          new SimFrame();
-          MUTATION_TESTER.start(JmeContext.Type.Headless);
+          //new SimFrame();
         }
       }
     });

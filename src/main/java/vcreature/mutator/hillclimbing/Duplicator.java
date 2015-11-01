@@ -88,11 +88,9 @@ public class Duplicator
         if (pivot1.getY() == pivot2.getY())
           if (pivot1.getZ() == pivot2.getZ())
           {
-            System.out.println("true");
             return true;
           }
     }
-    System.out.println("false");
     return false;
   }
 

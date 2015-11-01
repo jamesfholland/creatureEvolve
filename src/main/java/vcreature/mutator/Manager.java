@@ -15,7 +15,7 @@ public class Manager
 
   private Genome currentGenome;
 
-  private MutationType currentMutationType = MutationType.GENETIC;
+  private MutationType currentMutationType = MutationType.HILL;
 
   private GeneticManager geneticManager;
   private HillClimbingManager hillClimbingManager;
