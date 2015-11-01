@@ -26,14 +26,14 @@ public class MutationManager
   public MutationManager()
   {
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
-    testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
+    testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
     ImmutableVector rootSize = new ImmutableVector(2.0f, 1.0f, 2.0f);
     ImmutableVector eulerAngles = new ImmutableVector(0.0f,0.0f,0.0f);
     ImmutableVector jointSize = new ImmutableVector(0.5f, .5f, 1.0f);
 
 
     //testingGenome = new TessMonster(rootSize, eulerAngles, jointSize, 4);
-    //testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
+    //testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     //testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
     testingGenome = GenePool.getRandom();
