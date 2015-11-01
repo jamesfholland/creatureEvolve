@@ -40,10 +40,15 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Vector3f tmpVec3; //
   private boolean isCameraRotating = true;
-  private Creature myCreature;
+  private GenomeCreature myCreature;
   private float elapsedSimulationTime;
+
   private MutationManager mutationManager = new MutationManager();
+  private float fitnessUpdater = 0;
   private float currentFitness = 0;
+  private float previousFitness = 0;
+  private int zoom = 25;
+
 
   /**
    * Initalizes a BulletAppState and a Physics Space
@@ -163,6 +168,20 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     inputManager.addListener(this, "Toggle Camera Rotation");
   }
 
+  private void setCurrentFitness()
+  {
+    currentFitness = currentFitness-previousFitness;
+  }
+  protected void setZoom(int zoom)
+  {
+    this.zoom = zoom;
+  }
+  protected float getCurrentFitness()
+  {
+    return currentFitness;
+  }
+
+
 
   /**
    * Use the main event loop to trigger repeating actions.
@@ -172,6 +191,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   {
     this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
+    fitnessUpdater+=deltaSeconds;
 
     if(elapsedSimulationTime<1 && this.currentFitness>0.01)
     {
@@ -185,7 +205,11 @@ public class SimAnimation extends SimpleApplication implements ActionListener
       elapsedSimulationTime = 0;
 
       myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(this.currentFitness));
-
+    }
+    if(fitnessUpdater==60)
+    {
+      setCurrentFitness();
+      fitnessUpdater=0;
     }
 
     if (isCameraRotating)
@@ -193,8 +217,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
       //Move camera continously in circle of radius 25 meters centered 10 meters
       //  above the origin.
       cameraAngle += deltaSeconds * 2.0 * Math.PI / 60.0; //rotate full circle every minute
-      float x = (float) (25.0 * Math.cos(cameraAngle));
-      float z = (float) (25.0 * Math.sin(cameraAngle));
+      float x = (float) (zoom * Math.cos(cameraAngle));
+      float z = (float) (zoom * Math.sin(cameraAngle));
 
       tmpVec3 = new Vector3f(x, 10.0f, z);
       cam.setLocation(tmpVec3);
