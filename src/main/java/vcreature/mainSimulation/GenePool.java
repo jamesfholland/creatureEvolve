@@ -97,4 +97,12 @@ public class GenePool
     }
   }
 
+  public static int getPoolSize()
+  {
+    synchronized (GENOMES)
+    {
+      return GENOMES.size();
+    }
+  }
+
 }
