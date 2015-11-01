@@ -6,10 +6,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.text.DecimalFormat;
 
 /**
@@ -40,7 +37,7 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
   private JScrollPane creatureSelector = new JScrollPane();
   private Timer fitnessTracker;
   private DecimalFormat df = new DecimalFormat("#0.00");
-
+  private JButton chooseFile = new JButton("Load Creature From File");
 
   /**
    * Class Constructor:
@@ -133,9 +130,18 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
         }
       }
     });
+    chooseFile.addItemListener(new ItemListener()
+    {
+      @Override
+      public void itemStateChanged(ItemEvent e)
+      {
+
+      }
+    });
     userThreshold.setEditable(true);
     userThreshold.setText("15.00");
     userThreshold.addActionListener(this);
+    chooseFile.addActionListener(new OpenFile(animation));
     threshold = new JLabel("Fitness Threshold: ");
     zoomLabel = new JLabel("Zoom: ");
     speedLabel = new JLabel("Speed: ");
@@ -149,6 +155,7 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
     hillClimbPane.add(speed);
     hillClimbPane.add(fitnessPerMin);
     hillClimbPane.add(currentBestFitness);
+    hillClimbPane.add(chooseFile);
     add(hillClimbPane, BorderLayout.PAGE_END);
   }
 

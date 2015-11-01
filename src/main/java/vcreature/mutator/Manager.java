@@ -12,7 +12,7 @@ public class Manager
 
   private Genome currentGenome;
 
-  private MutationType currentMutationType = MutationType.HILL;
+  private MutationType currentMutationType = MutationType.GENETIC;
 
   private GeneticManager geneticManager;
   private HillClimbingManager hillClimbingManager;
@@ -49,8 +49,10 @@ public class Manager
     {
       case GENETIC:
         currentGenome = geneticManager.getNextGenome(lastFitness);
+        break;
       case HILL:
         currentGenome = hillClimbingManager.getNextCreature(lastFitness);
+        break;
     }
 
     return currentGenome;

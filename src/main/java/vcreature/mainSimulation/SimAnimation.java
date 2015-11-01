@@ -19,10 +19,10 @@ import com.jme3.system.AppSettings;
 import com.jme3.texture.Texture;
 import com.jme3.input.controls.ActionListener;
 import vcreature.genotype.GenomeCreature;
-import vcreature.mutator.HillClimbingManager;
 import vcreature.mutator.Manager;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.PhysicsConstants;
+import vcreature.genotype.Genome;
 
 /**
  * Created by Tess Daughton on 10/14/15.
@@ -34,7 +34,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
   private float cameraAngle = (float) (Math.PI / 2.0);
-  private boolean gamePause;
 
 
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
@@ -42,6 +41,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private boolean isCameraRotating = true;
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
+  private Genome fileGenome;
 
   private Manager manager = new Manager();
   private float fitnessUpdater = 0;
@@ -206,8 +206,15 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     {
       myCreature.remove();
       elapsedSimulationTime = 0;
+      if(fileGenome!=null)
+      {
+        myCreature = new GenomeCreature(physicsSpace, rootNode, fileGenome);
 
-      myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(this.currentFitness));
+      }
+      else
+      {
+        myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(this.currentFitness));
+      }
     }
 
     //This is the timer for updating the fitness per minute in the GUI.
@@ -230,6 +237,11 @@ public class SimAnimation extends SimpleApplication implements ActionListener
       cam.setLocation(tmpVec3);
       cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }
+  }
+
+  public void setCurrentCreature(Genome creature)
+  {
+    fileGenome = creature;
   }
 }
 

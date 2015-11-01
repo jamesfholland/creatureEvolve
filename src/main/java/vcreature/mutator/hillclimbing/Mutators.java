@@ -1,16 +1,106 @@
 package vcreature.mutator.hillclimbing;
 
 import vcreature.mainSimulation.MainSim;
+import vcreature.genotype.Genome;
+
 
 /**
  * Created by Tess Daughton on 10/27/15
  */
 public enum Mutators
 {
-  ADDER, DUPLICATOR, INVERTER, MOVER, RANDOMIZER, ROTATOR, SCALER, SUBTRACTOR, SYMMETRIZER, SCALE_ROOT, SCALE_BLOCK;
+  ADDER()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {
+          return Adder.addBlock(parent);
+        }
+      },
+  DUPLICATOR()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {
+          return Duplicator.duplicateLimb(parent);
+        }
+      },
+  INVERTER()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {
+          return Inverter.basicInverter(parent);
+        }
+      },
+  MOVER()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {
+          return Mover.moveLimbs(parent);
+        }
+      },
+  RANDOMIZER()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {
+          return Randomizer.randomize(parent);
+        }
+      },
+  ROTATOR()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {
+          //return Rotator.rotateBlock(parent,)
+          return null;
+        }
+      },
+  SCALER()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {
+          //scale value is hard-coded for now
+          return Scaler.scale(parent,1.1f);
+        }
+      },
+  SCALE_BLOCK()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {//scale value is hard-coded for now
+          return ScaleSingleBlock.scaleBlock(parent,1.1f);
+        }
+      },
+  SCALE_ROOT()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {
+          return ScaleSingleBlock.scaleRoot(parent, 1.1f);
+        }
+      },
+  SUBTRACTOR()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {
+          return Subtracter.subtractBlock(parent);
+        }
+      },
+  SYMMETRIZER()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {
+          return Symmetrizer.basicSymmetrize(parent);
+        }
+      };
 
-  private static Mutators currentMutator = null;
-  private static Mutators [] mutatorsList = Mutators.values();
+  private static Mutators currentMutator = Mutators.RANDOMIZER;
 
   public static void setCurrentMutator(Mutators mutator)
   {
@@ -23,6 +113,7 @@ public enum Mutators
   }
   public static Mutators getRandomMutator()
   {
-    return mutatorsList[MainSim.RANDOM.nextInt(mutatorsList.length)];
+    return Mutators.values()[MainSim.RANDOM.nextInt(Mutators.values().length)];
   }
-}
+  public abstract Genome mutate(Genome parent);
+  }

@@ -13,6 +13,7 @@ import java.util.Random;
 public class MainSim
 {
   public static final Random RANDOM = new Random(System.currentTimeMillis());
+  public static final MutationTester MUTATION_TESTER = new MutationTester();
 
   private void print(String msg, float x)
   {
@@ -39,7 +40,7 @@ public class MainSim
         {
           System.out.println("Starting App");
           new SimFrame();
-          //new ThreadController().start(JmeContext.Type.Headless);
+          MUTATION_TESTER.start(JmeContext.Type.Headless);
         }
       }
     });
