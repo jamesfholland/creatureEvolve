@@ -3,6 +3,8 @@ package vcreature.mutator;
 
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
+import vcreature.genotype.ImmutableVector;
+import vcreature.genotype.TessMonster;
 import vcreature.mainSimulation.GenePool;
 
 import java.util.Random;
@@ -26,6 +28,12 @@ public class MutationManager
   {
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
     testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
+    ImmutableVector rootSize = new ImmutableVector(2.0f, 1.0f, 2.0f);
+    ImmutableVector eulerAngles = new ImmutableVector(0.0f,0.0f,0.0f);
+    ImmutableVector jointSize = new ImmutableVector(0.5f, .5f, 1.0f);
+
+
+    //testingGenome = new TessMonster(rootSize, eulerAngles, jointSize, 4);
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     parentGenome = testingGenome;
     Mutators.setCurrentMutator(Mutators.RANDOMIZER);
@@ -81,7 +89,7 @@ public class MutationManager
     boolean override =true;
     if(override)
     {
-      testingGenome = Mover.moveLimbs(parentGenome);
+      //testingGenome = Mover.moveLimbs(parentGenome);
     }
     else
     {
@@ -145,7 +153,7 @@ public class MutationManager
           Mutators.setCurrentMutator(Mutators.SYMMETRIZER);
           break;
         default:
-          //implement
+//          implement
           testingGenome = Randomizer.randomize(parentGenome);
           testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
           Mutators.setCurrentMutator(Mutators.RANDOMIZER);

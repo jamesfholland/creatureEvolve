@@ -58,6 +58,7 @@ public class Scaler
       newGenome.addGeneBlock(scaledBlock);
       for(GeneNeuron geneNeuron: geneNeurons)
       {
+        System.out.println("ADDING NEURONS");
         if(geneNeuron.BLOCK_INDEX==i) newGenome.addGeneNeuron(geneNeuron);
       }
 
