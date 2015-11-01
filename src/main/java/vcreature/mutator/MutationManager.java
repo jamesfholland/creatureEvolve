@@ -4,7 +4,6 @@ package vcreature.mutator;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
-import vcreature.genotype.TessMonster;
 import vcreature.mainSimulation.GenePool;
 
 import java.util.Random;
