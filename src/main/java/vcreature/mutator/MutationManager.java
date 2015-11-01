@@ -6,9 +6,6 @@ import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 import vcreature.genotype.TessMonster;
 import vcreature.mainSimulation.GenePool;
-import vcreature.mainSimulation.SpawnCreature;
-import vcreature.mainSimulation.SpawnCreatureGenoform;
-import vcreature.mutator.geneticMerger.CutAndSplice;
 
 import java.util.Random;
 
