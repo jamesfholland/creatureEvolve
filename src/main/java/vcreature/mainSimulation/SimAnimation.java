@@ -196,7 +196,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     if(elapsedSimulationTime<1 && this.currentFitness>0.01)
     {
       myCreature.remove();
-      myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
+      myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(0));
       return;
     }
     if (elapsedSimulationTime > 15)
@@ -206,6 +206,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
       myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(this.currentFitness));
     }
+
+    //This is the timer for updating the fitness per minute in the GUI.
     if(fitnessUpdater==60)
     {
       setCurrentFitness();
