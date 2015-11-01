@@ -89,6 +89,10 @@ public class GenePool
     }
   }
 
+  /**
+   * Returns a copy of the GenePool.
+   * @return The GenePool as a LinkedList.
+   */
   public static LinkedList<Genome> getCopy()
   {
     synchronized (GENOMES)
@@ -97,6 +101,10 @@ public class GenePool
     }
   }
 
+  /**
+   * Returns the current size of the pool
+   * @return number of elements in the pool
+   */
   public static int getPoolSize()
   {
     synchronized (GENOMES)
