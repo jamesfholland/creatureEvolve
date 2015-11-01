@@ -17,16 +17,12 @@ import java.util.LinkedList;
  */
 public class GenomeCreature extends Creature
 {
-  private final PhysicsSpace ps_copy;
-  private final Node jMRN;
   private Genome genome;
   private ProtoBlock root;
 
-    public GenomeCreature(PhysicsSpace physicsSpace, Node jMonkeyRootNode, Genome genome)
+  public GenomeCreature(PhysicsSpace physicsSpace, Node jMonkeyRootNode, Genome genome)
   {
     super(physicsSpace, jMonkeyRootNode);
-     this.ps_copy = physicsSpace;
-      this.jMRN = jMonkeyRootNode;
     this.genome = genome;
     this.root = new ProtoBlock(genome.getRootSize(),genome.getRootEulerAngles());
 
@@ -82,4 +78,13 @@ public class GenomeCreature extends Creature
     root.placeCreatureOnGround(this);
   }
 
+  public Genome getCleanGenome()
+  {
+    return root.createCleanGenomeFromRoot();
+  }
+
+  public Genome getGenome()
+  {
+    return genome;
+  }
 }
