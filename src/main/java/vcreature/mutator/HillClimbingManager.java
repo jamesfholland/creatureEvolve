@@ -4,6 +4,8 @@ package vcreature.mutator;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
+
+import vcreature.genotype.TessMonster;
 import vcreature.mainSimulation.GenePool;
 import vcreature.mainSimulation.MutationTester;
 import vcreature.mainSimulation.SpawnCreatureGenoform;
@@ -30,9 +32,12 @@ public class HillClimbingManager
   public HillClimbingManager()
   {
     testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
-    //testingGenome = new TessMonster(rootSize, eulerAngles, jointSize, 4);
+    ImmutableVector rootSize = new ImmutableVector(1.5f, 0.5f, 1.0f);
+    ImmutableVector jointSize = new ImmutableVector(1.0f, 0.5f, 1.0f);
+
+    testingGenome = new TessMonster(rootSize, new ImmutableVector(0.0f, 0.0f, 0.0f), jointSize, 8);
     //testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
-    testingGenome = SpawnCreatureGenoform.makeFlappyBird();
+    //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     //testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
     //testingGenome = GenePool.getRandom();
     parentGenome = testingGenome;
