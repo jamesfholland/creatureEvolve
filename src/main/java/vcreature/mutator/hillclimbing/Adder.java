@@ -1,4 +1,4 @@
-package vcreature.mutator;
+package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.*;
 

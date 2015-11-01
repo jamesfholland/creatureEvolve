@@ -1,8 +1,8 @@
-package vcreature.mutator.geneticMerger;
+package vcreature.mutator;
 
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
-import vcreature.mutator.geneticMerger.MergeTypes.MergeType;
+import vcreature.mutator.genetic.MergeType;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

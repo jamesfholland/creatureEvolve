@@ -1,6 +1,8 @@
-package vcreature.mutator.geneticMerger.MergeTypes;
+package vcreature.mutator.genetic;
 
 import vcreature.genotype.Genome;
+import vcreature.mutator.genetic.MergeTypes.CutAndSplice;
+import vcreature.mutator.genetic.MergeTypes.SingleCrossover;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package vcreature.mutator.geneticMerger;
+package vcreature.mutator.genetic;
 
 /**
  * Created by Dayloki on 10/29/2015.

@@ -1,12 +1,10 @@
-package vcreature.mutator;
+package vcreature.mutator.hillclimbing;
 
-import com.jme3.math.Vector3f;
-import vcreature.genotype.*;
-import vcreature.genotype.phenoConversion.ProtoBlock;
-import vcreature.phenotype.Block;
+import vcreature.genotype.GeneBlock;
+import vcreature.genotype.GeneNeuron;
+import vcreature.genotype.Genome;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -21,8 +19,8 @@ public class Subtracter
     Genome newGenome=subtractBlock(genome,rand.nextInt(genome.getGENE_BLOCKS().size()));
     return newGenome;
   }
-public static Genome subtractBlock(Genome genome,int index)
-{
+  public static Genome subtractBlock(Genome genome,int index)
+  {
   ArrayList<GeneBlock> geneBlocks=genome.getGENE_BLOCKS();
   ArrayList<GeneNeuron> geneNeurons=genome.getGENE_NEURONS();
   geneBlocks.remove(index);

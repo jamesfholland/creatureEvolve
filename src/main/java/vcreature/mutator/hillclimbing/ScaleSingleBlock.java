@@ -1,5 +1,5 @@
 
-package vcreature.mutator;
+package vcreature.mutator.hillclimbing;
 import vcreature.genotype.*;
 import vcreature.mainSimulation.MainSim;
 import vcreature.phenotype.Block;
@@ -20,7 +20,7 @@ public class ScaleSingleBlock
    * @param scale the scale factor.
    * @return new Genome with scaled block.
    */
-  protected static Genome scaleBlock(Genome genome, float scale)
+  public static Genome scaleBlock(Genome genome, float scale)
   {
     ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
     ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
@@ -62,7 +62,7 @@ public class ScaleSingleBlock
     return newGenome;
   }
 
-  protected static Genome scaleRoot(Genome genome, float scale)
+  public static Genome scaleRoot(Genome genome, float scale)
   {
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;

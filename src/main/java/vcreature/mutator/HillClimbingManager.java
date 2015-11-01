@@ -5,13 +5,14 @@ import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 import vcreature.mainSimulation.GenePool;
+import vcreature.mutator.hillclimbing.*;
 
 import java.util.Random;
 
 /**
  * This will manage finding mutated genomes.
  */
-public class MutationManager
+public class HillClimbingManager
 {
   Random rand = new Random();
   private Genome parentGenome;
@@ -23,7 +24,7 @@ public class MutationManager
    * Sets up the mutation manager. Currently always seeds with FlappyBird.
    * In the future will be handed a GenEpoOl, that it picks a creature from.
    */
-  public MutationManager()
+  public HillClimbingManager()
   {
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
     testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
