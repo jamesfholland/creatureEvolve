@@ -10,6 +10,9 @@ public class Manager
 
   private float switchingThreshhold = 0.001f;
 
+  private long timeStart;
+  private float startFitness;
+
   private Genome currentGenome;
 
   private MutationType currentMutationType = MutationType.GENETIC;
