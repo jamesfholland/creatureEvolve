@@ -1,45 +1,49 @@
 
 package vcreature.mutator;
 import vcreature.genotype.*;
+import vcreature.mainSimulation.MainSim;
 import vcreature.phenotype.Block;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by Tyler on 10/28/2015.
+ * Scales a single block in the Genome.
  */
 public class ScaleSingleBlock
 {
 
+  /**
+   * Scales a random block in the genome
+   * If the Scale makes the creature invalid, we return the given genome.
+   * @param genome genome we are mutating
+   * @param scale the scale factor.
+   * @return new Genome with scaled block.
+   */
   protected static Genome scaleBlock(Genome genome, float scale)
   {
-    ArrayList<GeneBlock> geneBlocks;
-    ArrayList<GeneNeuron> geneNeurons;
+    ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
+    ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
     GeneBlock scaledBlock;
     GeneBlock block;
 
     ImmutableVector scaledSize;
     Genome newGenome;
 
-    Random rand = new Random();
-    ImmutableVector rootSize = genome.getRootSize();
-    scaledSize = new ImmutableVector(rootSize.getX(), rootSize.getY(), rootSize.getZ());
-    newGenome = new Genome(scaledSize, genome.getRootEulerAngles());
-    geneBlocks = genome.getGENE_BLOCKS();
-    geneNeurons = genome.getGENE_NEURONS();
+    newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
 
-    int pickRandom = rand.nextInt(geneBlocks.size()-1);
+    int pickRandom = MainSim.RANDOM.nextInt(geneBlocks.size());
 
     for (int i =0; i<geneBlocks.size();i++)
     {
       block = geneBlocks.get(i);
       if(i==pickRandom)
       {
-        if(block.SIZE.X<0.5f || block.SIZE.Y<0.5f || block.SIZE.Z< 0.5f) return genome;
-        if ( (Block.max(block.SIZE.getVector3f())) > (Block.min(block.SIZE.getVector3f()) * 10)) return genome;
-        scaledSize = new ImmutableVector(block.SIZE.getX() * scale,
-            block.SIZE.getY() * scale, block.SIZE.getZ() * scale);
+        scaledSize = new ImmutableVector(block.SIZE.X * scale,
+                                         block.SIZE.Y * scale, block.SIZE.Z * scale);
+        if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
+        if ( Block.max(scaledSize.getVector3f()) > (Block.min(scaledSize.getVector3f()) * 10)) return genome;
+
         scaledBlock =
             new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
                 scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
@@ -47,20 +51,13 @@ public class ScaleSingleBlock
       }
       else
       {
-        scaledSize = new ImmutableVector(block.SIZE.getX(),
-            block.SIZE.getY(), block.SIZE.getZ());
-        scaledBlock =
-            new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
-                scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
-                block.EULER_ANGLES);
+        scaledBlock = block;
       }
-      geneBlocks.set(i, scaledBlock);
       newGenome.addGeneBlock(scaledBlock);
-      for(GeneNeuron geneNeuron: geneNeurons)
-      {
-        if(geneNeuron.BLOCK_INDEX==i) newGenome.addGeneNeuron(geneNeuron);
-      }
-
+    }
+    for(GeneNeuron geneNeuron: geneNeurons)
+    {
+      newGenome.addGeneNeuron(geneNeuron);
     }
     return newGenome;
   }
@@ -69,18 +66,14 @@ public class ScaleSingleBlock
   {
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
-    GeneBlock scaledBlock;
-    GeneBlock block;
 
     ImmutableVector scaledSize;
     Genome newGenome;
 
-
-    Random rand = new Random();
     ImmutableVector rootSize = genome.getRootSize();
     scaledSize = new ImmutableVector(rootSize.getX()*scale, rootSize.getY()*scale, rootSize.getZ()*scale);
     if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
-    if ( (Block.max(scaledSize.getVector3f())) > (Block.min(scaledSize.getVector3f()) * 10)) return genome;
+    if ( Block.max(scaledSize.getVector3f()) > Block.min(scaledSize.getVector3f()) * 10) return genome;
 
     newGenome = new Genome(scaledSize, genome.getRootEulerAngles());
     geneBlocks = genome.getGENE_BLOCKS();
@@ -88,20 +81,11 @@ public class ScaleSingleBlock
 
     for (int i =0; i<geneBlocks.size();i++)
     {
-      block = geneBlocks.get(i);
-        scaledSize = new ImmutableVector(block.SIZE.getX(),
-            block.SIZE.getY(), block.SIZE.getZ());
-        scaledBlock =
-            new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
-                scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
-                block.EULER_ANGLES);
-      geneBlocks.set(i, scaledBlock);
-      newGenome.addGeneBlock(scaledBlock);
-      for(GeneNeuron geneNeuron: geneNeurons)
-      {
-        if(geneNeuron.BLOCK_INDEX==i) newGenome.addGeneNeuron(geneNeuron);
-      }
-
+      newGenome.addGeneBlock(geneBlocks.get(i));
+    }
+    for(GeneNeuron geneNeuron: geneNeurons)
+    {
+      newGenome.addGeneNeuron(geneNeuron);
     }
     return newGenome;
   }

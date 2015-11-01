@@ -4,12 +4,16 @@ package vcreature.mainSimulation;
 import com.jme3.math.Vector3f;
 import com.jme3.system.JmeContext;
 
+import java.util.Random;
+
 /**
  * Entry point to the program
  * Creates a JFrame, which takes care of embedding SimpleApplication inside of itself
  */
 public class MainSim
 {
+  public static final Random RANDOM = new Random(System.currentTimeMillis());
+
   private void print(String msg, float x)
   {
     String className = this.getClass().getSimpleName();
