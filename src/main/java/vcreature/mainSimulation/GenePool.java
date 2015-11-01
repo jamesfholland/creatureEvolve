@@ -73,7 +73,11 @@ public class GenePool
       GENOMES.add(newGenome);
     }
   }
-  
+
+  /**
+   * Returns the best creature in the pool.
+   * @return a genome.
+   */
   public static Genome getBest()
   {
     return getRandom();
