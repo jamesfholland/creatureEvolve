@@ -102,6 +102,7 @@ public class MutationManager
       switch (Mutators.getCurrentMutator())
       {
         case ADDER:
+          System.out.println("ADDER");
           testingGenome = Adder.addBlock(parentGenome);
           testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
 //        testingGenome = Adder.addBlock(testingGenome);
@@ -109,40 +110,52 @@ public class MutationManager
           Mutators.setCurrentMutator(Mutators.ADDER);
           break;
         case DUPLICATOR:
+          System.out.println("DUPLICATORR");
           testingGenome = Duplicator.duplicateLimb(parentGenome);
           Mutators.setCurrentMutator(Mutators.DUPLICATOR);
           break;
         case INVERTER:
           // implement
+          System.out.println("INVERTER");
           testingGenome = Inverter.basicInverter(parentGenome);
           Mutators.setCurrentMutator(Mutators.INVERTER);
           break;
         case MOVER:
           //implement
+          System.out.println("MOVER");
           Mutators.setCurrentMutator(Mutators.INVERTER);
           break;
         case RANDOMIZER:
+          System.out.println("RANDOMIZER");
           testingGenome = Randomizer.randomize(parentGenome);
 
           Mutators.setCurrentMutator(Mutators.RANDOMIZER);
           break;
         case ROTATOR:
           //implement
+          System.out.println("ROTATOR");
+
           Mutators.setCurrentMutator(Mutators.ROTATOR);
           testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
 
           break;
         case SCALER:
+          System.out.println("SCALER");
+
           scaler = rand.nextFloat() * 2;
           testingGenome = Scaler.scale(parentGenome, scaler);
           Mutators.setCurrentMutator(Mutators.SCALER);
           break;
         case SCALE_ROOT:
+          System.out.println("SCOLE_ROOT");
+
           scaler = rand.nextFloat() * 3;
           testingGenome = ScaleSingleBlock.scaleRoot(parentGenome, scaler);
           Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
           break;
         case SCALE_BLOCK:
+          System.out.println("SCALE_BLOCK");
+
           scaler = rand.nextFloat() * 3;
           testingGenome = ScaleSingleBlock.scaleBlock(parentGenome, scaler);
           Mutators.setCurrentMutator(Mutators.SCALE_ROOT);
@@ -151,14 +164,20 @@ public class MutationManager
           break;
         case SUBTRACTOR:
           //implement
+          System.out.println("SUBTRACTOR");
+
           Mutators.setCurrentMutator(Mutators.SUBTRACTOR);
           break;
         case SYMMETRIZER:
           //implement
+          System.out.println("SYMMETRIZER");
+
           Mutators.setCurrentMutator(Mutators.SYMMETRIZER);
           break;
         default:
 //          implement
+          System.out.println("DEFAULT");
+
           testingGenome = Randomizer.randomize(parentGenome);
           testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
           Mutators.setCurrentMutator(Mutators.RANDOMIZER);

@@ -92,7 +92,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     Block.initStaticMaterials(assetManager);
 
     myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
-
     //genePool.addCreatureToPopulation();
     initLighting();
     initKeys();
@@ -146,6 +145,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void setSpeed(int speed)
   {
     this.speed=speed;
+    physicsSpace.setMaxSubSteps(4*speed);
     settings.setFrequency(speed*60);
     this.restart();
   }
@@ -172,6 +172,13 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   {
     this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
+
+    if(elapsedSimulationTime<1 && this.currentFitness>0.01)
+    {
+      myCreature.remove();
+      myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
+      return;
+    }
     if (elapsedSimulationTime > 15)
     {
       myCreature.remove();

@@ -1,5 +1,6 @@
 package vcreature.mutator;
 import vcreature.genotype.*;
+import vcreature.phenotype.Block;
 
 import java.util.ArrayList;
 
@@ -8,61 +9,33 @@ import java.util.ArrayList;
  */
 public class Scaler
 {
-
-
   protected static Genome scale(Genome genome, float scale)
   {
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
-
     GeneBlock scaledBlock;
-    GeneBlock block;
     ImmutableVector scaledSize;
     Genome newGenome;
 
 
     ImmutableVector rootSize = genome.getRootSize();
-    if(rootSize.getX()*scale<0.5f || rootSize.getX()* scale>10*rootSize.getY()*scale || rootSize.getX()* scale>10*rootSize.getZ()*scale ||
-        rootSize.getY()*scale<0.5f ||  rootSize.getY()* scale>10*rootSize.getX()*scale || rootSize.getY()* scale>10*rootSize.getZ()*scale ||
-        rootSize.getZ()*scale<0.5f || rootSize.getZ()* scale>10*rootSize.getY()*scale || rootSize.getZ()* scale>10*rootSize.getX()*scale)
-    {
-      return genome;
-    }
-
-
     scaledSize = new ImmutableVector(rootSize.getX() * scale, rootSize.getY() * scale, rootSize.getZ() * scale);
+    if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
+    if ( (Block.max(scaledSize.getVector3f())) > (Block.min(scaledSize.getVector3f()) * 10)) return genome;
 
 
     newGenome = new Genome(scaledSize, genome.getRootEulerAngles());
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
 
-    for (int i = 0; i < geneBlocks.size(); i++)
+    for(GeneBlock block: geneBlocks)
     {
-      System.out.println(i);
-      block = geneBlocks.get(i);
-
-      if(block.SIZE.getX()*scale<.5f || block.SIZE.getX()>10*block.SIZE.getY() ||block.SIZE.getX()>10*block.SIZE
-
-          .getZ() ||
-          block.SIZE.getY()*scale<.5f || block.SIZE.getY() >10*block.SIZE.getX() ||block.SIZE
-          .getY()>10*block.SIZE.getZ() ||
-          block.SIZE.getZ()*scale<.5f || block.SIZE.getZ() >10*block.SIZE.getX() ||block.SIZE.getZ()>10*block.SIZE.getY())
-      {
-        return genome;
-      }
-      scaledSize = new ImmutableVector(block.SIZE.getX() * scale, block.SIZE.getY() * scale, block.SIZE.getZ() * scale);
+      scaledSize = new ImmutableVector(block.SIZE.X * scale, block.SIZE.Y * scale, block.SIZE.Z * scale);
       scaledBlock = new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT, scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
           block.EULER_ANGLES);
-      geneBlocks.set(i, scaledBlock);
       newGenome.addGeneBlock(scaledBlock);
-      for(GeneNeuron geneNeuron: geneNeurons)
-      {
-        System.out.println("ADDING NEURONS");
-        if(geneNeuron.BLOCK_INDEX==i) newGenome.addGeneNeuron(geneNeuron);
-      }
-
     }
+    for(int i=geneNeurons.size()-1; i>0; i--) newGenome.addGeneNeuron(geneNeurons.get(i));
     return newGenome;
   }
 }
