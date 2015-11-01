@@ -32,7 +32,7 @@ public class HillClimbingManager
     testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
     //testingGenome = new TessMonster(rootSize, eulerAngles, jointSize, 4);
     //testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
-    testingGenome = SpawnCreatureGenoform.makeFlappyBird();
+    //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     //testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
     //testingGenome = GenePool.getRandom();
     parentGenome = testingGenome;
