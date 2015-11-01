@@ -12,6 +12,9 @@ import javafx.geometry.Point3D;
 import javafx.scene.Node;
 import javafx.scene.shape.CullFace;
 import javafx.scene.shape.Mesh;
+import vcreature.genotype.GeneBlock;
+import vcreature.genotype.GeneNeuron;
+import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
@@ -361,10 +364,7 @@ public class ProtoBlock
     }
     else
     {
-      if(pivotLocal==null)
-      {
-        System.out.println("blarrg");
-      }
+
       //System.out.println(floats +"" + pivotLocal + pivotParentLocal + blockParent + axis + size);
       current = creature
               .addBlock(floats,size, blockParent, pivotParentLocal, pivotLocal,
@@ -389,4 +389,38 @@ public class ProtoBlock
     creature.placeOnGround();
   }
 
+  /**
+   * Recreates a genome based upon protoblocks. Used for getting clean genomes of creatures.
+   * @param genome Genome we are adding to
+   * @param parentIndex Block index of parent.
+   */
+  private void addToGenome(Genome genome, int parentIndex)
+  {
+    if(this.parent == null) return; //This must have been the root node.
+    int blockIndex = genome.getGENE_BLOCKS().size();
+    int parentOffset = blockIndex - parentIndex;
+    if (parentIndex == 0) parentOffset = 0; //Catch root block parents.
+
+    GeneBlock block = new GeneBlock(parentOffset, this.pivotParentOffset, this.pivotOffset, new ImmutableVector(this.size), new ImmutableVector(this.axis), new ImmutableVector(this.axis), new ImmutableVector(this.eulerAngles));
+    genome.addGeneBlock(block);
+
+    for(Neuron protoNeuron : neurons)
+    {
+      genome.addGeneNeuron(new GeneNeuron( blockIndex, ((ProtoNeuron) protoNeuron).geneNeuron));
+    }
+    for(ProtoBlock child : children)
+    {
+      child.addToGenome(genome, blockIndex);
+    }
+  }
+
+  public Genome createCleanGenomeFromRoot()
+  {
+    Genome genome = new Genome(new ImmutableVector(this.size), new ImmutableVector(this.eulerAngles));
+    for(ProtoBlock child : children)
+    {
+      child.addToGenome(genome, 0);
+    }
+    return genome;
+  }
 }

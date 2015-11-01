@@ -35,6 +35,18 @@ public class ImmutableVector
   }
 
   /**
+   * Basic vector constructor from Vector3f
+   *
+   * @param vector3f vector to base upon.
+   */
+  public ImmutableVector(Vector3f vector3f)
+  {
+    this.X = vector3f.x;
+    this.Y = vector3f.y;
+    this.Z = vector3f.z;
+  }
+
+  /**
    * Constructs a ImmutableVector from a BufferedReader. Used when parsing a genome file.
    *
    * @param fileIn The stream to parse a vector from.

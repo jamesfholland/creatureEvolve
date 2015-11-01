@@ -1,4 +1,4 @@
-package vcreature.mutator.geneticMerger;
+package vcreature.mutator.genetic.MergeTypes;
 
 /**
  * Created by Dayloki on 10/28/2015.
@@ -6,6 +6,7 @@ package vcreature.mutator.geneticMerger;
 
 import vcreature.genotype.Gene;
 import vcreature.genotype.Genome;
+import vcreature.mutator.genetic.GeneticTools;
 
 import java.util.ArrayList;
 import java.util.Random;

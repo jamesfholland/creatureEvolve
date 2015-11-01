@@ -4,12 +4,17 @@ package vcreature.mainSimulation;
 import com.jme3.math.Vector3f;
 import com.jme3.system.JmeContext;
 
+import java.util.Random;
+
 /**
  * Entry point to the program
  * Creates a JFrame, which takes care of embedding SimpleApplication inside of itself
  */
 public class MainSim
 {
+  public static final Random RANDOM = new Random(System.currentTimeMillis());
+  public static final MutationTester MUTATION_TESTER = new MutationTester();
+
   private void print(String msg, float x)
   {
     String className = this.getClass().getSimpleName();
@@ -35,7 +40,7 @@ public class MainSim
         {
           System.out.println("Starting App");
           new SimFrame();
-          //new ThreadController().start(JmeContext.Type.Headless);
+          MUTATION_TESTER.start(JmeContext.Type.Headless);
         }
       }
     });

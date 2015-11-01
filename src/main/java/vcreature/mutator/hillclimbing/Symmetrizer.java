@@ -1,4 +1,4 @@
-package vcreature.mutator;
+package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
@@ -14,9 +14,6 @@ import java.util.Random;
  */
 public class Symmetrizer
 {
-  private static ArrayList<GeneBlock> geneBlocks;
-  private static ArrayList<GeneNeuron> geneNeurons;
-  private static Random rand = new Random();
   public static Genome basicSymmetrize(Genome genome)
   {
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());

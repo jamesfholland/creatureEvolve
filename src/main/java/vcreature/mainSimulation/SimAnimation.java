@@ -19,10 +19,10 @@ import com.jme3.system.AppSettings;
 import com.jme3.texture.Texture;
 import com.jme3.input.controls.ActionListener;
 import vcreature.genotype.GenomeCreature;
-import vcreature.mutator.MutationManager;
+import vcreature.mutator.Manager;
 import vcreature.phenotype.Block;
-import vcreature.phenotype.Creature;
 import vcreature.phenotype.PhysicsConstants;
+import vcreature.genotype.Genome;
 
 /**
  * Created by Tess Daughton on 10/14/15.
@@ -34,16 +34,23 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
   private float cameraAngle = (float) (Math.PI / 2.0);
-  private boolean gamePause;
 
 
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Vector3f tmpVec3; //
   private boolean isCameraRotating = true;
-  private Creature myCreature;
+  private GenomeCreature myCreature;
   private float elapsedSimulationTime;
-  private MutationManager mutationManager = new MutationManager();
+  private Genome fileGenome;
+
+  private Manager manager = new Manager();
+  private float fitnessUpdater = 0;
+  private float elapsedMinutes = 0;
   private float currentFitness = 0;
+  private float previousFitness = 0;
+  private float tempFitness = 0;
+  private int zoom = 25;
+
 
   /**
    * Initalizes a BulletAppState and a Physics Space
@@ -91,8 +98,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
     Block.initStaticMaterials(assetManager);
 
-    myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
-
+    myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(-1));
     //genePool.addCreatureToPopulation();
     initLighting();
     initKeys();
@@ -146,6 +152,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void setSpeed(int speed)
   {
     this.speed=speed;
+    physicsSpace.setMaxSubSteps(4*speed);
     settings.setFrequency(speed*60);
     this.restart();
   }
@@ -163,6 +170,21 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     inputManager.addListener(this, "Toggle Camera Rotation");
   }
 
+  private void setCurrentFitness()
+  { tempFitness=currentFitness;
+    currentFitness = (currentFitness-previousFitness)/elapsedMinutes;
+    previousFitness=tempFitness;
+  }
+  protected void setZoom(int zoom)
+  {
+    this.zoom = zoom;
+  }
+  protected float getCurrentFitness()
+  {
+    return currentFitness;
+  }
+
+
 
   /**
    * Use the main event loop to trigger repeating actions.
@@ -172,13 +194,35 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   {
     this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
-    if (elapsedSimulationTime > 10)
+    fitnessUpdater+=deltaSeconds;
+
+    if(elapsedSimulationTime<1 && this.currentFitness>0.01)
+    {
+      myCreature.remove();
+      myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0));
+      return;
+    }
+    if (elapsedSimulationTime > 15)
     {
       myCreature.remove();
       elapsedSimulationTime = 0;
+      if(fileGenome!=null)
+      {
+        myCreature = new GenomeCreature(physicsSpace, rootNode, fileGenome);
 
-      myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(this.currentFitness));
+      }
+      else
+      {
+        myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(this.currentFitness));
+      }
+    }
 
+    //This is the timer for updating the fitness per minute in the GUI.
+    if(fitnessUpdater==60)
+    {
+      elapsedMinutes++;
+      setCurrentFitness();
+      fitnessUpdater=0;
     }
 
     if (isCameraRotating)
@@ -186,13 +230,18 @@ public class SimAnimation extends SimpleApplication implements ActionListener
       //Move camera continously in circle of radius 25 meters centered 10 meters
       //  above the origin.
       cameraAngle += deltaSeconds * 2.0 * Math.PI / 60.0; //rotate full circle every minute
-      float x = (float) (25.0 * Math.cos(cameraAngle));
-      float z = (float) (25.0 * Math.sin(cameraAngle));
+      float x = (float) (zoom * Math.cos(cameraAngle));
+      float z = (float) (zoom * Math.sin(cameraAngle));
 
       tmpVec3 = new Vector3f(x, 10.0f, z);
       cam.setLocation(tmpVec3);
       cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }
+  }
+
+  public void setCurrentCreature(Genome creature)
+  {
+    fileGenome = creature;
   }
 }
 

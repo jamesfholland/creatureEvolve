@@ -1,4 +1,4 @@
-package vcreature.mutator;
+package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.*;
 
@@ -10,8 +10,6 @@ import java.util.Random;
  */
 public class Adder
 {
-  Genome genome;
-
   /**
    * This is where the magic happens
    */

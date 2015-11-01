@@ -1,7 +1,6 @@
 package vcreature.genotype.phenoConversion;
 
 import vcreature.genotype.GeneNeuron;
-import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.Neuron;
 
 /**
@@ -11,6 +10,7 @@ import vcreature.phenotype.Neuron;
 public class ProtoNeuron extends Neuron
 {
 
+  public final GeneNeuron geneNeuron;
 
   /**
    * Each Neuron can have up to 5 inputs (a, b, c, d and e). Each of these inputs
@@ -27,6 +27,7 @@ public class ProtoNeuron extends Neuron
   {
     super(geneNeuron.A_TYPE, geneNeuron.B_TYPE, geneNeuron.C_TYPE, geneNeuron.D_TYPE, geneNeuron.E_TYPE);
 
+    this.geneNeuron = geneNeuron;
     setInputValue(Neuron.A, geneNeuron.A_VALUE);
     setInputValue(Neuron.B, geneNeuron.B_VALUE);
     setInputValue(Neuron.C, geneNeuron.C_VALUE);

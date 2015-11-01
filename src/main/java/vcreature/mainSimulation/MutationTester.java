@@ -1,43 +1,41 @@
 package vcreature.mainSimulation;
 
-    import com.jme3.app.SimpleApplication;
-    import com.jme3.bullet.BulletAppState;
-    import com.jme3.bullet.PhysicsSpace;
-    import com.jme3.bullet.control.RigidBodyControl;
-    import com.jme3.input.KeyInput;
-    import com.jme3.input.controls.KeyTrigger;
-    import com.jme3.light.AmbientLight;
-    import com.jme3.light.DirectionalLight;
-    import com.jme3.material.Material;
-    import com.jme3.math.ColorRGBA;
-    import com.jme3.math.Vector2f;
-    import com.jme3.math.Vector3f;
-    import com.jme3.renderer.queue.RenderQueue;
-    import com.jme3.scene.Geometry;
-    import com.jme3.shadow.DirectionalLightShadowRenderer;
-    import com.jme3.system.AppSettings;
-    import com.jme3.texture.Texture;
-    import com.jme3.input.controls.ActionListener;
-    import vcreature.genotype.GenomeCreature;
-    import vcreature.mutator.MutationManager;
-    import vcreature.phenotype.Block;
-    import vcreature.phenotype.Creature;
-    import vcreature.phenotype.PhysicsConstants;
+import com.jme3.app.SimpleApplication;
+import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.material.Material;
+import com.jme3.math.Vector2f;
+import com.jme3.renderer.queue.RenderQueue;
+import com.jme3.scene.Geometry;
+import com.jme3.system.AppSettings;
+import com.jme3.texture.Texture;
+import vcreature.genotype.GenomeCreature;
+import vcreature.mutator.HillClimbingManager;
+import vcreature.mutator.hillclimbing.*;
+import vcreature.phenotype.Block;
+import vcreature.phenotype.PhysicsConstants;
+import vcreature.genotype.Genome;
 /**
- * Created by L301126 on 10/28/15.
+ * Created by Tess Daughton on 10/28/15.
  */
-public class ThreadController extends SimpleApplication implements Runnable
+public class MutationTester extends SimpleApplication
 {
-  //  public static GenePool genePool = new GenePool();
   private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
 
 
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
-  private Creature myCreature;
+  private GenomeCreature currentCreature;
+  private Genome bestCreatureGenome;
+  private Genome testGenome;
+  private Genome currentGenome;
   private float elapsedSimulationTime;
-  private MutationManager mutationManager = new MutationManager();
+  private HillClimbingManager hillClimbingManager = new HillClimbingManager();
+  private float bestFitness = 0;
   private float currentFitness = 0;
+  private Mutators mutators[] = Mutators.values();
+  private int indexOfCurrentMutator = 0;
 
   /**
    * Initalizes a BulletAppState and a Physics Space
@@ -57,7 +55,7 @@ public class ThreadController extends SimpleApplication implements Runnable
     physicsSpace.setGravity(PhysicsConstants.GRAVITY);
     physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
     physicsSpace.setMaxSubSteps(4);
-    this.speed = 20;
+    this.speed = 100;
     AppSettings settings = new AppSettings(true);
     setSettings(settings);
     settings.setResolution(1024, 768);
@@ -85,7 +83,11 @@ public class ThreadController extends SimpleApplication implements Runnable
 
     Block.initStaticMaterials(assetManager);
 
-    myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
+    currentCreature = new GenomeCreature(physicsSpace, rootNode, hillClimbingManager.getNextCreature(-1));
+    currentGenome = currentCreature.getGenome();
+    bestCreatureGenome = currentGenome;
+    testGenome = mutators[indexOfCurrentMutator].mutate(currentGenome);
+    indexOfCurrentMutator++;
     //genePool.addCreatureToPopulation();
 
   }
@@ -96,21 +98,34 @@ public class ThreadController extends SimpleApplication implements Runnable
   @Override
   public void simpleUpdate(float deltaSeconds)
   {
-    this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
+    if(elapsedSimulationTime==15)
+    {
+      testGenome = mutators[indexOfCurrentMutator].mutate(currentGenome);
+      indexOfCurrentMutator++;
+      if(indexOfCurrentMutator>=mutators.length-1)
+      {
+        indexOfCurrentMutator=0;
+        hillClimbingManager.getNextCreature(bestCreatureGenome.getFitness());
+      }
+    }
+    this.currentFitness = currentCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
     if (elapsedSimulationTime > 15)
     {
-      myCreature.remove();
+      currentCreature.remove();
       elapsedSimulationTime = 0;
-
-      myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(this.currentFitness));
+      currentCreature = new GenomeCreature(physicsSpace, rootNode, testGenome);
+    }
+    if (currentCreature.getFitness() > bestFitness)
+    {
+      bestFitness = currentCreature.getFitness();
+      bestCreatureGenome = testGenome;
     }
   }
 
-  @Override
-  public void run()
+  public Genome getBestCreatureGenome()
   {
-
+    return bestCreatureGenome;
   }
 }
 

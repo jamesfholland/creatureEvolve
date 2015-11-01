@@ -1,4 +1,4 @@
-package vcreature.mutator;
+package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.*;
 import com.jme3.math.Vector3f;
@@ -43,7 +43,7 @@ public class Duplicator
    * @param genome
    * @return
    */
-  protected static Genome duplicateLimb(Genome genome)
+  public static Genome duplicateLimb(Genome genome)
   {
     newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
     geneBlocks = genome.getGENE_BLOCKS();
