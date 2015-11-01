@@ -37,7 +37,6 @@ public class MutationTester extends SimpleApplication implements ActionListener
   private boolean isCameraRotating = true;
 
 
-
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private GenomeCreature currentCreature;
   private Genome bestCreatureGenome;
@@ -48,7 +47,7 @@ public class MutationTester extends SimpleApplication implements ActionListener
   private float bestFitness = 0;
   private float currentFitness = 0;
   private Mutators mutators[] = Mutators.values();
-  private ArrayList <Genome> mutations = new ArrayList<>();
+  private ArrayList<Genome> mutations = new ArrayList<>();
   private int indexOfCurrentMutator = 0;
 
   /**
@@ -180,7 +179,7 @@ public class MutationTester extends SimpleApplication implements ActionListener
 
   public void setSpeed(int speed)
   {
-    this.speed=speed;
+    this.speed = speed;
     physicsSpace.setMaxSubSteps(4 * speed);
     settings.setFrequency(speed * 60);
     this.restart();
@@ -211,12 +210,12 @@ public class MutationTester extends SimpleApplication implements ActionListener
     if (elapsedSimulationTime > 14)
     {
       indexOfCurrentMutator++;
-      if (indexOfCurrentMutator >= mutators.length - 1)
+      if (indexOfCurrentMutator >= mutations.size() - 1)
       {
         indexOfCurrentMutator = 0;
         currentGenome = modeManager.getNextCreature(bestFitness);
         mutations.clear();
-
+        calculateMutations(currentGenome);
         testGenome = mutations.get(indexOfCurrentMutator);
       }
 
@@ -254,11 +253,12 @@ public class MutationTester extends SimpleApplication implements ActionListener
 
   private void calculateMutations(Genome genome)
   {
-    for(Mutators mutator: mutators)
+    for (Mutators mutator : mutators)
     {
       mutations.add(mutator.mutate(genome));
     }
   }
+
 
   public synchronized Genome getBestCreatureGenome()
   {
