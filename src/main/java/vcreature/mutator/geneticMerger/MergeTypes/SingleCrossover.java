@@ -1,4 +1,4 @@
-package vcreature.mutator.geneticMerger;
+package vcreature.mutator.geneticMerger.MergeTypes;
 
 /**
  * Created by Dayloki on 10/28/2015.
@@ -8,6 +8,7 @@ import vcreature.genotype.Gene;
 import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
 import vcreature.genotype.Genome;
+import vcreature.mutator.geneticMerger.GeneticTools;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -44,7 +45,7 @@ public static ArrayList<Genome> singleCrossOver(Genome parent1,Genome parent2)
 //    genes2.add(gene);
 //  }
   int smallestGeneSize=genes1.size()>genes2.size() ? genes1.size() : genes2.size();
-genes1=GeneticTools.getParentsGenes(parent1,parent2)[0];
+genes1= GeneticTools.getParentsGenes(parent1, parent2)[0];
 genes2=GeneticTools.getParentsGenes(parent1,parent2)[1];
   int crossoverPoint=rand.nextInt(smallestGeneSize+1)-1;
 
