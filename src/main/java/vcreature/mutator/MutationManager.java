@@ -139,6 +139,7 @@ public class MutationManager
           break;
         case SUBTRACTOR:
           //implement
+          Subtracter.subtractBlock(parentGenome);
           Mutators.setCurrentMutator(Mutators.SUBTRACTOR);
           break;
         case SYMMETRIZER:
