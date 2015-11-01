@@ -2,6 +2,7 @@ package vcreature.mainSimulation;
 
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
+import vcreature.genotype.GenomeComparator;
 
 import java.util.LinkedList;
 import java.util.Random;
@@ -75,12 +76,17 @@ public class GenePool
   }
 
   /**
+   * Sorts the GenePool.
    * Returns the best creature in the pool.
    * @return a genome.
    */
   public static Genome getBest()
   {
-    return getRandom();
+    synchronized (GENOMES)
+    {
+      GENOMES.sort(new GenomeComparator());
+      return GENOMES.getFirst();
+    }
   }
 
 
