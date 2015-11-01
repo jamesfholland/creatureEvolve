@@ -1,5 +1,6 @@
 package vcreature.mutator;
 
+import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
 import vcreature.mutator.genetic.MergeType;
@@ -18,13 +19,12 @@ public class GeneticManager
 
   GeneticManager()
   {
-    testQueue = new LinkedList<>();
     mergeType = MergeType.CUTANDSPLICE;
   }
 
   public Genome getNextGenome(float lastFitness)
   {
-    if(lastFitness == -1 || testQueue.isEmpty())
+    if(lastFitness == -1)
     {
       buildQueue(GenePool.getBest());
     }
@@ -33,9 +33,19 @@ public class GeneticManager
       currentTestee.genome.setFitness(lastFitness);
       if (lastFitness > currentTestee.parent1.getFitness() && lastFitness > currentTestee.parent2.getFitness())
       {
+        System.out.println("Better Child replacing parents parent1,2: "
+                               + currentTestee.parent1.getFitness()+","
+                               + currentTestee.parent2.getFitness()+ "fitness: " + lastFitness);
         GenePool.replace(currentTestee.genome, currentTestee.parent1, currentTestee.parent2);
         buildQueue(currentTestee.genome);
+        GenoFile.writeGenome(currentTestee.genome);
       }
+    }
+    if(testQueue.isEmpty())
+    {
+      mergeType = mergeType.next(); //Cycle through mergeTypes.
+      System.out.println("QueueEmpty Building another from best");
+      buildQueue(GenePool.getBest());
     }
     currentTestee = testQueue.poll();
 
@@ -44,8 +54,8 @@ public class GeneticManager
 
   private void buildQueue(Genome parent)
   {
-
-    mergeType = mergeType.next(); //Cycle through mergeTypes.
+    testQueue = new LinkedList<>();
+    System.out.println("Building Queue GenePool Size: "+GenePool.getPoolSize());
     LinkedList<Genome> pool = GenePool.getCopy();
     for(Genome mate : pool)
     {
@@ -55,6 +65,8 @@ public class GeneticManager
         testQueue.offer(new GenomeTracker(child, parent, mate));
       }
     }
+
+    System.out.println("TestQueue size: " + testQueue.size());
   }
 
 
