@@ -89,5 +89,12 @@ public class GenePool
     }
   }
 
+  public static LinkedList<Genome> getCopy()
+  {
+    synchronized (GENOMES)
+    {
+      return new LinkedList<Genome>(GENOMES);
+    }
+  }
 
 }

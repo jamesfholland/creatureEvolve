@@ -16,6 +16,12 @@ public enum MergeType
         {
           return CutAndSplice.cutAndSplice(parent1, parent2);
         }
+
+        @Override
+        public MergeType next()
+        {
+          return SINGLECROSSOVER;
+        }
       },
   SINGLECROSSOVER()
       {
@@ -24,11 +30,23 @@ public enum MergeType
         {
           return SingleCrossover.singleCrossOver(parent1, parent2);
         }
+
+        @Override
+        public MergeType next()
+        {
+          return CUTANDSPLICE;
+        }
       },
   SWAPBLOCKSANDNEURONS()
       {
         @Override
         public ArrayList<Genome> merge(Genome parent1, Genome parent2)
+        {
+          return null;
+        }
+
+        @Override
+        public MergeType next()
         {
           return null;
         }
@@ -40,7 +58,14 @@ public enum MergeType
         {
           return null;
         }
+
+        @Override
+        public MergeType next()
+        {
+          return null;
+        }
       };
 
   public abstract ArrayList<Genome> merge(Genome parent1, Genome parent2);
+  public abstract MergeType next();
 }
