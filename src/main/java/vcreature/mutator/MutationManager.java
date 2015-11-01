@@ -30,10 +30,10 @@ public class MutationManager
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
     //testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
-    testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
+    //testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
+    testingGenome = GenePool.getRandom();
     parentGenome = testingGenome;
-    Mutators.setCurrentMutator(Mutators.RANDOMIZER);
-    //GenoFile.writeGenome(testingGenome);
+    Mutators.setCurrentMutator(Mutators.getRandomMutator());
   }
 
   /**
@@ -85,7 +85,7 @@ public class MutationManager
     boolean override =false;
     if(override)
     {
-      testingGenome = Mover.moveLimbs(parentGenome);
+      testingGenome = Cleaner.cleanGenome(parentGenome);
     }
     else
     {
@@ -154,7 +154,6 @@ public class MutationManager
           testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
           Mutators.setCurrentMutator(Mutators.RANDOMIZER);
           break;
-
       }
     }
     return testingGenome;
