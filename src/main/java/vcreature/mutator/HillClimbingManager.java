@@ -6,6 +6,7 @@ import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 import vcreature.mainSimulation.GenePool;
 import vcreature.mainSimulation.MutationTester;
+import vcreature.mainSimulation.SpawnCreatureGenoform;
 import vcreature.mutator.hillclimbing.*;
 import vcreature.mainSimulation.MainSim;
 
@@ -34,9 +35,9 @@ public class HillClimbingManager
 
     //testingGenome = new TessMonster(rootSize, eulerAngles, jointSize, 4);
     //testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
-    //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
+    testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     //testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
-    testingGenome = GenePool.getRandom();
+    //testingGenome = GenePool.getRandom();
     parentGenome = testingGenome;
     Mutators.setCurrentMutator(Mutators.getRandomMutator());
   }

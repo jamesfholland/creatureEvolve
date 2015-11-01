@@ -359,7 +359,7 @@ public class ProtoBlock
     float[] floats={eulerAngles.x,eulerAngles.y,eulerAngles.z};
     if (blockParent == null)
     {
-      current = creature.addRoot(new Vector3f(0,1000000000,0),size,floats);
+      current = creature.addRoot(new Vector3f(0,10000,0),size,floats);
       creature.getBlockByID(0).setMaterial(Block.MATERIAL_RED);
     }
     else

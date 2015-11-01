@@ -99,6 +99,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     Block.initStaticMaterials(assetManager);
 
     myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(-1));
+   // myCreature =new GenomeCreature(physicsSpace,rootNode,SpawnCreatureGenoform.makeFlappyBird());
     //genePool.addCreatureToPopulation();
     initLighting();
     initKeys();
@@ -199,6 +200,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     if(elapsedSimulationTime<1 && this.currentFitness>0.01)
     {
       myCreature.remove();
+      elapsedSimulationTime = 0;
       myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0));
       return;
     }
