@@ -3,7 +3,9 @@ package vcreature.mutator;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
+import vcreature.mainSimulation.SpawnRandomCreatureGenoform;
 import vcreature.mutator.genetic.MergeType;
+import vcreature.mutator.hillclimbing.Symmetrizer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,6 +39,7 @@ public class GeneticManager
                                + currentTestee.parent1.getFitness()+","
                                + currentTestee.parent2.getFitness()+ "fitness: " + lastFitness);
         GenePool.replace(currentTestee.genome, currentTestee.parent1, currentTestee.parent2);
+        GenePool.add(SpawnRandomCreatureGenoform.createRandomCreature(4));
         buildQueue(currentTestee.genome);
         GenoFile.writeGenome(currentTestee.genome);
       }
@@ -62,6 +65,8 @@ public class GeneticManager
       ArrayList<Genome> children = mergeType.merge(parent, mate);
       for(Genome child : children)
       {
+        Genome symChild = Symmetrizer.basicSymmetrize(child);
+        testQueue.offer(new GenomeTracker(symChild, parent, mate));
         testQueue.offer(new GenomeTracker(child, parent, mate));
       }
     }
