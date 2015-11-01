@@ -45,8 +45,10 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
   private MutationManager mutationManager = new MutationManager();
   private float fitnessUpdater = 0;
+  private float elapsedMinutes = 0;
   private float currentFitness = 0;
   private float previousFitness = 0;
+  private float tempFitness = 0;
   private int zoom = 25;
 
 
@@ -169,8 +171,9 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   }
 
   private void setCurrentFitness()
-  {
-    currentFitness = currentFitness-previousFitness;
+  { tempFitness=currentFitness;
+    currentFitness = (currentFitness-previousFitness)/elapsedMinutes;
+    previousFitness=tempFitness;
   }
   protected void setZoom(int zoom)
   {
@@ -210,6 +213,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     //This is the timer for updating the fitness per minute in the GUI.
     if(fitnessUpdater==60)
     {
+      elapsedMinutes++;
       setCurrentFitness();
       fitnessUpdater=0;
     }

@@ -19,7 +19,7 @@ public class Scaler
 
 
     ImmutableVector rootSize = genome.getRootSize();
-    scaledSize = new ImmutableVector(rootSize.getX() * scale, rootSize.getY() * scale, rootSize.getZ() * scale);
+    scaledSize = new ImmutableVector(rootSize.X * scale, rootSize.Y * scale, rootSize.Z * scale);
     if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
     if ( (Block.max(scaledSize.getVector3f())) > (Block.min(scaledSize.getVector3f()) * 10)) return genome;
 
@@ -31,6 +31,8 @@ public class Scaler
     for(GeneBlock block: geneBlocks)
     {
       scaledSize = new ImmutableVector(block.SIZE.X * scale, block.SIZE.Y * scale, block.SIZE.Z * scale);
+      if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
+      if ( (Block.max(scaledSize.getVector3f())) > (Block.min(scaledSize.getVector3f()) * 10)) return genome;
       scaledBlock = new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT, scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
           block.EULER_ANGLES);
       newGenome.addGeneBlock(scaledBlock);
