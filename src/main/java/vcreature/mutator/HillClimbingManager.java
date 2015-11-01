@@ -5,13 +5,14 @@ import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 import vcreature.mainSimulation.GenePool;
+import vcreature.mutator.hillclimbing.*;
 
 import java.util.Random;
 
 /**
  * This will manage finding mutated genomes.
  */
-public class MutationManager
+public class HillClimbingManager
 {
   Random rand = new Random();
   private Genome parentGenome;
@@ -23,17 +24,17 @@ public class MutationManager
    * Sets up the mutation manager. Currently always seeds with FlappyBird.
    * In the future will be handed a GenEpoOl, that it picks a creature from.
    */
-  public MutationManager()
+  public HillClimbingManager()
   {
     //testingGenome=SpawnCreatureGenoform.makeTableMonster();
-    testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
+    testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
     ImmutableVector rootSize = new ImmutableVector(2.0f, 1.0f, 2.0f);
     ImmutableVector eulerAngles = new ImmutableVector(0.0f,0.0f,0.0f);
     ImmutableVector jointSize = new ImmutableVector(0.5f, .5f, 1.0f);
 
 
     //testingGenome = new TessMonster(rootSize, eulerAngles, jointSize, 4);
-    //testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
+    //testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     //testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
     testingGenome = GenePool.getRandom();

@@ -1,4 +1,4 @@
-package vcreature.mutator;
+package vcreature.mutator.hillclimbing;
 
 import com.jme3.math.Vector3f;
 import vcreature.genotype.*;
@@ -16,9 +16,11 @@ import java.util.Random;
 public class Randomizer
 {
   /**
-   * This is where the magic happens
+   * Randomizes a creature, but keeps sizes below 5 meters.
+   * @param genome genome to mutate
+   * @return new genome
    */
-  protected static Genome randomize(Genome genome)
+  public static Genome randomize(Genome genome)
   {
     ArrayList<GeneNeuron> geneNeurons;
     ArrayList<GeneBlock> geneBlocks;

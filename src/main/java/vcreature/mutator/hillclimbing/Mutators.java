@@ -1,5 +1,7 @@
-package vcreature.mutator;
-import java.util.Random;
+package vcreature.mutator.hillclimbing;
+
+import vcreature.mainSimulation.MainSim;
+
 /**
  * Created by Tess Daughton on 10/27/15
  */
@@ -9,19 +11,18 @@ public enum Mutators
 
   private static Mutators currentMutator = null;
   private static Mutators [] mutatorsList = Mutators.values();
-  private static Random rand = new Random();
 
-  protected static void setCurrentMutator(Mutators mutator)
+  public static void setCurrentMutator(Mutators mutator)
   {
     currentMutator = mutator;
   }
 
-  protected static Mutators getCurrentMutator()
+  public static Mutators getCurrentMutator()
   {
     return currentMutator;
   }
-  protected static Mutators getRandomMutator()
+  public static Mutators getRandomMutator()
   {
-    return mutatorsList[rand.nextInt(mutatorsList.length)];
+    return mutatorsList[MainSim.RANDOM.nextInt(mutatorsList.length)];
   }
 }

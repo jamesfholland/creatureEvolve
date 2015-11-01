@@ -4,22 +4,14 @@ package vcreature.mainSimulation;
     import com.jme3.bullet.BulletAppState;
     import com.jme3.bullet.PhysicsSpace;
     import com.jme3.bullet.control.RigidBodyControl;
-    import com.jme3.input.KeyInput;
-    import com.jme3.input.controls.KeyTrigger;
-    import com.jme3.light.AmbientLight;
-    import com.jme3.light.DirectionalLight;
     import com.jme3.material.Material;
-    import com.jme3.math.ColorRGBA;
     import com.jme3.math.Vector2f;
-    import com.jme3.math.Vector3f;
     import com.jme3.renderer.queue.RenderQueue;
     import com.jme3.scene.Geometry;
-    import com.jme3.shadow.DirectionalLightShadowRenderer;
     import com.jme3.system.AppSettings;
     import com.jme3.texture.Texture;
-    import com.jme3.input.controls.ActionListener;
     import vcreature.genotype.GenomeCreature;
-    import vcreature.mutator.MutationManager;
+    import vcreature.mutator.HillClimbingManager;
     import vcreature.phenotype.Block;
     import vcreature.phenotype.Creature;
     import vcreature.phenotype.PhysicsConstants;
@@ -36,7 +28,7 @@ public class ThreadController extends SimpleApplication implements Runnable
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Creature myCreature;
   private float elapsedSimulationTime;
-  private MutationManager mutationManager = new MutationManager();
+  private HillClimbingManager hillClimbingManager = new HillClimbingManager();
   private float currentFitness = 0;
 
   /**
@@ -85,7 +77,7 @@ public class ThreadController extends SimpleApplication implements Runnable
 
     Block.initStaticMaterials(assetManager);
 
-    myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(-1));
+    myCreature = new GenomeCreature(physicsSpace, rootNode, hillClimbingManager.getNextCreature(-1));
     //genePool.addCreatureToPopulation();
 
   }
@@ -103,7 +95,7 @@ public class ThreadController extends SimpleApplication implements Runnable
       myCreature.remove();
       elapsedSimulationTime = 0;
 
-      myCreature = new GenomeCreature(physicsSpace, rootNode, mutationManager.getNextCreature(this.currentFitness));
+      myCreature = new GenomeCreature(physicsSpace, rootNode, hillClimbingManager.getNextCreature(this.currentFitness));
     }
   }
 

@@ -52,15 +52,25 @@ public class GenoFile
   /**
    * Reads a genome from file located in the GenePool folder.
    *
-   * @param filePath the file's name, not the path to file.
+   * @param fileName the file's name, not the path to file.
    * @return the parsed genome or null if an error occurred.
+   */
+  public static Genome readGenomeFromPool(String fileName)
+  {
+    return readGenome(GENE_POOL_LOCATION + fileName);
+  }
+
+  /**
+   * Returns a Genome from an arbitrary file path
+   * @param filePath The path to the file.
+   * @return genome found in the file.
    */
   public static Genome readGenome(String filePath)
   {
     BufferedReader fileIn = null;
     try
     {
-      fileIn = new BufferedReader(new FileReader(new File(GENE_POOL_LOCATION + filePath)));
+      fileIn = new BufferedReader(new FileReader(new File(filePath)));
       Genome genome = new Genome(fileIn);
       return genome;
     }
@@ -99,7 +109,7 @@ public class GenoFile
     {
       if(files[i].isFile() && files[i].getName().endsWith(".geno"))
       {
-        genomes.add(GenoFile.readGenome(files[i].getName()));
+        genomes.add(GenoFile.readGenomeFromPool(files[i].getName()));
       }
     }
 
