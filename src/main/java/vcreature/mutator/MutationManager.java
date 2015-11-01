@@ -6,6 +6,9 @@ import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 import vcreature.genotype.TessMonster;
 import vcreature.mainSimulation.GenePool;
+import vcreature.mainSimulation.SpawnCreature;
+import vcreature.mainSimulation.SpawnCreatureGenoform;
+import vcreature.mutator.geneticMerger.CutAndSplice;
 
 import java.util.Random;
 
@@ -34,10 +37,12 @@ public class MutationManager
 
 
     //testingGenome = new TessMonster(rootSize, eulerAngles, jointSize, 4);
+    //testingGenome = GenePool.getRandom(); //GenoFile.readGenome("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
+    //testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
+    testingGenome = GenePool.getRandom();
     parentGenome = testingGenome;
-    Mutators.setCurrentMutator(Mutators.RANDOMIZER);
-    //GenoFile.writeGenome(testingGenome);
+    Mutators.setCurrentMutator(Mutators.getRandomMutator());
   }
 
   /**
@@ -86,10 +91,10 @@ public class MutationManager
   private Genome mutateGenome()
   {
 
-    boolean override =true;
+    boolean override =false;
     if(override)
     {
-      //testingGenome = Mover.moveLimbs(parentGenome);
+      testingGenome = Cleaner.cleanGenome(parentGenome);
     }
     else
     {
@@ -158,7 +163,6 @@ public class MutationManager
           testingGenome = Symmetrizer.basicSymmetrize(testingGenome);
           Mutators.setCurrentMutator(Mutators.RANDOMIZER);
           break;
-
       }
     }
     return testingGenome;

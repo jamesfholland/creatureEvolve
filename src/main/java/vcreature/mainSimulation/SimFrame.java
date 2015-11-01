@@ -86,10 +86,10 @@ public class SimFrame extends JFrame
           int fps = (int) source.getValue();
           animation.setSpeed(fps);
         }
-
       }
     });
     JLabel speedLabel = new JLabel(("Speed: "));
+    JLabel fittnessPerMin = new JLabel(("Fittness/Min: "));
     threadPane.add(speedLabel);
     threadPane.add(speed);
     add(threadPane, BorderLayout.PAGE_END);
