@@ -71,7 +71,7 @@ public class HillClimbingManager
     for (Mutators mutator : Mutators.values())
     {
       testQueue.add(mutator.mutate(genome));
-     // testQueue.add(mutator.SCALER.mutate(genome));
+      //testQueue.add(mutator.DUPLICATOR.mutate(genome));
     }
   }
 }

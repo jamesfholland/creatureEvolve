@@ -15,7 +15,7 @@ public class Manager
 
   private Genome currentGenome;
 
-  private MutationType currentMutationType = MutationType.HILL;
+  private  MutationType currentMutationType = MutationType.HILL;
 
   private GeneticManager geneticManager;
   private HillClimbingManager hillClimbingManager;
@@ -48,21 +48,25 @@ public class Manager
 
   public Genome getNextCreature(float lastFitness)
   {
-    switch(currentMutationType)
-    {
-      case GENETIC:
-        currentGenome = geneticManager.getNextGenome(lastFitness);
-        break;
-      case HILL:
-        currentGenome = hillClimbingManager.getNextCreature(lastFitness);
-        break;
-    }
-
+      switch (currentMutationType)
+      {
+        case GENETIC:
+          System.out.println("genetic");
+          currentGenome = geneticManager.getNextGenome(lastFitness);
+          break;
+        case HILL:
+          System.out.println("hill");
+          currentGenome = hillClimbingManager.getNextCreature(lastFitness);
+          break;
+      }
     return currentGenome;
   }
+  public void setCurrentMutationType(MutationType mutationType)
+  {
+    currentMutationType = mutationType;
+  }
 
-
-  enum MutationType
+  public enum MutationType
   {
     HILL, GENETIC
   }
