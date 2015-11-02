@@ -33,7 +33,7 @@ public class Subtracter
     {
       newGenome.addGeneBlock(geneBlocks.get(i));
 
-      for (int j = 0; j < geneNeurons.size(); j++)
+      for (int j = 0; j < geneNeurons.size()-1; j++)
       {
         if (geneNeurons.get(j).BLOCK_INDEX == i) newGenome.addGeneNeuron(geneNeurons.get(i));
       }

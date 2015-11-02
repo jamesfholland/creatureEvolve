@@ -216,11 +216,11 @@ public class SpawnCreatureGenoform
     for(int i=0; i<5;i++)
     {
       GeneNeuron leg1Neuron1 = new GeneNeuron(
-          leg[i].PARENT_OFFSET,
+          i,
           //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
           EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
           EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
-          0, 0, 5, Float.MAX_VALUE, 0,
+          0, 0, 2, Float.MAX_VALUE, 0,
           //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
           EnumOperator.ADD, //Binary operator for merging A and B
           EnumOperator.IDENTITY, //Unary operator for after A and B are merged
@@ -232,11 +232,11 @@ public class SpawnCreatureGenoform
     for(int i=5; i<10;i++)
     {
       GeneNeuron leg1Neuron1 = new GeneNeuron(
-          leg[i].PARENT_OFFSET,
+          i,
           //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
           EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
           EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
-          0, 0, 5, -Float.MAX_VALUE, 0,
+          0, 0, 3, -Float.MAX_VALUE, 0,
           //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
           EnumOperator.ADD, //Binary operator for merging A and B
           EnumOperator.IDENTITY, //Unary operator for after A and B are merged
@@ -244,6 +244,8 @@ public class SpawnCreatureGenoform
           EnumOperator.IDENTITY); //Unary operator for after D and E are merged
       genome.addGeneNeuron(leg1Neuron1);
     }
+
+    //for
 
     return genome;
 

@@ -44,7 +44,7 @@ public class Mover
     GeneBlock block = geneBlocks.get(randomLimb);
     int parentOffset = block.PARENT_OFFSET;
     ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
-    randomFace = rand.nextInt(2);
+    randomFace = rand.nextInt(3);
     if(randomFace==0)
     {
       limb = new GeneBlock(parentOffset, randPivot, parentPivot, sizeCopy,
@@ -70,7 +70,7 @@ public class Mover
     for (int i = 0; i <geneBlocks.size() ; i++)
     {
       newGenome.addGeneBlock(geneBlocks.get(i));
-      for (int j = 0; j <geneNeurons.size() ; j++)
+      for (int j = 0; j <geneNeurons.size()-1 ; j++)
       {
         if(geneNeurons.get(j).BLOCK_INDEX==i)newGenome.addGeneNeuron(geneNeurons.get(i));
       }

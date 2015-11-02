@@ -67,6 +67,8 @@ public class Duplicator
       {
         for (int j = geneNeurons.size() - 1; j > 0; j--)
         {
+          GeneNeuron replicatedNeuron = geneNeurons.get(j);
+          //replicatedNeuron = replicatedNeuron.D_VALUE*-1;
           if (geneNeurons.get(j).BLOCK_INDEX == i) newGenome.addGeneNeuron(geneNeurons.get(j));
           if (i == geneBlocks.size() - 1)
           {
