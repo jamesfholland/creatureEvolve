@@ -14,6 +14,7 @@ public class Mover
 {
   protected static Genome moveLimbs(Genome genome)
   {
+    if(genome.getGENE_BLOCKS().size() == 0) return genome;
     GeneBlock limb;
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
@@ -34,7 +35,7 @@ public class Mover
     else if(randomFace==2) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign);
 
 
-    int randomLimb = rand.nextInt(geneBlocks.size()-1);
+    int randomLimb = rand.nextInt(geneBlocks.size());
 
     ImmutableVector sizeCopy =new ImmutableVector(geneBlocks.get(randomLimb).SIZE.getX(),geneBlocks.get(randomLimb).SIZE.getY(),geneBlocks.get(randomLimb).SIZE.getZ());
 
