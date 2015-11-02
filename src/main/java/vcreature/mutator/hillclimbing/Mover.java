@@ -70,10 +70,11 @@ public class Mover
     for (int i = 0; i <geneBlocks.size() ; i++)
     {
       newGenome.addGeneBlock(geneBlocks.get(i));
-      for (int j = 0; j <geneNeurons.size() ; j++)
-      {
-        if(geneNeurons.get(j).BLOCK_INDEX==i)newGenome.addGeneNeuron(geneNeurons.get(i));
-      }
+
+    }
+    for (int j = 0; j <geneNeurons.size() ; j++)
+    {
+      newGenome.addGeneNeuron(geneNeurons.get(j));
     }
     if(checkForIntersections(newGenome)) genome=newGenome;
     else moveLimbs(genome);

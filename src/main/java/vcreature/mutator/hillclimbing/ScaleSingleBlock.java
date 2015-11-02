@@ -17,11 +17,14 @@ public class ScaleSingleBlock
    * Scales a random block in the genome
    * If the Scale makes the creature invalid, we return the given genome.
    * @param genome genome we are mutating
-   * @param scale the scale factor.
    * @return new Genome with scaled block.
    */
-  public static Genome scaleBlock(Genome genome, float scale)
+  public static Genome scaleBlock(Genome genome)
   {
+    Random rand = new Random();
+    float scaler;
+    scaler = rand.nextFloat();
+    scaler=scaler*2;
     ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
     ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
     GeneBlock scaledBlock;
@@ -39,8 +42,8 @@ public class ScaleSingleBlock
       block = geneBlocks.get(i);
       if(i==pickRandom)
       {
-        scaledSize = new ImmutableVector(block.SIZE.X * scale,
-                                         block.SIZE.Y * scale, block.SIZE.Z * scale);
+        scaledSize = new ImmutableVector(block.SIZE.X * scaler,
+                                         block.SIZE.Y * scaler, block.SIZE.Z * scaler);
         if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
         if ( Block.max(scaledSize.getVector3f()) > (Block.min(scaledSize.getVector3f()) * 10)) return genome;
 
@@ -62,8 +65,13 @@ public class ScaleSingleBlock
     return newGenome;
   }
 
-  public static Genome scaleRoot(Genome genome, float scale)
+  public static Genome scaleRoot(Genome genome)
   {
+    Random rand = new Random();
+    float scaler;
+    scaler = rand.nextFloat();
+    scaler=scaler*2;
+
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
 
@@ -71,7 +79,7 @@ public class ScaleSingleBlock
     Genome newGenome;
 
     ImmutableVector rootSize = genome.getRootSize();
-    scaledSize = new ImmutableVector(rootSize.getX()*scale, rootSize.getY()*scale, rootSize.getZ()*scale);
+    scaledSize = new ImmutableVector(rootSize.getX()*scaler, rootSize.getY()*scaler, rootSize.getZ()*scaler);
     if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
     if ( Block.max(scaledSize.getVector3f()) > Block.min(scaledSize.getVector3f()) * 10) return genome;
 

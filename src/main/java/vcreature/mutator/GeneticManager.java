@@ -3,6 +3,7 @@ package vcreature.mutator;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
+import vcreature.mainSimulation.SpawnCreatureGenoform;
 import vcreature.mainSimulation.SpawnRandomCreatureGenoform;
 import vcreature.mutator.genetic.MergeType;
 import vcreature.mutator.hillclimbing.Symmetrizer;
@@ -42,6 +43,7 @@ public class GeneticManager
             + currentTestee.parent2.getFitness() + "fitness: " + lastFitness);
         GenePool.replace(currentTestee.genome, currentTestee.parent1,
             currentTestee.parent2);
+
         GenePool.add(SpawnRandomCreatureGenoform.createRandomCreature(4));
         buildQueue(currentTestee.genome);
         GenoFile.writeGenome(currentTestee.genome);

@@ -3,14 +3,19 @@ import vcreature.genotype.*;
 import vcreature.phenotype.Block;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Scales a gene a set amount. Can maximize, randomize, or seed the scaling.
  */
 public class Scaler
 {
-  public static Genome scale(Genome genome, float scale)
+  public static Genome scale(Genome genome)
   {
+    Random rand = new Random();
+    float scaler;
+    scaler = rand.nextFloat();
+    scaler=scaler*2;
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
     GeneBlock scaledBlock;
@@ -19,7 +24,7 @@ public class Scaler
 
 
     ImmutableVector rootSize = genome.getRootSize();
-    scaledSize = new ImmutableVector(rootSize.X * scale, rootSize.Y * scale, rootSize.Z * scale);
+    scaledSize = new ImmutableVector(rootSize.X * scaler, rootSize.Y * scaler, rootSize.Z * scaler);
     if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
     if ( (Block.max(scaledSize.getVector3f())) > (Block.min(scaledSize.getVector3f()) * 10)) return genome;
 
@@ -31,7 +36,7 @@ public class Scaler
     for(GeneBlock block: geneBlocks)
     {
 
-      scaledSize = new ImmutableVector(block.SIZE.X * scale, block.SIZE.Y * scale, block.SIZE.Z * scale);
+      scaledSize = new ImmutableVector(block.SIZE.X * scaler, block.SIZE.Y * scaler, block.SIZE.Z * scaler);
       if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
       if ( (Block.max(scaledSize.getVector3f())) > (Block.min(scaledSize.getVector3f()) * 10)) return genome;
       scaledBlock = new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT, scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
@@ -40,7 +45,7 @@ public class Scaler
       if ( (Block.max(scaledSize.getVector3f())) > (Block.min(scaledSize.getVector3f()) * 10)) scaledBlock = block;
       newGenome.addGeneBlock(scaledBlock);
     }
-    for(int i=geneNeurons.size()-1; i>0; i--) newGenome.addGeneNeuron(geneNeurons.get(i));
+    for(int i=geneNeurons.size()-1; i>=0; i--) newGenome.addGeneNeuron(geneNeurons.get(i));
     return newGenome;
   }
 }

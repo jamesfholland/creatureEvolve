@@ -4,6 +4,7 @@ package vcreature.mutator;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
+import vcreature.mainSimulation.SpawnCreatureGenoform;
 import vcreature.mutator.hillclimbing.Mutators;
 
 import java.util.LinkedList;
@@ -64,12 +65,13 @@ public class HillClimbingManager
 
   private void buildQueue(Genome genome)
   {
+    //genome= SpawnCreatureGenoform.makeTylerMonster();
     parentGenome = genome;
     testQueue = new LinkedList<>();
     for (Mutators mutator : Mutators.values())
     {
-      //testQueue.add(mutator.mutate(genome));
-      testQueue.add(mutator.DUPLICATOR.mutate(genome));
+      testQueue.add(mutator.mutate(genome));
+     // testQueue.add(mutator.SCALER.mutate(genome));
     }
   }
 }

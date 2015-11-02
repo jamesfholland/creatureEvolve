@@ -55,7 +55,7 @@ public enum Mutators
         public Genome mutate(Genome parent)
         {
           //scale value is hard-coded for now
-          return Scaler.scale(parent,1.1f);
+          return Scaler.scale(parent);
         }
       },
   SCALE_BLOCK()
@@ -64,7 +64,7 @@ public enum Mutators
         public Genome mutate(Genome parent)
         {//scale value is hard-coded for now
           float scaler;
-          return ScaleSingleBlock.scaleBlock(parent,1.1f);
+          return ScaleSingleBlock.scaleBlock(parent);
         }
       },
   SCALE_ROOT()
@@ -72,7 +72,7 @@ public enum Mutators
         @Override
         public Genome mutate(Genome parent)
         {
-          return ScaleSingleBlock.scaleRoot(parent, 1.1f);
+          return ScaleSingleBlock.scaleRoot(parent);
         }
       },
   SUBTRACTOR()

@@ -2,12 +2,16 @@ package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.*;
 import com.jme3.math.Vector3f;
+import vcreature.phenotype.EnumNeuronInput;
+import vcreature.phenotype.EnumOperator;
+import vcreature.phenotype.Neuron;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Finds either random existing gene and duplicates or duplicates a seeded gene. Calls Adder to add the gene.
+ * Finds either random existing gene and duplicates or duplicates a seeded
+ * gene. Calls Adder to add the gene.
  */
 public class Duplicator
 {
@@ -20,6 +24,7 @@ public class Duplicator
   private static ImmutableVector placementPivot;
   private static ImmutableVector placementPivotParent;
   private static ImmutableVector size;
+  private static GeneNeuron neuron;
 
   private static Genome newGenome;
   private static float x;
@@ -35,9 +40,12 @@ public class Duplicator
    * Sequence of steps:
    * (1) Pick random block from given genome
    * (2) Check the pivot directly across from that genome
-   * (3) If this pivot is available, duplicate the block and place at this pivot. EXIT ALGORITHM
-   * (4) Check adjoining edges to see if their pivots are available. Step 3 if they are.
-   * (5) If none of the following pivots are available for placement, algorithm terminates
+   * (3) If this pivot is available, duplicate the block and place at this
+   * pivot. EXIT ALGORITHM
+   * (4) Check adjoining edges to see if their pivots are available. Step 3
+   * if they are.
+   * (5) If none of the following pivots are available for placement,
+   * algorithm terminates
    * WITHOUT PLACING DUPLICATE BLOCK
    *
    * @param genome
@@ -51,6 +59,8 @@ public class Duplicator
     geneNeurons = genome.getGENE_NEURONS();
     int randIndex = rand.nextInt(geneBlocks.size());
     block = geneBlocks.get(randIndex);
+    randIndex = rand.nextInt(geneNeurons.size());
+    neuron = geneNeurons.get(randIndex);
     placementPivotParent = findAvailablePivot(block.PARENT_PIVOT);
     if (placementPivotParent == null)
     {
@@ -59,24 +69,56 @@ public class Duplicator
     else
     {
       ImmutableVector hingeAxis = findHingeAxis(placementPivotParent);
-      duplicateBlock = new GeneBlock(0, placementPivotParent, placementPivot, size,
-          hingeAxis, hingeAxis, block.EULER_ANGLES);
+      duplicateBlock =
+          new GeneBlock(0, placementPivotParent, placementPivot, size,
+              hingeAxis, hingeAxis, block.EULER_ANGLES);
 
       newGenome.addGeneBlock(duplicateBlock);
       for (int i = 0; i < geneBlocks.size(); i++)
       {
-        for (int j = geneNeurons.size() - 1; j > 0; j--)
+
+        newGenome.addGeneBlock(geneBlocks.get(i));
+  //      newGenome.addGeneNeuron(neuron);
+
+//        for (int j = 0; j < geneNeurons.size() - 1; j++)
+//        {
+//
+////          if (geneNeurons.get(j).BLOCK_INDEX == i) newGenome
+// .addGeneNeuron(geneNeurons.get(j));
+////          if (i == geneBlocks.size() - 1)
+////          {
+////            if (geneNeurons.get(j).BLOCK_INDEX == randIndex) newGenome
+// .addGeneNeuron(geneNeurons.get(j));
+//          }
+      }
+      for (int j = 0; j < geneNeurons.size(); j++)
+      {
+       // if(geneNeurons.get(j) != null)
+       // newGenome.addGeneNeuron(geneNeurons.get(j));
+        //else
         {
-          if (geneNeurons.get(j).BLOCK_INDEX == i) newGenome.addGeneNeuron(geneNeurons.get(j));
-          if (i == geneBlocks.size() - 1)
-          {
-            if (geneNeurons.get(j).BLOCK_INDEX == randIndex) newGenome.addGeneNeuron(geneNeurons.get(j));
-          }
+          EnumNeuronInput aInput=EnumNeuronInput.TIME;
+          EnumNeuronInput bInput=EnumNeuronInput.CONSTANT;
+          EnumNeuronInput cInput=EnumNeuronInput.CONSTANT;
+          EnumNeuronInput dInput=EnumNeuronInput.CONSTANT;
+          EnumNeuronInput eInput=EnumNeuronInput.CONSTANT;
+
+          int sign = (rand.nextBoolean()) ? 1 : -1;
+          neuron = new GeneNeuron(
+              j, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+              aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
+              0, 0,5, -1*sign*Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+              EnumOperator.ADD, //Binary operator for merging A and B
+              EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+              EnumOperator.ADD, //Binary operator for merging D and E
+              EnumOperator.IDENTITY); //Unary operator for after D and E are merged);
+          newGenome.addGeneNeuron(neuron);
         }
       }
     }
     return newGenome;
   }
+
 
   private static boolean comparePivot(ImmutableVector pivot1)
   {
@@ -85,20 +127,33 @@ public class Duplicator
     {
       pivot2 = geneBlock.PARENT_PIVOT;
       if (pivot1.getX() == pivot2.getX())
+      {
         if (pivot1.getY() == pivot2.getY())
+        {
           if (pivot1.getZ() == pivot2.getZ())
           {
             return true;
           }
+        }
+      }
     }
     return false;
   }
 
   private static ImmutableVector findHingeAxis(ImmutableVector pivot)
   {
-    if (Math.abs(pivot.getX()) == 1) return Axis.UNIT_Z.getImmutableVector();
-    else if (Math.abs(pivot.getZ()) == 1) return Axis.UNIT_X.getImmutableVector();
-    else return Axis.UNIT_Y.getImmutableVector();
+    if (Math.abs(pivot.getX()) == 1)
+    {
+      return Axis.UNIT_Z.getImmutableVector();
+    }
+    else if (Math.abs(pivot.getZ()) == 1)
+    {
+      return Axis.UNIT_X.getImmutableVector();
+    }
+    else
+    {
+      return Axis.UNIT_Y.getImmutableVector();
+    }
 
   }
 
@@ -118,8 +173,11 @@ public class Duplicator
       z = randomPivot.getZ();
       size = new ImmutableVector(block.SIZE.X, block.SIZE.Y, block.SIZE.Z);
       availablePivot = new ImmutableVector(x, y, -z);
-      placementPivot = new ImmutableVector(0,yp,-zp);
-      if (!(comparePivot(availablePivot))) return availablePivot;
+      placementPivot = new ImmutableVector(0, yp, -zp);
+      if (!(comparePivot(availablePivot)))
+      {
+        return availablePivot;
+      }
       else
       {
         size = new ImmutableVector(block.SIZE.X, block.SIZE.Y, block.SIZE.Z);
@@ -127,13 +185,13 @@ public class Duplicator
         if (!(comparePivot(availablePivot)))
         {
           size = new ImmutableVector(block.SIZE.X, block.SIZE.Y, block.SIZE.Z);
-          placementPivot = new ImmutableVector(-xp,yp, zp);
+          placementPivot = new ImmutableVector(-xp, yp, zp);
           return availablePivot;
         }
         availablePivot = new ImmutableVector(-z, y, -x);
         if (!(comparePivot(availablePivot)))
         {
-          placementPivot = new ImmutableVector(zp,yp,-xp);
+          placementPivot = new ImmutableVector(zp, yp, -xp);
           size = new ImmutableVector(block.SIZE.Z, block.SIZE.Y, block.SIZE.X);
           return availablePivot;
         }
