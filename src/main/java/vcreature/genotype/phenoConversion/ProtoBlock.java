@@ -227,7 +227,7 @@ public class ProtoBlock
         (box.getMinVector().y < +min.y + size.y) &&
         (box.getMinVector().z < +min.z + size.z))
     {
-      System.out.println("Intersections");
+//      System.out.println("Intersections");
       return true;
     }
     return false;

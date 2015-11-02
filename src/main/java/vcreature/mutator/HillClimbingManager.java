@@ -68,8 +68,8 @@ public class HillClimbingManager
     testQueue = new LinkedList<>();
     for (Mutators mutator : Mutators.values())
     {
-      testQueue.add(mutator.mutate(genome));
-      //testQueue.add(mutator.DUPLICATOR.mutate(genome));
+      //testQueue.add(mutator.mutate(genome));
+      testQueue.add(mutator.DUPLICATOR.mutate(genome));
     }
   }
 }
