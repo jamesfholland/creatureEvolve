@@ -30,7 +30,7 @@ dependencies {
 run {
 
   systemProperties System.getProperties()
-  args System.getProperty("exec.args").split()
+  args "noGraphics"
 }
 
 idea {
