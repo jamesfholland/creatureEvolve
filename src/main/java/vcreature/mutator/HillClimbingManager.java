@@ -35,15 +35,16 @@ public class HillClimbingManager
     ImmutableVector rootSize = new ImmutableVector(1.5f, 0.5f, 1.0f);
     ImmutableVector jointSize = new ImmutableVector(1.0f, 0.5f, 1.0f);
 
-    testingGenome = new TessMonster(rootSize, new ImmutableVector(0.0f, 0.0f, 0.0f), jointSize, 8);
+    //testingGenome = new TessMonster(rootSize, new ImmutableVector(0.0f, 0.0f, 0.0f), jointSize, 8);
     //testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
     //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
     //testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
     //testingGenome = GenePool.getRandom();
+    testingGenome = SpawnCreatureGenoform.makeTylerMonster();
+
     parentGenome = testingGenome;
     Mutators.setCurrentMutator(Mutators.getRandomMutator());
   }
-
   /**
    * This returns the next mutant based on the current creature we are hill
    * climbing from.
