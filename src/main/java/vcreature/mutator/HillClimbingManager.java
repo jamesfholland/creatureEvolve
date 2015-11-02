@@ -1,0 +1,83 @@
+package vcreature.mutator;
+
+
+import vcreature.genotype.GenoFile;
+import vcreature.genotype.Genome;
+import vcreature.genotype.ImmutableVector;
+
+import vcreature.genotype.TessMonster;
+import vcreature.mainSimulation.GenePool;
+import vcreature.mainSimulation.MutationTester;
+import vcreature.mainSimulation.SpawnCreatureGenoform;
+import vcreature.mutator.hillclimbing.*;
+import vcreature.mainSimulation.MainSim;
+
+import java.util.Random;
+
+/**
+ * This will manage finding mutated genomes.
+ */
+public class HillClimbingManager
+{
+  Random rand = new Random();
+  private Genome parentGenome;
+  private Genome testingGenome;
+
+  private boolean retesting = false;
+
+  /**
+   * Sets up the mutation manager. Currently always seeds with FlappyBird.
+   * In the future will be handed a GenEpoOl, that it picks a creature from.
+   */
+  public HillClimbingManager()
+  {
+    testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
+    ImmutableVector rootSize = new ImmutableVector(1.5f, 0.5f, 1.0f);
+    ImmutableVector jointSize = new ImmutableVector(1.0f, 0.5f, 1.0f);
+
+    testingGenome = new TessMonster(rootSize, new ImmutableVector(0.0f, 0.0f, 0.0f), jointSize, 8);
+    //testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
+    //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
+    //testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
+    //testingGenome = GenePool.getRandom();
+    parentGenome = testingGenome;
+    Mutators.setCurrentMutator(Mutators.getRandomMutator());
+  }
+
+  /**
+   * This returns the next mutant based on the current creature we are hill
+   * climbing from.
+   *
+   * @param testedFitness the calculated fitness in meters.
+   *                      If this is -1, this means we are just starting and
+   *                      need to test the seed.
+   * @return the next genome to test.
+   */
+  public synchronized Genome getNextCreature(float testedFitness)
+  {
+    //Check if first run.
+    if (testedFitness == -1)
+    {
+      return testingGenome;
+    }
+    if (testedFitness > parentGenome.getFitness())
+    {
+      if (retesting)
+      {
+        retesting = false;
+        System.out.println("Better Creature found, Fitness: " + testedFitness);
+        testingGenome.setFitness(testedFitness);
+        parentGenome = testingGenome;
+        GenoFile.writeGenome(parentGenome);
+        return MainSim.MUTATION_TESTER.getBestCreatureGenome();
+      }
+      else
+      {
+        retesting = true;
+        return testingGenome;
+      }
+    }
+    return parentGenome;
+  }
+}
+

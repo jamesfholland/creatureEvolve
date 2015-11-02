@@ -1,18 +1,10 @@
 package vcreature.mainSimulation;
 
-import com.jme3.bounding.BoundingBox;
-import com.jme3.bullet.PhysicsSpace;
-import com.jme3.collision.CollisionResults;
-import com.jme3.math.Vector3f;
-import com.jme3.scene.Node;
 import vcreature.genotype.*;
-import vcreature.genotype.phenoConversion.ProtoBlock;
-import vcreature.mutator.Adder;
-import vcreature.mutator.Randomizer;
-import vcreature.phenotype.Block;
+import vcreature.mutator.hillclimbing.Adder;
+import vcreature.mutator.hillclimbing.Randomizer;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.EnumOperator;
-import vcreature.phenotype.Neuron;
 
 import java.util.Random;
 

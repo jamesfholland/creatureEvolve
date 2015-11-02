@@ -70,7 +70,7 @@ public class Genome
     GENE_NEURONS = Collections.synchronizedList(new ArrayList<GeneNeuron>());
 
     //Read in file name (if we want to store the fitness we can parse it here.)
-    fileIn.readLine();
+    this.fitness = Float.parseFloat(fileIn.readLine().split("_")[0]);
     fileIn.readLine(); //Read #ROOT
     ROOT_SIZE = new ImmutableVector(fileIn);
     ROOT_EULER_ANGLES = new ImmutableVector(fileIn);

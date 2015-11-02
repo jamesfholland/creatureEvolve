@@ -134,6 +134,31 @@ public final class GeneNeuron
   }
 
   /**
+   * Creates a copy except for the blockindex.
+   * @param blockIndex new blockindex we want.
+   * @param copy GeneNeuron to copy.
+   */
+  public GeneNeuron(int blockIndex, GeneNeuron copy)
+  {
+    BLOCK_INDEX = blockIndex;
+    A_TYPE = copy.A_TYPE;
+    B_TYPE = copy.B_TYPE;
+    C_TYPE = copy.C_TYPE;
+    D_TYPE = copy.D_TYPE;
+    E_TYPE = copy.E_TYPE;
+
+    A_VALUE = copy.A_VALUE;
+    B_VALUE = copy.B_VALUE;
+    C_VALUE = copy.C_VALUE;
+    D_VALUE = copy.D_VALUE;
+    E_VALUE = copy.E_VALUE;
+    BINARY_AB = copy.BINARY_AB;
+    UNARY_AB = copy.UNARY_AB;
+    BINARY_DE = copy.BINARY_DE;
+    UNARY_DE = copy.UNARY_DE;
+  }
+
+  /**
    * Constructs a GeneNeuron from file input.
    * @param fileIn the stream we are reading from
    * @throws IOException handled in GenoFile
