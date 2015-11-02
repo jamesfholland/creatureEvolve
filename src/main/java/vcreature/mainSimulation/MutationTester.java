@@ -5,6 +5,7 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
@@ -19,12 +20,9 @@ import com.jme3.system.AppSettings;
 import com.jme3.texture.Texture;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
-import vcreature.mutator.hillclimbing.*;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.PhysicsConstants;
-import vcreature.genotype.Genome;
-import com.jme3.input.controls.ActionListener;
-import java.util.ArrayList;
+
 /**
  * Created by Tess Daughton on 10/28/15.
  */
@@ -39,15 +37,12 @@ public class MutationTester extends SimpleApplication implements ActionListener
 
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private GenomeCreature currentCreature;
-  private Genome bestCreatureGenome;
-  private Genome testGenome;
-  private Genome currentGenome;
   private float elapsedSimulationTime;
-  private Manager modeManager = new Manager();
-  private float bestFitness = 0;
+  private Manager manager = new Manager();
   private float currentFitness = 0;
-  private Mutators mutators[] = Mutators.values();
-  private ArrayList<Genome> mutations = new ArrayList<>();
+  private float fitnessUpdater = 0;
+
+
   private int indexOfCurrentMutator = 0;
 
   /**
@@ -92,8 +87,8 @@ public class MutationTester extends SimpleApplication implements ActionListener
 
     physicsSpace.setGravity(PhysicsConstants.GRAVITY);
     physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
-    physicsSpace.setMaxSubSteps(4);
-    this.speed = 4;
+    physicsSpace.setMaxSubSteps(20);
+    this.speed = 20;
     AppSettings settings = new AppSettings(true);
     setSettings(settings);
     settings.setResolution(1024, 768);
@@ -117,21 +112,14 @@ public class MutationTester extends SimpleApplication implements ActionListener
     floor_phy.setFriction(PhysicsConstants.GROUND_SLIDING_FRICTION);
     floor_phy.setRestitution(PhysicsConstants.GROUND_BOUNCINESS);
     floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
-        PhysicsConstants.GROUND_ANGULAR_DAMPINING);
+                         PhysicsConstants.GROUND_ANGULAR_DAMPINING);
 
     Block.initStaticMaterials(assetManager);
 
-    currentCreature = new GenomeCreature(physicsSpace, rootNode, modeManager.getNextCreature(-1));
-    currentGenome = currentCreature.getGenome();
-    this.calculateMutations(currentGenome);
+    currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(-1));
 
-    bestCreatureGenome = currentGenome;
-    testGenome = mutators[indexOfCurrentMutator].mutate(currentGenome);
-    indexOfCurrentMutator++;
     initLighting();
     initKeys();
-    flyCam.setDragToRotate(true);
-    //genePool.addCreatureToPopulation();
   }
 
 
@@ -206,63 +194,23 @@ public class MutationTester extends SimpleApplication implements ActionListener
   {
     this.currentFitness = currentCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
+    fitnessUpdater += deltaSeconds;
 
-    if (elapsedSimulationTime > 14)
+    if (elapsedSimulationTime < 1 && this.currentFitness > 0.01)
     {
-      indexOfCurrentMutator++;
-      if (indexOfCurrentMutator >= mutations.size() - 1)
-      {
-        indexOfCurrentMutator = 0;
-        currentGenome = modeManager.getNextCreature(bestFitness);
-        mutations.clear();
-        calculateMutations(currentGenome);
-        testGenome = mutations.get(indexOfCurrentMutator);
-      }
-
-      if (elapsedSimulationTime > 15)
-      {
-        while (testGenome == null) ;
-        currentCreature.remove();
-        currentCreature = new GenomeCreature(physicsSpace, rootNode, testGenome);
-        elapsedSimulationTime = 0;
-        bestFitness = 0;
-      }
-
-      if (currentCreature.getFitness() > bestFitness)
-      {
-        bestFitness = currentCreature.getFitness();
-        bestCreatureGenome = testGenome;
-        System.out.println(bestFitness);
-      }
-
-      if (isCameraRotating)
-      {
-        //Move camera continously in circle of radius 25 meters centered 10 meters
-        //  above the origin.
-        cameraAngle += deltaSeconds * 2.0 * Math.PI / 60.0; //rotate full circle every minute
-        float x = (float) (25 * Math.cos(cameraAngle));
-        float z = (float) (25 * Math.sin(cameraAngle));
-
-        tmpVec3 = new Vector3f(x, 10.0f, z);
-        cam.setLocation(tmpVec3);
-        cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
-      }
-
+      currentCreature.remove();
+      elapsedSimulationTime = 0;
+      currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0));
+      return;
     }
-  }
-
-  private void calculateMutations(Genome genome)
-  {
-    for (Mutators mutator : mutators)
+    if (elapsedSimulationTime > 15)
     {
-      mutations.add(mutator.mutate(genome));
+      currentCreature.remove();
+      elapsedSimulationTime = 0;
+
+      currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(this.currentFitness));
     }
-  }
 
-
-  public synchronized Genome getBestCreatureGenome()
-  {
-    return this.bestCreatureGenome;
   }
 }
 

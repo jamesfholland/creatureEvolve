@@ -49,15 +49,6 @@ public enum Mutators
           return Randomizer.randomize(parent);
         }
       },
-  ROTATOR()
-      {
-        @Override
-        public Genome mutate(Genome parent)
-        {
-          //return Rotator.rotateBlock(parent,)
-          return null;
-        }
-      },
   SCALER()
       {
         @Override
