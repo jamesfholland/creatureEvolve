@@ -16,6 +16,7 @@ import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
 import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
+import vcreature.mainSimulation.MainSim;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.Neuron;
@@ -226,7 +227,8 @@ public class ProtoBlock
         (box.getMinVector().y < +min.y + size.y) &&
         (box.getMinVector().z < +min.z + size.z))
     {
-       return true;
+      System.out.println("Intersections");
+      return true;
     }
     return false;
   }
@@ -359,17 +361,28 @@ public class ProtoBlock
     float[] floats={eulerAngles.x,eulerAngles.y,eulerAngles.z};
     if (blockParent == null)
     {
-      current = creature.addRoot(new Vector3f(0,10000,0),size,floats);
+      current = creature.addRoot(new Vector3f(0,1000,0),size,floats);
       creature.getBlockByID(0).setMaterial(Block.MATERIAL_RED);
     }
     else
     {
 
-      //System.out.println(floats +"" + pivotLocal + pivotParentLocal + blockParent + axis + size);
       current = creature
               .addBlock(floats,size, blockParent, pivotParentLocal, pivotLocal,
                        axis);
-
+      switch (MainSim.RANDOM.nextInt(3))
+      {
+        case 0: {
+          creature.getBlockByID(current.getID()).setMaterial(Block.MATERIAL_BLUE);
+          break;
+        }case 1:{
+        creature.getBlockByID(current.getID()).setMaterial(Block.MATERIAL_GREEN);
+        break;
+      }case 2:{
+        creature.getBlockByID(current.getID()).setMaterial(Block.MATERIAL_BROWN);
+        break;
+      }
+      }
       for (Neuron neuron : neurons)
       {
         current.addNeuron(neuron);

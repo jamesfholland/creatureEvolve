@@ -41,9 +41,12 @@ public class TessMonster extends Genome
     ImmutableVector parentSize = rootSize;
     ArrayList<ImmutableVector> parentPivots = new ArrayList <>();
 
-    parentPivots.add(new ImmutableVector(-1, -1, 0)); //Center of hinge in the block's coordinates
     parentPivots.add(new ImmutableVector(1, -1, 0)); //Center of hinge in the block's coordinates
+
     parentPivots.add(new ImmutableVector(0, -1, -1)); //Center of hinge in the block's coordinates
+    parentPivots.add(new ImmutableVector(-1, -1, 0)); //Center of hinge in the block's coordinates
+
+
     parentPivots.add(new ImmutableVector(0, -1, 1)); //Center of hinge in the block's coordinates
 
     ImmutableVector parentChildPivot;
@@ -53,10 +56,12 @@ public class TessMonster extends Genome
     ImmutableVector intermediatePivot;
 
 
-    for (ImmutableVector parentPivot : parentPivots)
+    //for (ImmutableVector parentPivot : parentPivots)
+    for (int j = 0; j <parentPivots.size() ; j++)
     {
+      ImmutableVector parentPivot=parentPivots.get(j);
       childPivot1 = new ImmutableVector(-(parentPivot.X), -(parentPivot.Y), -(parentPivot.Z));
-      childPivot2 = new ImmutableVector(-(childPivot1.X), -(childPivot1.Y), -(childPivot1.Z));
+     // childPivot2 = new ImmutableVector(-(childPivot1.X), -(childPivot1.Y), -(childPivot1.Z));
       if(Math.abs(parentPivot.X)==1)
       {
         legParentAxis = Axis.UNIT_Z;
@@ -66,28 +71,29 @@ public class TessMonster extends Genome
       else
       {
         legParentAxis = Axis.UNIT_X;
+        legParentAxis = Axis.UNIT_X;
         legAxis = Axis.UNIT_X;
         tempSize = leg2Size;
       }
       int alternator = 1;
       for (int i = 0; i < numLegJoints; i++)
       {
-        if (i == 0)
+        if ((i)== 0)
         {
           leg1 = new GeneBlock(i, parentPivot, childPivot1, tempSize, legParentAxis.getImmutableVector(), legAxis.getImmutableVector(), zeroVector);
         }
         else
         {
-          leg1 = new GeneBlock(-1, childPivot1, childPivot2, tempSize, legParentAxis.getImmutableVector(), legAxis.getImmutableVector(), zeroVector);
+          leg1 = new GeneBlock(-1, parentPivot, childPivot1, tempSize, legParentAxis.getImmutableVector(), legAxis.getImmutableVector(), zeroVector);
         }
-        legNeuron1 = new GeneNeuron(i, EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT, EnumNeuronInput.CONSTANT,
+        legNeuron1 = new GeneNeuron(i*(j+1), EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT, EnumNeuronInput.CONSTANT,
             null, 0, 0, 5, alternator * Float.MAX_VALUE, 0, EnumOperator.ADD, EnumOperator.IDENTITY, EnumOperator.ADD, EnumOperator.IDENTITY);
         alternator = -(alternator);
         tempGeneNeurons.add(legNeuron1);
         this.addGeneBlock(leg1);
-        intermediatePivot = childPivot1;
-        childPivot1=childPivot2;
-        childPivot2 = intermediatePivot;
+//        intermediatePivot = childPivot1;
+//        childPivot1=childPivot2;
+//        childPivot2 = intermediatePivot;
 
       }
       for (int i = tempGeneNeurons.size() - 1; i > 0; i--)

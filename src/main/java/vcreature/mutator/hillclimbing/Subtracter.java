@@ -35,7 +35,7 @@ public class Subtracter
 
       for (int j = 0; j < geneNeurons.size(); j++)
       {
-        if (geneNeurons.get(j).BLOCK_INDEX == i) newGenome.addGeneNeuron(geneNeurons.get(i));
+        if (geneNeurons.get(j).BLOCK_INDEX == i) newGenome.addGeneNeuron(geneNeurons.get(j));
       }
     }
   }
