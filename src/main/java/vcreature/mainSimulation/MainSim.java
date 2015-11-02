@@ -45,12 +45,11 @@ public class MainSim
         settings.setTitle("Creatures Evolution");
         MUTATION_TESTER.setShowSettings(false);
         MUTATION_TESTER.setSettings(settings);
-        //MUTATION_TESTER.start(JmeContext.Type.Headless);
-       MUTATION_TESTER.start();
+        MUTATION_TESTER.start(JmeContext.Type.Headless);
         if (args.length== 0) // if the user enters ANY command line argument, the GUI will NOT run
         {
           System.out.println("Starting App");
-          //new SimFrame();
+          new SimFrame();
         }
       }
     });
