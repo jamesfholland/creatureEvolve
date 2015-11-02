@@ -8,6 +8,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
+import vcreature.mutator.Manager;
 
 /**
  * Created by Tess Daughton on 10/18/2015
@@ -179,11 +180,16 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
   {
     if(modeChange.getText().equals("Switch to Genetic Algorithm"))
     {
+      MainSim.MUTATION_TESTER.setCurrentMutationType(Manager.MutationType.GENETIC);
       modeChange.setText("Switch to Hill Climbing");
+      animation.restart();
+
     }
     else
     {
       modeChange.setText("Switch to Genetic Algorithm");
+      MainSim.MUTATION_TESTER.setCurrentMutationType(Manager.MutationType.HILL);
+      animation.restart();
     }
   }
 
