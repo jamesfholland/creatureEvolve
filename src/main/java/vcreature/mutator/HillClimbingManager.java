@@ -3,15 +3,10 @@ package vcreature.mutator;
 
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
-import vcreature.genotype.ImmutableVector;
+import vcreature.mainSimulation.GenePool;
+import vcreature.mutator.hillclimbing.Mutators;
 
-import vcreature.genotype.TessMonster;
-import vcreature.mainSimulation.*;
-import vcreature.mutator.hillclimbing.*;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Random;
 
 /**
  * This will manage finding mutated genomes.
@@ -53,7 +48,7 @@ public class HillClimbingManager
         System.out.println("Better Child replacing parents parent1: "
                                + parentGenome.getFitness()+"fitness: " + lastFitness);
         GenePool.replace(currentTestee, parentGenome);
-        buildQueue(GenePool.getWorst());
+        buildQueue(currentTestee);
         GenoFile.writeGenome(currentTestee);
       }
     }
@@ -73,7 +68,8 @@ public class HillClimbingManager
     testQueue = new LinkedList<>();
     for (Mutators mutator : Mutators.values())
     {
-      testQueue.add(mutator.mutate(genome));
+      //testQueue.add(mutator.mutate(genome));
+      testQueue.add(mutator.DUPLICATOR.mutate(genome));
     }
   }
 }

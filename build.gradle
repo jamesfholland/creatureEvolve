@@ -27,6 +27,12 @@ dependencies {
     compile 'com.jme3:jme3-lwjgl:3.0.+'
 }
 
+run {
+
+  systemProperties System.getProperties()
+  args "noGraphics"
+}
+
 idea {
     module {
         sourceDirs += file('src/main/java')

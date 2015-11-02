@@ -28,7 +28,7 @@ public class MainSim
     System.out.format("%s.%s [%.3f, %.3f, %.3f]\n", className, msg, vector.x, vector.y, vector.z);
   }
 
-  public static void main(String[] args)
+  public static void main(final String[] args)
   {
     System.out.println("Starting Simulation");
 
