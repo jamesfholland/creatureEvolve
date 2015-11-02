@@ -6,12 +6,11 @@ import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 
 import vcreature.genotype.TessMonster;
-import vcreature.mainSimulation.GenePool;
-import vcreature.mainSimulation.MutationTester;
-import vcreature.mainSimulation.SpawnCreatureGenoform;
+import vcreature.mainSimulation.*;
 import vcreature.mutator.hillclimbing.*;
-import vcreature.mainSimulation.MainSim;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -19,11 +18,10 @@ import java.util.Random;
  */
 public class HillClimbingManager
 {
-  Random rand = new Random();
   private Genome parentGenome;
-  private Genome testingGenome;
+  private Genome currentTestee = null;
 
-  private boolean retesting = false;
+  private LinkedList<Genome> testQueue = new LinkedList<>();
 
   /**
    * Sets up the mutation manager. Currently always seeds with FlappyBird.
@@ -31,53 +29,52 @@ public class HillClimbingManager
    */
   public HillClimbingManager()
   {
-    testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
-    ImmutableVector rootSize = new ImmutableVector(1.5f, 0.5f, 1.0f);
-    ImmutableVector jointSize = new ImmutableVector(1.0f, 0.5f, 1.0f);
-
-    testingGenome = new TessMonster(rootSize, new ImmutableVector(0.0f, 0.0f, 0.0f), jointSize, 8);
-    //testingGenome = GenePool.getRandom(); //GenoFile.readGenomeFromPool("7.20_Flappy.geno");
-    //testingGenome = SpawnCreatureGenoform.makeFlappyBird();
-    //testingGenome= CutAndSplice.cutAndSplice(SpawnCreatureGenoform.makeFlappyBird(),SpawnCreatureGenoform.makeTableMonster()).get(1);
-    //testingGenome = GenePool.getRandom();
-    parentGenome = testingGenome;
-    Mutators.setCurrentMutator(Mutators.getRandomMutator());
   }
-
   /**
    * This returns the next mutant based on the current creature we are hill
    * climbing from.
    *
-   * @param testedFitness the calculated fitness in meters.
+   * @param lastFitness the calculated fitness in meters.
    *                      If this is -1, this means we are just starting and
    *                      need to test the seed.
    * @return the next genome to test.
    */
-  public synchronized Genome getNextCreature(float testedFitness)
+  public synchronized Genome getNextCreature(float lastFitness)
   {
-    //Check if first run.
-    if (testedFitness == -1)
+    if(lastFitness == -1 )
     {
-      return testingGenome;
+      buildQueue(GenePool.getWorst());
     }
-    if (testedFitness > parentGenome.getFitness())
+    else
     {
-      if (retesting)
+      currentTestee.setFitness(lastFitness);
+      if (lastFitness > parentGenome.getFitness())
       {
-        retesting = false;
-        System.out.println("Better Creature found, Fitness: " + testedFitness);
-        testingGenome.setFitness(testedFitness);
-        parentGenome = testingGenome;
-        GenoFile.writeGenome(parentGenome);
-        return MainSim.MUTATION_TESTER.getBestCreatureGenome();
-      }
-      else
-      {
-        retesting = true;
-        return testingGenome;
+        System.out.println("Better Child replacing parents parent1: "
+                               + parentGenome.getFitness()+"fitness: " + lastFitness);
+        GenePool.replace(currentTestee, parentGenome);
+        buildQueue(GenePool.getWorst());
+        GenoFile.writeGenome(currentTestee);
       }
     }
-    return parentGenome;
+    if(testQueue.isEmpty())
+    {
+      System.out.println("QueueEmpty Building another from worst Creature");
+      buildQueue(GenePool.getWorst());
+    }
+    currentTestee = testQueue.poll();
+
+    return currentTestee;
+  }
+
+  private void buildQueue(Genome genome)
+  {
+    parentGenome = genome;
+    testQueue = new LinkedList<>();
+    for (Mutators mutator : Mutators.values())
+    {
+      testQueue.add(mutator.mutate(genome));
+    }
   }
 }
 

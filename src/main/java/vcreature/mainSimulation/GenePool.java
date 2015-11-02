@@ -113,4 +113,16 @@ public class GenePool
     }
   }
 
+  /**
+   * Get the worst Genome in the pool
+   * @return worst Genome
+   */
+  public static Genome getWorst()
+  {
+    synchronized (GENOMES)
+    {
+      GENOMES.sort(new GenomeComparator());
+      return GENOMES.getFirst();
+    }
+  }
 }

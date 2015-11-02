@@ -51,7 +51,23 @@ public class Randomizer
     else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign);
     else if(randomFace==2) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign);
     ImmutableVector parentPivot=new ImmutableVector(-randPivot.X,-randPivot.Y,-randPivot.Z);
-    randBlock=new GeneBlock(parentOffset, randPivot,parentPivot,size,Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
+
+
+    randomFace=rand.nextInt(2);
+    if(randomFace==0)
+    {
+      randBlock = new GeneBlock(parentOffset, randPivot, parentPivot, size,
+          Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
+          randAngle);
+    }
+    else if(randomFace==1)
+    {
+      randBlock=new GeneBlock(parentOffset, randPivot,parentPivot,size,Axis.UNIT_X.getImmutableVector(),Axis.UNIT_X.getImmutableVector(),randAngle);
+    }
+    else
+    {
+      randBlock=new GeneBlock(parentOffset, randPivot,parentPivot,size,Axis.UNIT_Y.getImmutableVector(),Axis.UNIT_Y.getImmutableVector(),randAngle);
+    }
     geneBlocks.remove(index);
     geneBlocks.add(index,randBlock);
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());

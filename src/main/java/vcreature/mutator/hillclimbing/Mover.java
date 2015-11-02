@@ -14,6 +14,7 @@ public class Mover
 {
   protected static Genome moveLimbs(Genome genome)
   {
+    if(genome.getGENE_BLOCKS().size() == 0) return genome;
     GeneBlock limb;
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
@@ -34,7 +35,7 @@ public class Mover
     else if(randomFace==2) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign);
 
 
-    int randomLimb = rand.nextInt(geneBlocks.size()-1);
+    int randomLimb = rand.nextInt(geneBlocks.size());
 
     ImmutableVector sizeCopy =new ImmutableVector(geneBlocks.get(randomLimb).SIZE.getX(),geneBlocks.get(randomLimb).SIZE.getY(),geneBlocks.get(randomLimb).SIZE.getZ());
 
@@ -43,7 +44,22 @@ public class Mover
     GeneBlock block = geneBlocks.get(randomLimb);
     int parentOffset = block.PARENT_OFFSET;
     ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
-    limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy, Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
+    randomFace = rand.nextInt(2);
+    if(randomFace==0)
+    {
+      limb = new GeneBlock(parentOffset, randPivot, parentPivot, sizeCopy,
+          Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
+          randAngle);
+    }
+    else if(randomFace ==1 )
+    {
+      limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy,Axis.UNIT_Y.getImmutableVector(),Axis.UNIT_Y.getImmutableVector(),randAngle);
+    }
+    else
+    {
+      limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy,Axis.UNIT_X.getImmutableVector(),Axis.UNIT_X.getImmutableVector(),randAngle);
+    }
+    //limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy, Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
 
 
     geneBlocks.remove(randomLimb);
