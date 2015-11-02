@@ -55,17 +55,24 @@ public class Duplicator
     if (placementPivotParent == null)
     {
       return genome;
-    } else
+    }
+    else
     {
       ImmutableVector hingeAxis = findHingeAxis(placementPivotParent);
       duplicateBlock = new GeneBlock(0, placementPivotParent, placementPivot, size,
-              hingeAxis, hingeAxis, block.EULER_ANGLES);
+          hingeAxis, hingeAxis, block.EULER_ANGLES);
 
       newGenome.addGeneBlock(duplicateBlock);
-
-      for (int j = geneNeurons.size() - 1; j > 0; j--)
+      for (int i = 0; i < geneBlocks.size(); i++)
       {
-        newGenome.addGeneNeuron(geneNeurons.get(j));
+        for (int j = geneNeurons.size() - 1; j > 0; j--)
+        {
+          if (geneNeurons.get(j).BLOCK_INDEX == i) newGenome.addGeneNeuron(geneNeurons.get(j));
+          if (i == geneBlocks.size() - 1)
+          {
+            if (geneNeurons.get(j).BLOCK_INDEX == randIndex) newGenome.addGeneNeuron(geneNeurons.get(j));
+          }
+        }
       }
     }
     return newGenome;
@@ -111,7 +118,7 @@ public class Duplicator
       z = randomPivot.getZ();
       size = new ImmutableVector(block.SIZE.X, block.SIZE.Y, block.SIZE.Z);
       availablePivot = new ImmutableVector(x, y, -z);
-      placementPivot = new ImmutableVector(0, yp, -zp);
+      placementPivot = new ImmutableVector(0,yp,-zp);
       if (!(comparePivot(availablePivot))) return availablePivot;
       else
       {
@@ -120,13 +127,13 @@ public class Duplicator
         if (!(comparePivot(availablePivot)))
         {
           size = new ImmutableVector(block.SIZE.X, block.SIZE.Y, block.SIZE.Z);
-          placementPivot = new ImmutableVector(-xp, yp, zp);
+          placementPivot = new ImmutableVector(-xp,yp, zp);
           return availablePivot;
         }
         availablePivot = new ImmutableVector(-z, y, -x);
         if (!(comparePivot(availablePivot)))
         {
-          placementPivot = new ImmutableVector(zp, yp, -xp);
+          placementPivot = new ImmutableVector(zp,yp,-xp);
           size = new ImmutableVector(block.SIZE.Z, block.SIZE.Y, block.SIZE.X);
           return availablePivot;
         }
