@@ -6,6 +6,7 @@ import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.scene.Geometry;
+import com.jme3.system.AppSettings;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
 import vcreature.phenotype.PhysicsConstants;
@@ -19,6 +20,7 @@ public class MutationTester extends SimpleApplication implements ActionListener
   private PhysicsSpace physicsSpace;
   private boolean isCameraRotating = true;
 
+  private boolean speedSet = false;
 
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private GenomeCreature currentCreature;
@@ -44,8 +46,13 @@ public class MutationTester extends SimpleApplication implements ActionListener
 
     physicsSpace.setGravity(PhysicsConstants.GRAVITY);
     physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
-    physicsSpace.setMaxSubSteps(40);
-    this.speed = 100;
+
+
+
+    AppSettings settings = new AppSettings(true);
+
+    setSettings(settings);
+    settings.setResolution(1024, 768);
     this.setPauseOnLostFocus(false);
     //Set up inmovable floor
     com.jme3.scene.shape.Box floor = new com.jme3.scene.shape.Box(50f, 0.1f, 50f);
@@ -95,6 +102,15 @@ public class MutationTester extends SimpleApplication implements ActionListener
   @Override
   public void simpleUpdate(float deltaSeconds)
   {
+    if (!this.speedSet)
+    {
+      //this.createCanvas();
+      //this.startCanvas();
+      this.setSpeed(20);
+
+      this.speedSet = true;
+    }
+    //System.out.println(deltaSeconds);
     this.currentFitness = currentCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
     fitnessUpdater += deltaSeconds;
@@ -120,6 +136,13 @@ public class MutationTester extends SimpleApplication implements ActionListener
       }
 
     }
+  }
+  public void setSpeed(int speed)
+  {
+    this.speed=speed;
+    physicsSpace.setMaxSubSteps(4*speed);
+    settings.setFrequency(speed*60);
+    this.restart();
   }
 
   public void setCurrentMutationType(Manager.MutationType mutationType)
