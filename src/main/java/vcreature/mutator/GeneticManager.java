@@ -91,6 +91,11 @@ public class GeneticManager
     System.out.println("TestQueue size: " + testQueue.size());
   }
 
+  public float getFitnessBar()
+  {
+    return Math.min(currentTestee.parent1.getFitness(), currentTestee.parent2.getFitness());
+  }
+
 
   class GenomeTracker
   {
