@@ -78,8 +78,6 @@ public class GeneticManager
                              + currentTestee.parent2.getFitness() + "fitness: " + lastFitness);
       GenePool.replace(currentTestee.genome, currentTestee.parent1,
                        currentTestee.parent2);
-
-      GenePool.add(SpawnRandomCreatureGenoform.createRandomCreature(4));
       buildQueue(currentTestee.genome);
       GenoFile.writeGenome(currentTestee.genome);
     }
