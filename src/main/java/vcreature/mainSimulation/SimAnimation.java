@@ -35,7 +35,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
 
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
-  private Vector3f cameraLocation;
+  private Vector3f cameraLocation = new Vector3f();
   private boolean isCameraRotating = true;
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
