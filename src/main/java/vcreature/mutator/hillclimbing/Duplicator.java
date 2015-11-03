@@ -59,7 +59,14 @@ public class Duplicator
     geneNeurons = genome.getGENE_NEURONS();
     int randIndex = rand.nextInt(geneBlocks.size());
     block = geneBlocks.get(randIndex);
-    randIndex = rand.nextInt(geneNeurons.size());
+    if (geneNeurons.size()==0)
+    {
+      randIndex=0;
+    }
+    else
+    {
+      randIndex = rand.nextInt(geneNeurons.size());
+    }
     neuron = geneNeurons.get(randIndex);
     placementPivotParent = findAvailablePivot(block.PARENT_PIVOT);
     if (placementPivotParent == null)
@@ -78,7 +85,7 @@ public class Duplicator
       {
 
         newGenome.addGeneBlock(geneBlocks.get(i));
-  //      newGenome.addGeneNeuron(neuron);
+        //      newGenome.addGeneNeuron(neuron);
 
 //        for (int j = 0; j < geneNeurons.size() - 1; j++)
 //        {
@@ -93,25 +100,32 @@ public class Duplicator
       }
       for (int j = 0; j < geneNeurons.size(); j++)
       {
-       // if(geneNeurons.get(j) != null)
-       // newGenome.addGeneNeuron(geneNeurons.get(j));
+        // if(geneNeurons.get(j) != null)
+        // newGenome.addGeneNeuron(geneNeurons.get(j));
         //else
         {
-          EnumNeuronInput aInput=EnumNeuronInput.TIME;
-          EnumNeuronInput bInput=EnumNeuronInput.CONSTANT;
-          EnumNeuronInput cInput=EnumNeuronInput.CONSTANT;
-          EnumNeuronInput dInput=EnumNeuronInput.CONSTANT;
-          EnumNeuronInput eInput=EnumNeuronInput.CONSTANT;
+          EnumNeuronInput aInput = EnumNeuronInput.TIME;
+          EnumNeuronInput bInput = EnumNeuronInput.CONSTANT;
+          EnumNeuronInput cInput = EnumNeuronInput.CONSTANT;
+          EnumNeuronInput dInput = EnumNeuronInput.CONSTANT;
+          EnumNeuronInput eInput = EnumNeuronInput.CONSTANT;
 
           int sign = (rand.nextBoolean()) ? 1 : -1;
           neuron = new GeneNeuron(
-              j, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+              j,
+              //This is the list index of leg1 the corresponding block. As
+              // long as we generate lists in the same order this should work
+              // fine.
               aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
-              0, 0,5, -1*sign*Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+              0, 0, 5, -1 * sign * Float.MAX_VALUE, 0,
+              //are the float values that correspond to each type. If the
+              // type is not Constant, then it will be ignored.
               EnumOperator.ADD, //Binary operator for merging A and B
-              EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+              EnumOperator.IDENTITY,
+              //Unary operator for after A and B are merged
               EnumOperator.ADD, //Binary operator for merging D and E
-              EnumOperator.IDENTITY); //Unary operator for after D and E are merged);
+              EnumOperator.IDENTITY); //Unary operator for after D and E are
+              // merged);
           newGenome.addGeneNeuron(neuron);
         }
       }

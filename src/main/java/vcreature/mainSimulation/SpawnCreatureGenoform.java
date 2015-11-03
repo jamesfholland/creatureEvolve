@@ -279,7 +279,7 @@ public class SpawnCreatureGenoform
           // as we generate lists in the same order this should work fine.
           EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
           EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
-          0, 0, 4, -Float.MAX_VALUE, 0,
+          0, 0, 3, -Float.MAX_VALUE, 0,
           //are the float values that correspond to each type. If the type is
           // not Constant, then it will be ignored.
           EnumOperator.ADD, //Binary operator for merging A and B
@@ -297,7 +297,7 @@ public class SpawnCreatureGenoform
           //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
           EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
           EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
-          0, 0, 4, Float.MAX_VALUE, 0,
+          0, 0, 3, Float.MAX_VALUE, 0,
           //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
           EnumOperator.ADD, //Binary operator for merging A and B
           EnumOperator.IDENTITY, //Unary operator for after A and B are merged
@@ -305,6 +305,79 @@ public class SpawnCreatureGenoform
           EnumOperator.IDENTITY); //Unary operator for after D and E are merged
       genome.addGeneNeuron(leg1Neuron1);
     }
+
+
+//
+//    for(int i=0; i<5;i++)
+//    {
+//      GeneNeuron leg1Neuron1 = new GeneNeuron(
+//          i-1,
+//          //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+//          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+//          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+//          0, 0, 4, -Float.MAX_VALUE, 0,
+//          //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+//          EnumOperator.ADD, //Binary operator for merging A and B
+//          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+//          EnumOperator.ADD, //Binary operator for merging D and E
+//          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+//      genome.addGeneNeuron(leg1Neuron1);
+//    }
+//
+//    for(int i=5; i<10;i++)
+//    {
+//      GeneNeuron leg1Neuron1 = new GeneNeuron(
+//          i-1,
+//          //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+//          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+//          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+//          0, 0, 4, Float.MAX_VALUE, 0,
+//          //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+//          EnumOperator.ADD, //Binary operator for merging A and B
+//          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+//          EnumOperator.ADD, //Binary operator for merging D and E
+//          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+//      genome.addGeneNeuron(leg1Neuron1);
+//    }
+//
+//
+//    for(int i=10; i<13;i++)
+//    {
+//      GeneNeuron leg1Neuron1 = new GeneNeuron(
+//          i-1,
+//          //This is the list index of leg1 the corresponding block. As long
+//          // as we generate lists in the same order this should work fine.
+//          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+//          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+//          0, 0, 4, Float.MAX_VALUE, 0,
+//          //are the float values that correspond to each type. If the type is
+//          // not Constant, then it will be ignored.
+//          EnumOperator.ADD, //Binary operator for merging A and B
+//          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+//          EnumOperator.ADD, //Binary operator for merging D and E
+//          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+//      genome.addGeneNeuron(leg1Neuron1);
+//    }
+//
+//
+//    for(int i=13; i<16;i++)
+//    {
+//      GeneNeuron leg1Neuron1 = new GeneNeuron(
+//          i-1,
+//          //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+//          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+//          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+//          0, 0, 4, -Float.MAX_VALUE, 0,
+//          //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+//          EnumOperator.ADD, //Binary operator for merging A and B
+//          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+//          EnumOperator.ADD, //Binary operator for merging D and E
+//          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+//      genome.addGeneNeuron(leg1Neuron1);
+//    }
+//
+//
+
 
 
     //for
