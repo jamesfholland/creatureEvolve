@@ -23,7 +23,7 @@ public class GeneticManager
 
   GeneticManager()
   {
-    mergeType = MergeType.CUTANDSPLICE;
+    mergeType = MergeType.CHIMERA;
   }
 
   public Genome getNextGenome(float lastFitness)
