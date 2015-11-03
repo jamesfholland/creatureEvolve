@@ -211,6 +211,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
       if(fileGenome!=null)
       {
         myCreature = new GenomeCreature(physicsSpace, rootNode, fileGenome);
+        //fileGenome=null;
       }
       else
       {

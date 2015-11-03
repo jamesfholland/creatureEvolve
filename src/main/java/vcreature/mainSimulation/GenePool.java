@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class GenePool
 {
-  private static final LinkedList<Genome> GENOMES;
+  protected static final LinkedList<Genome> GENOMES;
   private static Random rand=new Random();
   static
   {
