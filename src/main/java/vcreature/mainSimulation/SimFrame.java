@@ -3,11 +3,15 @@ package vcreature.mainSimulation;
 import com.jme3.system.JmeCanvasContext;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import vcreature.genotype.Genome;
 import vcreature.mutator.Manager;
 
 /**
@@ -19,7 +23,7 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
 {
   private SimAnimation animation;
   private JmeCanvasContext ctx;
-  private JPanel hillClimbPane;
+  private JPanel controlPane;
 
   private JPanel appPane;
   private static final int TOP_SPEED = 25;
@@ -39,6 +43,13 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
   private Timer fitnessTracker;
   private DecimalFormat df = new DecimalFormat("#0.00");
   private JButton chooseFile = new JButton("Load Creature From File");
+  private JPanel creatureSelectionPanel;
+  private ArrayList<JButton> creatures = new ArrayList<>();
+  private JButton creature;
+
+  private JLabel creatureSelectorTitle;
+
+
 
   /**
    * Class Constructor:
@@ -49,15 +60,38 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
     super();
     animation = new SimAnimation();
 
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setPreferredSize(new Dimension(1200, 1200));
-    setSize(new Dimension(1200, 1200));
-    this.addHillClimbPane();
+    this.addCreatureSelectionPane();
+    this.addControlPane();
     this.addAppPane();
     pack();
     setVisible(true);
     fitnessTracker = new Timer(0, this);
     fitnessTracker.start();
+
+  }
+
+  protected void addCreatureSelectionPane()
+  {
+    creatureSelectionPanel = new JPanel();
+    creatureSelectorTitle = new JLabel("Gene Pool Creatures");
+    creatureSelectorTitle.setFont(new Font("Serif", Font.BOLD, 20));
+    creatureSelectionPanel.add(creatureSelectorTitle);
+    for(Genome genome: GenePool.GENOMES)
+    {
+      creature = new JButton(genome.getFileName());
+      creatures.add(creature);
+    }
+    creatureSelectionPanel.add(creature);
+    new CreatureSelectionHandler(creatures,animation);
+    creatureSelector = new JScrollPane(creatureSelectionPanel);
+    creatureSelector.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setPreferredSize(new Dimension(1400, 1200));
+    setSize(new Dimension(1400, 1200));
+    creatureSelectionPanel.setPreferredSize(new Dimension(200, 865));
+    creatureSelectionPanel.setSize(new Dimension(200, 865));
+    this.add(creatureSelectionPanel);
 
   }
 
@@ -69,25 +103,27 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
   protected void addAppPane()
   {
     appPane = new JPanel();
+    JLabel title = new JLabel("Creature Evolve");
+    title.setFont(new Font("Serif", Font.BOLD, 90));
+    title.setForeground(Color.white);
+    title.setBackground(Color.black);
     animation.createCanvas();
     animation.startCanvas();
     ctx = (JmeCanvasContext) animation.getContext();
     ctx.setSystemListener(animation);
-    ctx.getCanvas().setPreferredSize(new Dimension(1000, 700));
+    ctx.getCanvas().setPreferredSize(new Dimension(1000, 735));
     appPane.setPreferredSize(new Dimension(1200, 800));
     appPane.setSize(new Dimension(1200, 800));
     appPane.setBackground(Color.BLACK);
-    modeChange.setFont(new Font("Serif", Font.BOLD, 40));
+    modeChange.setFont(new Font("Serif", Font.BOLD, 25));
     modeChange.setOpaque(true);
-    modeChange.setBackground(Color.lightGray);
+    modeChange.setBackground(Color.BLACK);
+    modeChange.setForeground(Color.DARK_GRAY);
     modeChange.addMouseListener(this);
-    modeChange.setPreferredSize(new Dimension(1200, 50));
-    modeChange.setSize(new Dimension(50, 800));
-    creatureSelector.setPreferredSize(new Dimension(10, 700));
-    creatureSelector.setSize(new Dimension(50, 800));
-//    appPane.add(creatureSelector);
+    modeChange.setPreferredSize(new Dimension(350, 50));
+    modeChange.setSize(new Dimension(350, 50));
+    appPane.add(title);
     appPane.add(modeChange);
-//
     appPane.add(ctx.getCanvas(),BorderLayout.CENTER);
     add(appPane, BorderLayout.CENTER);
   }
@@ -97,9 +133,9 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
    * JButton showApp to allow the user to hide/show the creature animation
    * JComboBox threadSelector allows the user to view the creatures running on each thread
    */
-  private void addHillClimbPane()
+  private void addControlPane()
   {
-    hillClimbPane = new JPanel();
+    controlPane = new JPanel();
     speed.setMajorTickSpacing(4);
     speed.setPaintTicks(true);
     speed.setPaintLabels(true);
@@ -148,16 +184,16 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
     speedLabel = new JLabel("Speed: ");
     fitnessPerMin = new JLabel(("Fitness/Min: " + df.format(animation.getCurrentFitness())));
     currentBestFitness = new JLabel("Current Top Fitness: " + df.format(animation.getCurrentFitness()));
-    hillClimbPane.add(threshold);
-    hillClimbPane.add(userThreshold);
-    hillClimbPane.add(zoomLabel);
-    hillClimbPane.add(zoom);
-    hillClimbPane.add(speedLabel);
-    hillClimbPane.add(speed);
-    hillClimbPane.add(fitnessPerMin);
-    hillClimbPane.add(currentBestFitness);
-    hillClimbPane.add(chooseFile);
-    add(hillClimbPane, BorderLayout.PAGE_END);
+    controlPane.add(threshold);
+    controlPane.add(userThreshold);
+    controlPane.add(zoomLabel);
+    controlPane.add(zoom);
+    controlPane.add(speedLabel);
+    controlPane.add(speed);
+    controlPane.add(fitnessPerMin);
+    controlPane.add(currentBestFitness);
+    controlPane.add(chooseFile);
+    add(controlPane, BorderLayout.PAGE_END);
   }
 
 
@@ -165,7 +201,7 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
   public void actionPerformed(ActionEvent e)
   {
     fitnessPerMin.setText("Fitness/Min: " + df.format(animation.getCurrentFitness()));
-    //currentBestFitness.setText("Current Top Fitness: " + df.format(GenePool.getBest().toString()));
+    currentBestFitness.setText("Current Top Fitness: " + df.format(GenePool.getBest().getFitness()));
 
     if (e.getSource() instanceof JTextField)
     {

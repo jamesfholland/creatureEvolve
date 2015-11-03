@@ -74,5 +74,10 @@ public class HillClimbingManager
       testQueue.add(mutator.mutate(genome));
     }
   }
+
+  public float getFitnessBar()
+  {
+    return parentGenome.getFitness();
+  }
 }
 
