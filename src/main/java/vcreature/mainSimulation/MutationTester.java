@@ -137,7 +137,7 @@ public class MutationTester extends SimpleApplication implements ActionListener
       }
       catch (Exception e)
       {
-        System.out.println(e.getStackTrace());
+        e.printStackTrace();
       }
 
     }
