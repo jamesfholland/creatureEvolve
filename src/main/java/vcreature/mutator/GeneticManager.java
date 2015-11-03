@@ -3,7 +3,6 @@ package vcreature.mutator;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
-import vcreature.mainSimulation.SpawnCreatureGenoform;
 import vcreature.mainSimulation.SpawnRandomCreatureGenoform;
 import vcreature.mutator.genetic.MergeType;
 import vcreature.mutator.hillclimbing.Symmetrizer;
@@ -43,7 +42,7 @@ public class GeneticManager
       buildQueue(GenePool.getRandom());
     }
     currentTestee = testQueue.poll();
-    return currentTestee.genome;
+    return currentTestee.GENOME;
   }
 
   private void buildQueue(Genome parent)
@@ -64,46 +63,46 @@ public class GeneticManager
 
   public float getFitnessBar()
   {
-    return Math.min(currentTestee.parent1.getFitness(), currentTestee.parent2.getFitness());
+    return Math.min(currentTestee.PARENT1.getFitness(), currentTestee.PARENT2.getFitness());
   }
 
   public void finalize(float lastFitness)
   {
-    currentTestee.genome.setFitness(lastFitness);
-    if (lastFitness > currentTestee.parent1.getFitness() &&
-        lastFitness > currentTestee.parent2.getFitness())
+    currentTestee.GENOME.setFitness(lastFitness);
+    if (lastFitness > currentTestee.PARENT1.getFitness() &&
+        lastFitness > currentTestee.PARENT2.getFitness())
     {
       System.out.println("Better Child replacing parents parent1,2: "
-                             + currentTestee.parent1.getFitness() + ","
-                             + currentTestee.parent2.getFitness() + "fitness: " + lastFitness);
-      GenePool.replace(currentTestee.genome, currentTestee.parent1,
-                       currentTestee.parent2);
+                             + currentTestee.PARENT1.getFitness() + ","
+                             + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
+      GenePool.replace(currentTestee.GENOME, currentTestee.PARENT1,
+                       currentTestee.PARENT2);
 
       GenePool.add(SpawnRandomCreatureGenoform.createRandomCreature(4));
-      buildQueue(currentTestee.genome);
-      GenoFile.writeGenome(currentTestee.genome);
+      buildQueue(currentTestee.GENOME);
+      GenoFile.writeGenome(currentTestee.GENOME);
     }
     //Parent1 is currently the best so not bothering checking.
-    else if(lastFitness > currentTestee.parent2.getFitness() && currentTestee.parent2.getFitness() != -1)
+    else if(lastFitness > currentTestee.PARENT2.getFitness() && currentTestee.PARENT2.getFitness() != -1)
     {
       System.out.println("Better Child replacing weaker parent2: "
-                             + currentTestee.parent2.getFitness() + "fitness: " + lastFitness);
-      GenePool.replace(currentTestee.genome, currentTestee.parent2);
+                             + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
+      GenePool.replace(currentTestee.GENOME, currentTestee.PARENT2);
     }
   }
 
 
   class GenomeTracker
   {
-    public Genome parent1;
-    public Genome parent2;
-    public Genome genome;
+    public final Genome PARENT1;
+    public final Genome PARENT2;
+    public final Genome GENOME;
 
     GenomeTracker(Genome child, Genome parent1, Genome parent2)
     {
-      this.genome = child;
-      this.parent1 = parent1;
-      this.parent2 = parent2;
+      this.GENOME = child;
+      this.PARENT1 = parent1;
+      this.PARENT2 = parent2;
     }
   }
 }

@@ -1,8 +1,7 @@
 package vcreature.mutator.genetic;
 
 import vcreature.genotype.Genome;
-import vcreature.mutator.genetic.MergeTypes.CutAndSplice;
-import vcreature.mutator.genetic.MergeTypes.SingleCrossover;
+import vcreature.mutator.genetic.MergeTypes.*;
 
 import java.util.ArrayList;
 
@@ -36,7 +35,7 @@ public enum MergeType
         @Override
         public MergeType next()
         {
-          return CUTANDSPLICE;
+          return CHIMERA;
         }
       },
   SWAPBLOCKSANDNEURONS()
@@ -44,13 +43,13 @@ public enum MergeType
         @Override
         public ArrayList<Genome> merge(Genome parent1, Genome parent2)
         {
-          return null;
+          return SwapBlocksAndNeurons.swapBlocksAndNeurons(parent1,parent2);
         }
 
         @Override
         public MergeType next()
         {
-          return null;
+          return SWAPBLOCKSANDNEURONS;
         }
       },
   SWAPLEGS()
@@ -58,15 +57,29 @@ public enum MergeType
         @Override
         public ArrayList<Genome> merge(Genome parent1, Genome parent2)
         {
-          return null;
+          return SwapLegs.swapThoseLegs(parent1,parent2);
         }
 
         @Override
         public MergeType next()
         {
-          return null;
+          return SWAPLEGS;
         }
-      };
+      },
+  CHIMERA()
+          {
+            @Override
+            public ArrayList<Genome> merge(Genome parent1, Genome parent2)
+            {
+              return Chimera.makeChimera(parent1, parent2);
+            }
+
+            @Override
+            public MergeType next()
+            {
+              return CUTANDSPLICE;
+            }
+          };
 
   public abstract ArrayList<Genome> merge(Genome parent1, Genome parent2);
   public abstract MergeType next();

@@ -18,7 +18,6 @@ public class GenePool
    * Get a copy or add a synchronized method to do what you need.
    */
   private static final LinkedList<Genome> GENOMES;
-  private static Random rand=new Random();
   private static final int MINIMUM_POOL_SIZE = 10;
   static
   {
@@ -40,7 +39,7 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
-      int index = Math.abs(rand.nextInt()) % GENOMES.size();
+      int index = Math.abs(MainSim.RANDOM.nextInt()) % GENOMES.size();
       return GENOMES.get(index);
     }
   }

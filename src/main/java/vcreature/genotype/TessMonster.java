@@ -1,11 +1,7 @@
 package vcreature.genotype;
 
-import com.jme3.bullet.PhysicsSpace;
-import com.jme3.math.Vector3f;
 import vcreature.phenotype.*;
-import com.jme3.scene.Node;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

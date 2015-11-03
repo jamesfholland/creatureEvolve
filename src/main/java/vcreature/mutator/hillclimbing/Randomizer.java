@@ -1,9 +1,6 @@
 package vcreature.mutator.hillclimbing;
 
-import com.jme3.math.Vector3f;
 import vcreature.genotype.*;
-import vcreature.genotype.phenoConversion.ProtoBlock;
-import vcreature.phenotype.Block;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.EnumOperator;
 

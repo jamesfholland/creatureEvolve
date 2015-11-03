@@ -1,17 +1,9 @@
 package vcreature.genotype.phenoConversion;
 
 import com.jme3.bounding.BoundingBox;
-import com.jme3.bounding.BoundingVolume;
 import com.jme3.math.Matrix4f;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-import com.sun.javafx.geom.PickRay;
-import com.sun.javafx.scene.input.PickResultChooser;
-import javafx.geometry.Point3D;
-import javafx.scene.Node;
-import javafx.scene.shape.CullFace;
-import javafx.scene.shape.Mesh;
 import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
 import vcreature.genotype.Genome;
@@ -21,7 +13,6 @@ import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.Neuron;
 
-import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +26,7 @@ public class ProtoBlock
    * Offset from the root's 0,0,0 center.
    */
   private Vector3f center;
-  private Vector3f eulerAngles=new Vector3f(0,0,0);
+  private Vector3f eulerAngles = new Vector3f(0, 0, 0);
   /**
    * Size in meters.
    */
@@ -83,7 +74,6 @@ public class ProtoBlock
 
 
   /**
-   *
    * @param protoBlock
    */
   public ProtoBlock(ProtoBlock protoBlock)
@@ -100,18 +90,17 @@ public class ProtoBlock
   }
 
   /**
-   *
    * @param size
    * @param eulerAngles
    */
-  public ProtoBlock(ImmutableVector size,ImmutableVector eulerAngles)
+  public ProtoBlock(ImmutableVector size, ImmutableVector eulerAngles)
   {
     this.parent = null; //Null parent because we are the root.
     this.center = new Vector3f(0, 0, 0); //We don't know the actual
     this.size = size.getVector3f();
     this.children = new LinkedList<>();
     this.neurons = new LinkedList<>();
-    this.eulerAngles=eulerAngles.getVector3f();
+    this.eulerAngles = eulerAngles.getVector3f();
   }
 
   /**
@@ -135,9 +124,9 @@ public class ProtoBlock
    * @param axisParent  the hinge's parent axis
    * @param axis        the hinge's axis
    */
-  public void initializeBlock(ImmutableVector size, ProtoBlock parent,
-                              ImmutableVector pivotParent,
-                              ImmutableVector pivot, ImmutableVector axisParent, ImmutableVector axis,ImmutableVector eulerAngles)
+  public void initializeBlock(ImmutableVector size, ProtoBlock parent, ImmutableVector pivotParent,
+                              ImmutableVector pivot, ImmutableVector axisParent, ImmutableVector axis,
+                              ImmutableVector eulerAngles)
   {
     this.size = size.getVector3f();
     this.parent = parent;
@@ -148,8 +137,9 @@ public class ProtoBlock
 
     this.pivotParentOffset = pivotParent;
     this.pivotOffset = pivot;
-    this.eulerAngles=eulerAngles.getVector3f();
+    this.eulerAngles = eulerAngles.getVector3f();
   }
+
   public Vector3f getBlockCenter()
   {
     return center;
@@ -163,8 +153,7 @@ public class ProtoBlock
    */
   public Vector3f getMinVector()
   {
-    return new Vector3f(center.x - size.x, center.y - size.y,
-        center.z - size.z);
+    return new Vector3f(center.x - size.x, center.y - size.y, center.z - size.z);
   }
 
   /**
@@ -174,8 +163,7 @@ public class ProtoBlock
    */
   public Vector3f getMaxVector()
   {
-    return new Vector3f(center.x + size.x, center.y + size.y,
-        center.z + size.z);
+    return new Vector3f(center.x + size.x, center.y + size.y, center.z + size.z);
   }
 
   /**
@@ -186,51 +174,18 @@ public class ProtoBlock
    */
   public Vector3f getDimensionVector()
   {
-    return new Vector3f(getMaxVector().x - getMinVector().x,
-        getMaxVector().y - getMinVector().y,
-        getMaxVector().z - getMinVector().z);
+    return new Vector3f(getMaxVector().x - getMinVector().x, getMaxVector().y - getMinVector().y, getMaxVector().z -
+        getMinVector().z);
   }
 
-  public static boolean checkIntersection(List<ProtoBlock> children)
+  public static boolean blockIntersecting(Vector3f min, Vector3f size, ProtoBlock box)
   {
-    ArrayList<BoundingBox> boundingBoxes=new ArrayList<>();
-    for (int i = 0; i <children.size() ; i++)
-    {
-      BoundingBox temp= toBoundingBox(children.get(i));
-      for (int j = 0; j <boundingBoxes.size() ; j++)
-      {
-        if(temp.intersects(boundingBoxes.get(i))) return true;
-      }
-      boundingBoxes.add(temp);
-    }
-    return false;
-  }
-  public static BoundingBox toBoundingBox(ProtoBlock protoBlock)
-  {
-
-    BoundingBox box=new BoundingBox(protoBlock.getMinVector(),protoBlock.getMaxVector());
-    float[] floats={protoBlock.eulerAngles.x,protoBlock.eulerAngles.y,protoBlock.eulerAngles.x};
-    Quaternion rotation=new Quaternion(floats);
-    Matrix4f result=null;
-    Matrix4f rotateMatrix=new Matrix4f(rotation.toRotationMatrix(result));
-    box.transform(rotateMatrix,box);
-
-    return box;
-  }
-  public static boolean blockIntersecting(Vector3f min, Vector3f size,
-                                          ProtoBlock box)
-  {
-    if ((min.x < box.getMinVector().x + box.getDimensionVector().x) &&
+    return (min.x < box.getMinVector().x + box.getDimensionVector().x) &&
         (min.y < box.getMinVector().y + box.getDimensionVector().y) &&
         (min.z < box.getMinVector().z + box.getDimensionVector().z) &&
         (box.getMinVector().x < +min.x + size.x) &&
         (box.getMinVector().y < +min.y + size.y) &&
-        (box.getMinVector().z < +min.z + size.z))
-    {
-//      System.out.println("Intersections");
-      return true;
-    }
-    return false;
+        (box.getMinVector().z < +min.z + size.z);
   }
 
   /**
@@ -244,24 +199,19 @@ public class ProtoBlock
     if (parent != null)
     {
       this.pivot = this.parent.getHingeFromCenterOffset(this.pivotParentOffset);
-      this.pivotParentLocal =
-          this.parent.getHingeLocalCoord(this.pivotParentOffset);
+      this.pivotParentLocal = this.parent.getHingeLocalCoord(this.pivotParentOffset);
       setCenterFromHingeOffset();
       this.pivotLocal = getHingeLocalCoord(this.pivotOffset);
     }
     Vector3f min = getMinVector();
-    Vector3f max = getMaxVector();
     Vector3f dimentionVector = getDimensionVector();
     for (ProtoBlock box : existingBlocks)
     //Check Block collision somehow.
     //If collision remove child from this.parent.
     {
       //checks to see if two blocks are intersecting
-     if (blockIntersecting(min, dimentionVector, box))
-     // if(checkIntersection(children))
+      if (blockIntersecting(min, dimentionVector, box))
       {
-       // System.out.println("Intersects");
-        //this.parent.removeChild(this);
         return;
       }
     }
@@ -349,39 +299,45 @@ public class ProtoBlock
     for (ProtoBlock child : children)
     {
       tempHeight = child.getHeight();
-      if (tempHeight > height) height = tempHeight;
+      if (tempHeight > height)
+      {
+        height = tempHeight;
+      }
     }
 
     return height;
   }
 
-  public void addBlocksToCreature(Creature creature,Block blockParent, LinkedList<ProtoBlock> existingBlocks)
+  public void addBlocksToCreature(Creature creature, Block blockParent, LinkedList<ProtoBlock> existingBlocks)
   {
     Block current;
-    float[] floats={eulerAngles.x,eulerAngles.y,eulerAngles.z};
+    float[] floats = {eulerAngles.x, eulerAngles.y, eulerAngles.z};
     if (blockParent == null)
     {
-      current = creature.addRoot(new Vector3f(0,1000,0),size,floats);
+      current = creature.addRoot(new Vector3f(0, 1000, 0), size, floats);
       creature.getBlockByID(0).setMaterial(Block.MATERIAL_RED);
     }
     else
     {
 
-      current = creature
-              .addBlock(floats,size, blockParent, pivotParentLocal, pivotLocal,
-                       axis);
+      current = creature.addBlock(floats, size, blockParent, pivotParentLocal, pivotLocal, axis);
       switch (MainSim.RANDOM.nextInt(3))
       {
-        case 0: {
+        case 0:
+        {
           creature.getBlockByID(current.getID()).setMaterial(Block.MATERIAL_BLUE);
           break;
-        }case 1:{
-        creature.getBlockByID(current.getID()).setMaterial(Block.MATERIAL_GREEN);
-        break;
-      }case 2:{
-        creature.getBlockByID(current.getID()).setMaterial(Block.MATERIAL_BROWN);
-        break;
-      }
+        }
+        case 1:
+        {
+          creature.getBlockByID(current.getID()).setMaterial(Block.MATERIAL_GREEN);
+          break;
+        }
+        case 2:
+        {
+          creature.getBlockByID(current.getID()).setMaterial(Block.MATERIAL_BROWN);
+          break;
+        }
       }
       for (Neuron neuron : neurons)
       {
@@ -397,6 +353,7 @@ public class ProtoBlock
       }
     }
   }
+
   public void placeCreatureOnGround(Creature creature)
   {
     creature.placeOnGround();
@@ -404,24 +361,32 @@ public class ProtoBlock
 
   /**
    * Recreates a genome based upon protoblocks. Used for getting clean genomes of creatures.
-   * @param genome Genome we are adding to
+   *
+   * @param genome      Genome we are adding to
    * @param parentIndex Block index of parent.
    */
   private void addToGenome(Genome genome, int parentIndex)
   {
-    if(this.parent == null) return; //This must have been the root node.
+    if (this.parent == null)
+    {
+      return; //This must have been the root node.
+    }
     int blockIndex = genome.getGENE_BLOCKS().size();
     int parentOffset = blockIndex - parentIndex;
-    if (parentIndex == 0) parentOffset = 0; //Catch root block parents.
+    if (parentIndex == 0)
+    {
+      parentOffset = 0; //Catch root block parents.
+    }
 
-    GeneBlock block = new GeneBlock(parentOffset, this.pivotParentOffset, this.pivotOffset, new ImmutableVector(this.size), new ImmutableVector(this.axis), new ImmutableVector(this.axis), new ImmutableVector(this.eulerAngles));
+    GeneBlock block = new GeneBlock(parentOffset, this.pivotParentOffset, this.pivotOffset, new ImmutableVector(this
+        .size), new ImmutableVector(this.axis), new ImmutableVector(this.axis), new ImmutableVector(this.eulerAngles));
     genome.addGeneBlock(block);
 
-    for(Neuron protoNeuron : neurons)
+    for (Neuron protoNeuron : neurons)
     {
-      genome.addGeneNeuron(new GeneNeuron( blockIndex, ((ProtoNeuron) protoNeuron).geneNeuron));
+      genome.addGeneNeuron(new GeneNeuron(blockIndex, ((ProtoNeuron) protoNeuron).geneNeuron));
     }
-    for(ProtoBlock child : children)
+    for (ProtoBlock child : children)
     {
       child.addToGenome(genome, blockIndex);
     }
@@ -430,7 +395,7 @@ public class ProtoBlock
   public Genome createCleanGenomeFromRoot()
   {
     Genome genome = new Genome(new ImmutableVector(this.size), new ImmutableVector(this.eulerAngles));
-    for(ProtoBlock child : children)
+    for (ProtoBlock child : children)
     {
       child.addToGenome(genome, 0);
     }

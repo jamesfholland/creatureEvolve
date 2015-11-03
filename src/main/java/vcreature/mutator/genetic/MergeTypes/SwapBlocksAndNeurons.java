@@ -9,7 +9,6 @@ import vcreature.genotype.Genome;
 import vcreature.mutator.genetic.GeneticTools;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Takes blocks from parents one and add parents two's neurons

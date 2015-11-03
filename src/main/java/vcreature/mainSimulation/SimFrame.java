@@ -3,7 +3,6 @@ package vcreature.mainSimulation;
 import com.jme3.system.JmeCanvasContext;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
@@ -39,7 +38,7 @@ public class SimFrame extends JFrame implements ActionListener
   private JLabel threshold;
   private JTextField userThreshold = new JTextField();
   private String[] modes = {"Genetic/Hill Climbing", "Hill Climbing", "Genetic Algorithm"};
-  private JComboBox modeChange = new JComboBox(modes);
+  private JComboBox modeChange = new JComboBox<String>(modes);
   private JScrollPane creatureSelector = new JScrollPane();
   private Timer fitnessTracker;
   private DecimalFormat df = new DecimalFormat("#0.00");
@@ -59,8 +58,8 @@ public class SimFrame extends JFrame implements ActionListener
   public SimFrame(Manager manager)
   {
     super();
-    animation = new SimAnimation();
     this.manager = manager;
+    animation = new SimAnimation(manager);
     this.addCreatureSelectionPane();
     this.addControlPane();
     this.addAppPane();
@@ -147,7 +146,7 @@ public class SimFrame extends JFrame implements ActionListener
         JSlider source = (JSlider) e.getSource();
         if (source.getValueIsAdjusting())
         {
-          int fps = (int) source.getValue();
+          int fps = source.getValue();
           animation.setSpeed(fps);
         }
       }

@@ -16,7 +16,6 @@ import vcreature.phenotype.PhysicsConstants;
  */
 public class MutationTester extends SimpleApplication implements ActionListener
 {
-  private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
   private boolean isCameraRotating = true;
 
@@ -25,9 +24,8 @@ public class MutationTester extends SimpleApplication implements ActionListener
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private GenomeCreature currentCreature;
   private float elapsedSimulationTime;
-  private Manager manager = new Manager();
+  private Manager manager;
   private float currentFitness = 0;
-  private int fitnessUpdater = 0;
 
 
   public MutationTester(Manager manager)
@@ -45,7 +43,7 @@ public class MutationTester extends SimpleApplication implements ActionListener
   @Override
   public void simpleInitApp()
   {
-    bulletAppState = new BulletAppState();
+    BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
 
@@ -118,13 +116,13 @@ public class MutationTester extends SimpleApplication implements ActionListener
     //System.out.println(deltaSeconds);
     this.currentFitness = currentCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
-    fitnessUpdater += deltaSeconds;
 
     if (elapsedSimulationTime < 1 && this.currentFitness > 0.01)
     {
       currentCreature.remove();
       elapsedSimulationTime = 0;
-      currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0));
+      currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0.0f));
+      this.currentFitness = 0.0f;
       return;
     }
     if (elapsedSimulationTime > 15)
@@ -135,9 +133,11 @@ public class MutationTester extends SimpleApplication implements ActionListener
       try
       {
         currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(this.currentFitness));
+        this.currentFitness = 0.0f;
       }
-      catch (NullPointerException e)
+      catch (Exception e)
       {
+        e.printStackTrace();
       }
 
     }

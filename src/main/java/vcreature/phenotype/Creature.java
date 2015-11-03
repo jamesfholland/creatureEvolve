@@ -1,6 +1,5 @@
 package vcreature.phenotype;
 
-import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.math.Vector3f;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.scene.Node;

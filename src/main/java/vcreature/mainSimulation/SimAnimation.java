@@ -18,7 +18,6 @@ import com.jme3.scene.Geometry;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.system.AppSettings;
 import com.jme3.texture.Texture;
-import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
@@ -31,27 +30,29 @@ import vcreature.phenotype.PhysicsConstants;
  **/
 public class SimAnimation extends SimpleApplication implements ActionListener
 {
-  //  public static GenePool genePool = new GenePool();
-  private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
   private float cameraAngle = (float) (Math.PI / 2.0);
 
 
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
-  private Vector3f tmpVec3; //
+  private Vector3f cameraLocation = new Vector3f();
   private boolean isCameraRotating = true;
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
 
   private Genome fileGenome = SpawnCreatureGenoform.creature();
 
-  private Manager manager = new Manager();
-  private float fitnessUpdater = 0;
+  private Manager manager;
   private float elapsedMinutes = 0;
   private float currentFitness = 0;
   private float previousFitness = 0;
   private float tempFitness = 0;
   private int zoom = 25;
+
+  public SimAnimation(Manager manager)
+  {
+    this.manager = manager;
+  }
 
 
   /**
@@ -67,7 +68,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   {
    // GenoFile.writeGenome(fileGenome);
 
-    bulletAppState = new BulletAppState();
+    BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
 
@@ -201,15 +202,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   {
     this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
-    fitnessUpdater += deltaSeconds;
-
-    if (elapsedSimulationTime < 1 && this.currentFitness > 0.01)
-    {
-      myCreature.remove();
-      elapsedSimulationTime = 0;
-      myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0));
-      return;
-    }
     if (elapsedSimulationTime > 15)
     {
       myCreature.remove();
@@ -221,28 +213,20 @@ public class SimAnimation extends SimpleApplication implements ActionListener
       }
       else
       {
-        myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(this.currentFitness));
+        myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getCurrentGenome());
       }
-    }
-
-    //This is the timer for updating the fitness per minute in the GUI.
-    if (fitnessUpdater == 60)
-    {
-      elapsedMinutes++;
-      setCurrentFitness();
-      fitnessUpdater = 0;
     }
 
     if (isCameraRotating)
     {
-      //Move camera continously in circle of radius 25 meters centered 10 meters
+      //Move camera continuously in circle of radius 25 meters centered 10 meters
       //  above the origin.
       cameraAngle += deltaSeconds * 2.0 * Math.PI / 60.0; //rotate full circle every minute
       float x = (float) (zoom * Math.cos(cameraAngle));
       float z = (float) (zoom * Math.sin(cameraAngle));
 
-      tmpVec3 = new Vector3f(x, 10.0f, z);
-      cam.setLocation(tmpVec3);
+      cameraLocation.set(x, 10.0f, z);
+      cam.setLocation(cameraLocation);
       cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }
   }

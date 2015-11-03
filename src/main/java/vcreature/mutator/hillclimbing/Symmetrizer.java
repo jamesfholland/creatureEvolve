@@ -6,8 +6,6 @@ import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Random;
 
 /**
  * Symmetrizer (real word) makes a creature or block symmetrical.

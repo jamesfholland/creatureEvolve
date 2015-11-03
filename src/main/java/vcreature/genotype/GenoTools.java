@@ -19,17 +19,22 @@ public class GenoTools
     ArrayList<GeneNeuron> neurons = genome.getGENE_NEURONS();
 
     Gene parent = new Gene(blocks, neurons, index);
-
+    ArrayList<GeneNeuron> childNeurons=new ArrayList<>();
     for(int i = 0; i < blocks.size(); i++)
     {
+
       if(i + blocks.get(i).PARENT_OFFSET == index)
       {
-        parent.children.add(getAppendage(genome, i));
+
+        for (int j = 0; j < neurons.size(); j++)
+        {
+          if(neurons.get(j).BLOCK_INDEX==i) childNeurons.add(neurons.get(j));
+        }
+        Gene gene=new Gene(blocks,childNeurons,i);
+        parent.children.add(gene);
+        //parent.children.add(getAppendage(genome, i));
       }
     }
-
-
-
     return parent;
   }
 

@@ -1,13 +1,11 @@
 package vcreature.mutator.hillclimbing;
 
-import sun.applet.Main;
 import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
 import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 import vcreature.mainSimulation.MainSim;
 import vcreature.mutator.Cleaner;
-import vcreature.phenotype.Neuron;
 
 import java.util.ArrayList;
 
@@ -47,16 +45,15 @@ public static Genome basicInverter(Genome genome)
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
     ArrayList<GeneBlock> geneBlocks=genome.getGENE_BLOCKS();
     ArrayList<GeneNeuron> geneNeurons=genome.getGENE_NEURONS();
-    int index=MainSim.RANDOM.nextInt(geneNeurons.size()-1);
-    geneNeurons.remove(index);
-    geneNeurons.add(index, flipNeuron(geneNeurons.get(index)));
+    int index=MainSim.RANDOM.nextInt(geneNeurons.size());
     for (int i = 0; i <geneBlocks.size() ; i++)
     {
       newGenome.addGeneBlock(geneBlocks.get(i));
     }
     for (int i = 0; i <geneNeurons.size() ; i++)
     {
-      newGenome.addGeneNeuron(geneNeurons.get(i));
+      if(i == index) newGenome.addGeneNeuron(flipNeuron(geneNeurons.get(index)));
+      else newGenome.addGeneNeuron(geneNeurons.get(i));
     }
     return newGenome;
   }
