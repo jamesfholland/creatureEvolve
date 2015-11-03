@@ -65,8 +65,11 @@ public class Manager
       if (repeated)
       {
         minFitness = Math.min(lastFitness, firstTest);
-        //Add our change in fitness.
-        deltaFitness += minFitness - fitnessBar;
+        //Add our change in fitness, unless its parent was an untested genome.
+        if(fitnessBar != -1)
+        {
+          deltaFitness += minFitness - fitnessBar;
+        }
       }
       else if (lastFitness > fitnessBar)
       {
