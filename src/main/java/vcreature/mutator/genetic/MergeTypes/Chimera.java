@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class Chimera
 {
-  public static ArrayList<Genome> Chimera(Genome parent1,Genome parent2)
+  public static ArrayList<Genome> makeChimera(Genome parent1, Genome parent2)
   {
     ArrayList<Genome> children = new ArrayList<>();
     Genome child1;

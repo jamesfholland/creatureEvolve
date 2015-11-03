@@ -71,7 +71,7 @@ public enum MergeType
             @Override
             public ArrayList<Genome> merge(Genome parent1, Genome parent2)
             {
-              return Chimera.Chimera(parent1, parent2);
+              return Chimera.makeChimera(parent1, parent2);
             }
 
             @Override
