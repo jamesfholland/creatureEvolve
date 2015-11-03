@@ -37,25 +37,16 @@ public class HillClimbingManager
    */
   public synchronized Genome getNextCreature(float lastFitness)
   {
-    if(lastFitness == -1 )
+    if(lastFitness == -1 || currentTestee == null)
     {
       buildQueue(GenePool.getWorst());
     }
     else
     {
-      currentTestee.setFitness(lastFitness);
-      if (lastFitness > parentGenome.getFitness())
-      {
-        System.out.println("Better Child replacing parents parent1: "
-                               + parentGenome.getFitness()+"fitness: " + lastFitness);
-        GenePool.replace(currentTestee, parentGenome);
-        buildQueue(currentTestee);
-        GenoFile.writeGenome(currentTestee);
-      }
+      finalize(lastFitness);
     }
     if(testQueue.isEmpty())
     {
-      System.out.println("QueueEmpty Building another from worst Creature");
       buildQueue(GenePool.getWorst());
     }
     currentTestee = testQueue.poll();
@@ -78,6 +69,19 @@ public class HillClimbingManager
   public float getFitnessBar()
   {
     return parentGenome.getFitness();
+  }
+
+  public void finalize(float lastFitness)
+  {
+    currentTestee.setFitness(lastFitness);
+    if (lastFitness > parentGenome.getFitness())
+    {
+      System.out.println("Better Child replacing parent parent: "
+                             + parentGenome.getFitness()+"fitness: " + lastFitness);
+      GenePool.replace(currentTestee, parentGenome);
+      buildQueue(currentTestee);
+      GenoFile.writeGenome(currentTestee);
+    }
   }
 }
 

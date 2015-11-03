@@ -35,47 +35,20 @@ public class GeneticManager
     }
     else
     {
-      currentTestee.genome.setFitness(lastFitness);
-      if (lastFitness > currentTestee.parent1.getFitness() &&
-          lastFitness > currentTestee.parent2.getFitness())
-      {
-        System.out.println("Better Child replacing parents parent1,2: "
-            + currentTestee.parent1.getFitness() + ","
-            + currentTestee.parent2.getFitness() + "fitness: " + lastFitness);
-        GenePool.replace(currentTestee.genome, currentTestee.parent1,
-            currentTestee.parent2);
-
-        GenePool.add(SpawnRandomCreatureGenoform.createRandomCreature(4));
-        buildQueue(currentTestee.genome);
-        GenoFile.writeGenome(currentTestee.genome);
-      }
-      //Parent1 is currently the best so not bothering checking.
-      else if(lastFitness > currentTestee.parent2.getFitness() && currentTestee.parent2.getFitness() != -1)
-      {
-        System.out.println("Better Child replacing weaker parent2: "
-                               + currentTestee.parent2.getFitness() + "fitness: " + lastFitness);
-        GenePool.replace(currentTestee.genome, currentTestee.parent2);
-      }
-
+      finalize(lastFitness);
     }
     if (testQueue.isEmpty())
     {
       mergeType = mergeType.next(); //Cycle through mergeTypes.
-      System.out.println("QueueEmpty Building another from random");
       buildQueue(GenePool.getRandom());
     }
     currentTestee = testQueue.poll();
-    System.out.println("parent1,2: "
-                           + currentTestee.parent1.getFitness() + ","
-                           + currentTestee.parent2.getFitness() + "fitness: " + lastFitness);
     return currentTestee.genome;
   }
 
   private void buildQueue(Genome parent)
   {
     testQueue = new LinkedList<>();
-    System.out
-        .println("Building Queue GenePool Size: " + GenePool.getPoolSize());
     LinkedList<Genome> pool = GenePool.getCopy();
     for (Genome mate : pool)
     {
@@ -87,13 +60,36 @@ public class GeneticManager
         testQueue.offer(new GenomeTracker(child, parent, mate));
       }
     }
-
-    System.out.println("TestQueue size: " + testQueue.size());
   }
 
   public float getFitnessBar()
   {
     return Math.min(currentTestee.parent1.getFitness(), currentTestee.parent2.getFitness());
+  }
+
+  public void finalize(float lastFitness)
+  {
+    currentTestee.genome.setFitness(lastFitness);
+    if (lastFitness > currentTestee.parent1.getFitness() &&
+        lastFitness > currentTestee.parent2.getFitness())
+    {
+      System.out.println("Better Child replacing parents parent1,2: "
+                             + currentTestee.parent1.getFitness() + ","
+                             + currentTestee.parent2.getFitness() + "fitness: " + lastFitness);
+      GenePool.replace(currentTestee.genome, currentTestee.parent1,
+                       currentTestee.parent2);
+
+      GenePool.add(SpawnRandomCreatureGenoform.createRandomCreature(4));
+      buildQueue(currentTestee.genome);
+      GenoFile.writeGenome(currentTestee.genome);
+    }
+    //Parent1 is currently the best so not bothering checking.
+    else if(lastFitness > currentTestee.parent2.getFitness() && currentTestee.parent2.getFitness() != -1)
+    {
+      System.out.println("Better Child replacing weaker parent2: "
+                             + currentTestee.parent2.getFitness() + "fitness: " + lastFitness);
+      GenePool.replace(currentTestee.genome, currentTestee.parent2);
+    }
   }
 
 
