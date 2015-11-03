@@ -74,7 +74,7 @@ public class GenoFile
       Genome genome = new Genome(fileIn);
       return genome;
     }
-    catch (IOException e)
+    catch (Exception e)
     {
       e.printStackTrace();
       return null;
@@ -109,7 +109,8 @@ public class GenoFile
     {
       if(files[i].isFile() && files[i].getName().endsWith(".geno"))
       {
-        genomes.add(GenoFile.readGenomeFromPool(files[i].getName()));
+        Genome genome = GenoFile.readGenomeFromPool(files[i].getName());
+        if(genome != null)  genomes.add(genome);
       }
     }
 

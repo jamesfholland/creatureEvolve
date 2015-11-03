@@ -1,5 +1,6 @@
 package vcreature.mutator;
 
+import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 
 /**
@@ -14,8 +15,10 @@ public class Manager
   private float startFitness;
 
   private Genome currentGenome;
+  private boolean repeat = false;
+  private float firstTest;
 
-  private  MutationType currentMutationType = MutationType.HILL;
+  private MutationType currentMutationType = MutationType.GENETIC;
 
   private GeneticManager geneticManager;
   private HillClimbingManager hillClimbingManager;
@@ -24,6 +27,7 @@ public class Manager
   {
     initializeGenetics();
     initializeHillClimbing();
+
   }
 
   private void initializeHillClimbing()
@@ -48,17 +52,29 @@ public class Manager
 
   public Genome getNextCreature(float lastFitness)
   {
-      switch (currentMutationType)
+    float worstTest;
+    if(repeat)
+    {
+      firstTest = lastFitness;
+      //Don't get new Genome we will test again.
+    }
+    else
+    {
+      worstTest = Math.min(lastFitness, firstTest);
+
+      switch(currentMutationType)
       {
         case GENETIC:
-          System.out.println("genetic");
-          currentGenome = geneticManager.getNextGenome(lastFitness);
+          currentGenome = geneticManager.getNextGenome(worstTest);
           break;
         case HILL:
-          System.out.println("hill");
-          currentGenome = hillClimbingManager.getNextCreature(lastFitness);
+          currentGenome = hillClimbingManager.getNextCreature(worstTest);
           break;
       }
+
+    }
+
+    repeat = !repeat;
     return currentGenome;
   }
   public void setCurrentMutationType(MutationType mutationType)
