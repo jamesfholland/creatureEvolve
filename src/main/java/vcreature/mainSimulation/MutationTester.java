@@ -25,7 +25,7 @@ public class MutationTester extends SimpleApplication implements ActionListener
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private GenomeCreature currentCreature;
   private float elapsedSimulationTime;
-  private Manager manager = new Manager();
+  private Manager manager;
   private float currentFitness = 0;
   private int fitnessUpdater = 0;
 

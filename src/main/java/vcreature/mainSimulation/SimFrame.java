@@ -59,8 +59,8 @@ public class SimFrame extends JFrame implements ActionListener
   public SimFrame(Manager manager)
   {
     super();
-    animation = new SimAnimation();
     this.manager = manager;
+    animation = new SimAnimation(manager);
     this.addCreatureSelectionPane();
     this.addControlPane();
     this.addAppPane();
