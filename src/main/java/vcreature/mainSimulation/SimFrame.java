@@ -38,7 +38,7 @@ public class SimFrame extends JFrame implements ActionListener
   private JLabel threshold;
   private JTextField userThreshold = new JTextField();
   private String[] modes = {"Genetic/Hill Climbing", "Hill Climbing", "Genetic Algorithm"};
-  private JComboBox modeChange = new JComboBox(modes);
+  private JComboBox modeChange = new JComboBox<String>(modes);
   private JScrollPane creatureSelector = new JScrollPane();
   private Timer fitnessTracker;
   private DecimalFormat df = new DecimalFormat("#0.00");
