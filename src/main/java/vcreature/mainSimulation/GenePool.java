@@ -13,7 +13,11 @@ import java.util.Random;
  */
 public class GenePool
 {
-  protected static final LinkedList<Genome> GENOMES;
+  /**
+   * Don't change from private, this is synchronized.
+   * Get a copy or add a synchronized method to do what you need.
+   */
+  private static final LinkedList<Genome> GENOMES;
   private static Random rand=new Random();
   private static final int MINIMUM_POOL_SIZE = 10;
   static

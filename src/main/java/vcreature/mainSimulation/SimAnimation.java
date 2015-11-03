@@ -5,6 +5,7 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
@@ -17,13 +18,12 @@ import com.jme3.scene.Geometry;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.system.AppSettings;
 import com.jme3.texture.Texture;
-import com.jme3.input.controls.ActionListener;
 import vcreature.genotype.GenoFile;
+import vcreature.genotype.Genome;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.PhysicsConstants;
-import vcreature.genotype.Genome;
 
 /**
  * Created by Tess Daughton on 10/14/15.
@@ -31,7 +31,7 @@ import vcreature.genotype.Genome;
  **/
 public class SimAnimation extends SimpleApplication implements ActionListener
 {
-//  public static GenePool genePool = new GenePool();
+  //  public static GenePool genePool = new GenePool();
   private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
   private float cameraAngle = (float) (Math.PI / 2.0);
@@ -42,6 +42,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private boolean isCameraRotating = true;
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
+
   private Genome fileGenome;
 
   private Manager manager = new Manager();
@@ -97,12 +98,12 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     floor_phy.setFriction(PhysicsConstants.GROUND_SLIDING_FRICTION);
     floor_phy.setRestitution(PhysicsConstants.GROUND_BOUNCINESS);
     floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
-        PhysicsConstants.GROUND_ANGULAR_DAMPINING);
+                         PhysicsConstants.GROUND_ANGULAR_DAMPINING);
 
     Block.initStaticMaterials(assetManager);
 
     myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(-1));
-   // myCreature =new GenomeCreature(physicsSpace,rootNode,SpawnCreatureGenoform.makeFlappyBird());
+    // myCreature =new GenomeCreature(physicsSpace,rootNode,SpawnCreatureGenoform.makeFlappyBird());
     //genePool.addCreatureToPopulation();
     initLighting();
     initKeys();
@@ -155,9 +156,9 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
   public void setSpeed(int speed)
   {
-    this.speed=speed;
-    physicsSpace.setMaxSubSteps(4*speed);
-    settings.setFrequency(speed*60);
+    this.speed = speed;
+    physicsSpace.setMaxSubSteps(4 * speed);
+    settings.setFrequency(speed * 60);
     this.restart();
   }
 
@@ -175,19 +176,21 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   }
 
   private void setCurrentFitness()
-  { tempFitness=currentFitness;
-    currentFitness = (currentFitness-previousFitness)/elapsedMinutes;
-    previousFitness=tempFitness;
+  {
+    tempFitness = currentFitness;
+    currentFitness = (currentFitness - previousFitness) / elapsedMinutes;
+    previousFitness = tempFitness;
   }
+
   protected void setZoom(int zoom)
   {
     this.zoom = zoom;
   }
+
   protected float getCurrentFitness()
   {
     return currentFitness;
   }
-
 
 
   /**
@@ -198,9 +201,9 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   {
     this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
-    fitnessUpdater+=deltaSeconds;
+    fitnessUpdater += deltaSeconds;
 
-    if(elapsedSimulationTime<1 && this.currentFitness>0.01)
+    if (elapsedSimulationTime < 1 && this.currentFitness > 0.01)
     {
       myCreature.remove();
       elapsedSimulationTime = 0;
@@ -211,7 +214,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     {
       myCreature.remove();
       elapsedSimulationTime = 0;
-      if(fileGenome!=null)
+      if (fileGenome != null)
       {
         myCreature = new GenomeCreature(physicsSpace, rootNode, fileGenome);
         //fileGenome=null;
@@ -223,11 +226,11 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     }
 
     //This is the timer for updating the fitness per minute in the GUI.
-    if(fitnessUpdater==60)
+    if (fitnessUpdater == 60)
     {
       elapsedMinutes++;
       setCurrentFitness();
-      fitnessUpdater=0;
+      fitnessUpdater = 0;
     }
 
     if (isCameraRotating)
@@ -247,7 +250,11 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void setCurrentCreature(Genome creature)
   {
     fileGenome = creature;
-    simpleUpdate(0.0f);
+
+    //Calling simpleUpdate caused problems with null
+    //pointers when two simultaneous threads (GUI and SimpleApp modified mycreature at once.
+    //simpleUpdate(0.0f);
+
   }
 }
 
