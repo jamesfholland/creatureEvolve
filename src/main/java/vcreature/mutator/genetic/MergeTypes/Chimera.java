@@ -35,10 +35,8 @@ public class Chimera
     for (int i = 0; i <genes2.size() ; i++)
     {
       GeneBlock block=genes2.get(i).geneBlock;
-      System.out.println("it's not happening");
       if(block.PARENT_OFFSET!=0)
      {
-       System.out.println("it's happening");
        child1.addGeneBlock(block);
        for (int j = 0; j< genes2.get(i).geneNeurons.size() ; j++)
        {
