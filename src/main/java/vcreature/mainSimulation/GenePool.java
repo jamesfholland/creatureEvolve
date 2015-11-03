@@ -15,9 +15,17 @@ public class GenePool
 {
   protected static final LinkedList<Genome> GENOMES;
   private static Random rand=new Random();
+  private static final int MINIMUM_POOL_SIZE = 10;
   static
   {
     GENOMES = GenoFile.loadGenePool();
+    while (GENOMES.size() < MINIMUM_POOL_SIZE)
+    {
+      synchronized (GENOMES)
+      {
+        GENOMES.add(SpawnRandomCreatureGenoform.createCreature(MainSim.RANDOM.nextInt(2)+2));
+      }
+    }
   }
 
   /**

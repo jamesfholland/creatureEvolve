@@ -28,6 +28,7 @@ public class GeneticManager
 
   public Genome getNextGenome(float lastFitness)
   {
+
     if (lastFitness == -1)
     {
       buildQueue(GenePool.getBest());
@@ -48,15 +49,25 @@ public class GeneticManager
         buildQueue(currentTestee.genome);
         GenoFile.writeGenome(currentTestee.genome);
       }
+      //Parent1 is currently the best so not bothering checking.
+      else if(lastFitness > currentTestee.parent2.getFitness() && currentTestee.parent2.getFitness() != -1)
+      {
+        System.out.println("Better Child replacing weaker parent2: "
+                               + currentTestee.parent2.getFitness() + "fitness: " + lastFitness);
+        GenePool.replace(currentTestee.genome, currentTestee.parent2);
+      }
+
     }
     if (testQueue.isEmpty())
     {
       mergeType = mergeType.next(); //Cycle through mergeTypes.
-      System.out.println("QueueEmpty Building another from best");
-      buildQueue(GenePool.getBest());
+      System.out.println("QueueEmpty Building another from random");
+      buildQueue(GenePool.getRandom());
     }
     currentTestee = testQueue.poll();
-
+    System.out.println("parent1,2: "
+                           + currentTestee.parent1.getFitness() + ","
+                           + currentTestee.parent2.getFitness() + "fitness: " + lastFitness);
     return currentTestee.genome;
   }
 
@@ -78,6 +89,11 @@ public class GeneticManager
     }
 
     System.out.println("TestQueue size: " + testQueue.size());
+  }
+
+  public float getFitnessBar()
+  {
+    return Math.min(currentTestee.parent1.getFitness(), currentTestee.parent2.getFitness());
   }
 
 
