@@ -113,6 +113,7 @@ public class Manager
             returnFitness = -1;
             break;
         }
+        break;
       //Force Genetic Algorithm
       case GENETIC:
         switch(currentHeuristic)
@@ -121,6 +122,7 @@ public class Manager
             switchToGENETICALG(fitness);
             returnFitness = -1;
         }
+        break;
       //Switching permitted
       case GENETICHILL:
       {
