@@ -12,13 +12,13 @@ import java.util.ArrayList;
  */
 public class CreatureSelectionHandler implements ActionListener
 {
-  private ArrayList<JButton>  creatures;
+  private ArrayList<JButton> creatures;
   private SimAnimation animation;
 
-  public CreatureSelectionHandler(ArrayList <JButton> creatures, SimAnimation animation)
+  public CreatureSelectionHandler(ArrayList<JButton> creatures, SimAnimation animation)
   {
     this.creatures = creatures;
-    for(JButton button: creatures)
+    for (JButton button : creatures)
     {
       button.addActionListener(this);
     }
@@ -28,15 +28,14 @@ public class CreatureSelectionHandler implements ActionListener
 
   public void actionPerformed(ActionEvent e)
   {
-    for (JButton button : creatures)
+    for (int j = 0; j < creatures.size() - 1; j++)
     {
-      if (e.getSource() == button)
+      String genomeName = GenePool.GENOMES.get(j).toString();
+      creatures.get(j).setText(genomeName.substring(25, genomeName.length() - 1));
+      if (e.getSource() == creatures.get(j))
       {
-        for (Genome gene : GenePool.GENOMES)
-          if (button.getText().equals(gene.getFileName()))
-          {
-            animation.setCurrentCreature(gene);
-          }
+        animation.setCurrentCreature(GenePool.GENOMES.get(j));
+        creatures.get(j).setText("Current Creature View");
       }
     }
   }

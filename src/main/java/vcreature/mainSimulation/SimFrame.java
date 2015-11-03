@@ -76,13 +76,13 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
     creatureSelectorTitle = new JLabel("Gene Pool Creatures");
     creatureSelectorTitle.setFont(new Font("Serif", Font.BOLD, 20));
     creatureSelectionPanel.add(creatureSelectorTitle);
-    for(Genome genome: GenePool.GENOMES)
+    for (Genome genome : GenePool.GENOMES)
     {
       creature = new JButton(genome.getFileName());
       creatures.add(creature);
+      creatureSelectionPanel.add(creature);
     }
-    creatureSelectionPanel.add(creature);
-    new CreatureSelectionHandler(creatures,animation);
+    new CreatureSelectionHandler(creatures, animation);
     creatureSelector = new JScrollPane(creatureSelectionPanel);
     creatureSelector.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -92,7 +92,6 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
     creatureSelectionPanel.setPreferredSize(new Dimension(200, 865));
     creatureSelectionPanel.setSize(new Dimension(200, 865));
     this.add(creatureSelectionPanel);
-
   }
 
   /**

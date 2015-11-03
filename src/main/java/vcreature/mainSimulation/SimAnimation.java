@@ -244,6 +244,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void setCurrentCreature(Genome creature)
   {
     fileGenome = creature;
+    simpleUpdate(0.0f);
   }
 }
 
