@@ -168,16 +168,330 @@ public class SpawnCreatureGenoform
   }
 
 
-//  public static Genome makeNewMonster()
-//  {
-//    return genome;
-//  }
-
-
   public static Genome makeTylerMonster()
   {
     ImmutableVector zeroVector = new ImmutableVector(0f,0f,0f);
-    Genome genome = new Genome(new ImmutableVector(10f,1f,10f), zeroVector);
+    Genome genome = new Genome(new ImmutableVector(40f,400f,40f), zeroVector);
+
+    ImmutableVector pivotARoot = new ImmutableVector(1.0f, -1f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotBRoot = new ImmutableVector(1.0f, -1f, .5f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotCRoot = new ImmutableVector(1.0f, -1f, -.5f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotDRoot = new ImmutableVector(1.0f, -1f, 1.f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotERoot = new ImmutableVector(1.0f, -1f, -1.0f); //Center of hinge in the block's coordinates
+
+    ImmutableVector pivotFRoot = new ImmutableVector(-1.0f, -1f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotGRoot = new ImmutableVector(-1.0f, -1f, .5f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotHRoot = new ImmutableVector(-1.0f, -1f, -.5f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotIRoot = new ImmutableVector(-1.0f, -1f, 1.f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotJRoot = new ImmutableVector(-1.0f, -1f, -1.0f); //Center of hinge in the block's coordinates
+
+
+    ImmutableVector pivotKRoot = new ImmutableVector(0.0f, -1f, 1.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotLRoot = new ImmutableVector(.5f, -1f, 1.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotMRoot = new ImmutableVector(-.5f, -1f, 1.0f); //Center of hinge in the block's coordinates
+
+    ImmutableVector pivotNRoot = new ImmutableVector(0.0f, -1f, -1.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotORoot = new ImmutableVector(.5f, -1f, -1.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotPRoot = new ImmutableVector(-.5f, -1f, -1.0f); //Center of hinge in the block's coordinates
+
+
+
+    ImmutableVector pivotAOneBlockDown = new ImmutableVector(-1.0f,1.0f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotBOneBlockDown = new ImmutableVector(1.0f,1.0f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotCOneBlockDown = new ImmutableVector(0.0f,1.0f, -1.0f);
+    ImmutableVector pivotDOneBlockDown = new ImmutableVector(0.0f,1.0f, 1.0f);
+    ImmutableVector pivotEOneBlockDown = new ImmutableVector(1.0f,1.0f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotFOneBlockDown = new ImmutableVector(-1.0f,-1.0f, 0.0f); //Center of hinge in the block's coordinates
+
+
+    ImmutableVector legSize1 = new ImmutableVector(5f, 50f, 5f);
+    ImmutableVector legSize2 = new ImmutableVector(.75f,.75f,1.5f);
+
+    Axis LegParentAxis1 = Axis.UNIT_Z;
+    Axis LegAxis1 = Axis.UNIT_Z;
+
+    Axis LegParentAxis2 = Axis.UNIT_X;
+    Axis LegAxis2 = Axis.UNIT_X;
+
+    GeneBlock leg[] = new GeneBlock[32];
+
+    leg[0] = new GeneBlock(0, pivotARoot, pivotAOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[1] = new GeneBlock(0, pivotFRoot, pivotBOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[2] = new GeneBlock(0, pivotCRoot, pivotAOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[3] = new GeneBlock(0, pivotDRoot, pivotAOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[4] = new GeneBlock(0, pivotERoot, pivotAOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+
+    leg[5] = new GeneBlock(0, pivotFRoot, pivotBOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[6] = new GeneBlock(0, pivotGRoot, pivotBOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[7] = new GeneBlock(0, pivotHRoot, pivotBOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[8] = new GeneBlock(0, pivotIRoot, pivotBOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[9] = new GeneBlock(0, pivotJRoot, pivotBOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+
+    leg[10] = new GeneBlock(0, pivotKRoot, pivotCOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+    leg[11] = new GeneBlock(0, pivotLRoot, pivotCOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+    leg[12] = new GeneBlock(0, pivotMRoot, pivotCOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+
+    leg[13] = new GeneBlock(0, pivotNRoot, pivotDOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+    leg[14] = new GeneBlock(0, pivotORoot, pivotDOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+    leg[15] = new GeneBlock(0, pivotPRoot, pivotDOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+
+
+    leg[16] = new GeneBlock(-16, pivotARoot, pivotEOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[17] = new GeneBlock(-16, pivotARoot, pivotEOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[18] = new GeneBlock(-16, pivotARoot, pivotEOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[19] = new GeneBlock(-16, pivotARoot, pivotEOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[20] = new GeneBlock(-16, pivotARoot, pivotEOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+
+    leg[21] = new GeneBlock(-16, pivotFRoot, pivotAOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[22] = new GeneBlock(-16, pivotFRoot, pivotAOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[23] = new GeneBlock(-16, pivotFRoot, pivotAOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[24] = new GeneBlock(-16, pivotFRoot, pivotAOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+    leg[25] = new GeneBlock(-16, pivotFRoot, pivotAOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
+
+   // leg[26] = new GeneBlock(-16, pivotKRoot, pivotCOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+//    leg[27] = new GeneBlock(-16, pivotLRoot, pivotCOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+//    leg[28] = new GeneBlock(-16, pivotMRoot, pivotCOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+//
+//    leg[29] = new GeneBlock(-16, pivotNRoot, pivotDOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+//    leg[30] = new GeneBlock(-16, pivotORoot, pivotDOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+//    leg[31] = new GeneBlock(-16, pivotPRoot, pivotDOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+
+
+    for(int i=0; i<26; i++)
+    {
+      genome.addGeneBlock(leg[i]);
+    }
+
+    for(int i=0; i<5;i++)
+    {
+      GeneNeuron leg1Neuron1 = new GeneNeuron(
+          i,
+          //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+          0, 0, 5, Float.MAX_VALUE, 0,
+          //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+          EnumOperator.ADD, //Binary operator for merging A and B
+          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+          EnumOperator.ADD, //Binary operator for merging D and E
+          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome.addGeneNeuron(leg1Neuron1);
+
+
+      GeneNeuron leg1Neuron2 = new GeneNeuron(
+          i,
+          //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+          0, 0, 4, -Float.MAX_VALUE, 0,
+          //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+          EnumOperator.ADD, //Binary operator for merging A and B
+          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+          EnumOperator.ADD, //Binary operator for merging D and E
+          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome.addGeneNeuron(leg1Neuron2);
+
+    }
+
+    for(int i=5; i<10;i++)
+    {
+      GeneNeuron leg1Neuron1 = new GeneNeuron(
+          i,
+          //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+          0, 0, 5, -Float.MAX_VALUE, 0,
+          //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+          EnumOperator.ADD, //Binary operator for merging A and B
+          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+          EnumOperator.ADD, //Binary operator for merging D and E
+          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome.addGeneNeuron(leg1Neuron1);
+
+
+      GeneNeuron leg1Neuron2 = new GeneNeuron(
+          i,
+          //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+          0, 0, 4, Float.MAX_VALUE, 0,
+          //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+          EnumOperator.ADD, //Binary operator for merging A and B
+          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+          EnumOperator.ADD, //Binary operator for merging D and E
+          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome.addGeneNeuron(leg1Neuron2);
+
+
+    }
+
+
+    for(int i=10; i<13;i++)
+    {
+      GeneNeuron leg1Neuron1 = new GeneNeuron(
+          i,
+          //This is the list index of leg1 the corresponding block. As long
+          // as we generate lists in the same order this should work fine.
+          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+          0, 0, 5, -Float.MAX_VALUE, 0,
+          //are the float values that correspond to each type. If the type is
+          // not Constant, then it will be ignored.
+          EnumOperator.ADD, //Binary operator for merging A and B
+          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+          EnumOperator.ADD, //Binary operator for merging D and E
+          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome.addGeneNeuron(leg1Neuron1);
+
+
+      GeneNeuron leg1Neuron2 = new GeneNeuron(
+          i,
+          //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+          0, 0, 4, Float.MAX_VALUE, 0,
+          //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+          EnumOperator.ADD, //Binary operator for merging A and B
+          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+          EnumOperator.ADD, //Binary operator for merging D and E
+          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome.addGeneNeuron(leg1Neuron2);
+
+
+    }
+
+
+    for(int i=13; i<16;i++)
+    {
+      GeneNeuron leg1Neuron1 = new GeneNeuron(
+          i,
+          //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+          0, 0, 5, Float.MAX_VALUE, 0,
+          //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+          EnumOperator.ADD, //Binary operator for merging A and B
+          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+          EnumOperator.ADD, //Binary operator for merging D and E
+          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome.addGeneNeuron(leg1Neuron1);
+
+      GeneNeuron leg1Neuron2 = new GeneNeuron(
+          i,
+          //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+          0, 0, 4, -Float.MAX_VALUE, 0,
+          //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+          EnumOperator.ADD, //Binary operator for merging A and B
+          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+          EnumOperator.ADD, //Binary operator for merging D and E
+          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome.addGeneNeuron(leg1Neuron2);
+    }
+
+
+    for(int i=16; i<21;i++)
+    {
+      GeneNeuron leg1Neuron1 = new GeneNeuron(
+          i,
+          //This is the list index of leg1 the corresponding block. As long
+          // as we generate lists in the same order this should work fine.
+          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+          0, 0, 5, -Float.MAX_VALUE, 0,
+          //are the float values that correspond to each type. If the type is
+          // not Constant, then it will be ignored.
+          EnumOperator.ADD, //Binary operator for merging A and B
+          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+          EnumOperator.ADD, //Binary operator for merging D and E
+          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome.addGeneNeuron(leg1Neuron1);
+    }
+
+    for(int i=21; i<26;i++)
+    {
+      GeneNeuron leg1Neuron1 = new GeneNeuron(
+          i,
+          //This is the list index of leg1 the corresponding block. As long
+          // as we generate lists in the same order this should work fine.
+          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+          0, 0, 5, Float.MAX_VALUE, 0,
+          //are the float values that correspond to each type. If the type is
+          // not Constant, then it will be ignored.
+          EnumOperator.ADD, //Binary operator for merging A and B
+          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+          EnumOperator.ADD, //Binary operator for merging D and E
+          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome.addGeneNeuron(leg1Neuron1);
+    }
+      return genome;
+
+  }
+
+
+  static public Genome gaint()
+  {
+
+    ImmutableVector zeroVector = new ImmutableVector(0f,0f,0f);
+    Genome genome = new Genome(new ImmutableVector(5f,5f,5f), zeroVector);
+
+    ImmutableVector pivotParentA = new ImmutableVector(1.0f, -1f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotParentB = new ImmutableVector(-1.0f, -1f, 0.0f); //Center of hinge in the block's coordinates
+
+    ImmutableVector pivotChildA = new ImmutableVector(1.0f, 1f, 0.0f); //Center of hinge in the block's coordinates
+    ImmutableVector pivotChildB = new ImmutableVector(-1.0f, 1f, 0.0f); //Center of hinge in the block's coordinates
+
+
+    ImmutableVector legSize = new ImmutableVector(1.0f, 1.0f, 1.0f);
+
+    int totaNumber = 400;
+    GeneBlock leg;
+    Axis LegParentAxis = Axis.UNIT_Z;
+    Axis LegAxis = Axis.UNIT_Z;
+
+
+    leg = new GeneBlock(0, pivotParentA, pivotChildA,legSize,LegParentAxis.getImmutableVector(),LegAxis.getImmutableVector(),zeroVector);
+    genome.addGeneBlock(leg);
+    for(int i=0; i<totaNumber/2;i++)
+    {
+      leg = new GeneBlock(-1, pivotParentA, pivotChildA,legSize,LegParentAxis.getImmutableVector(),LegAxis.getImmutableVector(),zeroVector);
+      genome.addGeneBlock(leg);
+    }
+
+    leg = new GeneBlock(0, pivotParentB, pivotChildB,legSize,LegParentAxis.getImmutableVector(),LegAxis.getImmutableVector(),zeroVector);
+    genome.addGeneBlock(leg);
+    for(int i=totaNumber/2; i<totaNumber;i++)
+    {
+      leg = new GeneBlock(-1, pivotParentB, pivotChildB,legSize,LegParentAxis.getImmutableVector(),LegAxis.getImmutableVector(),zeroVector);
+      genome.addGeneBlock(leg);
+    }
+
+    for(int i=0; i<totaNumber;i++)
+    {
+      GeneNeuron leg1Neuron1 = new GeneNeuron(
+          i,
+          //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+          EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
+          EnumNeuronInput.CONSTANT, null, //EnumNeuronInput types
+          0, 0, 5, Float.MAX_VALUE, 0,
+          //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+          EnumOperator.ADD, //Binary operator for merging A and B
+          EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+          EnumOperator.ADD, //Binary operator for merging D and E
+          EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+      genome.addGeneNeuron(leg1Neuron1);
+    }
+
+      return genome;
+  }
+
+  static public Genome fallingCreature()
+  {
+
+    ImmutableVector zeroVector = new ImmutableVector(0f,0f,0f);
+    Genome genome = new Genome(new ImmutableVector(5f,.5f,5f), zeroVector);
 
     ImmutableVector pivotARoot = new ImmutableVector(1.0f, -1f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector pivotBRoot = new ImmutableVector(1.0f, -1f, .5f); //Center of hinge in the block's coordinates
@@ -254,7 +568,7 @@ public class SpawnCreatureGenoform
     leg[24] = new GeneBlock(-16, pivotFRoot, pivotAOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
     leg[25] = new GeneBlock(-16, pivotFRoot, pivotAOneBlockDown, legSize1, LegParentAxis1.getImmutableVector(), LegAxis1.getImmutableVector(), zeroVector);
 
-   // leg[26] = new GeneBlock(-16, pivotKRoot, pivotCOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
+    // leg[26] = new GeneBlock(-16, pivotKRoot, pivotCOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
 //    leg[27] = new GeneBlock(-16, pivotLRoot, pivotCOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
 //    leg[28] = new GeneBlock(-16, pivotMRoot, pivotCOneBlockDown, legSize2, LegParentAxis2.getImmutableVector(), LegAxis2.getImmutableVector(), zeroVector);
 //
@@ -432,8 +746,7 @@ public class SpawnCreatureGenoform
           EnumOperator.IDENTITY); //Unary operator for after D and E are merged
       genome.addGeneNeuron(leg1Neuron1);
     }
-      return genome;
-
+    return genome;
   }
 
   static public Genome makeTableMonster()

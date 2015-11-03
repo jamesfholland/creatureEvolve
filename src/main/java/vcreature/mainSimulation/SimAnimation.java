@@ -42,7 +42,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private boolean isCameraRotating = true;
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
-  private Genome fileGenome=SpawnCreatureGenoform.makeTylerMonster();
+  private Genome fileGenome=SpawnCreatureGenoform.gaint();
 
   private Manager manager = new Manager();
   private float fitnessUpdater = 0;
@@ -64,7 +64,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   @Override
   public void simpleInitApp()
   {
-    GenoFile.writeGenome(fileGenome);
+   // GenoFile.writeGenome(fileGenome);
 
     bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);

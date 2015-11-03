@@ -27,7 +27,7 @@ public class Randomizer
 
     Random rand=new Random();
     float min = .5f;
-    float max = 5f;
+    float max = 3f;
 
 
     geneBlocks=genome.getGENE_BLOCKS();
@@ -36,9 +36,19 @@ public class Randomizer
 
     GeneBlock block=geneBlocks.get(index);
     GeneBlock randBlock;
-    float sizeX = rand.nextFloat() * (max - min) + min;
-    float sizeY = rand.nextFloat() * (max - min) + min;
-    float sizeZ = rand.nextFloat() * (max - min) + min;
+    float sizeX;
+    float sizeY;
+    float sizeZ;
+    sizeX = rand.nextFloat() * (max - min) + min;
+    sizeY = rand.nextFloat() * (max - min) + min;
+    if(sizeX > 1f && sizeY > 1f)
+    {
+      sizeZ= rand.nextFloat()+min;
+    }
+    else
+    {
+      sizeZ = rand.nextFloat() * (max - min) + min;
+    }
     ImmutableVector size=new ImmutableVector(sizeX,sizeY,sizeZ);
     ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
     int parentOffset=block.PARENT_OFFSET;
