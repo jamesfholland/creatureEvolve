@@ -51,10 +51,6 @@ public class Mover
           Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
           randAngle);
     }
-    else if(randomFace ==1 )
-    {
-      limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy,Axis.UNIT_Y.getImmutableVector(),Axis.UNIT_Y.getImmutableVector(),randAngle);
-    }
     else
     {
       limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy,Axis.UNIT_X.getImmutableVector(),Axis.UNIT_X.getImmutableVector(),randAngle);

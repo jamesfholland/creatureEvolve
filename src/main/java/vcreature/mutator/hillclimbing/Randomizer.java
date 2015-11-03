@@ -70,13 +70,9 @@ public class Randomizer
           Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
           randAngle);
     }
-    else if(randomFace==1)
-    {
-      randBlock=new GeneBlock(parentOffset, randPivot,parentPivot,size,Axis.UNIT_X.getImmutableVector(),Axis.UNIT_X.getImmutableVector(),randAngle);
-    }
     else
     {
-      randBlock=new GeneBlock(parentOffset, randPivot,parentPivot,size,Axis.UNIT_Y.getImmutableVector(),Axis.UNIT_Y.getImmutableVector(),randAngle);
+      randBlock=new GeneBlock(parentOffset, randPivot,parentPivot,size,Axis.UNIT_X.getImmutableVector(),Axis.UNIT_X.getImmutableVector(),randAngle);
     }
     geneBlocks.remove(index);
     geneBlocks.add(index,randBlock);
