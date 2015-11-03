@@ -90,7 +90,15 @@ public enum Mutators
         {
           return Symmetrizer.basicSymmetrize(parent);
         }
-      };
+      },
+    NEURON_FLIPPER()
+          {
+            @Override
+            public Genome mutate(Genome parent)
+            {
+              return Inverter.flipNeuron(parent);
+            }
+          };
 
   private static Mutators currentMutator = Mutators.RANDOMIZER;
 

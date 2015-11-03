@@ -19,7 +19,7 @@ import vcreature.mutator.Manager;
  * JFrame containing SimpleApp
  * **/
 
-public class SimFrame extends JFrame implements ActionListener, MouseListener
+public class SimFrame extends JFrame implements ActionListener
 {
   private SimAnimation animation;
   private JmeCanvasContext ctx;
@@ -38,7 +38,8 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
   private JLabel currentBestFitness;
   private JLabel threshold;
   private JTextField userThreshold = new JTextField();
-  private JButton modeChange = new JButton("Switch to Genetic Algorithm");
+  private String[] modes = {"Hill Climbing", "Genetic Algorithm", "Genetic/Hill Climbing"};
+  private JComboBox modeChange = new JComboBox(modes);
   private JScrollPane creatureSelector = new JScrollPane();
   private Timer fitnessTracker;
   private DecimalFormat df = new DecimalFormat("#0.00");
@@ -48,18 +49,18 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
   private JButton creature;
 
   private JLabel creatureSelectorTitle;
-
+  private Manager manager;
 
 
   /**
    * Class Constructor:
    * Sets up the JFrame to contain the SimpleApp canvas
    */
-  public SimFrame()
+  public SimFrame(Manager manager)
   {
     super();
     animation = new SimAnimation();
-
+    this.manager = manager;
     this.addCreatureSelectionPane();
     this.addControlPane();
     this.addAppPane();
@@ -114,16 +115,16 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
     appPane.setPreferredSize(new Dimension(1200, 800));
     appPane.setSize(new Dimension(1200, 800));
     appPane.setBackground(Color.BLACK);
-    modeChange.setFont(new Font("Serif", Font.BOLD, 25));
+    modeChange.setFont(new Font("Serif", Font.BOLD, 20));
     modeChange.setOpaque(true);
     modeChange.setBackground(Color.BLACK);
     modeChange.setForeground(Color.DARK_GRAY);
-    modeChange.addMouseListener(this);
-    modeChange.setPreferredSize(new Dimension(350, 50));
-    modeChange.setSize(new Dimension(350, 50));
+    modeChange.addActionListener(this);
+    modeChange.setPreferredSize(new Dimension(350, 100));
+    modeChange.setSize(new Dimension(350, 100));
     appPane.add(title);
     appPane.add(modeChange);
-    appPane.add(ctx.getCanvas(),BorderLayout.CENTER);
+    appPane.add(ctx.getCanvas(), BorderLayout.CENTER);
     add(appPane, BorderLayout.CENTER);
   }
 
@@ -181,8 +182,8 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
     threshold = new JLabel("Fitness Threshold: ");
     zoomLabel = new JLabel("Zoom: ");
     speedLabel = new JLabel("Speed: ");
-    fitnessPerMin = new JLabel(("Fitness/Min: " + df.format(animation.getCurrentFitness())));
-    currentBestFitness = new JLabel("Current Top Fitness: " + df.format(animation.getCurrentFitness()));
+    fitnessPerMin = new JLabel(("Fitness/Min: " + df.format((manager.getFitnessPerMinute()))));
+    currentBestFitness = new JLabel("Current Top Fitness: " + df.format(GenePool.getBest().getFitness()));
     controlPane.add(threshold);
     controlPane.add(userThreshold);
     controlPane.add(zoomLabel);
@@ -199,49 +200,25 @@ public class SimFrame extends JFrame implements ActionListener, MouseListener
   @Override
   public void actionPerformed(ActionEvent e)
   {
-    fitnessPerMin.setText("Fitness/Min: " + df.format(animation.getCurrentFitness()));
+    Object source = e.getSource();
+    fitnessPerMin.setText("Fitness/Min: " + df.format(manager.getFitnessPerMinute()));
     currentBestFitness.setText("Current Top Fitness: " + df.format(GenePool.getBest().getFitness()));
 
-    if (e.getSource() instanceof JTextField)
+    if (source instanceof JTextField)
     {
       JTextField tf = (JTextField) e.getSource();
       String userValue = tf.getText();
       tf.setText(userValue);
     }
-  }
-
-  @Override
-  public void mouseClicked(MouseEvent e)
-  {
-    if(modeChange.getText().equals("Switch to Genetic Algorithm"))
+    if (source instanceof JComboBox)
     {
-      MainSim.MUTATION_TESTER.setCurrentMutationType(Manager.MutationType.GENETIC);
-      modeChange.setText("Switch to Hill Climbing");
-      animation.restart();
-
-    }
-    else
-    {
-      modeChange.setText("Switch to Genetic Algorithm");
-      MainSim.MUTATION_TESTER.setCurrentMutationType(Manager.MutationType.HILL);
+      System.out.println("JComboBox");
+      JComboBox cb = (JComboBox) source;
+      String thread = (String) cb.getSelectedItem();
+      if (thread.equals("Hill Climbing")) manager.setCurrentMutationType(Manager.MutationType.HILL);
+      else if (thread.equals("Genetic Algorithm")) manager.setCurrentMutationType(Manager.MutationType.GENETIC);
+      else if(thread.equals("Genetic Algorithm/Hill Climbing")) manager.setCurrentMutationType(Manager.MutationType.GENETICHILL);
       animation.restart();
     }
   }
-
-  @Override
-  public void mousePressed(MouseEvent e)
-  {}
-
-  @Override
-  public void mouseReleased(MouseEvent e)
-  {}
-
-  @Override
-  public void mouseEntered(MouseEvent e)
-  {}
-
-  @Override
-  public void mouseExited(MouseEvent e)
-  {}
 }
-

@@ -65,10 +65,13 @@ public class Manager
       if (repeated)
       {
         minFitness = Math.min(lastFitness, firstTest);
-        //Add our change in fitness.
-        deltaFitness += minFitness - fitnessBar;
+        //Add our change in fitness, unless its parent was an untested genome.
+        if(fitnessBar != -1)
+        {
+          deltaFitness += minFitness - fitnessBar;
+        }
       }
-      else if (lastFitness > fitnessBar && fitnessBar != -1)
+      else if (lastFitness > fitnessBar)
       {
         //Don't get new Genome we will test again.
         firstTest = lastFitness;
@@ -106,34 +109,35 @@ public class Manager
         switch(currentHeuristic)
         {
           case GENETICALGORITHM:
-            geneticManager.finalize(fitness);
-            currentHeuristic = HeuristicMode.HILLCLIMB;
+            switchToHILL(fitness);
             returnFitness = -1;
             break;
         }
-        //Force Genetic Algorithm
+      //Force Genetic Algorithm
       case GENETIC:
         switch(currentHeuristic)
         {
           case HILLCLIMB:
-            hillClimbingManager.finalize(fitness);
-            currentHeuristic = HeuristicMode.GENETICALGORITHM;
+            switchToGENETICALG(fitness);
             returnFitness = -1;
         }
-        //Switching permitted
+      //Switching permitted
       case GENETICHILL:
       {
         switch(currentHeuristic)
         {
           case GENETICALGORITHM:
-
+            if((System.currentTimeMillis() - startTime) > 2000*60)
+            {
+              switchToHILL(fitness);
+              returnFitness = -1;
+            }
             break;
           case HILLCLIMB:
             if(this.getFitnessPerMinute() <= this.switchingThreshhold
                 && (System.currentTimeMillis() - startTime) > 2000*60)
             {
-              hillClimbingManager.finalize(fitness);
-              currentHeuristic = HeuristicMode.GENETICALGORITHM;
+              switchToGENETICALG(fitness);
               returnFitness = -1;
             }
             break;
@@ -160,6 +164,18 @@ public class Manager
   public void setCurrentMutationType(MutationType mutationType)
   {
     currentMutationType = mutationType;
+  }
+
+  private void switchToHILL(float fitness)
+  {
+    geneticManager.finalize(fitness);
+    currentHeuristic = HeuristicMode.HILLCLIMB;
+  }
+
+  private void switchToGENETICALG(float fitness)
+  {
+    hillClimbingManager.finalize(fitness);
+    currentHeuristic = HeuristicMode.GENETICALGORITHM;
   }
 
   public enum MutationType
