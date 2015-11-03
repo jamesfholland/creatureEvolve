@@ -146,7 +146,7 @@ public class SimFrame extends JFrame implements ActionListener
         JSlider source = (JSlider) e.getSource();
         if (source.getValueIsAdjusting())
         {
-          int fps = (int) source.getValue();
+          int fps = source.getValue();
           animation.setSpeed(fps);
         }
       }

@@ -78,16 +78,16 @@ public class SpawnRandomCreature extends Creature
         switch (rand.nextInt(4))
         {
           case 0:
-            nextLeg.setMaterial(nextLeg.MATERIAL_BLUE);
+            nextLeg.setMaterial(Block.MATERIAL_BLUE);
             break;
           case 1:
-            nextLeg.setMaterial(nextLeg.MATERIAL_BROWN);
+            nextLeg.setMaterial(Block.MATERIAL_BROWN);
             break;
           case 2:
-            nextLeg.setMaterial(nextLeg.MATERIAL_GREEN);
+            nextLeg.setMaterial(Block.MATERIAL_GREEN);
             break;
           case 3:
-            nextLeg.setMaterial(nextLeg.MATERIAL_RED);
+            nextLeg.setMaterial(Block.MATERIAL_RED);
             break;
         }
 
