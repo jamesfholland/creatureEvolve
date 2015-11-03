@@ -4,7 +4,6 @@ package vcreature.mutator;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
-import vcreature.mainSimulation.SpawnCreatureGenoform;
 import vcreature.mutator.hillclimbing.Mutators;
 
 import java.util.LinkedList;

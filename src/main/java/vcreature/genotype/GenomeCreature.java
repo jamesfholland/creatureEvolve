@@ -1,8 +1,6 @@
 package vcreature.genotype;
 
-import com.jme3.bounding.BoundingBox;
 import com.jme3.bullet.PhysicsSpace;
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import vcreature.genotype.phenoConversion.ProtoBlock;
 import vcreature.genotype.phenoConversion.ProtoNeuron;

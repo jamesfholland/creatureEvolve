@@ -1,17 +1,9 @@
 package vcreature.genotype.phenoConversion;
 
 import com.jme3.bounding.BoundingBox;
-import com.jme3.bounding.BoundingVolume;
 import com.jme3.math.Matrix4f;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-import com.sun.javafx.geom.PickRay;
-import com.sun.javafx.scene.input.PickResultChooser;
-import javafx.geometry.Point3D;
-import javafx.scene.Node;
-import javafx.scene.shape.CullFace;
-import javafx.scene.shape.Mesh;
 import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
 import vcreature.genotype.Genome;
@@ -21,7 +13,6 @@ import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.Neuron;
 
-import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

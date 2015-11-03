@@ -9,8 +9,6 @@ import vcreature.phenotype.Creature;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.Neuron;
 
-import static jdk.nashorn.internal.objects.Global.print;
-
 /**
  * Created by Dayloki on 10/8/2015.
  */

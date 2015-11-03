@@ -1,14 +1,8 @@
 package vcreature.mainSimulation;
 
-import com.jme3.bounding.BoundingVolume;
 import com.jme3.bullet.PhysicsSpace;
-import com.jme3.collision.CollisionResult;
 import com.jme3.collision.CollisionResults;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 //import javafx.geometry.BoundingBox;
 import com.jme3.bounding.BoundingBox;
@@ -17,8 +11,6 @@ import vcreature.phenotype.Creature;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.Neuron;
 
-import javax.vecmath.Vector3d;
-import java.awt.*;
 import java.util.Random;
 
 /**

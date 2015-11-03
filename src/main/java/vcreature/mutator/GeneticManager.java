@@ -3,7 +3,6 @@ package vcreature.mutator;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
-import vcreature.mainSimulation.SpawnCreatureGenoform;
 import vcreature.mainSimulation.SpawnRandomCreatureGenoform;
 import vcreature.mutator.genetic.MergeType;
 import vcreature.mutator.hillclimbing.Symmetrizer;

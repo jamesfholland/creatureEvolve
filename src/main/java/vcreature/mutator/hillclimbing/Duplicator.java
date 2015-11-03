@@ -1,10 +1,7 @@
 package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.*;
-import com.jme3.math.Vector3f;
 import vcreature.phenotype.EnumNeuronInput;
-import vcreature.phenotype.EnumOperator;
-import vcreature.phenotype.Neuron;
 
 import java.util.ArrayList;
 import java.util.Random;

@@ -18,7 +18,6 @@ import com.jme3.scene.Geometry;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.system.AppSettings;
 import com.jme3.texture.Texture;
-import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;

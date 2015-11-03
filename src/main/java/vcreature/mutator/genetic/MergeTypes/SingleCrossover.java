@@ -10,7 +10,6 @@ import vcreature.mainSimulation.MainSim;
 import vcreature.mutator.genetic.GeneticTools;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *Starting from one end of one parent genome, copy

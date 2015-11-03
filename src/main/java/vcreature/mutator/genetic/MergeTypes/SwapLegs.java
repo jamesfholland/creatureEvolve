@@ -5,7 +5,6 @@ package vcreature.mutator.genetic.MergeTypes;
  */
 
 import vcreature.genotype.Gene;
-import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GenoTools;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.MainSim;
