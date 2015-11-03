@@ -16,7 +16,6 @@ import vcreature.phenotype.PhysicsConstants;
  */
 public class MutationTester extends SimpleApplication implements ActionListener
 {
-  private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
   private boolean isCameraRotating = true;
 
@@ -27,7 +26,6 @@ public class MutationTester extends SimpleApplication implements ActionListener
   private float elapsedSimulationTime;
   private Manager manager;
   private float currentFitness = 0;
-  private int fitnessUpdater = 0;
 
 
   public MutationTester(Manager manager)
@@ -45,7 +43,7 @@ public class MutationTester extends SimpleApplication implements ActionListener
   @Override
   public void simpleInitApp()
   {
-    bulletAppState = new BulletAppState();
+    BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
 
@@ -118,7 +116,6 @@ public class MutationTester extends SimpleApplication implements ActionListener
     //System.out.println(deltaSeconds);
     this.currentFitness = currentCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
-    fitnessUpdater += deltaSeconds;
 
     if (elapsedSimulationTime < 1 && this.currentFitness > 0.01)
     {

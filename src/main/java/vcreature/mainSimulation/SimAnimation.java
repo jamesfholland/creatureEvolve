@@ -30,8 +30,6 @@ import vcreature.phenotype.PhysicsConstants;
  **/
 public class SimAnimation extends SimpleApplication implements ActionListener
 {
-  //  public static GenePool genePool = new GenePool();
-  private BulletAppState bulletAppState;
   private PhysicsSpace physicsSpace;
   private float cameraAngle = (float) (Math.PI / 2.0);
 
@@ -70,7 +68,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   {
    // GenoFile.writeGenome(fileGenome);
 
-    bulletAppState = new BulletAppState();
+    BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
 
