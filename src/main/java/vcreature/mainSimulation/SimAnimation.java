@@ -18,6 +18,7 @@ import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.system.AppSettings;
 import com.jme3.texture.Texture;
 import com.jme3.input.controls.ActionListener;
+import vcreature.genotype.GenoFile;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
 import vcreature.phenotype.Block;
@@ -63,6 +64,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   @Override
   public void simpleInitApp()
   {
+    GenoFile.writeGenome(fileGenome);
+
     bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
