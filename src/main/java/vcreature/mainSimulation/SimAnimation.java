@@ -35,7 +35,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
 
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
-  private Vector3f tmpVec3; //
+  private Vector3f cameraLocation;
   private boolean isCameraRotating = true;
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
@@ -219,14 +219,14 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
     if (isCameraRotating)
     {
-      //Move camera continously in circle of radius 25 meters centered 10 meters
+      //Move camera continuously in circle of radius 25 meters centered 10 meters
       //  above the origin.
       cameraAngle += deltaSeconds * 2.0 * Math.PI / 60.0; //rotate full circle every minute
       float x = (float) (zoom * Math.cos(cameraAngle));
       float z = (float) (zoom * Math.sin(cameraAngle));
 
-      tmpVec3 = new Vector3f(x, 10.0f, z);
-      cam.setLocation(tmpVec3);
+      cameraLocation.set(x, 10.0f, z);
+      cam.setLocation(cameraLocation);
       cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }
   }
