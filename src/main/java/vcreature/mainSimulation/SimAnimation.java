@@ -42,7 +42,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private boolean isCameraRotating = true;
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
-  private Genome fileGenome=SpawnCreatureGenoform.gaint();
+  private Genome fileGenome;
 
   private Manager manager = new Manager();
   private float fitnessUpdater = 0;
