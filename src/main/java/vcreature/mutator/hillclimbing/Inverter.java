@@ -1,13 +1,11 @@
 package vcreature.mutator.hillclimbing;
 
-import sun.applet.Main;
 import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
 import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 import vcreature.mainSimulation.MainSim;
 import vcreature.mutator.Cleaner;
-import vcreature.phenotype.Neuron;
 
 import java.util.ArrayList;
 
