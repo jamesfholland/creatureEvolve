@@ -29,14 +29,13 @@ public static ArrayList<Genome> singleCrossOver(Genome parent1,Genome parent2)
 
   ArrayList<Gene> genes1=new ArrayList<>();
   ArrayList<Gene> genes2=new ArrayList<>();
-
 genes1= GeneticTools.getParentsGenes(parent1, parent2)[0];
 genes2=GeneticTools.getParentsGenes(parent1,parent2)[1];
-  int smallestGeneSize=genes1.size()>genes2.size() ? genes1.size() : genes2.size();
+  int smallestGeneSize = genes1.size()>genes2.size() ? genes1.size() : genes2.size();
   int crossoverPoint=rand.nextInt(smallestGeneSize+1)-1;
   Genome child1=new Genome(parent1.getRootSize(),parent1.getRootEulerAngles());
   //Child 1 will be made here
-  for (int i = 0; i <genes2.size(); i++)
+  for (int i = 0; i < genes2.size(); i++)
   {
     if(i<crossoverPoint)
     {
