@@ -58,47 +58,69 @@ public enum Mutators
           return Scaler.scale(parent);
         }
       },
+  EXTENDER()
+      {
+        @Override
+        public Genome mutate(Genome parent)
+        {
+          return Extender.extendLimbs(parent);
+        }
+      },
+
   SCALE_BLOCK()
-      {
-        @Override
-        public Genome mutate(Genome parent)
-        {//scale value is hard-coded for now
-          float scaler;
-          return ScaleSingleBlock.scaleBlock(parent);
-        }
-      },
+  {
+    @Override
+    public Genome mutate (Genome parent)
+    {//scale value is hard-coded for now
+      return ScaleSingleBlock.scaleBlock(parent);
+    }
+  }
+
+  ,
+
   SCALE_ROOT()
-      {
-        @Override
-        public Genome mutate(Genome parent)
-        {
-          return ScaleSingleBlock.scaleRoot(parent);
-        }
-      },
+  {
+    @Override
+    public Genome mutate (Genome parent)
+    {
+      return ScaleSingleBlock.scaleRoot(parent);
+    }
+  }
+
+  ,
+
   SUBTRACTOR()
-      {
-        @Override
-        public Genome mutate(Genome parent)
-        {
-          return Subtracter.subtractBlock(parent);
-        }
-      },
+  {
+    @Override
+    public Genome mutate (Genome parent)
+    {
+      return Subtracter.subtractBlock(parent);
+    }
+  }
+
+  ,
+
   SYMMETRIZER()
-      {
-        @Override
-        public Genome mutate(Genome parent)
-        {
-          return Symmetrizer.basicSymmetrize(parent);
-        }
-      },
-    NEURON_FLIPPER()
-          {
-            @Override
-            public Genome mutate(Genome parent)
-            {
-              return Inverter.flipNeuron(parent);
-            }
-          };
+  {
+    @Override
+    public Genome mutate (Genome parent)
+    {
+      return Symmetrizer.basicSymmetrize(parent);
+    }
+  }
+
+  ,
+
+  NEURON_FLIPPER()
+  {
+    @Override
+    public Genome mutate (Genome parent)
+    {
+      return Inverter.flipNeuron(parent);
+    }
+  }
+
+  ;
 
   private static Mutators currentMutator = Mutators.RANDOMIZER;
 
@@ -111,9 +133,11 @@ public enum Mutators
   {
     return currentMutator;
   }
+
   public static Mutators getRandomMutator()
   {
     return Mutators.values()[MainSim.RANDOM.nextInt(Mutators.values().length)];
   }
+
   public abstract Genome mutate(Genome parent);
   }

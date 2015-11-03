@@ -43,7 +43,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
 
-  private Genome fileGenome;
+  private Genome fileGenome = SpawnCreatureGenoform.creature();
 
   private Manager manager = new Manager();
   private float fitnessUpdater = 0;
