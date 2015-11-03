@@ -29,6 +29,11 @@ public class MutationTester extends SimpleApplication implements ActionListener
   private float currentFitness = 0;
   private int fitnessUpdater = 0;
 
+
+  public MutationTester(Manager manager)
+  {
+    this.manager=manager;
+  }
   /**
    * Initalizes a BulletAppState and a Physics Space
    * Sets relevant Physics constants
@@ -143,11 +148,6 @@ public class MutationTester extends SimpleApplication implements ActionListener
     physicsSpace.setMaxSubSteps(4*speed);
     settings.setFrequency(speed*60);
     this.restart();
-  }
-
-  public void setCurrentMutationType(Manager.MutationType mutationType)
-  {
-    manager.setCurrentMutationType(mutationType);
   }
 }
 
