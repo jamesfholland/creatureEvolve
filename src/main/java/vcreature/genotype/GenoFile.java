@@ -105,12 +105,16 @@ public class GenoFile
 
     File[] files = folder.listFiles();
 
-    for( int i = 0; i < files.length; i++)
+    if(files != null)
     {
-      if(files[i].isFile() && files[i].getName().endsWith(".geno"))
+      for (int i = 0; i < files.length; i++)
       {
-        Genome genome = GenoFile.readGenomeFromPool(files[i].getName());
-        if(genome != null)  genomes.add(genome);
+        if (files[i].isFile() && files[i].getName().endsWith(".geno"))
+        {
+          Genome genome = GenoFile.readGenomeFromPool(files[i].getName());
+          if (genome != null)
+            genomes.add(genome);
+        }
       }
     }
 
