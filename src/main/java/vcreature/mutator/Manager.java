@@ -3,6 +3,9 @@ package vcreature.mutator;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * This class handles switching between Genetics and HillClimbing.
  */
@@ -13,6 +16,7 @@ public class Manager
   private long startTime;
 
   private Genome currentGenome;
+  private Lock genomeLock = new ReentrantLock();
   private boolean repeated = false;
   private float firstTest;
   private float fitnessBar;
@@ -50,15 +54,21 @@ public class Manager
 
   public Genome getCurrentGenome()
   {
-    synchronized (this.currentGenome)
+    genomeLock.lock();
+    try
     {
       return this.currentGenome;
+    }
+    finally
+    {
+      genomeLock.unlock();
     }
   }
 
   public Genome getNextCreature(float lastFitness)
   {
-    synchronized (this.currentGenome)
+    genomeLock.lock();
+    try
     {
       float minFitness = lastFitness;
 
@@ -70,6 +80,7 @@ public class Manager
         {
           deltaFitness += minFitness - fitnessBar;
         }
+        repeated = false;
       }
       else if (lastFitness > fitnessBar)
       {
@@ -96,6 +107,10 @@ public class Manager
       }
 
       return currentGenome;
+    }
+    finally
+    {
+      genomeLock.unlock();
     }
   }
 

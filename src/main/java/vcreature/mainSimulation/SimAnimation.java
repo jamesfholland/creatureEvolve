@@ -201,15 +201,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   {
     this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
-    fitnessUpdater += deltaSeconds;
-
-    if (elapsedSimulationTime < 1 && this.currentFitness > 0.01)
-    {
-      myCreature.remove();
-      elapsedSimulationTime = 0;
-      myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0));
-      return;
-    }
     if (elapsedSimulationTime > 15)
     {
       myCreature.remove();
@@ -221,16 +212,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
       }
       else
       {
-        myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(this.currentFitness));
+        myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getCurrentGenome());
       }
-    }
-
-    //This is the timer for updating the fitness per minute in the GUI.
-    if (fitnessUpdater == 60)
-    {
-      elapsedMinutes++;
-      setCurrentFitness();
-      fitnessUpdater = 0;
     }
 
     if (isCameraRotating)

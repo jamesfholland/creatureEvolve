@@ -124,7 +124,8 @@ public class MutationTester extends SimpleApplication implements ActionListener
     {
       currentCreature.remove();
       elapsedSimulationTime = 0;
-      currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0));
+      currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0.0f));
+      this.currentFitness = 0.0f;
       return;
     }
     if (elapsedSimulationTime > 15)
@@ -135,9 +136,11 @@ public class MutationTester extends SimpleApplication implements ActionListener
       try
       {
         currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(this.currentFitness));
+        this.currentFitness = 0.0f;
       }
-      catch (NullPointerException e)
+      catch (Exception e)
       {
+        System.out.println(e.getStackTrace());
       }
 
     }
