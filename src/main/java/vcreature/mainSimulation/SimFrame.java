@@ -38,7 +38,7 @@ public class SimFrame extends JFrame implements ActionListener
   private JLabel currentBestFitness;
   private JLabel threshold;
   private JTextField userThreshold = new JTextField();
-  private String[] modes = {"Hill Climbing", "Genetic Algorithm", "Genetic/Hill Climbing"};
+  private String[] modes = {"Genetic/Hill Climbing", "Hill Climbing", "Genetic Algorithm"};
   private JComboBox modeChange = new JComboBox(modes);
   private JScrollPane creatureSelector = new JScrollPane();
   private Timer fitnessTracker;
@@ -77,7 +77,7 @@ public class SimFrame extends JFrame implements ActionListener
     creatureSelectorTitle = new JLabel("Gene Pool Creatures");
     creatureSelectorTitle.setFont(new Font("Serif", Font.BOLD, 20));
     creatureSelectionPanel.add(creatureSelectorTitle);
-    for (Genome genome : GenePool.GENOMES)
+    for (Genome genome : GenePool.getCopy())
     {
       creature = new JButton(genome.getFileName());
       creatures.add(creature);
