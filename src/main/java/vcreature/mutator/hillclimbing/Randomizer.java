@@ -70,8 +70,6 @@ public class Randomizer
       randPivot = new ImmutableVector(xSign, ySign * rand.nextFloat(), zSign);
     }
     ImmutableVector parentPivot = new ImmutableVector(-randPivot.X, -randPivot.Y, -randPivot.Z);
-
-
     randomFace = rand.nextInt(2);
     if (randomFace == 0)
     {
@@ -118,7 +116,6 @@ public class Randomizer
     geneNeurons = genome.getGENE_NEURONS();
 
     int sign = (rand.nextBoolean()) ? 1 : -1;
-
     EnumNeuronInput aInput = EnumNeuronInput.TIME;
     EnumNeuronInput bInput = EnumNeuronInput.CONSTANT;
     EnumNeuronInput cInput = EnumNeuronInput.CONSTANT;

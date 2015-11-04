@@ -13,11 +13,12 @@ import java.util.ArrayList;
 public class CutAndSplice
 {
   /**
-   * Picks a location and cuts both parents there.
-   * The parts are then exchanged to create 2 children.
+   * Picks a unique location on each parent and cuts both parents there.
+   * The first half of parent 1 and the second half of parent 2 will be put together and the
+   * second half of parent 1 and first half of parent 2 will make the second child
    * @param parent1 first parent
    * @param parent2 second parent
-   * @return List of child Genomes.
+   * @return List of child Genomes, always two.
    */
   public static ArrayList<Genome> cutAndSplice(Genome parent1, Genome parent2)
   {
@@ -54,7 +55,6 @@ public class CutAndSplice
         }
       }
     }
-
     //Gene 2 slice and dice for child 1 and 2
     for (int i = 0; i < genes2.size(); i++)
     {
@@ -81,6 +81,5 @@ public class CutAndSplice
     children.add(child2);
 
     return children;
-
   }
 }

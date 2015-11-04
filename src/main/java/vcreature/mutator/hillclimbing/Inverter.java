@@ -18,8 +18,8 @@ class Inverter
   /**
    * Takes a genome and will flip it upside down.
    * First takes all the blocks and inverts the pivot points of them.
-   * Then it takes the Neurons and aflips there impulse signs.
-   * returns the "upside down creauture"
+   * Then it takes the Neurons and flips there impulse signs.
+   * returns the "upside down creature"
    *
    * @param genome a genome of a current creature that you want to change
    * @return a new genome with everything being turned upside down.
@@ -43,16 +43,9 @@ class Inverter
     for (int i = 0; i < geneNeurons.size(); i++)
     {
       GeneNeuron tempNeuron = geneNeurons.get(i);
-      GeneNeuron newNeuron =
-          new GeneNeuron(tempNeuron.BLOCK_INDEX, tempNeuron.A_TYPE,
-                         tempNeuron.B_TYPE, tempNeuron.C_TYPE, tempNeuron.D_TYPE,
-                         tempNeuron.E_TYPE, tempNeuron.A_VALUE, tempNeuron.B_VALUE,
-                         tempNeuron.C_VALUE, -1 * tempNeuron.D_VALUE, tempNeuron.E_VALUE,
-                         tempNeuron.BINARY_AB, tempNeuron.UNARY_AB, tempNeuron.BINARY_DE,
-                         tempNeuron.UNARY_DE);
+      GeneNeuron newNeuron = flipNeuron(tempNeuron);
       newGenome.addGeneNeuron(newNeuron);
     }
-
     return newGenome;
   }
 
@@ -62,6 +55,12 @@ class Inverter
                                immutableVector.Z);
   }
 
+  /**
+   * Takes a random neuron from a given neuron and flips the sign of the power from that neuron
+   * This method will also clean the genome before removing all recessive traits.
+   * @param genome the genome you want to alter
+   * @return the same genome except for one of the neurons having opposite power.
+   */
   public static Genome flipNeuron(Genome genome)
   {
     genome = Cleaner.cleanGenome(genome);
@@ -93,7 +92,7 @@ class Inverter
    * that it fires in.
    *
    * @param neuron a neuron to be fired with a hinge.
-   * @return a neuron that fires in the oppisite direction of the original.
+   * @return a neuron that fires in the opposite direction of the original.
    */
   public static GeneNeuron flipNeuron(GeneNeuron neuron)
   {

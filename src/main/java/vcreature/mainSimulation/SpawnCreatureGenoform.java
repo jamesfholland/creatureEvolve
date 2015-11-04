@@ -4,8 +4,15 @@ import vcreature.genotype.*;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.EnumOperator;
 
+/**
+ * This class is full of seeds for creatures, each class should return a genome
+ */
 public class SpawnCreatureGenoform
 {
+  /**
+   * Creates classic flappy bird but in a genome
+   * @return genome of flappy bird
+   */
   public static Genome makeFlappyBird()
   {
     Genome genome = new Genome(new ImmutableVector(2.0f, 1.5f, 1.5f), new ImmutableVector(0f, 0f, 0f));
@@ -909,6 +916,10 @@ public class SpawnCreatureGenoform
     return genome;
   }
 
+  /**
+   * Makes everyone's favorite creature, TableMonster!
+   * @return tableMonster genome
+   */
   static public Genome makeTableMonster()
   {
     Genome genome = new Genome(new ImmutableVector(5f, .75f, 5f), new ImmutableVector(0f, 0f, 0f));

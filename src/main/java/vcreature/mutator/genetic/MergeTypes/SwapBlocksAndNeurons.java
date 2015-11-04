@@ -11,6 +11,13 @@ import java.util.ArrayList;
  */
 public class SwapBlocksAndNeurons
 {
+  /**
+   * Will produce two children, One with parent1's blocks and parent1's neurons.
+   * The second with parent1's neurons and parent2's blocks
+   * @param parent1
+   * @param parent2
+   * @return An arraylist with each of the children
+   */
   public static ArrayList<Genome> swapBlocksAndNeurons(Genome parent1, Genome parent2)
   {
     ArrayList<Genome> children = new ArrayList<>();
