@@ -44,7 +44,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private Genome fileGenome;
 
   private Manager manager;
-  private float elapsedMinutes = 0;
   private float currentFitness = 0;
   private float previousFitness = 0;
   private float tempFitness = 0;
@@ -177,19 +176,16 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     inputManager.addListener(this, "Toggle Camera Rotation");
   }
 
-  private void setCurrentFitness()
-  {
-    tempFitness = currentFitness;
-    currentFitness = (currentFitness - previousFitness) / elapsedMinutes;
-    previousFitness = tempFitness;
-  }
-
   protected void setZoom(int zoom)
   {
     this.zoom = zoom;
   }
 
-  protected float getCurrentFitness()
+  /**
+   *
+   * @return
+   */
+  public float getCurrentFitness()
   {
     return currentFitness;
   }

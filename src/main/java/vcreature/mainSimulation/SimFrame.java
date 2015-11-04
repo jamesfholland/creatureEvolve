@@ -88,7 +88,7 @@ public class SimFrame extends JFrame implements ActionListener
     creatureSelector = new JScrollPane(creatureSelectionPanel);
     creatureSelector.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(1400, 1200));
     setSize(new Dimension(1400, 1200));
     creatureSelectionPanel.setPreferredSize(new Dimension(200, 865));
