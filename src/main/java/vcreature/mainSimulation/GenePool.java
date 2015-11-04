@@ -18,7 +18,7 @@ public class GenePool
    * Get a copy or add a synchronized method to do what you need.
    */
   private static final LinkedList<Genome> GENOMES;
-  private static final int MINIMUM_POOL_SIZE = 100;
+  private static final int MINIMUM_POOL_SIZE = 1000;
   static
   {
     GENOMES = GenoFile.loadGenePool();
