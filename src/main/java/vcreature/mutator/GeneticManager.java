@@ -80,7 +80,6 @@ class GeneticManager
 
       GenePool.add(SpawnRandomCreatureGenoform.createRandomCreature(4));
       buildQueue(currentTestee.GENOME);
-      GenoFile.writeGenome(currentTestee.GENOME);
     }
     //Parent1 is currently the best so not bothering checking.
     //else if(lastFitness > currentTestee.PARENT2.getFitness() && currentTestee.PARENT2.getFitness() != -1)

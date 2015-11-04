@@ -58,12 +58,10 @@ class HillClimbingManager
 
   private void buildQueue(Genome genome)
   {
-    //genome= SpawnCreatureGenoform.makeTylerMonster();
     parentGenome = genome;
     testQueue = new LinkedList<>();
     for (Mutators mutator : Mutators.values())
     {
-      // testQueue.add(mutator.mutate(genome));
       testQueue.add(mutator.mutate(genome));
     }
   }
@@ -82,7 +80,6 @@ class HillClimbingManager
                              + parentGenome.getFitness() + "fitness: " + lastFitness);
       GenePool.replace(currentTestee, parentGenome);
       buildQueue(currentTestee);
-      GenoFile.writeGenome(currentTestee);
     }
   }
 }

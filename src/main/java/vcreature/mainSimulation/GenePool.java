@@ -174,7 +174,7 @@ public class GenePool
   private static void minutelyUpdate()
   {
     System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
-                           + ": The best creature: " + GenePool.getBest());
+                           + ": The best creature: " + GenePool.getBest().getFitness());
   }
 
   private static class GeneManager implements Runnable
