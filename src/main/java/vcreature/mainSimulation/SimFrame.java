@@ -25,7 +25,6 @@ public class SimFrame extends JFrame implements ActionListener
   private SimAnimation animation;
   private JmeCanvasContext ctx;
   private JPanel controlPane;
-
   private JPanel appPane;
   private static final int TOP_SPEED = 25;
   private static final int LOW_SPEED = 0;
@@ -48,7 +47,6 @@ public class SimFrame extends JFrame implements ActionListener
   private JPanel creatureSelectionPanel;
   private ArrayList<JButton> creatures = new ArrayList<>();
   private JButton creature;
-
   private JLabel creatureSelectorTitle;
   private Manager manager;
 
@@ -56,6 +54,10 @@ public class SimFrame extends JFrame implements ActionListener
   /**
    * Class Constructor:
    * Sets up the JFrame to contain the SimpleApp canvas
+   * Adds a creature selection panel to select creatures from genome
+   * Adds a control panel with user controls
+   * Adds the canvas from simple application
+   * Starts the class timer for the ActionListener
    */
   public SimFrame(Manager manager)
   {
@@ -72,6 +74,10 @@ public class SimFrame extends JFrame implements ActionListener
 
   }
 
+  /**
+   * Creates a JScrollPane with the current list of creatures in the gene pool
+   * Utilizes a CreatureSelectionHandler object for listening to button clicks and loading the relevant creature
+   */
   protected void addCreatureSelectionPane()
   {
     creatureSelectionPanel = new JPanel();
@@ -100,6 +106,7 @@ public class SimFrame extends JFrame implements ActionListener
    * Creates a JPanel that contains the SimpleAppliation
    * Creates and starts the SimpleApplication Canvas (which is what actually gets embedded in panel)
    * Gets the context of the simple application
+   * Takes care of the "ModeChange" selector, which toggles the Manager between different Heuristic Modes
    */
   protected void addAppPane()
   {
@@ -131,8 +138,10 @@ public class SimFrame extends JFrame implements ActionListener
 
   /**
    * Creates a Jpanel that contains user controls
-   * JButton showApp to allow the user to hide/show the creature animation
-   * JComboBox threadSelector allows the user to view the creatures running on each thread
+   * JSliders speed and zoom to allow the user to modify the app speed and the camera zoom level
+   * userThreshold is the user specified threshold for hill climbing / genetic
+   * chooseFile button allows user to open a JFileOpener and select a creature to load from file
+   * Displays current best fitness and fitness/minute labels
    */
   private void addControlPane()
   {
@@ -199,6 +208,14 @@ public class SimFrame extends JFrame implements ActionListener
 
 
   @Override
+  /**
+   * Updates the fitness per minute and the current best fitness labels
+   * Both the userThreshold textfield and the jcombobox for mode change rely on this action listener,
+   * so it checks to see which of the two has triggered the actionEvent
+   * If it was the userThreshold, this value is updated
+   * If it was the mode change, it switches the current selected item in the JComboBox and sets the relevant
+   * MutationType inside of Manager
+   */
   public void actionPerformed(ActionEvent e)
   {
     Object source = e.getSource();
