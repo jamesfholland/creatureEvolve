@@ -162,10 +162,9 @@ public class ProtoBlock
   }
 
   /**
-   * Compute the geometry and location. If not valid removes itself from the
-   * parent.
+   * Compute the geometry and location. If the block is valid it adds itself to the existing blocks list.
    *
-   * @param existingBlocks
+   * @param existingBlocks list of blocks that are valid and will be in the phenome.
    */
   public void computeLocation(LinkedList<ProtoBlock> existingBlocks)
   {
@@ -177,13 +176,13 @@ public class ProtoBlock
       this.pivotLocal = getHingeLocalCoord(this.pivotOffset);
     }
     Vector3f min = getMinVector();
-    Vector3f dimentionVector = getDimensionVector();
+    Vector3f dimensionVector = getDimensionVector();
     for (ProtoBlock box : existingBlocks)
     //Check Block collision somehow.
     //If collision remove child from this.parent.
     {
       //checks to see if two blocks are intersecting
-      if (blockIntersecting(min, dimentionVector, box))
+      if (blockIntersecting(min, dimensionVector, box))
       {
         return;
       }
@@ -200,7 +199,7 @@ public class ProtoBlock
   /**
    * Add a child to this protoblock.
    *
-   * @param child
+   * @param child block that is the child.
    */
   public void addChild(ProtoBlock child)
   {
@@ -208,7 +207,8 @@ public class ProtoBlock
   }
 
   /**
-   *
+   * Add a neuron to this block.
+   * @param neuron Adds a ProtoNeuron to the block.
    */
   public void addNeuron(Neuron neuron)
   {

@@ -182,7 +182,6 @@ public class Genome
    * then loops over GENE_BLOCKS, and lastly loops over GENE_NEURONS.
    *
    * @param fileOut the outputstream we are writing to.
-   * @return the file name based on the fitness.
    */
   public void toFile(BufferedWriter fileOut) throws IOException
   {

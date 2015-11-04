@@ -79,17 +79,13 @@ public class MutationTester extends SimpleApplication implements ActionListener
   /**
    * Basically the "actionPerformed" of SimpleApplication
    *
-   * @param name
-   * @param isPressed
-   * @param timePerFrame
+   * @param name the type of action being performed
+   * @param isPressed was the mouse pressed
+   * @param timePerFrame unused seconds per frame.
    */
   public void onAction(String name, boolean isPressed, float timePerFrame)
   {
-    if (isPressed && name.equals("Toggle Camera Rotation"))
-    {
-      isCameraRotating = !isCameraRotating;
-    }
-    else if (name.equals("Quit"))
+    if (name.equals("Quit"))
     {
       System.out.format("Creature Fitness (Maximium height of lowest point) = %.3f meters]\n", currentCreature
           .getFitness());

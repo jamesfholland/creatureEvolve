@@ -137,9 +137,9 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   /**
    * Basically the "actionPerformed" of SimpleApplication
    *
-   * @param name
-   * @param isPressed
-   * @param timePerFrame
+   * @param name name of action being performed
+   * @param isPressed was the mouse pressed
+   * @param timePerFrame seconds per frame unused.
    */
   public void onAction(String name, boolean isPressed, float timePerFrame)
   {
@@ -182,8 +182,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   }
 
   /**
-   *
-   * @return
+   * Gets the fitness of the creature
+   * @return fitness in meters
    */
   public float getCurrentFitness()
   {

@@ -84,7 +84,7 @@ public final class GeneBlock
    * @param size            The blocks size in distance
    * @param parentHingeAxis The axis on the parent to rotate upon.
    * @param hingeAxis       The axis on to rotate upon.
-   * @param eulerAngles
+   * @param eulerAngles     The euler angle orientation of the block.
    */
   public GeneBlock(int parentOffset, ImmutableVector parentPivot, ImmutableVector pivot, ImmutableVector size,
                    ImmutableVector parentHingeAxis, ImmutableVector hingeAxis, ImmutableVector eulerAngles)

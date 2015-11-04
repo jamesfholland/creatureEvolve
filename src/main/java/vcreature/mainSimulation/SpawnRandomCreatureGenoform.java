@@ -17,8 +17,8 @@ public class SpawnRandomCreatureGenoform
 
   /**
    * This was terribly not thread safe. I fixed that, but am not sure if this is what we want to use or if I should be using adder?
-   * @param numberOfBlocks
-   * @return
+   * @param numberOfBlocks in creature.
+   * @return genome of random creature
    */
   public static Genome createCreature(int numberOfBlocks)
   {
@@ -78,17 +78,10 @@ public class SpawnRandomCreatureGenoform
 //      if(randBlockIndex<1) randBlockIndex=1;
       int numOfBlocks = genome.getGENE_BLOCKS().size();
 
-      int randBlockIndex = 1;
-      //System.out.println(numOfBlocks);
-      //System.out.println(genome.getGENE_BLOCKS().toString());
-      if (numOfBlocks > 1)
-      {
-        randBlockIndex = genome.getGENE_BLOCKS().get(rand.nextInt(numOfBlocks)).hashCode();
-      }
       int offset = -rand.nextInt(i);
       //System.out.println(offset);
       ImmutableVector randAngle = new ImmutableVector(0, 0, 0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
-      ImmutableVector axis = new ImmutableVector(0, 0, 0);
+      ImmutableVector axis;
       if (rand.nextBoolean())
       {
         axis = new ImmutableVector(0, 0, 1);//new ImmutableVector(0,0,randAngle.X*randAngle.Y);//=new ImmutableVector(0,randAngle.Y*randAngle.Z,0);
