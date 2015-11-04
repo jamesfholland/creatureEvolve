@@ -1,6 +1,5 @@
 package vcreature.mutator.hillclimbing;
 import vcreature.genotype.*;
-import vcreature.phenotype.Block;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,8 +24,7 @@ public class Scaler
 
     ImmutableVector rootSize = genome.getRootSize();
     scaledSize = new ImmutableVector(rootSize.X * scaler, rootSize.Y * scaler, rootSize.Z * scaler);
-    if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
-    if ( (Block.max(scaledSize.getVector3f())) > (Block.min(scaledSize.getVector3f()) * 10)) return genome;
+    if(GenoTools.isValidBlockSize(scaledSize)) scaledSize = genome.getRootSize(); //Revert to old size, it should be valid.
 
 
     newGenome = new Genome(scaledSize, genome.getRootEulerAngles());
@@ -37,12 +35,9 @@ public class Scaler
     {
 
       scaledSize = new ImmutableVector(block.SIZE.X * scaler, block.SIZE.Y * scaler, block.SIZE.Z * scaler);
-      if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
-      if ( (Block.max(scaledSize.getVector3f())) > (Block.min(scaledSize.getVector3f()) * 10)) return genome;
       scaledBlock = new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT, scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
           block.EULER_ANGLES);
-      if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) scaledBlock = block;
-      if ( (Block.max(scaledSize.getVector3f())) > (Block.min(scaledSize.getVector3f()) * 10)) scaledBlock = block;
+      if(GenoTools.isValidBlockSize(scaledBlock.SIZE)) scaledBlock = block; //Keep old block if invalid
       newGenome.addGeneBlock(scaledBlock);
     }
     for(int i=geneNeurons.size()-1; i>=0; i--) newGenome.addGeneNeuron(geneNeurons.get(i));

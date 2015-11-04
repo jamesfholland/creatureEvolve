@@ -1,5 +1,7 @@
 package vcreature.genotype;
 
+import vcreature.phenotype.Block;
+
 import java.util.ArrayList;
 
 /**
@@ -38,4 +40,11 @@ public class GenoTools
     return parent;
   }
 
+  public static boolean isValidBlockSize(ImmutableVector size)
+  {
+    if(size.X<0.501f || size.Y<0.501f || size.Z< 0.501f) return false;
+    if ( (Block.max(size.getVector3f())) > (Block.min(size.getVector3f()) * 9.99)) return false;
+
+    return true;
+  }
 }
