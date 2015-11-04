@@ -5,7 +5,22 @@ import vcreature.genotype.Genome;
 
 
 /**
- * Created by Tess Daughton on 10/27/15
+ * This is a caller method made with enums. This allowed us to easily
+ * add methods for hill climbing relitivly easy.
+ * We have the methods for hill climbing
+ *  -Adder: Adds a block
+ *  -Duplicator: Duplicates a block
+ *  -Inverter: Inverts creature
+ *  -Mover: Moves blocks
+ *  -Randomizer: takes a block and Randomizes it on the creature
+ *  -Scaler: Takes a creature and scales it
+ *  -Extender: Takes a block and adjusts the legnth, height, or width
+ *  -Scale_Block: This will take a block and make it larger, or smaller
+ *  -Scale_Root: This will take the root and make it larger, or smaller
+ *  -Subtractor: Takes a block and deletes it from a creature
+ *  -Symmitrizer: A leg from a creature and tries to duplicate on an similar spot
+ *      somewhere else on the creature
+ *  -Neuron_FLipper: Flips the neurons on a creature, to make them fire oppisite
  */
 public enum Mutators
 {
@@ -119,15 +134,10 @@ public enum Mutators
       return Inverter.flipNeuron(parent);
     }
   }
-
   ;
 
-  private static Mutators currentMutator = Mutators.RANDOMIZER;
 
-  public static void setCurrentMutator(Mutators mutator)
-  {
-    currentMutator = mutator;
-  }
+  private static Mutators currentMutator = Mutators.RANDOMIZER;
 
   public static Mutators getCurrentMutator()
   {
