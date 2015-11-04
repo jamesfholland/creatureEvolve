@@ -39,7 +39,7 @@ class GeneticManager
     if (testQueue.isEmpty())
     {
       mergeType = mergeType.next(); //Cycle through mergeTypes.
-      buildQueue(GenePool.getRandom());
+      buildQueue(GenePool.getOneOfTheBest());
     }
     currentTestee = testQueue.poll();
     return currentTestee.GENOME;

@@ -4,6 +4,7 @@ package vcreature.mutator;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
+import vcreature.mainSimulation.MainSim;
 import vcreature.mutator.hillclimbing.Mutators;
 
 import java.util.LinkedList;
@@ -47,7 +48,8 @@ class HillClimbingManager
     }
     if (testQueue.isEmpty())
     {
-      buildQueue(GenePool.getWorst());
+      if(MainSim.RANDOM.nextBoolean())buildQueue(GenePool.getWorst());
+      else buildQueue(GenePool.getOneOfTheBest());
     }
     currentTestee = testQueue.poll();
 
