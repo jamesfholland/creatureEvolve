@@ -17,7 +17,10 @@ import java.util.ArrayList;
 
 /**
  * Created by Tess Daughton on 10/18/2015
- * JFrame containing SimpleApp
+ * JFrame containing all components of GUI including:
+ * User Control Panel
+ * Animation for application
+ * Creature selection panel to choose creatures from Gene Pool
  **/
 
 public class SimFrame extends JFrame implements ActionListener
@@ -90,7 +93,7 @@ public class SimFrame extends JFrame implements ActionListener
       creatures.add(creature);
       creatureSelectionPanel.add(creature);
     }
-    new CreatureSelectionHandler(creatures, animation);
+    new CreatureSelectionHandler(creatures, animation, this);
     creatureSelector = new JScrollPane(creatureSelectionPanel);
     creatureSelector.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -149,7 +152,7 @@ public class SimFrame extends JFrame implements ActionListener
     speed.setMajorTickSpacing(4);
     speed.setPaintTicks(true);
     speed.setPaintLabels(true);
-    speed.addChangeListener(new ChangeListener()
+    speed.addChangeListener(new ChangeListener() //speed event handling, toggles speed inside GUI
     {
       @Override
       public void stateChanged(ChangeEvent e)
@@ -164,7 +167,7 @@ public class SimFrame extends JFrame implements ActionListener
     });
     zoom.setMajorTickSpacing(2);
     zoom.setPaintTicks(true);
-    zoom.addChangeListener(new ChangeListener()
+    zoom.addChangeListener(new ChangeListener() //zoom event handling, toggles zoom inside GUI
     {
       @Override
       public void stateChanged(ChangeEvent e)
@@ -177,18 +180,11 @@ public class SimFrame extends JFrame implements ActionListener
         }
       }
     });
-    chooseFile.addItemListener(new ItemListener()
-    {
-      @Override
-      public void itemStateChanged(ItemEvent e)
-      {
 
-      }
-    });
     userThreshold.setEditable(true);
     userThreshold.setText("15.00");
     userThreshold.addActionListener(this);
-    chooseFile.addActionListener(new OpenFile(animation));
+    chooseFile.addActionListener(new OpenFile(animation)); //event handling for User selected file creature
     threshold = new JLabel("Fitness Threshold: ");
     zoomLabel = new JLabel("Zoom: ");
     speedLabel = new JLabel("Speed: ");

@@ -9,6 +9,7 @@ import java.util.Random;
 /**
  * Entry point to the program
  * Creates a JFrame, which takes care of embedding SimpleApplication inside of itself
+ * Creates a headless SimpleApp used for testing creatures
  */
 public class MainSim
 {
@@ -37,6 +38,7 @@ public class MainSim
         if (args.length == 0) // if the user enters ANY command line argument, the GUI will NOT run
         {
           System.out.println("Starting GUI");
+          //GUI version
           new SimFrame(manager);
         }
       }

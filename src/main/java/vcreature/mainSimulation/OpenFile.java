@@ -10,18 +10,29 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
- * Created by L301126 on 11/1/15.
- * Author: http://stackoverflow.com/questions/16351875/jfilechooser-on-a-button-click
+ * Created by Tess Daughton on 11/1/15.
+ * Event Handler called on user click of Jbutton "Load Creature" inside SimAnimation instance
+ * Used to allow the user to select a creature to load from file
  */
 class OpenFile implements ActionListener
 {
   private SimAnimation animation;
 
+  /**
+   * Class Constructor
+   * @param animation the instance of SimAnimation the GUI is being running with
+   */
   public OpenFile(SimAnimation animation)
   {
     this.animation = animation;
   }
 
+  /**
+   * opens a JFileChooser
+   * Converts user selected file into genome, which is then passed into the instance of
+   * SimAnimation and loaded upon next internal call of simpleUpdate
+   * @param e
+   */
   public void actionPerformed(ActionEvent e)
   {
     JFileChooser fileChooser = new JFileChooser();
