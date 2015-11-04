@@ -135,19 +135,6 @@ public enum Mutators
     }
   }
   ;
-
-
-  private static Mutators currentMutator = Mutators.RANDOMIZER;
-
-  public static Mutators getCurrentMutator()
-  {
-    return currentMutator;
-  }
-
-  public static Mutators getRandomMutator()
-  {
-    return Mutators.values()[MainSim.RANDOM.nextInt(Mutators.values().length)];
-  }
-
+  
   public abstract Genome mutate(Genome parent);
   }
