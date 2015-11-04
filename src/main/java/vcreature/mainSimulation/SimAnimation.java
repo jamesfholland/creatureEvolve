@@ -79,9 +79,9 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     this.speed = 4;
     AppSettings settings = new AppSettings(true);
     setSettings(settings);
-    settings.setResolution(1024, 768);
+    settings.setResolution(800, 600);
     this.setPauseOnLostFocus(false);
-    //Set up inmovable floor
+    //Set up immovable floor
     com.jme3.scene.shape.Box floor = new com.jme3.scene.shape.Box(50f, 0.1f, 50f);
     Material floor_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
     Texture floorTexture = assetManager.loadTexture("Textures/FloorTile.png");
