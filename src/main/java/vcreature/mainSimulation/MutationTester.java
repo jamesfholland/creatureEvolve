@@ -27,6 +27,8 @@ class MutationTester extends SimpleApplication implements ActionListener
   private float elapsedSimulationTime;
   private Manager manager;
 
+  private float previousFitness = -1;
+
 
   public MutationTester(Manager manager)
   {
@@ -80,8 +82,8 @@ class MutationTester extends SimpleApplication implements ActionListener
   /**
    * Basically the "actionPerformed" of SimpleApplication
    *
-   * @param name the type of action being performed
-   * @param isPressed was the mouse pressed
+   * @param name         the type of action being performed
+   * @param isPressed    was the mouse pressed
    * @param timePerFrame unused seconds per frame.
    */
   public void onAction(String name, boolean isPressed, float timePerFrame)
@@ -96,42 +98,48 @@ class MutationTester extends SimpleApplication implements ActionListener
 
   /**
    * Use the main event loop to trigger repeating actions.
+   *
    * @param deltaSeconds change in simulation time seconds.
    */
   @Override
   public void simpleUpdate(float deltaSeconds)
   {
-    if (!this.speedSet)
+    try
     {
-      this.setSpeed(SPEEDSETTING);
-      this.speedSet = true;
-    }
-    //System.out.println(deltaSeconds);
-    float currentFitness = currentCreature.updateBrain(elapsedSimulationTime);
-    elapsedSimulationTime += deltaSeconds;
-
-    if (elapsedSimulationTime < 1 && currentFitness > 0.01)
-    {
-      currentCreature.remove();
-      elapsedSimulationTime = 0;
-      currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0.0f));
-      return;
-    }
-    if (elapsedSimulationTime > 15)
-    {
-      currentCreature.remove();
-      elapsedSimulationTime = 0;
-
-      try
+      //Just needs to happen the first time. Doesn't appear to work if called in initapp.
+      if (!this.speedSet)
       {
+        this.setSpeed(SPEEDSETTING);
+        this.speedSet = true;
+      }
+
+      //System.out.println(deltaSeconds);
+      float currentFitness = currentCreature.updateBrain(elapsedSimulationTime);
+      elapsedSimulationTime += deltaSeconds;
+
+      if (elapsedSimulationTime < 4f && currentFitness > 1.0f)
+      {
+        currentCreature.remove();
+        previousFitness = -1;
+        elapsedSimulationTime = 0;
+        currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0.0f));
+        return;
+      }
+      if ((elapsedSimulationTime > 10 && currentFitness < previousFitness) || elapsedSimulationTime > 20)
+      {
+        currentCreature.remove();
+        elapsedSimulationTime = 0;
+        previousFitness = -1;
+
         currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(currentFitness));
       }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
-
+      previousFitness = currentFitness;
     }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+
   }
 
   private void setSpeed(int speed)
