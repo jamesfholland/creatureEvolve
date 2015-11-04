@@ -1,6 +1,5 @@
 package vcreature.genotype.phenoConversion;
 
-import com.jme3.bounding.BoundingBox;
 import com.jme3.math.Vector3f;
 import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
@@ -28,6 +27,9 @@ public class ProtoBlock
    */
   private Vector3f size;
   private ProtoBlock parent;
+  /**
+   * List of children blocks.
+   */
   private LinkedList<ProtoBlock> children;
 
   /**
@@ -44,7 +46,6 @@ public class ProtoBlock
    */
   private Vector3f pivotLocal;
 
-  private Vector3f axisParent;
   private Vector3f axis;
 
   /**
@@ -57,37 +58,13 @@ public class ProtoBlock
   private ImmutableVector pivotOffset;
 
 
-  /**
-   * Used for collision detection.
-   */
-  private BoundingBox boundingBox;
-
   private LinkedList<Neuron> neurons;
 
-/**
- * making deep cloning constructors
- */
-
-
   /**
-   * @param protoBlock
-   */
-  public ProtoBlock(ProtoBlock protoBlock)
-  {
-    this.center = new Vector3f(protoBlock.center);
-    this.size = new Vector3f(protoBlock.size);
-    this.pivot = new Vector3f(protoBlock.pivot);
-    this.pivotParentLocal = new Vector3f(protoBlock.pivotParentLocal);
-    this.pivotLocal = new Vector3f(protoBlock.pivotLocal);
-    pivotParentOffset = protoBlock.pivotParentOffset;
-    pivotOffset = protoBlock.pivotOffset;
-    children.addAll(protoBlock.children);
-    neurons.addAll(protoBlock.neurons);
-  }
-
-  /**
-   * @param size
-   * @param eulerAngles
+   * Constructor to root node as a ProtoBlock
+   *
+   * @param size        in meters
+   * @param eulerAngles how the block is rotated.
    */
   public ProtoBlock(ImmutableVector size, ImmutableVector eulerAngles)
   {
@@ -117,18 +94,16 @@ public class ProtoBlock
    * @param parent      the ProtoBlock parent to be adopted by
    * @param pivotParent the hinge offset on parent block
    * @param pivot       the hinge offset on this block
-   * @param axisParent  the hinge's parent axis
    * @param axis        the hinge's axis
    */
   public void initializeBlock(ImmutableVector size, ProtoBlock parent, ImmutableVector pivotParent,
-                              ImmutableVector pivot, ImmutableVector axisParent, ImmutableVector axis,
+                              ImmutableVector pivot, ImmutableVector axis,
                               ImmutableVector eulerAngles)
   {
     this.size = size.getVector3f();
     this.parent = parent;
     this.parent.addChild(this);
 
-    this.axisParent = axisParent.getVector3f();
     this.axis = axis.getVector3f();
 
     this.pivotParentOffset = pivotParent;
@@ -136,16 +111,10 @@ public class ProtoBlock
     this.eulerAngles = eulerAngles.getVector3f();
   }
 
-  public Vector3f getBlockCenter()
-  {
-    return center;
-  }
-
-
   /**
-   * get min corner on cube in a vector form vector
+   * Get min corner coordinates of block in a vector form
    *
-   * @return returns a vector
+   * @return returns a vector of meter coordinates.
    */
   public Vector3f getMinVector()
   {
@@ -174,6 +143,14 @@ public class ProtoBlock
         getMinVector().z);
   }
 
+  /**
+   * Calculate if two blocks intersect. It assumes we are axis aligned, no rotations.
+   *
+   * @param min  meter coordinates for the corner with lowest location
+   * @param size The block's size in meters
+   * @param box  block we are comparing to.
+   * @return true if they intersect.
+   */
   public static boolean blockIntersecting(Vector3f min, Vector3f size, ProtoBlock box)
   {
     return (min.x < box.getMinVector().x + box.getDimensionVector().x) &&
@@ -231,16 +208,6 @@ public class ProtoBlock
   }
 
   /**
-   * Removes an unwanted or invalid child
-   *
-   * @param child to be removed.
-   */
-  public void removeChild(ProtoBlock child)
-  {
-    this.children.remove(child);
-  }
-
-  /**
    *
    */
   public void addNeuron(Neuron neuron)
@@ -288,6 +255,11 @@ public class ProtoBlock
     return new Vector3f(x, y, z);
   }
 
+  /**
+   * Gets the height of this block
+   *
+   * @return height of block in meters.
+   */
   public float getHeight()
   {
     float height = -1 * center.y + size.y;
@@ -300,10 +272,16 @@ public class ProtoBlock
         height = tempHeight;
       }
     }
-
     return height;
   }
 
+  /**
+   * Adds this ProtoBlock and children to a creature. If and only if this block is in the existingBlocks list.
+   *
+   * @param creature       the creature we are being added to.
+   * @param blockParent    the Phenotype Block we are attaching to
+   * @param existingBlocks The list of blocks that are permitted to be added
+   */
   public void addBlocksToCreature(Creature creature, Block blockParent, LinkedList<ProtoBlock> existingBlocks)
   {
     Block current;
@@ -350,11 +328,6 @@ public class ProtoBlock
     }
   }
 
-  public void placeCreatureOnGround(Creature creature)
-  {
-    creature.placeOnGround();
-  }
-
   /**
    * Recreates a genome based upon protoblocks. Used for getting clean genomes of creatures.
    *
@@ -388,6 +361,11 @@ public class ProtoBlock
     }
   }
 
+  /**
+   * Returns a clean genome without any blocks not shown in phenome.
+   *
+   * @return the clean genome.
+   */
   public Genome createCleanGenomeFromRoot()
   {
     Genome genome = new Genome(new ImmutableVector(this.size), new ImmutableVector(this.eulerAngles));
