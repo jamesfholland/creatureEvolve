@@ -53,4 +53,14 @@ public class GenoTools
     return (Block.max(size.getVector3f())) > (Block.min(size.getVector3f()) * 9.99);
 
   }
+
+  /**
+   * Inverts X and Z components of a ImmutableVector
+   * @param immutableVector vector we are inverting
+   * @return new vector with inversions completed.
+   */
+  public static ImmutableVector invertXZ(ImmutableVector immutableVector)
+  {
+    return new ImmutableVector(-1 * immutableVector.X, immutableVector.Y, -1 * immutableVector.Z);
+  }
 }

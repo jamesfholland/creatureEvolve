@@ -3,15 +3,21 @@ package vcreature.mutator.hillclimbing;
 import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
 import vcreature.genotype.Genome;
-import vcreature.genotype.ImmutableVector;
 
 import java.util.ArrayList;
+
+import static vcreature.genotype.GenoTools.invertXZ;
 
 /**
  * Symmetrizer (real word) makes a creature or block symmetrical.
  */
 public class Symmetrizer
 {
+  /**
+   * Symmetrizes a genome. It will add lots of recessive genes doing this.
+   * @param genome parent genome
+   * @return symmetrized child
+   */
   public static Genome basicSymmetrize(Genome genome)
   {
     Genome newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
@@ -32,28 +38,5 @@ public class Symmetrizer
       newGenome.addGeneNeuron(newNeuron);
     }
     return newGenome;
-  }
-
-  private static ImmutableVector invertXZ(ImmutableVector immutableVector)
-  {
-    return new ImmutableVector(-1 * immutableVector.X, immutableVector.Y, -1 * immutableVector.Z);
-  }
-
-  public static ArrayList<Genome> symmetrizedList(Genome genome)
-  {
-    ArrayList<Genome> symmetrizedCreatures = new ArrayList<>();
-    ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
-    ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
-    ArrayList<GeneBlock> childrenOfRoot = new ArrayList<>();
-
-
-    for (GeneBlock block : geneBlocks)
-    {
-      if (block.PARENT_OFFSET == 0)
-      {
-        childrenOfRoot.add(block);
-      }
-    }
-    return symmetrizedCreatures;
   }
 }
