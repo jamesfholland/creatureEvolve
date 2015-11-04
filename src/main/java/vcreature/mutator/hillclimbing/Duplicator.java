@@ -3,6 +3,7 @@ package vcreature.mutator.hillclimbing;
 import vcreature.genotype.*;
 import vcreature.mainSimulation.MainSim;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -71,9 +72,7 @@ class Duplicator
       for (int j = 0; j < geneNeurons.size(); j++)
       {
         GeneNeuron n = geneNeurons.get(j);
-        n = new GeneNeuron(n.BLOCK_INDEX, n.A_TYPE, n.B_TYPE, n.C_TYPE,
-                           n.D_TYPE, n.E_TYPE, n.A_VALUE, n.B_VALUE, n.C_VALUE, n.D_VALUE * -1,
-                           n.E_VALUE, n.BINARY_AB, n.UNARY_AB, n.BINARY_DE, n.UNARY_DE);
+       n=Inverter.flipNeuron(n);
         {
           if (j == geneNeurons.size() - 1)
           {

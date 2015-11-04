@@ -32,7 +32,7 @@ public class Symmetrizer
     }
     for (GeneNeuron tempNeuron : geneNeurons)
     {
-      GeneNeuron newNeuron = new GeneNeuron(tempNeuron.BLOCK_INDEX, tempNeuron.A_TYPE, tempNeuron.B_TYPE, tempNeuron.C_TYPE, tempNeuron.D_TYPE, tempNeuron.E_TYPE, tempNeuron.A_VALUE, tempNeuron.B_VALUE, tempNeuron.C_VALUE, -1 * tempNeuron.D_VALUE, tempNeuron.E_VALUE, tempNeuron.BINARY_AB, tempNeuron.UNARY_AB, tempNeuron.BINARY_DE, tempNeuron.UNARY_DE);
+      GeneNeuron newNeuron = Inverter.flipNeuron(tempNeuron);
       newGenome.addGeneNeuron(tempNeuron);
       newGenome.addGeneNeuron(newNeuron);
     }

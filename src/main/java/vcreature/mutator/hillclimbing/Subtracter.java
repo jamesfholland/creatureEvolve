@@ -39,14 +39,10 @@ public class Subtracter
       if (i != index)
       {
         newGenome.addGeneBlock(geneBlocks.get(i));
-
-        for (int j = 0; j < geneNeurons.size() - 1; j++)
-        {
-          if (geneNeurons.get(j).BLOCK_INDEX == i)
-          {
-            newGenome.addGeneNeuron(geneNeurons.get(j));
-          }
-        }
+      }
+      for (int j = 0; j < geneNeurons.size() - 1; j++)
+      {
+          newGenome.addGeneNeuron(geneNeurons.get(j));
       }
     }
     return newGenome;

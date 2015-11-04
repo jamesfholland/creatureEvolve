@@ -1,5 +1,6 @@
 package vcreature.mainSimulation;
 
+import sun.applet.Main;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.GenomeComparator;
@@ -144,4 +145,15 @@ public class GenePool
       return GENOMES.getFirst();
     }
   }
+
+  public static Genome getOneOfTheBest()
+  {
+    GENOMES.sort(new GenomeComparator());
+    if(GENOMES.size()>=10)
+    {
+      return GENOMES.get(MainSim.RANDOM.nextInt(10));
+    }
+    else return GENOMES.getFirst();
+  }
+
 }

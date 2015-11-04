@@ -87,13 +87,10 @@ public class Randomizer
     for (int i = 0; i < geneBlocks.size(); i++)
     {
       newGenome.addGeneBlock(geneBlocks.get(i));
-      for (GeneNeuron geneNeuron : geneNeurons)
-      {
-        if (geneNeuron.BLOCK_INDEX == i)
-        {
-          newGenome.addGeneNeuron(geneNeuron);
-        }
-      }
+    }
+    for (GeneNeuron geneNeuron : geneNeurons)
+    {
+        newGenome.addGeneNeuron(geneNeuron);
     }
     return newGenome;
   }
