@@ -179,7 +179,6 @@ public class GenePool
 
   private static class GeneManager implements Runnable
   {
-
     private static int minutes = 0;
     private static boolean interrupted = false;
     @Override
