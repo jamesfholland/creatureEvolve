@@ -97,9 +97,9 @@ public class SimFrame extends JFrame implements ActionListener
     creatureSelector = new JScrollPane(creatureSelectionPanel);
     creatureSelector.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(1400, 1200));
     setSize(new Dimension(1400, 1200));
+    creatureSelector.setSize(new Dimension(200, 865));
     creatureSelectionPanel.setPreferredSize(new Dimension(200, 865));
     creatureSelectionPanel.setSize(new Dimension(200, 865));
     this.add(creatureSelectionPanel);
@@ -223,12 +223,16 @@ public class SimFrame extends JFrame implements ActionListener
       JTextField tf = (JTextField) e.getSource();
       String userValue = tf.getText();
       tf.setText(userValue);
+      new LoadFrame(this,1000).setVisible(true);
+
     }
     if (source instanceof JComboBox)
     {
       System.out.println("JComboBox");
       JComboBox cb = (JComboBox) source;
       String thread = (String) cb.getSelectedItem();
+      new LoadFrame(this,2000).setVisible(true);
+
       if (thread.equals("Hill Climbing"))
       {
         manager.setCurrentMutationType(Manager.MutationType.HILL);

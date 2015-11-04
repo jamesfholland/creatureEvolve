@@ -13,6 +13,7 @@ import vcreature.phenotype.PhysicsConstants;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
 
 /**
  * MutationTester is the background application for mutations and Genetic merging.
@@ -48,6 +49,8 @@ class MutationTester extends SimpleApplication implements ActionListener
   @Override
   public void simpleInitApp()
   {
+    java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
+
     BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
@@ -68,7 +71,7 @@ class MutationTester extends SimpleApplication implements ActionListener
     floor_phy.setFriction(PhysicsConstants.GROUND_SLIDING_FRICTION);
     floor_phy.setRestitution(PhysicsConstants.GROUND_BOUNCINESS);
     floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
-                         PhysicsConstants.GROUND_ANGULAR_DAMPINING);
+        PhysicsConstants.GROUND_ANGULAR_DAMPINING);
 
     currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(-1));
     currentBestFitness.setDelay(60000);

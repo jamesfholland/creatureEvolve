@@ -15,7 +15,7 @@ public class LoadFrame extends JWindow
   public LoadFrame(Frame frame, int waitTime)
   {
     super(frame);
-    JLabel loading = new JLabel("Loading Creature... ");
+    JLabel loading = new JLabel("Loading ... ");
     loading.setFont(new Font ("Serif", Font.BOLD, 100));
     loading.setBackground(Color.WHITE);
     loading.setForeground(Color.DARK_GRAY);
