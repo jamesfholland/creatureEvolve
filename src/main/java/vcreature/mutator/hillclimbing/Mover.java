@@ -12,6 +12,13 @@ import java.util.Random;
  */
 public class Mover
 {
+  /**
+   * Takes a genome, then takes a block inside of the genome and moves it
+   * randomly around. It can move the block anywhere on the creature, and
+   * will keep the same firing of the neurons.
+   *
+   * @param genome a genome of a current creature that you want to change
+   * @return a new genome with a slight change   */
   protected static Genome moveLimbs(Genome genome)
   {
     if(genome.getGENE_BLOCKS().size() == 0) return genome;
