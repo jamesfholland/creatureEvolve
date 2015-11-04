@@ -1,11 +1,9 @@
 package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.*;
-import vcreature.phenotype.EnumNeuronInput;
-import vcreature.phenotype.EnumOperator;
+import vcreature.mainSimulation.MainSim;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Tyler on 11/3/2015.
@@ -32,60 +30,59 @@ public class Extender
     if(genome.getGENE_BLOCKS().size() == 0) return genome;
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
-    Random rand = new Random();
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
 
-    int picker = rand.nextInt(3);
-    int randomLimb = rand.nextInt(geneBlocks.size());
+    int picker = MainSim.RANDOM.nextInt(3);
+    int randomLimb = MainSim.RANDOM.nextInt(geneBlocks.size());
 
-    float recalculatedSizeX = geneBlocks.get(randomLimb).SIZE.getX() * rand.nextFloat() * 2;
-    float recalculatedSizeY = geneBlocks.get(randomLimb).SIZE.getY() * rand.nextFloat() * 2;
-    float recalculatedSizeZ = geneBlocks.get(randomLimb).SIZE.getZ() * rand.nextFloat() * 2;
+    float recalculatedSizeX = geneBlocks.get(randomLimb).SIZE.getX() * MainSim.RANDOM.nextFloat() * 2;
+    float recalculatedSizeY = geneBlocks.get(randomLimb).SIZE.getY() * MainSim.RANDOM.nextFloat() * 2;
+    float recalculatedSizeZ = geneBlocks.get(randomLimb).SIZE.getZ() * MainSim.RANDOM.nextFloat() * 2;
 
     ImmutableVector newSizeX =new ImmutableVector(recalculatedSizeX,geneBlocks.get(randomLimb).SIZE.getY(),geneBlocks.get(randomLimb).SIZE.getZ());
     ImmutableVector newSizeY =new ImmutableVector(geneBlocks.get(randomLimb).SIZE.getX(),recalculatedSizeY,geneBlocks.get(randomLimb).SIZE.getZ());
     ImmutableVector newSizeZ =new ImmutableVector(geneBlocks.get(randomLimb).SIZE.getX(),geneBlocks.get(randomLimb).SIZE.getY(),recalculatedSizeZ);
 
     GeneBlock block = geneBlocks.get(randomLimb);
-    if(picker == 0 && (recalculatedSizeX > .5f && (recalculatedSizeX * 10 > geneBlocks.get(randomLimb).SIZE.getY() || recalculatedSizeX * 10 > geneBlocks.get(randomLimb).SIZE.getZ())))
+    if(picker == 0 )
     {
       block =
           new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
               newSizeX, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
               block.EULER_ANGLES);
     }
-    else if(picker == 1 && geneBlocks.get(randomLimb).SIZE.getX()> .5f && (recalculatedSizeY * 10 > geneBlocks.get(randomLimb).SIZE.getX() || recalculatedSizeY * 10 > geneBlocks.get(randomLimb).SIZE.getZ()))
+    else if(picker == 1)
     {
       block =
           new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
               newSizeY, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
               block.EULER_ANGLES);
     }
-    else if(picker == 2  && geneBlocks.get(randomLimb).SIZE.getX()> .5f && (recalculatedSizeZ * 10 > geneBlocks.get(randomLimb).SIZE.getY() || recalculatedSizeZ * 10 > geneBlocks.get(randomLimb).SIZE.getX()))
+    else if(picker == 2)
     {
       block =
           new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
               newSizeZ, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
               block.EULER_ANGLES);
     }
-    else
+
+    if(GenoTools.isNotValidBlockSize(block.SIZE))
     {
       return genome;
     }
     geneBlocks.remove(randomLimb);
     geneBlocks.add(randomLimb, block);
 
-
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
-    for (int i = 0; i <geneBlocks.size() ; i++)
+    for (GeneBlock geneBlock : geneBlocks)
     {
-      newGenome.addGeneBlock(geneBlocks.get(i));
+      newGenome.addGeneBlock(geneBlock);
 
     }
-    for (int j = 0; j <geneNeurons.size() ; j++)
+    for (GeneNeuron geneNeuron : geneNeurons)
     {
-      newGenome.addGeneNeuron(geneNeurons.get(j));
+      newGenome.addGeneNeuron(geneNeuron);
     }
     return newGenome;
   }

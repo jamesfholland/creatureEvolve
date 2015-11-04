@@ -31,7 +31,7 @@ public class Scaler
 
     ImmutableVector rootSize = genome.getRootSize();
     scaledSize = new ImmutableVector(rootSize.X * scaler, rootSize.Y * scaler, rootSize.Z * scaler);
-    if(GenoTools.isValidBlockSize(scaledSize)) scaledSize = genome.getRootSize(); //Revert to old size, it should be valid.
+    if(GenoTools.isNotValidBlockSize(scaledSize)) scaledSize = genome.getRootSize(); //Revert to old size, it should be valid.
 
 
     newGenome = new Genome(scaledSize, genome.getRootEulerAngles());
@@ -44,7 +44,7 @@ public class Scaler
       scaledSize = new ImmutableVector(block.SIZE.X * scaler, block.SIZE.Y * scaler, block.SIZE.Z * scaler);
       scaledBlock = new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT, scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
           block.EULER_ANGLES);
-      if(GenoTools.isValidBlockSize(scaledBlock.SIZE)) scaledBlock = block; //Keep old block if invalid
+      if(GenoTools.isNotValidBlockSize(scaledBlock.SIZE)) scaledBlock = block; //Keep old block if invalid
       newGenome.addGeneBlock(scaledBlock);
     }
     for(int i=geneNeurons.size()-1; i>=0; i--) newGenome.addGeneNeuron(geneNeurons.get(i));
