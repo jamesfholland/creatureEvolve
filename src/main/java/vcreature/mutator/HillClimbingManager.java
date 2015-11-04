@@ -11,7 +11,7 @@ import java.util.LinkedList;
 /**
  * This will manage finding mutated genomes.
  */
-public class HillClimbingManager
+class HillClimbingManager
 {
   private Genome parentGenome;
   private Genome currentTestee = null;

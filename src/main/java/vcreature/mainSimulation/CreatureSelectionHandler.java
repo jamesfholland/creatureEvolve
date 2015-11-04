@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class CreatureSelectionHandler implements ActionListener
+class CreatureSelectionHandler implements ActionListener
 {
   private ArrayList<JButton> creatures;
   private SimAnimation animation;

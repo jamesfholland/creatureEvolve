@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Inverts creatures and genes. Flips sign of neurons, flips entire genomes
  * intelligently (turns creature over) or stupidly (ie flips arraylist)
  */
-public class Inverter
+class Inverter
 {
   /**
    * Takes a genome and will flip it upside down.

@@ -116,7 +116,7 @@ public class ProtoBlock
    *
    * @return returns a vector of meter coordinates.
    */
-  public Vector3f getMinVector()
+  private Vector3f getMinVector()
   {
     return new Vector3f(center.x - size.x, center.y - size.y, center.z - size.z);
   }
@@ -126,7 +126,7 @@ public class ProtoBlock
    *
    * @return returns a vector
    */
-  public Vector3f getMaxVector()
+  private Vector3f getMaxVector()
   {
     return new Vector3f(center.x + size.x, center.y + size.y, center.z + size.z);
   }
@@ -137,7 +137,7 @@ public class ProtoBlock
    *
    * @return returns a vector
    */
-  public Vector3f getDimensionVector()
+  private Vector3f getDimensionVector()
   {
     return new Vector3f(getMaxVector().x - getMinVector().x, getMaxVector().y - getMinVector().y, getMaxVector().z -
         getMinVector().z);
@@ -151,7 +151,7 @@ public class ProtoBlock
    * @param box  block we are comparing to.
    * @return true if they intersect.
    */
-  public static boolean blockIntersecting(Vector3f min, Vector3f size, ProtoBlock box)
+  private static boolean blockIntersecting(Vector3f min, Vector3f size, ProtoBlock box)
   {
     return (min.x < box.getMinVector().x + box.getDimensionVector().x) &&
         (min.y < box.getMinVector().y + box.getDimensionVector().y) &&
@@ -201,7 +201,7 @@ public class ProtoBlock
    *
    * @param child block that is the child.
    */
-  public void addChild(ProtoBlock child)
+  private void addChild(ProtoBlock child)
   {
     this.children.add(child);
   }
@@ -221,7 +221,7 @@ public class ProtoBlock
    * @param hingeOffset offset on this block to use to find the hinge point.
    * @return the actual point relative to root.
    */
-  public Vector3f getHingeFromCenterOffset(ImmutableVector hingeOffset)
+  private Vector3f getHingeFromCenterOffset(ImmutableVector hingeOffset)
   {
     float x = center.x + size.x * hingeOffset.X;
     float y = center.y + size.y * hingeOffset.Y;
@@ -247,7 +247,7 @@ public class ProtoBlock
    * @param hingeOffset the locale offset percentages
    * @return locale coordinates of the hinge
    */
-  public Vector3f getHingeLocalCoord(ImmutableVector hingeOffset)
+  private Vector3f getHingeLocalCoord(ImmutableVector hingeOffset)
   {
     float x = size.x * hingeOffset.X;
     float y = size.y * hingeOffset.Y;

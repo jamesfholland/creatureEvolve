@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * -Width
  * -Height
  */
-public class Extender
+class Extender
 {
 
   /**
@@ -22,7 +22,7 @@ public class Extender
    * @param genome a genome of a current creature that you want to change
    * @return a new genome with a slight change
    */
-  protected static Genome extendLimbs(Genome genome)
+  static Genome extendLimbs(Genome genome)
   {
     if (genome.getGENE_BLOCKS().size() == 0)
     {

@@ -15,7 +15,7 @@ import vcreature.phenotype.PhysicsConstants;
  * MutationTester is the background application for mutations and Genetic merging.
  * It contains the physics space for actual testing.
  */
-public class MutationTester extends SimpleApplication implements ActionListener
+class MutationTester extends SimpleApplication implements ActionListener
 {
   private PhysicsSpace physicsSpace;
 

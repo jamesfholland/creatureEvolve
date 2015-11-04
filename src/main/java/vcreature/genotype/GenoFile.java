@@ -55,7 +55,7 @@ public class GenoFile
    * @param fileName the file's name, not the path to file.
    * @return the parsed genome or null if an error occurred.
    */
-  public static Genome readGenomeFromPool(String fileName)
+  private static Genome readGenomeFromPool(String fileName)
   {
     return readGenome(GENE_POOL_LOCATION + fileName);
   }

@@ -14,7 +14,7 @@ import java.util.LinkedList;
  * Manages genetic merger classes. Will choose which class to use in
  * different situations
  */
-public class GeneticManager
+class GeneticManager
 {
   private GenomeTracker currentTestee = null;
   private LinkedList<GenomeTracker> testQueue;

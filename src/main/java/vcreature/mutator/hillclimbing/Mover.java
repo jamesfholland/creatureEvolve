@@ -11,7 +11,7 @@ import java.util.Random;
  * I implemented this to check limbs (non-parent blocks) and make them be on the same Hinge-Axis if
  * they aren't already. Should probably add some more logic to this.
  */
-public class Mover
+class Mover
 {
   /**
    * Takes a genome, then takes a block inside of the genome and moves it
@@ -21,7 +21,7 @@ public class Mover
    * @param genome a genome of a current creature that you want to change
    * @return a new genome with a slight change
    */
-  protected static Genome moveLimbs(Genome genome)
+  static Genome moveLimbs(Genome genome)
   {
     if (genome.getGENE_BLOCKS().size() == 0)
     {

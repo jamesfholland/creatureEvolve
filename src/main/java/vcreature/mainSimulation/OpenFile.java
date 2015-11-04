@@ -13,7 +13,7 @@ import java.io.File;
  * Created by L301126 on 11/1/15.
  * Author: http://stackoverflow.com/questions/16351875/jfilechooser-on-a-button-click
  */
-public class OpenFile implements ActionListener
+class OpenFile implements ActionListener
 {
   private SimAnimation animation;
 
