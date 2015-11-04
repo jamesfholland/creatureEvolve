@@ -90,7 +90,7 @@ public class Block
    * @param id Index of this block in the creature's body ArrayList
    * @param center location in world coordinates of the center of the box.
    *     The address of this Vector3f is copied into this blocks startCenter field.
-   *     Therefore, the address passed as center must be a new instrance of 
+   *     Therefore, the address passed as center must be a new instance of
    *     Vector3f and not reused for other data.
    *
    * @param size  extent of box in each direction from the box's center. 
@@ -98,7 +98,7 @@ public class Block
    * would have a length in the x dimension of 1.0 meters.
    * @param rotation in world coordinates of this block.
    *     The address of this Quaternion is copied into this blocks startRotation field.
-   *     Therefore, the address passed as rotation must be a new instrance of 
+   *     Therefore, the address passed as rotation must be a new instance of
    *     Quaternion and not reused for other data.
    */
   public Block(PhysicsSpace physicsSpace, Node rootNode, int id, Vector3f center, Vector3f size, Quaternion rotation) 
@@ -114,7 +114,7 @@ public class Block
     this.id = id;
     
     //Copies only the address, but in the creature class, 
-    //  this addesss was created with new and is not reused
+    //  this address was created with new and is not reused
     startCenter   = center; 
     startRotation = rotation;
     

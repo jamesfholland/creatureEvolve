@@ -78,5 +78,4 @@ public class SingleCrossover
 
     return children;
   }
-
 }

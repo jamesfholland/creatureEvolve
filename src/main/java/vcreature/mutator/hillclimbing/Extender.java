@@ -16,7 +16,7 @@ class Extender
 
   /**
    * This will take a genome and then choose a random block from the genome. It will
-   * then adjust the height, width, or length of the random block that was choosen.
+   * then adjust the height, width, or length of the random block that was chosen.
    * It has checks inside of it to make sure it stays within the bounds of the block.
    *
    * @param genome a genome of a current creature that you want to change

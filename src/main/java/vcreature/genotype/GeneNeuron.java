@@ -165,9 +165,9 @@ public final class GeneNeuron
   }
 
   /**
-   * Creates a copy except for the blockindex.
+   * Creates a copy except for the block index.
    *
-   * @param blockIndex new blockindex we want.
+   * @param blockIndex new block index we want.
    * @param copy       GeneNeuron to copy.
    */
   public GeneNeuron(int blockIndex, GeneNeuron copy)
