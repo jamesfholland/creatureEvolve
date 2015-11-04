@@ -6,6 +6,7 @@ import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.scene.Geometry;
 import com.jme3.system.AppSettings;
+import vcreature.genotype.GenoTools;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
 import vcreature.phenotype.PhysicsConstants;
@@ -97,7 +98,7 @@ class MutationTester extends SimpleApplication implements ActionListener
       }
 
       //System.out.println(deltaSeconds);
-      float currentFitness = currentCreature.updateBrain(elapsedSimulationTime);
+      float currentFitness = GenoTools.round2decimals(currentCreature.updateBrain(elapsedSimulationTime));
       elapsedSimulationTime += deltaSeconds;
 
       if (elapsedSimulationTime < 4f && currentFitness > 1.0f)

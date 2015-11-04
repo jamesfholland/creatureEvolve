@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Manager
 {
-  private float switchingThreshhold = 0.001f;
+  private float switchingThreshhold = 1.0f;
 
   private long startTime;
 

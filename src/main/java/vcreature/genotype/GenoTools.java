@@ -2,6 +2,7 @@ package vcreature.genotype;
 
 import vcreature.phenotype.Block;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -65,5 +66,18 @@ public class GenoTools
   public static ImmutableVector invertXZ(ImmutableVector immutableVector)
   {
     return new ImmutableVector(-1 * immutableVector.X, immutableVector.Y, -1 * immutableVector.Z);
+  }
+
+  /**
+   * Rounds a float to 2 decimal places.
+   * @param number float to round
+   * @return rounded float
+   */
+  public static float round2decimals(float number)
+  {
+    BigDecimal bigDecimal = new BigDecimal(number);
+    BigDecimal roundedDecimal = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP);
+    return roundedDecimal.floatValue();
+
   }
 }
