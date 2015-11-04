@@ -15,7 +15,6 @@ import java.io.File;
  */
 public class OpenFile implements ActionListener
 {
-  private Genome fileGenome;
   private SimAnimation animation;
 
   public OpenFile(SimAnimation animation)
@@ -30,8 +29,11 @@ public class OpenFile implements ActionListener
     if (returnVal == JFileChooser.APPROVE_OPTION)
     {
       File file = fileChooser.getSelectedFile();
-      fileGenome = GenoFile.readGenome(file.getAbsolutePath());
-      animation.setCurrentCreature(fileGenome);
+      Genome fileGenome = GenoFile.readGenome(file.getAbsolutePath());
+      if(fileGenome != null) //Null means it was an invalid file.
+      {
+        animation.setCurrentCreature(fileGenome);
+      }
     }
   }
 }
