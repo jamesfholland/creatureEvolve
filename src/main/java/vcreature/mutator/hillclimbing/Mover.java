@@ -18,7 +18,8 @@ public class Mover
    * will keep the same firing of the neurons.
    *
    * @param genome a genome of a current creature that you want to change
-   * @return a new genome with a slight change   */
+   * @return a new genome with a slight change
+   */
   protected static Genome moveLimbs(Genome genome)
   {
     if(genome.getGENE_BLOCKS().size() == 0) return genome;
