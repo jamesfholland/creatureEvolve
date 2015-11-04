@@ -23,8 +23,8 @@ public class LoadFrame extends JWindow
     pack();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     Dimension labelSize = new Dimension(500,500);
-    setLocation((screenSize.width/2 - (labelSize.width/2)-300),
-                (screenSize.height/2 - (labelSize.height/2)));
+    setLocation((screenSize.width/2 - (labelSize.width/2)-100),
+                (screenSize.height/2 - (labelSize.height/2))+100);
     final int pause =  waitTime;
     final Runnable closerRunner = new Runnable()
     {

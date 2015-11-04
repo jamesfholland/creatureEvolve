@@ -184,7 +184,7 @@ public class SimFrame extends JFrame implements ActionListener
     userThreshold.setEditable(true);
     userThreshold.setText("15.00");
     userThreshold.addActionListener(this);
-    chooseFile.addActionListener(new OpenFile(animation)); //event handling for User selected file creature
+    chooseFile.addActionListener(new OpenFile(animation,this)); //event handling for User selected file creature
     threshold = new JLabel("Fitness Threshold: ");
     zoomLabel = new JLabel("Zoom: ");
     speedLabel = new JLabel("Speed: ");
