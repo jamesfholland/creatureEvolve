@@ -11,7 +11,10 @@ import java.util.Random;
 public class Adder
 {
   /**
-   * This is where the magic happens
+   * This will randomly add a block to a creature for hill climbing.
+   * It has methods so it tries to not make cubes, but more flat blocks that are wide.
+   * @param genome a genome of a current creature that you want to change
+   * @return a new genome with a slight change
    */
   public static Genome addBlock(Genome genome)
   {

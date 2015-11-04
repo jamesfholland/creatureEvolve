@@ -45,8 +45,8 @@ public class Duplicator
    * algorithm terminates
    * WITHOUT PLACING DUPLICATE BLOCK
    *
-   * @param genome
-   * @return
+   * @param genome a genome of a current creature that you want to change
+   * @return a new genome with a slight change
    */
   public static Genome duplicateLimb(Genome genome)
   {
