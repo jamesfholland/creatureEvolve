@@ -67,8 +67,9 @@ public class GenePool
     {
       GENOMES.remove(parent1);
       GENOMES.remove(parent2);
+      GenePool.add(newGenome);
     }
-    GenePool.add(newGenome);
+
   }
 
   /**
@@ -82,8 +83,8 @@ public class GenePool
     synchronized (GENOMES)
     {
       GENOMES.remove(parent);
+      GenePool.add(newGenome);
     }
-    GenePool.add(newGenome);
   }
 
   /**
@@ -195,8 +196,6 @@ public class GenePool
           {
             hourlyUpdate();
           }
-
-
         }
         catch (InterruptedException e)
         {
