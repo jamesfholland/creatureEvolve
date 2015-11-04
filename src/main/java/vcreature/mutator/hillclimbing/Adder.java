@@ -58,7 +58,7 @@ public class Adder
     int ySign = (rand.nextBoolean()) ? 1 : -1;
     int zSign = (rand.nextBoolean()) ? 1 : -1;
     ImmutableVector randPivot = new ImmutableVector(0, 0, 0);
-    int randomFace = rand.nextInt(2);
+    int randomFace = rand.nextInt(3);
 
     if (randomFace == 0)
     {
@@ -68,24 +68,30 @@ public class Adder
     {
       randPivot = new ImmutableVector(xSign, ySign * rand.nextFloat(), zSign);
     }
-    else if (randomFace == 2)
+    else
     {
       randPivot = new ImmutableVector(xSign, ySign, zSign * rand.nextFloat());
     }
 
     ImmutableVector parentPivot = new ImmutableVector(-randPivot.X, -randPivot.Y, -randPivot.Z);
 
-    if (rand.nextBoolean())
+    if (randomFace==0)
     {
       randBlock = new GeneBlock(parentOffset, randPivot, parentPivot, size,
-                                Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
+                                Axis.UNIT_X.getImmutableVector(), Axis.UNIT_X.getImmutableVector(),
+                                randAngle);
+    }
+    else if(randomFace == 1)
+    {
+      randBlock = new GeneBlock(parentOffset, randPivot, parentPivot, size,
+                                Axis.UNIT_Y.getImmutableVector(), Axis.UNIT_Y.getImmutableVector(),
                                 randAngle);
     }
     else
     {
       randBlock = new GeneBlock(parentOffset, randPivot, parentPivot, size,
-                                Axis.UNIT_X.getImmutableVector(), Axis.UNIT_X.getImmutableVector(),
-                                randAngle);
+          Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
+          randAngle);
     }
 
     geneBlocks.add(randBlock);
