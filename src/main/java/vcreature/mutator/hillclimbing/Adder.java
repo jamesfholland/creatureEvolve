@@ -22,17 +22,15 @@ public class Adder
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
     Random rand=new Random();
-    float min = .5f;
+    float min = .501f;
     float max = 3f;
 
     geneBlocks=genome.getGENE_BLOCKS();
     geneNeurons=genome.getGENE_NEURONS();
     int index = rand.nextInt(geneBlocks.size());
-    int signChooser = (rand.nextBoolean()) ? -1 : 1;
 
 
-
-   // GeneBlock block=geneBlocks.get(index);
+    // GeneBlock block=geneBlocks.get(index);
     GeneBlock randBlock;
     float sizeX;
     float sizeY;
@@ -42,7 +40,7 @@ public class Adder
     sizeY = rand.nextFloat() * (max - min) + min;
     if(sizeX>1f && sizeY>1f)
     {
-      sizeZ = rand.nextFloat()+ min;
+      sizeZ = rand.nextFloat() + min;
     }
     else
     {
@@ -75,22 +73,17 @@ public class Adder
           Axis.UNIT_X.getImmutableVector(), Axis.UNIT_X.getImmutableVector(),
           randAngle);
     }
-    //geneBlocks.remove(index);
-    //geneBlocks.add(randBlock);
 
     geneBlocks.add(randBlock);
     Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
-    for (int i = 0; i <geneBlocks.size() ; i++)
+    for (GeneBlock geneBlock : geneBlocks)
     {
-      newGenome.addGeneBlock(geneBlocks.get(i));
-//      for (int j = 0; j <geneNeurons.size() ; j++)
-//      {
-//        if(geneNeurons.get(j).BLOCK_INDEX==i)newGenome.addGeneNeuron(geneNeurons.get(j));
-//      }
+      newGenome.addGeneBlock(geneBlock);
+
     }
-    for (int j = 0; j <geneNeurons.size(); j++)
+    for (GeneNeuron geneNeuron : geneNeurons)
     {
-      newGenome.addGeneNeuron(geneNeurons.get(j));
+      newGenome.addGeneNeuron(geneNeuron);
     }
     newGenome=Randomizer.randomizeNeuron(newGenome,geneBlocks.size()-1);
     return newGenome;
