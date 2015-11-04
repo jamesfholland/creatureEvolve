@@ -41,9 +41,7 @@ public class SpawnRandomCreatureGenoform
     //Axis legParentAxis = Axis.UNIT_Z;
     //Axis legAxis = Axis.UNIT_Z;
     ImmutableVector legParentAxis = new ImmutableVector(0, 0, 1);
-    ;
     ImmutableVector legAxis = new ImmutableVector(0, 0, 1);
-    ;
     //Axis legAxis=new Axis();
 
     float sizeX = rand.nextFloat() * (max - min) + min;
@@ -163,9 +161,7 @@ public class SpawnRandomCreatureGenoform
     Genome genome = new Genome(rootSize, new ImmutableVector(0f, 0f, 0f));
 
     ImmutableVector legParentAxis = new ImmutableVector(0, 0, 1);
-    ;
     ImmutableVector legAxis = new ImmutableVector(0, 0, 1);
-    ;
     //Axis legAxis=new Axis();
 
     float sizeX = rand.nextFloat() * (max - min) + min;

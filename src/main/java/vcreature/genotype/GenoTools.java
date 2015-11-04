@@ -43,8 +43,7 @@ public class GenoTools
   public static boolean isNotValidBlockSize(ImmutableVector size)
   {
     if(size.X<0.501f || size.Y<0.501f || size.Z< 0.501f) return true;
-    if ( (Block.max(size.getVector3f())) > (Block.min(size.getVector3f()) * 9.99)) return true;
+    return (Block.max(size.getVector3f())) > (Block.min(size.getVector3f()) * 9.99);
 
-    return false;
   }
 }

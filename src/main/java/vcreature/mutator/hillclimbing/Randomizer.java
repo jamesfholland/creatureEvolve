@@ -54,7 +54,7 @@ public class Randomizer
     int xSign = (rand.nextBoolean()) ? 1 : -1;
     int ySign =(rand.nextBoolean()) ? 1 : -1;
     int zSign = (rand.nextBoolean()) ? 1 : -1;
-    ImmutableVector randPivot= new ImmutableVector(1, 0, 0);;
+    ImmutableVector randPivot= new ImmutableVector(1, 0, 0);
     int randomFace=rand.nextInt(2);
     if(randomFace==0) randPivot=new ImmutableVector(xSign,ySign,zSign*rand.nextFloat());
     else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign);
