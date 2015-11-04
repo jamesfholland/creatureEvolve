@@ -23,8 +23,8 @@ public class SwapBlocksAndNeurons
     ArrayList<Gene> genes1;
     ArrayList<Gene> genes2;
 
-    genes1 = GeneticTools.getParentsGenes(parent1, parent2)[0];
-    genes2 = GeneticTools.getParentsGenes(parent1, parent2)[1];
+    genes1 = GeneticTools.getParentsGenes(parent1, parent2).get(0);
+    genes2 = GeneticTools.getParentsGenes(parent1, parent2).get(1);
 
     child1 = new Genome(parent1.getRootSize(), parent1.getRootEulerAngles());
     child2 = new Genome(parent2.getRootSize(), parent2.getRootEulerAngles());

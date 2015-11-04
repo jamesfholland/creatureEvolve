@@ -24,8 +24,8 @@ public static ArrayList<Genome> singleCrossOver(Genome parent1,Genome parent2)
 
   ArrayList<Genome> children=new ArrayList<>();
 
-  ArrayList<Gene> genes1= GeneticTools.getParentsGenes(parent1, parent2)[0];
-  ArrayList<Gene> genes2=GeneticTools.getParentsGenes(parent1,parent2)[1];
+  ArrayList<Gene> genes1= GeneticTools.getParentsGenes(parent1, parent2).get(0);
+  ArrayList<Gene> genes2= GeneticTools.getParentsGenes(parent1, parent2).get(1);
   int smallestGeneSize = genes1.size() < genes2.size() ? genes1.size() : genes2.size();
   int crossoverPoint=MainSim.RANDOM.nextInt(smallestGeneSize);
   Genome child1=new Genome(parent1.getRootSize(),parent1.getRootEulerAngles());

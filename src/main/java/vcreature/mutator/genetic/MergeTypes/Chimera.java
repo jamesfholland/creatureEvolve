@@ -25,40 +25,46 @@ public class Chimera
     ArrayList<Gene> genes1;
     ArrayList<Gene> genes2;
 
-    genes1 = GeneticTools.getParentsGenes(parent1, parent2)[0];
-    genes2 = GeneticTools.getParentsGenes(parent1, parent2)[1];
+    genes1 = GeneticTools.getParentsGenes(parent1, parent2).get(0);
+    genes2 = GeneticTools.getParentsGenes(parent1, parent2).get(1);
     child1 = new Genome(parent1.getRootSize(), parent1.getRootEulerAngles());
     child2 = new Genome(parent2.getRootSize(), parent2.getRootEulerAngles());
 //child1
-    for (int i = 0; i <genes1.size(); i++) {child1.addGeneBlock(genes1.get(i).geneBlock);}
-    for (int i = 0; i <parent1.getGENE_NEURONS().size() ; i++) {child1.addGeneNeuron(parent1.getGENE_NEURONS().get(i));}
-    for (int i = 0; i <genes2.size() ; i++)
+    for (Gene aGenes1 : genes1)
     {
-      GeneBlock block=genes2.get(i).geneBlock;
-      if(block.PARENT_OFFSET!=0)
-     {
-       child1.addGeneBlock(block);
-       for (int j = 0; j< genes2.get(i).geneNeurons.size() ; j++)
-       {
-         child1.addGeneNeuron(new GeneNeuron(child1.getGENE_BLOCKS().size(),genes2.get(i).geneNeurons.get(j)));
-       }
-     }
+      child1.addGeneBlock(aGenes1.geneBlock);
+    }
+    for (int i = 0; i <parent1.getGENE_NEURONS().size() ; i++) {child1.addGeneNeuron(parent1.getGENE_NEURONS().get(i));}
+    for (Gene aGenes2 : genes2)
+    {
+      GeneBlock block = aGenes2.geneBlock;
+      if (block.PARENT_OFFSET != 0)
+      {
+        child1.addGeneBlock(block);
+        for (int j = 0; j < aGenes2.geneNeurons.size(); j++)
+        {
+          child1.addGeneNeuron(new GeneNeuron(child1.getGENE_BLOCKS().size(), aGenes2.geneNeurons.get(j)));
+        }
+      }
     }
 
     //for (int i = 0; i <parent2.getGENE_NEURONS().size() ; i++) {child1.addGeneNeuron(parent2.getGENE_NEURONS().get(i));}
     children.add(child1);
 
-    for (int i = 0; i <genes2.size(); i++) {child2.addGeneBlock(genes2.get(i).geneBlock);}
-    for (int i = 0; i <parent2.getGENE_NEURONS().size() ; i++) {child2.addGeneNeuron(parent2.getGENE_NEURONS().get(i));}
-    for (int i = 0; i <genes1.size() ; i++)
+    for (Gene aGenes2 : genes2)
     {
-      GeneBlock block=genes1.get(i).geneBlock;
-      if(block.PARENT_OFFSET!=0)
+      child2.addGeneBlock(aGenes2.geneBlock);
+    }
+    for (int i = 0; i <parent2.getGENE_NEURONS().size() ; i++) {child2.addGeneNeuron(parent2.getGENE_NEURONS().get(i));}
+    for (Gene aGenes1 : genes1)
+    {
+      GeneBlock block = aGenes1.geneBlock;
+      if (block.PARENT_OFFSET != 0)
       {
         child2.addGeneBlock(block);
-        for (int j = 0; j< genes1.get(i).geneNeurons.size() ; j++)
+        for (int j = 0; j < aGenes1.geneNeurons.size(); j++)
         {
-          child1.addGeneNeuron(new GeneNeuron(child1.getGENE_BLOCKS().size(),genes1.get(i).geneNeurons.get(j)));
+          child1.addGeneNeuron(new GeneNeuron(child1.getGENE_BLOCKS().size(), aGenes1.geneNeurons.get(j)));
         }
       }
     }

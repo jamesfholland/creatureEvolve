@@ -26,8 +26,8 @@ public class SwapLegs
     ArrayList<Gene> genes1;
     ArrayList<Gene> genes2;
 
-    genes1 = GeneticTools.getParentsGenes(parent1, parent2)[0];
-    genes2 = GeneticTools.getParentsGenes(parent1, parent2)[1];
+    genes1 = GeneticTools.getParentsGenes(parent1, parent2).get(0);
+    genes2 = GeneticTools.getParentsGenes(parent1, parent2).get(1);
 
     child1 = new Genome(parent1.getRootSize(), parent1.getRootEulerAngles());
     child2 = new Genome(parent2.getRootSize(), parent2.getRootEulerAngles());
@@ -51,8 +51,8 @@ public class SwapLegs
   public static ArrayList<Genome> singleCrossoverLegs(Genome parent1,Genome parent2,ArrayList<Gene> genes1,ArrayList<Gene> genes2)
   {
     int smallestGeneSize=genes1.size()>genes2.size() ? genes1.size() : genes2.size();
-    genes1= GeneticTools.getParentsGenes(parent1, parent2)[0];
-    genes2=GeneticTools.getParentsGenes(parent1,parent2)[1];
+    genes1= GeneticTools.getParentsGenes(parent1, parent2).get(0);
+    genes2= GeneticTools.getParentsGenes(parent1, parent2).get(1);
     int crossoverPoint= MainSim.RANDOM.nextInt(smallestGeneSize + 1)-1;
     ArrayList<Genome> children=new ArrayList<>();
     Genome child1=new Genome(parent1.getRootSize(),parent1.getRootEulerAngles());

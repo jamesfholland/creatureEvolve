@@ -28,8 +28,8 @@ public class CutAndSplice
     ArrayList<Gene> genes2 = new ArrayList<>();
 
     int smallestGeneSize = genes1.size() > genes2.size() ? genes1.size() : genes2.size();
-    genes1 = GeneticTools.getParentsGenes(parent1, parent2)[0];
-    genes2 = GeneticTools.getParentsGenes(parent1, parent2)[1];
+    genes1 = GeneticTools.getParentsGenes(parent1, parent2).get(0);
+    genes2 = GeneticTools.getParentsGenes(parent1, parent2).get(1);
     int crossoverPoint1 = rand.nextInt(genes1.size());
     int crossoverPoint2 = rand.nextInt(genes2.size());
 
