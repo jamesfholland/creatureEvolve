@@ -1,10 +1,10 @@
 package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.*;
+import vcreature.mainSimulation.MainSim;
 import vcreature.phenotype.EnumNeuronInput;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Finds either random existing gene and duplicates or duplicates a seeded
@@ -13,11 +13,6 @@ import java.util.Random;
 public class Duplicator
 {
 
-  private static ArrayList<GeneBlock> geneBlocks;
-  private static Random rand = new Random();
-  private static GeneBlock block;
-  private static ImmutableVector placementPivot;
-  private static ImmutableVector size;
 
 
   /**
@@ -39,21 +34,24 @@ public class Duplicator
   public static Genome duplicateLimb(Genome genome)
   {
     Genome newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
-    geneBlocks = genome.getGENE_BLOCKS();
+    ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
     for (GeneBlock geneBlock : geneBlocks) newGenome.addGeneBlock(geneBlock);
     ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
-    int randIndex = rand.nextInt(geneBlocks.size());
-    block = geneBlocks.get(randIndex);
+    int randIndex = MainSim.RANDOM.nextInt(geneBlocks.size());
+    GeneBlock block = geneBlocks.get(randIndex);
     if (geneNeurons.size() == 0)
     {
       randIndex = 0;
     }
     else
     {
-      randIndex = rand.nextInt(geneNeurons.size());
+      randIndex = MainSim.RANDOM.nextInt(geneNeurons.size());
     }
     GeneNeuron neuron = geneNeurons.get(randIndex);
-    ImmutableVector placementPivotParent = findAvailablePivot(block.PARENT_PIVOT);
+    ImmutableVector[] pivotInfo = findAvailablePivot(block.PARENT_PIVOT, geneBlocks, block);
+    ImmutableVector placementPivotParent = pivotInfo[0];
+    ImmutableVector placementPivot = pivotInfo[1];
+    ImmutableVector size = pivotInfo[2];
     if (placementPivotParent == null)
     {
       return genome;
@@ -63,44 +61,19 @@ public class Duplicator
       ImmutableVector hingeAxis = findHingeAxis(placementPivotParent);
       GeneBlock duplicateBlock = new GeneBlock(0, placementPivotParent, placementPivot, size,
                                                hingeAxis, hingeAxis, block.EULER_ANGLES);
-
       newGenome.addGeneBlock(duplicateBlock);
       for (GeneBlock geneBlock : geneBlocks)
       {
         newGenome.addGeneBlock(geneBlock);
       }
 
-
       for (int j = 0; j < geneNeurons.size(); j++)
       {
-
         GeneNeuron n = geneNeurons.get(j);
         n = new GeneNeuron(n.BLOCK_INDEX, n.A_TYPE, n.B_TYPE, n.C_TYPE,
             n.D_TYPE, n.E_TYPE, n.A_VALUE, n.B_VALUE, n.C_VALUE, n.D_VALUE * -1,
             n.E_VALUE, n.BINARY_AB, n.UNARY_AB, n.BINARY_DE, n.UNARY_DE);
         {
-          EnumNeuronInput aInput = EnumNeuronInput.TIME;
-          EnumNeuronInput bInput = EnumNeuronInput.CONSTANT;
-          EnumNeuronInput cInput = EnumNeuronInput.CONSTANT;
-          EnumNeuronInput dInput = EnumNeuronInput.CONSTANT;
-          EnumNeuronInput eInput = EnumNeuronInput.CONSTANT;
-
-//          int sign = (rand.nextBoolean()) ? 1 : -1;
-//          neuron = new GeneNeuron(
-//              j,
-//              //This is the list index of leg1 the corresponding block. As
-//              // long as we generate lists in the same order this should work
-//              // fine.
-//              aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
-//              0, 0, 5, -1 * sign * Float.MAX_VALUE, 0,
-//              //are the float values that correspond to each type. If the
-//              // type is not Constant, then it will be ignored.
-//              EnumOperator.ADD, //Binary operator for merging A and B
-//              EnumOperator.IDENTITY,
-//              //Unary operator for after A and B are merged
-//              EnumOperator.ADD, //Binary operator for merging D and E
-//              EnumOperator.IDENTITY); //Unary operator for after D and E are
-//          // merged);
           if (j == geneNeurons.size() - 1)
           {
             newGenome.addGeneNeuron(n);
@@ -115,8 +88,14 @@ public class Duplicator
     return newGenome;
   }
 
-
-  private static boolean comparePivot(ImmutableVector pivot1)
+  /**
+   * Find if any blocks share the pivot parent_pivot
+   * This doesn't care who the parent block is in the comparison. Is this a bug?
+   * @param pivot1 our pivot
+   * @param geneBlocks list of blocks to compare pivots to.
+   * @return true if any other blocks happen to have the same pivot location
+   */
+  private static boolean hasMatchingPivotInList(ImmutableVector pivot1, ArrayList<GeneBlock> geneBlocks)
   {
     ImmutableVector pivot2;
     for (GeneBlock geneBlock : geneBlocks)
@@ -150,11 +129,19 @@ public class Duplicator
     {
       return Axis.UNIT_Y.getImmutableVector();
     }
-
   }
 
-  private static ImmutableVector findAvailablePivot(ImmutableVector randomPivot)
+  /**
+   * Returns an array containing the pivot and the size.
+   * @param randomPivot location on parent
+   * @param geneBlocks list of geneBlocks to squeeze into
+   * @param block block we are duplicating.
+   * @return array of pivot location and size {available pivot, placement pivot, size}
+   */
+  private static ImmutableVector[] findAvailablePivot(ImmutableVector randomPivot, ArrayList<GeneBlock> geneBlocks, GeneBlock block)
   {
+    ImmutableVector[] returnVectors = new ImmutableVector[3];
+
     float x = Math.abs(randomPivot.getX());
     float y = Math.abs(randomPivot.getY());
     float z = Math.abs(randomPivot.getZ());
@@ -162,6 +149,8 @@ public class Duplicator
     float yp = block.PIVOT.getY();
     float zp = block.PIVOT.getZ();
     ImmutableVector availablePivot = null;
+    ImmutableVector size = null;
+    ImmutableVector placementPivot = null;
     if (x == 1 && y == 1 || x == 1 && z == 1 || y == 1 && z == 1)
     {
       x = randomPivot.getX();
@@ -170,50 +159,40 @@ public class Duplicator
       size = new ImmutableVector(block.SIZE.X, block.SIZE.Y, block.SIZE.Z);
       availablePivot = new ImmutableVector(x, y, -z);
       placementPivot = new ImmutableVector(0, yp, -zp);
-      if (!(comparePivot(availablePivot)))
+      if (hasMatchingPivotInList(availablePivot, geneBlocks))
       {
-        return availablePivot;
-      }
-      else
-      {
-        size = new ImmutableVector(block.SIZE.X, block.SIZE.Y, block.SIZE.Z);
         availablePivot = new ImmutableVector(-x, y, z);
-        if (!(comparePivot(availablePivot)))
+        size = new ImmutableVector(block.SIZE.X, block.SIZE.Y, block.SIZE.Z);
+        placementPivot = new ImmutableVector(-xp, yp, zp);
+        if (hasMatchingPivotInList(availablePivot, geneBlocks))
         {
-          size = new ImmutableVector(block.SIZE.X, block.SIZE.Y, block.SIZE.Z);
-          placementPivot = new ImmutableVector(-xp, yp, zp);
-          return availablePivot;
-        }
-        availablePivot = new ImmutableVector(-z, y, -x);
-        if (!(comparePivot(availablePivot)))
-        {
+          availablePivot = new ImmutableVector(-z, y, -x);
           placementPivot = new ImmutableVector(zp, yp, -xp);
           size = new ImmutableVector(block.SIZE.Z, block.SIZE.Y, block.SIZE.X);
-          return availablePivot;
-        }
-        availablePivot = new ImmutableVector(-z, y, x);
-        if (!(comparePivot(availablePivot)))
-        {
-          size = new ImmutableVector(block.SIZE.Z, block.SIZE.Y, block.SIZE.X);
-          placementPivot = new ImmutableVector(zp, yp, -xp);
-          return availablePivot;
-        }
-        availablePivot = new ImmutableVector(z, y, -x);
-        if (!(comparePivot(availablePivot)))
-        {
-          size = new ImmutableVector(block.SIZE.Z, block.SIZE.Y, block.SIZE.X);
-          placementPivot = new ImmutableVector(zp, yp, xp);
-          return availablePivot;
-        }
-        availablePivot = new ImmutableVector(-z, y, -x);
-        if (!(comparePivot(availablePivot)))
-        {
-          size = new ImmutableVector(block.SIZE.Z, block.SIZE.Y, block.SIZE.X);
-          placementPivot = new ImmutableVector(zp, yp, -xp);
-          return availablePivot;
+          if (hasMatchingPivotInList(availablePivot, geneBlocks))
+          {
+            availablePivot = new ImmutableVector(-z, y, x);
+            size = new ImmutableVector(block.SIZE.Z, block.SIZE.Y, block.SIZE.X);
+            placementPivot = new ImmutableVector(zp, yp, -xp);
+            if (hasMatchingPivotInList(availablePivot, geneBlocks))
+            {
+              availablePivot = new ImmutableVector(z, y, -x);
+              size = new ImmutableVector(block.SIZE.Z, block.SIZE.Y, block.SIZE.X);
+              placementPivot = new ImmutableVector(zp, yp, xp);
+              if (hasMatchingPivotInList(availablePivot, geneBlocks))
+              {
+                availablePivot = new ImmutableVector(-z, y, -x);
+                size = new ImmutableVector(block.SIZE.Z, block.SIZE.Y, block.SIZE.X);
+                placementPivot = new ImmutableVector(zp, yp, -xp);
+              }
+            }
+          }
         }
       }
     }
-    return availablePivot;
+    returnVectors[0] = availablePivot;
+    returnVectors[1] = placementPivot;
+    returnVectors[2] = size;
+    return returnVectors;
   }
 }
