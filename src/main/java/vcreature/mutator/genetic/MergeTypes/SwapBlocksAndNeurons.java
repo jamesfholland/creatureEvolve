@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class SwapBlocksAndNeurons
 {
-  public static ArrayList<Genome> swapBlocksAndNeurons(Genome parent1,Genome parent2)
+  public static ArrayList<Genome> swapBlocksAndNeurons(Genome parent1, Genome parent2)
   {
     ArrayList<Genome> children = new ArrayList<>();
     Genome child1;
@@ -34,7 +34,7 @@ public class SwapBlocksAndNeurons
       Gene gene1 = genes1.get(i);
       Gene gene2 = genes2.get(i);
       child1.addGeneBlock(gene1.geneBlock);
-      for (int j = 0; j <gene2.geneNeurons.size() ; j++)
+      for (int j = 0; j < gene2.geneNeurons.size(); j++)
       {
         child1.addGeneNeuron(gene2.geneNeurons.get(j));
       }
@@ -46,7 +46,7 @@ public class SwapBlocksAndNeurons
       Gene gene1 = genes2.get(i);
       Gene gene2 = genes1.get(i);
       child1.addGeneBlock(gene1.geneBlock);
-      for (int j = 0; j <gene2.geneNeurons.size() ; j++)
+      for (int j = 0; j < gene2.geneNeurons.size(); j++)
       {
         child1.addGeneNeuron(gene2.geneNeurons.get(j));
       }

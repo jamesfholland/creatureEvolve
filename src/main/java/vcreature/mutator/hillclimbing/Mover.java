@@ -1,4 +1,5 @@
 package vcreature.mutator.hillclimbing;
+
 import vcreature.genotype.*;
 
 import java.util.ArrayList;
@@ -22,7 +23,10 @@ public class Mover
    */
   protected static Genome moveLimbs(Genome genome)
   {
-    if(genome.getGENE_BLOCKS().size() == 0) return genome;
+    if (genome.getGENE_BLOCKS().size() == 0)
+    {
+      return genome;
+    }
     GeneBlock limb;
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
@@ -32,36 +36,45 @@ public class Mover
 
 
     int xSign = (rand.nextBoolean()) ? 1 : -1;
-    int ySign =(rand.nextBoolean()) ? 1 : -1;
+    int ySign = (rand.nextBoolean()) ? 1 : -1;
     int zSign = (rand.nextBoolean()) ? 1 : -1;
 
-    ImmutableVector randPivot= new ImmutableVector(1, 0, 0);
+    ImmutableVector randPivot = new ImmutableVector(1, 0, 0);
 
-    int randomFace=rand.nextInt(2);
-    if(randomFace==0) randPivot=new ImmutableVector(xSign,ySign,zSign*rand.nextFloat());
-    else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign);
-    else if(randomFace==2) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign);
+    int randomFace = rand.nextInt(2);
+    if (randomFace == 0)
+    {
+      randPivot = new ImmutableVector(xSign, ySign, zSign * rand.nextFloat());
+    }
+    else if (randomFace == 1)
+    {
+      randPivot = new ImmutableVector(xSign * rand.nextFloat(), ySign, zSign);
+    }
+    else if (randomFace == 2)
+    {
+      randPivot = new ImmutableVector(xSign, ySign * rand.nextFloat(), zSign);
+    }
 
 
     int randomLimb = rand.nextInt(geneBlocks.size());
 
-    ImmutableVector sizeCopy =new ImmutableVector(geneBlocks.get(randomLimb).SIZE.getX(),geneBlocks.get(randomLimb).SIZE.getY(),geneBlocks.get(randomLimb).SIZE.getZ());
+    ImmutableVector sizeCopy = new ImmutableVector(geneBlocks.get(randomLimb).SIZE.getX(), geneBlocks.get(randomLimb).SIZE.getY(), geneBlocks.get(randomLimb).SIZE.getZ());
 
-    ImmutableVector parentPivot=new ImmutableVector(-randPivot.X,-randPivot.Y,-randPivot.Z);
+    ImmutableVector parentPivot = new ImmutableVector(-randPivot.X, -randPivot.Y, -randPivot.Z);
 
     GeneBlock block = geneBlocks.get(randomLimb);
     int parentOffset = block.PARENT_OFFSET;
-    ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
+    ImmutableVector randAngle = new ImmutableVector(0, 0, 0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
     randomFace = rand.nextInt(2);
-    if(randomFace==0)
+    if (randomFace == 0)
     {
       limb = new GeneBlock(parentOffset, randPivot, parentPivot, sizeCopy,
-          Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
-          randAngle);
+                           Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
+                           randAngle);
     }
     else
     {
-      limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy,Axis.UNIT_X.getImmutableVector(),Axis.UNIT_X.getImmutableVector(),randAngle);
+      limb = new GeneBlock(parentOffset, randPivot, parentPivot, sizeCopy, Axis.UNIT_X.getImmutableVector(), Axis.UNIT_X.getImmutableVector(), randAngle);
     }
     //limb=new GeneBlock(parentOffset, randPivot,parentPivot,sizeCopy, Axis.UNIT_Z.getImmutableVector(),Axis.UNIT_Z.getImmutableVector(),randAngle);
 
@@ -70,13 +83,13 @@ public class Mover
     geneBlocks.add(randomLimb, limb);
 
 
-    Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
-    for (int i = 0; i <geneBlocks.size() ; i++)
+    Genome newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
+    for (int i = 0; i < geneBlocks.size(); i++)
     {
       newGenome.addGeneBlock(geneBlocks.get(i));
 
     }
-    for (int j = 0; j <geneNeurons.size() ; j++)
+    for (int j = 0; j < geneNeurons.size(); j++)
     {
       newGenome.addGeneNeuron(geneNeurons.get(j));
     }

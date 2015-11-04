@@ -30,8 +30,9 @@ public class MutationTester extends SimpleApplication implements ActionListener
 
   public MutationTester(Manager manager)
   {
-    this.manager=manager;
+    this.manager = manager;
   }
+
   /**
    * Initalizes a BulletAppState and a Physics Space
    * Sets relevant Physics constants
@@ -51,7 +52,6 @@ public class MutationTester extends SimpleApplication implements ActionListener
     physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
 
 
-
     AppSettings settings = new AppSettings(true);
 
     setSettings(settings);
@@ -69,7 +69,7 @@ public class MutationTester extends SimpleApplication implements ActionListener
     floor_phy.setFriction(PhysicsConstants.GROUND_SLIDING_FRICTION);
     floor_phy.setRestitution(PhysicsConstants.GROUND_BOUNCINESS);
     floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
-        PhysicsConstants.GROUND_ANGULAR_DAMPINING);
+                         PhysicsConstants.GROUND_ANGULAR_DAMPINING);
 
     //Block.initStaticMaterials(assetManager);
 
@@ -142,11 +142,12 @@ public class MutationTester extends SimpleApplication implements ActionListener
 
     }
   }
+
   public void setSpeed(int speed)
   {
-    this.speed=speed;
-    physicsSpace.setMaxSubSteps(4*speed);
-    settings.setFrequency(speed*60);
+    this.speed = speed;
+    physicsSpace.setMaxSubSteps(4 * speed);
+    settings.setFrequency(speed * 60);
     this.restart();
   }
 }

@@ -43,7 +43,7 @@ public enum MergeType
         @Override
         public ArrayList<Genome> merge(Genome parent1, Genome parent2)
         {
-          return SwapBlocksAndNeurons.swapBlocksAndNeurons(parent1,parent2);
+          return SwapBlocksAndNeurons.swapBlocksAndNeurons(parent1, parent2);
         }
 
         @Override
@@ -57,7 +57,7 @@ public enum MergeType
         @Override
         public ArrayList<Genome> merge(Genome parent1, Genome parent2)
         {
-          return SwapLegs.swapThoseLegs(parent1,parent2);
+          return SwapLegs.swapThoseLegs(parent1, parent2);
         }
 
         @Override
@@ -67,20 +67,21 @@ public enum MergeType
         }
       },
   CHIMERA()
-          {
-            @Override
-            public ArrayList<Genome> merge(Genome parent1, Genome parent2)
-            {
-              return Chimera.makeChimera(parent1, parent2);
-            }
+      {
+        @Override
+        public ArrayList<Genome> merge(Genome parent1, Genome parent2)
+        {
+          return Chimera.makeChimera(parent1, parent2);
+        }
 
-            @Override
-            public MergeType next()
-            {
-              return CUTANDSPLICE;
-            }
-          };
+        @Override
+        public MergeType next()
+        {
+          return CUTANDSPLICE;
+        }
+      };
 
   public abstract ArrayList<Genome> merge(Genome parent1, Genome parent2);
+
   public abstract MergeType next();
 }

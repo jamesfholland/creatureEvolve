@@ -25,18 +25,19 @@ public class HillClimbingManager
   public HillClimbingManager()
   {
   }
+
   /**
    * This returns the next mutant based on the current creature we are hill
    * climbing from.
    *
    * @param lastFitness the calculated fitness in meters.
-   *                      If this is -1, this means we are just starting and
-   *                      need to test the seed.
+   *                    If this is -1, this means we are just starting and
+   *                    need to test the seed.
    * @return the next genome to test.
    */
   public synchronized Genome getNextCreature(float lastFitness)
   {
-    if(lastFitness == -1 || currentTestee == null)
+    if (lastFitness == -1 || currentTestee == null)
     {
       buildQueue(GenePool.getWorst());
     }
@@ -44,7 +45,7 @@ public class HillClimbingManager
     {
       finalize(lastFitness);
     }
-    if(testQueue.isEmpty())
+    if (testQueue.isEmpty())
     {
       buildQueue(GenePool.getWorst());
     }
@@ -60,7 +61,7 @@ public class HillClimbingManager
     testQueue = new LinkedList<>();
     for (Mutators mutator : Mutators.values())
     {
-     // testQueue.add(mutator.mutate(genome));
+      // testQueue.add(mutator.mutate(genome));
       testQueue.add(mutator.mutate(genome));
     }
   }
@@ -76,7 +77,7 @@ public class HillClimbingManager
     if (lastFitness > parentGenome.getFitness())
     {
       System.out.println("Better Child replacing parent parent: "
-                             + parentGenome.getFitness()+"fitness: " + lastFitness);
+                             + parentGenome.getFitness() + "fitness: " + lastFitness);
       GenePool.replace(currentTestee, parentGenome);
       buildQueue(currentTestee);
       GenoFile.writeGenome(currentTestee);

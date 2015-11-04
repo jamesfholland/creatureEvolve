@@ -62,6 +62,7 @@ public class GenoFile
 
   /**
    * Returns a Genome from an arbitrary file path
+   *
    * @param filePath The path to the file.
    * @return genome found in the file.
    */
@@ -96,6 +97,7 @@ public class GenoFile
 
   /**
    * Loads all genomes into a LinkedList.
+   *
    * @return List of genomes in starter GenePool.
    */
   public static LinkedList<Genome> loadGenePool()
@@ -105,7 +107,7 @@ public class GenoFile
 
     File[] files = folder.listFiles();
 
-    if(files != null)
+    if (files != null)
     {
       for (int i = 0; i < files.length; i++)
       {
@@ -113,7 +115,9 @@ public class GenoFile
         {
           Genome genome = GenoFile.readGenomeFromPool(files[i].getName());
           if (genome != null)
+          {
             genomes.add(genome);
+          }
         }
       }
     }

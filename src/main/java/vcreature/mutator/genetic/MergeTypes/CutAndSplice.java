@@ -13,7 +13,6 @@ import java.util.Random;
 
 /**
  * This will pick a random location in the DNA of each of the parents, split the parent DNA and produce two children
- *
  */
 public class CutAndSplice
 {
@@ -46,7 +45,8 @@ public class CutAndSplice
         {
           child1.addGeneNeuron(gene.geneNeurons.get(j));
         }
-      } else
+      }
+      else
       {
         Gene gene = genes1.get(i);
         child2.addGeneBlock(gene.geneBlock);
@@ -68,7 +68,8 @@ public class CutAndSplice
         {
           child1.addGeneNeuron(gene.geneNeurons.get(j));
         }
-      } else
+      }
+      else
       {
         Gene gene = genes2.get(i);
         child2.addGeneBlock(gene.geneBlock);

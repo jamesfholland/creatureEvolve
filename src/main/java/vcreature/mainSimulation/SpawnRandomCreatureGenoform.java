@@ -1,6 +1,9 @@
 package vcreature.mainSimulation;
 
-import vcreature.genotype.*;
+import vcreature.genotype.GeneBlock;
+import vcreature.genotype.GeneNeuron;
+import vcreature.genotype.Genome;
+import vcreature.genotype.ImmutableVector;
 import vcreature.mutator.hillclimbing.Adder;
 import vcreature.mutator.hillclimbing.Randomizer;
 import vcreature.phenotype.EnumNeuronInput;
@@ -63,9 +66,18 @@ public class SpawnRandomCreatureGenoform
       int xSign = (rand.nextBoolean()) ? 1 : -1;
       int ySign = (rand.nextBoolean()) ? 1 : -1;
       int zSign = (rand.nextBoolean()) ? 1 : -1;
-      if (randomFace == 0) randPivot = new ImmutableVector(xSign, ySign, zSign * rand.nextFloat());
-      else if (randomFace == 1) randPivot = new ImmutableVector(xSign * rand.nextFloat(), ySign, zSign);
-      else if (randomFace == 2) randPivot = new ImmutableVector(xSign, ySign * rand.nextFloat(), zSign);
+      if (randomFace == 0)
+      {
+        randPivot = new ImmutableVector(xSign, ySign, zSign * rand.nextFloat());
+      }
+      else if (randomFace == 1)
+      {
+        randPivot = new ImmutableVector(xSign * rand.nextFloat(), ySign, zSign);
+      }
+      else if (randomFace == 2)
+      {
+        randPivot = new ImmutableVector(xSign, ySign * rand.nextFloat(), zSign);
+      }
 
       // System.out.println(randPivot.getVector3f().toString());
       ImmutableVector pivotA = new ImmutableVector(-randPivot.X, -randPivot.Y, -randPivot.Z);//new ImmutableVector(1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
@@ -82,15 +94,22 @@ public class SpawnRandomCreatureGenoform
       int randBlockIndex = 1;
       //System.out.println(numOfBlocks);
       //System.out.println(genome.getGENE_BLOCKS().toString());
-      if (numOfBlocks > 1) randBlockIndex = genome.getGENE_BLOCKS().get(rand.nextInt(numOfBlocks)).hashCode();
+      if (numOfBlocks > 1)
+      {
+        randBlockIndex = genome.getGENE_BLOCKS().get(rand.nextInt(numOfBlocks)).hashCode();
+      }
       int offset = -rand.nextInt(i);
       //System.out.println(offset);
       ImmutableVector randAngle = new ImmutableVector(0, 0, 0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
       ImmutableVector axis = new ImmutableVector(0, 0, 0);
       if (rand.nextBoolean())
+      {
         axis = new ImmutableVector(0, 0, 1);//new ImmutableVector(0,0,randAngle.X*randAngle.Y);//=new ImmutableVector(0,randAngle.Y*randAngle.Z,0);
+      }
       else
+      {
         axis = new ImmutableVector(1, 0, 0);//new ImmutableVector(0,0,randAngle.X*randAngle.Y);//=new ImmutableVector(0,randAngle.Y*randAngle.Z,0);
+      }
       GeneBlock leg = new GeneBlock(offset, pivotA, pivotB, leg1Size, axis, axis, randAngle);
 
       genome.addGeneBlock(leg); //Leg1 is in position 0 in the list.
@@ -122,13 +141,13 @@ public class SpawnRandomCreatureGenoform
     EnumNeuronInput dInput = randEnumNeuron();
     EnumNeuronInput eInput = randEnumNeuron();
     randNeuron = new GeneNeuron(
-            index, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
-            aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
-            rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
-            EnumOperator.ADD, //Binary operator for merging A and B
-            EnumOperator.IDENTITY, //Unary operator for after A and B are merged
-            EnumOperator.ADD, //Binary operator for merging D and E
-            EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+        index, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+        aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
+        rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+        EnumOperator.ADD, //Binary operator for merging A and B
+        EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+        EnumOperator.ADD, //Binary operator for merging D and E
+        EnumOperator.IDENTITY); //Unary operator for after D and E are merged
     return randNeuron;
   }
 
@@ -172,9 +191,9 @@ public class SpawnRandomCreatureGenoform
     ImmutableVector leg2Size = new ImmutableVector(sizeX, sizeY, sizeZ);
     GeneBlock leg2 = new GeneBlock(0, pivotC, pivotD, leg2Size, legParentAxis, legAxis, zeroVector);
     genome.addGeneBlock(leg2);
-    for (int i = 0; i <numOfBlocks ; i++)
+    for (int i = 0; i < numOfBlocks; i++)
     {
-      genome= Adder.addBlock(genome);
+      genome = Adder.addBlock(genome);
     }
 
     return genome;

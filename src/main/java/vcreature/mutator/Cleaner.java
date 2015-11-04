@@ -14,7 +14,7 @@ public class Cleaner
   {
     PhysicsSpace physicsSpace = new PhysicsSpace();
     Node node = new Node();
-    GenomeCreature creature = new GenomeCreature(physicsSpace, node,genome);
+    GenomeCreature creature = new GenomeCreature(physicsSpace, node, genome);
     return creature.getCleanGenome();
   }
 

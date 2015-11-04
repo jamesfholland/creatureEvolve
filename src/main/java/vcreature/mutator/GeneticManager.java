@@ -85,9 +85,9 @@ public class GeneticManager
     //Parent1 is currently the best so not bothering checking.
     //else if(lastFitness > currentTestee.PARENT2.getFitness() && currentTestee.PARENT2.getFitness() != -1)
     //{
-      //System.out.println("Better Child replacing weaker parent2: "
-      //                       + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
-      //GenePool.replace(currentTestee.GENOME, currentTestee.PARENT2);
+    //System.out.println("Better Child replacing weaker parent2: "
+    //                       + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
+    //GenePool.replace(currentTestee.GENOME, currentTestee.PARENT2);
     //}
   }
 

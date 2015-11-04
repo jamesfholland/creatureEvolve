@@ -34,7 +34,10 @@ public class Chimera
     {
       child1.addGeneBlock(aGenes1.geneBlock);
     }
-    for (int i = 0; i <parent1.getGENE_NEURONS().size() ; i++) {child1.addGeneNeuron(parent1.getGENE_NEURONS().get(i));}
+    for (int i = 0; i < parent1.getGENE_NEURONS().size(); i++)
+    {
+      child1.addGeneNeuron(parent1.getGENE_NEURONS().get(i));
+    }
     for (Gene aGenes2 : genes2)
     {
       GeneBlock block = aGenes2.geneBlock;
@@ -55,7 +58,10 @@ public class Chimera
     {
       child2.addGeneBlock(aGenes2.geneBlock);
     }
-    for (int i = 0; i <parent2.getGENE_NEURONS().size() ; i++) {child2.addGeneNeuron(parent2.getGENE_NEURONS().get(i));}
+    for (int i = 0; i < parent2.getGENE_NEURONS().size(); i++)
+    {
+      child2.addGeneNeuron(parent2.getGENE_NEURONS().get(i));
+    }
     for (Gene aGenes1 : genes1)
     {
       GeneBlock block = aGenes1.geneBlock;

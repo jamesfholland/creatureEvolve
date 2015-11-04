@@ -22,7 +22,7 @@ public class GenomeCreature extends Creature
   {
     super(physicsSpace, jMonkeyRootNode);
     this.genome = genome;
-    this.root = new ProtoBlock(genome.getRootSize(),genome.getRootEulerAngles());
+    this.root = new ProtoBlock(genome.getRootSize(), genome.getRootEulerAngles());
 
     ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
     ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
@@ -37,7 +37,7 @@ public class GenomeCreature extends Creature
     //Add neurons
     for (GeneNeuron geneNeuron : geneNeurons)
     {
-      if(geneNeuron.BLOCK_INDEX >= 0 && geneNeuron.BLOCK_INDEX < protoBlocks.size())
+      if (geneNeuron.BLOCK_INDEX >= 0 && geneNeuron.BLOCK_INDEX < protoBlocks.size())
       {
         protoBlocks.get(geneNeuron.BLOCK_INDEX).addNeuron(new ProtoNeuron(geneNeuron));
       }
@@ -65,7 +65,7 @@ public class GenomeCreature extends Creature
       }
 
       //if(geneBlock.EULER_ANGLES==null) protoBlocks.get(i).initializeBlock(geneBlock.SIZE, parent, geneBlock.PARENT_PIVOT, geneBlock.PIVOT, geneBlock.PARENT_HINGE_AXIS, geneBlock.HINGE_AXIS);
-       protoBlocks.get(i).initializeBlock(geneBlock.SIZE, parent, geneBlock.PARENT_PIVOT, geneBlock.PIVOT, geneBlock.PARENT_HINGE_AXIS, geneBlock.HINGE_AXIS,geneBlock.EULER_ANGLES);
+      protoBlocks.get(i).initializeBlock(geneBlock.SIZE, parent, geneBlock.PARENT_PIVOT, geneBlock.PIVOT, geneBlock.PARENT_HINGE_AXIS, geneBlock.HINGE_AXIS, geneBlock.EULER_ANGLES);
     }
 
     //Add Neurons

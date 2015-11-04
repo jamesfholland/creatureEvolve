@@ -1,4 +1,3 @@
-
 package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.*;
@@ -44,13 +43,16 @@ public class ScaleSingleBlock
       if (i == pickRandom)
       {
         scaledSize = new ImmutableVector(block.SIZE.X * scaler,
-            block.SIZE.Y * scaler, block.SIZE.Z * scaler);
-        if (GenoTools.isNotValidBlockSize(scaledSize)) return genome;
+                                         block.SIZE.Y * scaler, block.SIZE.Z * scaler);
+        if (GenoTools.isNotValidBlockSize(scaledSize))
+        {
+          return genome;
+        }
 
         scaledBlock =
             new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
-                scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
-                block.EULER_ANGLES);
+                          scaledSize, block.PARENT_HINGE_AXIS, block.HINGE_AXIS,
+                          block.EULER_ANGLES);
       }
       else
       {
@@ -88,8 +90,11 @@ public class ScaleSingleBlock
     ImmutableVector rootSize = genome.getRootSize();
     scaledSize =
         new ImmutableVector(rootSize.getX() * scaler, rootSize.getY() * scaler,
-            rootSize.getZ() * scaler);
-    if (GenoTools.isNotValidBlockSize(scaledSize)) return genome;
+                            rootSize.getZ() * scaler);
+    if (GenoTools.isNotValidBlockSize(scaledSize))
+    {
+      return genome;
+    }
 
     newGenome = new Genome(scaledSize, genome.getRootEulerAngles());
     geneBlocks = genome.getGENE_BLOCKS();

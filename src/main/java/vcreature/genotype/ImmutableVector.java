@@ -95,10 +95,19 @@ public class ImmutableVector
     return Objects.hash(X, Y, Z);
   }
 
-  public float getX() { return this.X; }
+  public float getX()
+  {
+    return this.X;
+  }
 
-  public float getY() { return this.Y; }
+  public float getY()
+  {
+    return this.Y;
+  }
 
-  public float getZ() { return this.Z; }
+  public float getZ()
+  {
+    return this.Z;
+  }
 
 }

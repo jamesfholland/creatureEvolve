@@ -1,6 +1,7 @@
 package vcreature.genotype;
 
-import vcreature.phenotype.*;
+import vcreature.phenotype.EnumNeuronInput;
+import vcreature.phenotype.EnumOperator;
 
 import java.util.ArrayList;
 
@@ -35,7 +36,7 @@ public class TessMonster extends Genome
     ImmutableVector tempSize;
 
     ImmutableVector parentSize = rootSize;
-    ArrayList<ImmutableVector> parentPivots = new ArrayList <>();
+    ArrayList<ImmutableVector> parentPivots = new ArrayList<>();
 
     parentPivots.add(new ImmutableVector(1, -1, 0)); //Center of hinge in the block's coordinates
 
@@ -53,12 +54,12 @@ public class TessMonster extends Genome
 
 
     //for (ImmutableVector parentPivot : parentPivots)
-    for (int j = 0; j <parentPivots.size() ; j++)
+    for (int j = 0; j < parentPivots.size(); j++)
     {
-      ImmutableVector parentPivot=parentPivots.get(j);
+      ImmutableVector parentPivot = parentPivots.get(j);
       childPivot1 = new ImmutableVector(-(parentPivot.X), -(parentPivot.Y), -(parentPivot.Z));
-     // childPivot2 = new ImmutableVector(-(childPivot1.X), -(childPivot1.Y), -(childPivot1.Z));
-      if(Math.abs(parentPivot.X)==1)
+      // childPivot2 = new ImmutableVector(-(childPivot1.X), -(childPivot1.Y), -(childPivot1.Z));
+      if (Math.abs(parentPivot.X) == 1)
       {
         legParentAxis = Axis.UNIT_Z;
         legAxis = Axis.UNIT_Z;
@@ -74,7 +75,7 @@ public class TessMonster extends Genome
       int alternator = 1;
       for (int i = 0; i < numLegJoints; i++)
       {
-        if ((i)== 0)
+        if ((i) == 0)
         {
           leg1 = new GeneBlock(i, parentPivot, childPivot1, tempSize, legParentAxis.getImmutableVector(), legAxis.getImmutableVector(), zeroVector);
         }
@@ -82,8 +83,8 @@ public class TessMonster extends Genome
         {
           leg1 = new GeneBlock(-1, parentPivot, childPivot1, tempSize, legParentAxis.getImmutableVector(), legAxis.getImmutableVector(), zeroVector);
         }
-        legNeuron1 = new GeneNeuron(i*(j+1), EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT, EnumNeuronInput.CONSTANT,
-            null, 0, 0, 5, alternator * Float.MAX_VALUE, 0, EnumOperator.ADD, EnumOperator.IDENTITY, EnumOperator.ADD, EnumOperator.IDENTITY);
+        legNeuron1 = new GeneNeuron(i * (j + 1), EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT, EnumNeuronInput.CONSTANT,
+                                    null, 0, 0, 5, alternator * Float.MAX_VALUE, 0, EnumOperator.ADD, EnumOperator.IDENTITY, EnumOperator.ADD, EnumOperator.IDENTITY);
         alternator = -(alternator);
         tempGeneNeurons.add(legNeuron1);
         this.addGeneBlock(leg1);

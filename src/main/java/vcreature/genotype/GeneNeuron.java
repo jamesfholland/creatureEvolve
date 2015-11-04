@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * This class contains data required for building a neuron.
  * This is immutable all members are final.
- *
+ * <p>
  * Types (Neuron trigger [height, touch, time, constant, joint angle])
  * Input values (inputs for each type if constant)
  * <p>
@@ -90,37 +90,68 @@ public final class GeneNeuron
 
   /**
    * Create a new GeneNeuron nothing is modifiable after creation. This object is immutable.
+   *
    * @param blockIndex The index of the corresponding block found in the GeneBlock list. If index is out of range this neuron is ignored, but still kept for diversity.
-   * @param aType A's input type
-   * @param bType B's input type
-   * @param cType C's input type. This is the standard AB are being compared to, a constant is typical.
-   * @param dType D's input type
-   * @param eType E's input type
-   * @param aValue A's value
-   * @param bValue B's value
-   * @param cValue C's value
-   * @param dValue D's value
-   * @param eValue E's value
-   * @param binaryAB binary operator to merge A and B
-   * @param unaryAB unary operator applied after A and B are merged and before comparison to C
-   * @param binaryDE binary operator to merge D and E
-   * @param unaryDE unary operator applied before the merged D and E are sent to the hinge.
+   * @param aType      A's input type
+   * @param bType      B's input type
+   * @param cType      C's input type. This is the standard AB are being compared to, a constant is typical.
+   * @param dType      D's input type
+   * @param eType      E's input type
+   * @param aValue     A's value
+   * @param bValue     B's value
+   * @param cValue     C's value
+   * @param dValue     D's value
+   * @param eValue     E's value
+   * @param binaryAB   binary operator to merge A and B
+   * @param unaryAB    unary operator applied after A and B are merged and before comparison to C
+   * @param binaryDE   binary operator to merge D and E
+   * @param unaryDE    unary operator applied before the merged D and E are sent to the hinge.
    */
   public GeneNeuron(int blockIndex, EnumNeuronInput aType, EnumNeuronInput bType, EnumNeuronInput cType,
                     EnumNeuronInput dType, EnumNeuronInput eType, float aValue, float bValue, float cValue, float dValue, float eValue,
                     EnumOperator binaryAB, EnumOperator unaryAB, EnumOperator binaryDE, EnumOperator unaryDE)
   {
     BLOCK_INDEX = blockIndex;
-    if(aType == null) A_TYPE = EnumNeuronInput.CONSTANT;
-    else A_TYPE = aType;
-    if(bType == null) B_TYPE = EnumNeuronInput.CONSTANT;
-    else B_TYPE = bType;
-    if(cType == null) C_TYPE = EnumNeuronInput.CONSTANT;
-    else C_TYPE = cType;
-    if(dType == null) D_TYPE = EnumNeuronInput.CONSTANT;
-    else D_TYPE = dType;
-    if(eType == null) E_TYPE = EnumNeuronInput.CONSTANT;
-    else E_TYPE = eType;
+    if (aType == null)
+    {
+      A_TYPE = EnumNeuronInput.CONSTANT;
+    }
+    else
+    {
+      A_TYPE = aType;
+    }
+    if (bType == null)
+    {
+      B_TYPE = EnumNeuronInput.CONSTANT;
+    }
+    else
+    {
+      B_TYPE = bType;
+    }
+    if (cType == null)
+    {
+      C_TYPE = EnumNeuronInput.CONSTANT;
+    }
+    else
+    {
+      C_TYPE = cType;
+    }
+    if (dType == null)
+    {
+      D_TYPE = EnumNeuronInput.CONSTANT;
+    }
+    else
+    {
+      D_TYPE = dType;
+    }
+    if (eType == null)
+    {
+      E_TYPE = EnumNeuronInput.CONSTANT;
+    }
+    else
+    {
+      E_TYPE = eType;
+    }
 
     A_VALUE = aValue;
     B_VALUE = bValue;
@@ -135,8 +166,9 @@ public final class GeneNeuron
 
   /**
    * Creates a copy except for the blockindex.
+   *
    * @param blockIndex new blockindex we want.
-   * @param copy GeneNeuron to copy.
+   * @param copy       GeneNeuron to copy.
    */
   public GeneNeuron(int blockIndex, GeneNeuron copy)
   {
@@ -160,6 +192,7 @@ public final class GeneNeuron
 
   /**
    * Constructs a GeneNeuron from file input.
+   *
    * @param fileIn the stream we are reading from
    * @throws IOException handled in GenoFile
    */
@@ -185,6 +218,7 @@ public final class GeneNeuron
 
   /**
    * Writes a GeneNeuron to a file output stream
+   *
    * @param fileOut our output stream
    * @throws IOException handled in GenoFile
    */
@@ -208,8 +242,9 @@ public final class GeneNeuron
     fileOut.write(UNARY_DE.name() + "\n");
   }
 
-   /**
+  /**
    * This is overridden to maintain stability in genome hashes between runs.
+   *
    * @return an integer that is the hash.
    */
   @Override

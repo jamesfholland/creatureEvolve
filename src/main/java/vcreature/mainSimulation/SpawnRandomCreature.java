@@ -1,17 +1,18 @@
 package vcreature.mainSimulation;
 
+import com.jme3.bounding.BoundingBox;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.collision.CollisionResults;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
-//import javafx.geometry.BoundingBox;
-import com.jme3.bounding.BoundingBox;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.Neuron;
 
 import java.util.Random;
+
+//import javafx.geometry.BoundingBox;
 
 /**
  * Created by Dayloki on 10/8/2015.
@@ -60,13 +61,13 @@ public class SpawnRandomCreature extends Creature
       Block tempBlock = getBlockByID(rand.nextInt(getNumberOfBodyBlocks()));
       // Block tempBlock=getBlockByID(count++);//rand.nextInt(getNumberOfBodyBlocks()));
 //      Geometry tempGeometry= tempBlock.getGeometry();
-      Vector3f tempCenter=new Vector3f(0,0,0);
-       tempCenter = tempBlock.getCenter(tempCenter);
+      Vector3f tempCenter = new Vector3f(0, 0, 0);
+      tempCenter = tempBlock.getCenter(tempCenter);
       //System.out.println(tempBlock.getStartCenter().toString());
       Vector3f legSize = new Vector3f(sizeX, sizeY, sizeZ);
       // Vector3f legCenter=new Vector3f(tempCenter.getX()*xSign+sizeX,tempCenter.getX()+tempBlock.getSizeY()+sizeY+rootHeight,tempBlock.getSize()*zSign+sizeZ);
       Vector3f legCenter = new Vector3f(xSign * tempCenter.getX() + tempBlock.getSizeX() + sizeX, ySign * tempCenter.getY() +
-              tempBlock.getSizeY() + sizeY, zSign * tempCenter.getZ() + tempBlock.getSize() + sizeZ);
+          tempBlock.getSizeY() + sizeY, zSign * tempCenter.getZ() + tempBlock.getSize() + sizeZ);
       // Vector3f pivotA = new Vector3f( -xSign*tempBlock.getSizeX(),-ySign*tempBlock.getSizeY(),-zSign*tempBlock.getSize());
       Vector3f pivotA = new Vector3f(tempBlock.getSizeX() / 2, tempBlock.getSizeY() / 2, tempBlock.getSize() / 2);
       Vector3f pivotB = new Vector3f(-xSign * sizeX, -ySign * sizeY, 0 - zSign * sizeZ);
@@ -92,7 +93,7 @@ public class SpawnRandomCreature extends Creature
         }
 
         Neuron positveMax = new Neuron(EnumNeuronInput.TIME, null, EnumNeuronInput.CONSTANT,
-                EnumNeuronInput.CONSTANT, null);
+                                       EnumNeuronInput.CONSTANT, null);
         positveMax.setInputValue(Neuron.C, 10);
         positveMax.setInputValue(Neuron.D, Float.MAX_VALUE);
         nextLeg.addNeuron(positveMax);
@@ -103,7 +104,7 @@ public class SpawnRandomCreature extends Creature
   public boolean notIntersecting()
   {
     CollisionResults results = new CollisionResults();
-    Vector3f tempVector =new Vector3f(0,0,0);
+    Vector3f tempVector = new Vector3f(0, 0, 0);
     for (int i = 0; i < getNumberOfBodyBlocks() - 1; i++)
     {
       Block tempBlock = getBlockByID(i);
@@ -113,7 +114,10 @@ public class SpawnRandomCreature extends Creature
 
         BoundingBox tempBlock2Volume = new BoundingBox(tempBlock2.getStartCenter(tempVector), tempBlock2.getSizeX(), tempBlock2.getSizeY(), tempBlock2.getSize());
         System.out.println(tempBlock2.getGeometry().getLocalTranslation().toString());
-        if(tempBlock.getGeometry()==null) System.out.println("DKLS:JFDSA");
+        if (tempBlock.getGeometry() == null)
+        {
+          System.out.println("DKLS:JFDSA");
+        }
         tempBlock.getGeometry().collideWith(tempBlock2Volume, results);
         if (results.size() > 0)
         {

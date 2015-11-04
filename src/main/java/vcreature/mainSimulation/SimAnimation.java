@@ -40,7 +40,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
 
-//  private Genome fileGenome = SpawnCreatureGenoform.creature();
+  //  private Genome fileGenome = SpawnCreatureGenoform.creature();
   private Genome fileGenome;
 
   private Manager manager;
@@ -67,7 +67,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   @Override
   public void simpleInitApp()
   {
-   // GenoFile.writeGenome(fileGenome);
+    // GenoFile.writeGenome(fileGenome);
 
     BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);

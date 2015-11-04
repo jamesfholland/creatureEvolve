@@ -21,12 +21,12 @@ public class Adder
   {
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
-    Random rand=new Random();
+    Random rand = new Random();
     float min = .501f;
     float max = 3f;
 
-    geneBlocks=genome.getGENE_BLOCKS();
-    geneNeurons=genome.getGENE_NEURONS();
+    geneBlocks = genome.getGENE_BLOCKS();
+    geneNeurons = genome.getGENE_NEURONS();
     int index = rand.nextInt(geneBlocks.size());
 
 
@@ -38,7 +38,7 @@ public class Adder
 
     sizeX = rand.nextFloat() * (max - min) + min;
     sizeY = rand.nextFloat() * (max - min) + min;
-    if(sizeX>1f && sizeY>1f)
+    if (sizeX > 1f && sizeY > 1f)
     {
       sizeZ = rand.nextFloat() + min;
     }
@@ -46,36 +46,45 @@ public class Adder
     {
       sizeZ = rand.nextFloat() * (max - min) + min;
     }
-    ImmutableVector size=new ImmutableVector(sizeX,sizeY,sizeZ);
-    ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
-    int parentOffset= -1 * index;
+    ImmutableVector size = new ImmutableVector(sizeX, sizeY, sizeZ);
+    ImmutableVector randAngle = new ImmutableVector(0, 0, 0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
+    int parentOffset = -1 * index;
     int xSign = (rand.nextBoolean()) ? 1 : -1;
-    int ySign =(rand.nextBoolean()) ? 1 : -1;
+    int ySign = (rand.nextBoolean()) ? 1 : -1;
     int zSign = (rand.nextBoolean()) ? 1 : -1;
-    ImmutableVector randPivot= new ImmutableVector(0, 0, 0);
-    int randomFace=rand.nextInt(2);
+    ImmutableVector randPivot = new ImmutableVector(0, 0, 0);
+    int randomFace = rand.nextInt(2);
 
-    if(randomFace==0)      randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign);
-    else if(randomFace==1) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign);
-    else if(randomFace==2) randPivot=new ImmutableVector(xSign,ySign,zSign*rand.nextFloat());
+    if (randomFace == 0)
+    {
+      randPivot = new ImmutableVector(xSign * rand.nextFloat(), ySign, zSign);
+    }
+    else if (randomFace == 1)
+    {
+      randPivot = new ImmutableVector(xSign, ySign * rand.nextFloat(), zSign);
+    }
+    else if (randomFace == 2)
+    {
+      randPivot = new ImmutableVector(xSign, ySign, zSign * rand.nextFloat());
+    }
 
-    ImmutableVector parentPivot=new ImmutableVector(-randPivot.X,-randPivot.Y,-randPivot.Z);
+    ImmutableVector parentPivot = new ImmutableVector(-randPivot.X, -randPivot.Y, -randPivot.Z);
 
-    if(rand.nextBoolean())
+    if (rand.nextBoolean())
     {
       randBlock = new GeneBlock(parentOffset, randPivot, parentPivot, size,
-          Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
-          randAngle);
+                                Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
+                                randAngle);
     }
     else
     {
       randBlock = new GeneBlock(parentOffset, randPivot, parentPivot, size,
-          Axis.UNIT_X.getImmutableVector(), Axis.UNIT_X.getImmutableVector(),
-          randAngle);
+                                Axis.UNIT_X.getImmutableVector(), Axis.UNIT_X.getImmutableVector(),
+                                randAngle);
     }
 
     geneBlocks.add(randBlock);
-    Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
+    Genome newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
     for (GeneBlock geneBlock : geneBlocks)
     {
       newGenome.addGeneBlock(geneBlock);
@@ -85,7 +94,7 @@ public class Adder
     {
       newGenome.addGeneNeuron(geneNeuron);
     }
-    newGenome=Randomizer.randomizeNeuron(newGenome,geneBlocks.size()-1);
+    newGenome = Randomizer.randomizeNeuron(newGenome, geneBlocks.size() - 1);
     return newGenome;
   }
 }

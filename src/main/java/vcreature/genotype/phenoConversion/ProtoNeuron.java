@@ -4,8 +4,8 @@ import vcreature.genotype.GeneNeuron;
 import vcreature.phenotype.Neuron;
 
 /**
- *  This class handles creation of neurons to be added to a block. ProtoNeurons are stored in ProtoBlocks.
- *  Because of the similiarity between GeneNeurons and Neurons, this class is able to extend Neuron.
+ * This class handles creation of neurons to be added to a block. ProtoNeurons are stored in ProtoBlocks.
+ * Because of the similiarity between GeneNeurons and Neurons, this class is able to extend Neuron.
  */
 public class ProtoNeuron extends Neuron
 {

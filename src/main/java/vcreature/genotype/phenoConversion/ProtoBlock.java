@@ -1,8 +1,6 @@
 package vcreature.genotype.phenoConversion;
 
 import com.jme3.bounding.BoundingBox;
-import com.jme3.math.Matrix4f;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
@@ -13,9 +11,7 @@ import vcreature.phenotype.Block;
 import vcreature.phenotype.Creature;
 import vcreature.phenotype.Neuron;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * This is a ProtoBlock for the genotype to phenotype conversion.
@@ -379,7 +375,7 @@ public class ProtoBlock
     }
 
     GeneBlock block = new GeneBlock(parentOffset, this.pivotParentOffset, this.pivotOffset, new ImmutableVector(this
-        .size), new ImmutableVector(this.axis), new ImmutableVector(this.axis), new ImmutableVector(this.eulerAngles));
+                                                                                                                    .size), new ImmutableVector(this.axis), new ImmutableVector(this.axis), new ImmutableVector(this.eulerAngles));
     genome.addGeneBlock(block);
 
     for (Neuron protoNeuron : neurons)

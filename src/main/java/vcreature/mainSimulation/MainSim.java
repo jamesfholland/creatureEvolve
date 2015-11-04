@@ -1,4 +1,3 @@
-
 package vcreature.mainSimulation;
 
 import com.jme3.math.Vector3f;
@@ -40,7 +39,7 @@ public class MainSim
         Manager manager = new Manager();
         MutationTester mutationTester = new MutationTester(manager);
         AppSettings settings = new AppSettings(true);
-        settings.setResolution(1024,768);
+        settings.setResolution(1024, 768);
         settings.setSamples(4);
         settings.setVSync(true);
         settings.setFrequency(60);
@@ -48,7 +47,7 @@ public class MainSim
         mutationTester.setShowSettings(false);
         mutationTester.setSettings(settings);
         mutationTester.start(JmeContext.Type.Headless);
-        if (args.length== 0) // if the user enters ANY command line argument, the GUI will NOT run
+        if (args.length == 0) // if the user enters ANY command line argument, the GUI will NOT run
         {
           System.out.println("Starting App");
           new SimFrame(manager);

@@ -1,22 +1,24 @@
 package vcreature.mainSimulation;
 
 import com.jme3.system.JmeCanvasContext;
+import vcreature.genotype.Genome;
+import vcreature.mutator.Manager;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
-import vcreature.genotype.Genome;
-import vcreature.mutator.Manager;
 
 /**
  * Created by Tess Daughton on 10/18/2015
  * JFrame containing SimpleApp
- * **/
+ **/
 
 public class SimFrame extends JFrame implements ActionListener
 {
@@ -214,9 +216,18 @@ public class SimFrame extends JFrame implements ActionListener
       System.out.println("JComboBox");
       JComboBox cb = (JComboBox) source;
       String thread = (String) cb.getSelectedItem();
-      if (thread.equals("Hill Climbing")) manager.setCurrentMutationType(Manager.MutationType.HILL);
-      else if (thread.equals("Genetic Algorithm")) manager.setCurrentMutationType(Manager.MutationType.GENETIC);
-      else if(thread.equals("Genetic Algorithm/Hill Climbing")) manager.setCurrentMutationType(Manager.MutationType.GENETICHILL);
+      if (thread.equals("Hill Climbing"))
+      {
+        manager.setCurrentMutationType(Manager.MutationType.HILL);
+      }
+      else if (thread.equals("Genetic Algorithm"))
+      {
+        manager.setCurrentMutationType(Manager.MutationType.GENETIC);
+      }
+      else if (thread.equals("Genetic Algorithm/Hill Climbing"))
+      {
+        manager.setCurrentMutationType(Manager.MutationType.GENETICHILL);
+      }
       animation.restart();
     }
   }

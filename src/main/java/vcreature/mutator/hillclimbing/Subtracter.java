@@ -17,35 +17,40 @@ public class Subtracter
    * Takes a genome, then takes a block and subtracts it from the creature.
    *
    * @param genome a genome of a current creature that you want to change
-   * @return a new genome with a block that has been subtracted*/
+   * @return a new genome with a block that has been subtracted
+   */
   public static Genome subtractBlock(Genome genome)
   {
-    Random rand=new Random();
-    Genome newGenome=subtractBlock(genome,rand.nextInt(genome.getGENE_BLOCKS().size()));
+    Random rand = new Random();
+    Genome newGenome = subtractBlock(genome, rand.nextInt(genome.getGENE_BLOCKS().size()));
     return newGenome;
   }
-  public static Genome subtractBlock(Genome genome,int index)
+
+  public static Genome subtractBlock(Genome genome, int index)
   {
-  ArrayList<GeneBlock> geneBlocks=genome.getGENE_BLOCKS();
-  ArrayList<GeneNeuron> geneNeurons=genome.getGENE_NEURONS();
-  geneBlocks.remove(index);
+    ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
+    ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
+    geneBlocks.remove(index);
 
 
-  Genome newGenome=new Genome(genome.getRootSize(),genome.getRootEulerAngles());
-  for (int i = 0; i <geneBlocks.size(); i++)
-  {
-    if(i!=index)
+    Genome newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
+    for (int i = 0; i < geneBlocks.size(); i++)
     {
-      newGenome.addGeneBlock(geneBlocks.get(i));
-
-      for (int j = 0; j < geneNeurons.size()-1; j++)
+      if (i != index)
       {
-        if (geneNeurons.get(j).BLOCK_INDEX == i) newGenome.addGeneNeuron(geneNeurons.get(j));
+        newGenome.addGeneBlock(geneBlocks.get(i));
+
+        for (int j = 0; j < geneNeurons.size() - 1; j++)
+        {
+          if (geneNeurons.get(j).BLOCK_INDEX == i)
+          {
+            newGenome.addGeneNeuron(geneNeurons.get(j));
+          }
+        }
       }
     }
+    return newGenome;
   }
-  return newGenome;
-}
 
 //  public static Genome subtractNeurons(Genome genome)
 //  {

@@ -2,7 +2,6 @@ package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.*;
 import vcreature.mainSimulation.MainSim;
-import vcreature.phenotype.EnumNeuronInput;
 
 import java.util.ArrayList;
 
@@ -12,7 +11,6 @@ import java.util.ArrayList;
  */
 public class Duplicator
 {
-
 
 
   /**
@@ -35,7 +33,10 @@ public class Duplicator
   {
     Genome newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
     ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
-    for (GeneBlock geneBlock : geneBlocks) newGenome.addGeneBlock(geneBlock);
+    for (GeneBlock geneBlock : geneBlocks)
+    {
+      newGenome.addGeneBlock(geneBlock);
+    }
     ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
     int randIndex = MainSim.RANDOM.nextInt(geneBlocks.size());
     GeneBlock block = geneBlocks.get(randIndex);
@@ -71,8 +72,8 @@ public class Duplicator
       {
         GeneNeuron n = geneNeurons.get(j);
         n = new GeneNeuron(n.BLOCK_INDEX, n.A_TYPE, n.B_TYPE, n.C_TYPE,
-            n.D_TYPE, n.E_TYPE, n.A_VALUE, n.B_VALUE, n.C_VALUE, n.D_VALUE * -1,
-            n.E_VALUE, n.BINARY_AB, n.UNARY_AB, n.BINARY_DE, n.UNARY_DE);
+                           n.D_TYPE, n.E_TYPE, n.A_VALUE, n.B_VALUE, n.C_VALUE, n.D_VALUE * -1,
+                           n.E_VALUE, n.BINARY_AB, n.UNARY_AB, n.BINARY_DE, n.UNARY_DE);
         {
           if (j == geneNeurons.size() - 1)
           {
@@ -91,7 +92,8 @@ public class Duplicator
   /**
    * Find if any blocks share the pivot parent_pivot
    * This doesn't care who the parent block is in the comparison. Is this a bug?
-   * @param pivot1 our pivot
+   *
+   * @param pivot1     our pivot
    * @param geneBlocks list of blocks to compare pivots to.
    * @return true if any other blocks happen to have the same pivot location
    */
@@ -133,9 +135,10 @@ public class Duplicator
 
   /**
    * Returns an array containing the pivot and the size.
+   *
    * @param randomPivot location on parent
-   * @param geneBlocks list of geneBlocks to squeeze into
-   * @param block block we are duplicating.
+   * @param geneBlocks  list of geneBlocks to squeeze into
+   * @param block       block we are duplicating.
    * @return array of pivot location and size {available pivot, placement pivot, size}
    */
   private static ImmutableVector[] findAvailablePivot(ImmutableVector randomPivot, ArrayList<GeneBlock> geneBlocks, GeneBlock block)

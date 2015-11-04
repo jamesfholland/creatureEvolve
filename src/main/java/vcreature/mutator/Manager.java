@@ -76,7 +76,7 @@ public class Manager
       {
         minFitness = Math.min(lastFitness, firstTest);
         //Add our change in fitness, unless its parent was an untested genome.
-        if(fitnessBar != -1)
+        if (fitnessBar != -1)
         {
           deltaFitness += minFitness - fitnessBar;
         }
@@ -117,11 +117,11 @@ public class Manager
   private float determineSwitch(float fitness)
   {
     float returnFitness = fitness;
-    switch(currentMutationType)
+    switch (currentMutationType)
     {
       //Forced HillClimbing
       case HILL:
-        switch(currentHeuristic)
+        switch (currentHeuristic)
         {
           case GENETICALGORITHM:
             switchToHILL(fitness);
@@ -131,7 +131,7 @@ public class Manager
         break;
       //Force Genetic Algorithm
       case GENETIC:
-        switch(currentHeuristic)
+        switch (currentHeuristic)
         {
           case HILLCLIMB:
             switchToGENETICALG(fitness);
@@ -141,18 +141,18 @@ public class Manager
       //Switching permitted
       case GENETICHILL:
       {
-        switch(currentHeuristic)
+        switch (currentHeuristic)
         {
           case GENETICALGORITHM:
-            if((System.currentTimeMillis() - startTime) > 2000*60)
+            if ((System.currentTimeMillis() - startTime) > 2000 * 60)
             {
               switchToHILL(fitness);
               returnFitness = -1;
             }
             break;
           case HILLCLIMB:
-            if(this.getFitnessPerMinute() <= this.switchingThreshhold
-                && (System.currentTimeMillis() - startTime) > 2000*60)
+            if (this.getFitnessPerMinute() <= this.switchingThreshhold
+                && (System.currentTimeMillis() - startTime) > 2000 * 60)
             {
               switchToGENETICALG(fitness);
               returnFitness = -1;
@@ -163,7 +163,7 @@ public class Manager
       }
     }
     //We switched now reset time.
-    if(returnFitness == -1)
+    if (returnFitness == -1)
     {
       System.out.println("Switched to " + currentHeuristic.name());
       deltaFitness = 0;
@@ -175,7 +175,7 @@ public class Manager
 
   public float getFitnessPerMinute()
   {
-    return (deltaFitness)*1000/(System.currentTimeMillis() - startTime);
+    return (deltaFitness) * 1000 / (System.currentTimeMillis() - startTime);
   }
 
   public void setCurrentMutationType(MutationType mutationType)

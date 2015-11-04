@@ -5,7 +5,6 @@ import vcreature.genotype.Genome;
 import vcreature.genotype.GenomeComparator;
 
 import java.util.LinkedList;
-import java.util.Random;
 
 /**
  * GenePool manages the list of creatures that exist.
@@ -19,6 +18,7 @@ public class GenePool
    */
   private static final LinkedList<Genome> GENOMES;
   private static final int MINIMUM_POOL_SIZE = 1000;
+
   static
   {
     GENOMES = GenoFile.loadGenePool();
@@ -26,13 +26,14 @@ public class GenePool
     {
       synchronized (GENOMES)
       {
-        GENOMES.add(SpawnRandomCreatureGenoform.createCreature(MainSim.RANDOM.nextInt(2)+2));
+        GENOMES.add(SpawnRandomCreatureGenoform.createCreature(MainSim.RANDOM.nextInt(2) + 2));
       }
     }
   }
 
   /**
    * Return a random Genome from the pool.
+   *
    * @return a Genome
    */
   public static Genome getRandom()
@@ -46,9 +47,10 @@ public class GenePool
 
   /**
    * Replace 2 parents with a child.
+   *
    * @param newGenome Genome to store
-   * @param parent1 Genome to remove
-   * @param parent2 Genome to remove
+   * @param parent1   Genome to remove
+   * @param parent2   Genome to remove
    */
   public static void replace(Genome newGenome, Genome parent1, Genome parent2)
   {
@@ -62,8 +64,9 @@ public class GenePool
 
   /**
    * Replace a single parent with a child Genome
+   *
    * @param newGenome Genome to store
-   * @param parent Genome to replace
+   * @param parent    Genome to replace
    */
   public static void replace(Genome newGenome, Genome parent)
   {
@@ -76,6 +79,7 @@ public class GenePool
 
   /**
    * Adds a Genome to the pool
+   *
    * @param newGenome Genome to add
    */
   public static void add(Genome newGenome)
@@ -89,6 +93,7 @@ public class GenePool
   /**
    * Sorts the GenePool.
    * Returns the best creature in the pool.
+   *
    * @return a genome.
    */
   public static Genome getBest()
@@ -102,6 +107,7 @@ public class GenePool
 
   /**
    * Returns a copy of the GenePool.
+   *
    * @return The GenePool as a LinkedList.
    */
   public static LinkedList<Genome> getCopy()
@@ -114,6 +120,7 @@ public class GenePool
 
   /**
    * Returns the current size of the pool
+   *
    * @return number of elements in the pool
    */
   public static int getPoolSize()
@@ -126,6 +133,7 @@ public class GenePool
 
   /**
    * Get the worst Genome in the pool
+   *
    * @return worst Genome
    */
   public static Genome getWorst()
