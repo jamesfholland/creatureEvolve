@@ -88,17 +88,24 @@ public class Randomizer
     for (int i = 0; i < geneBlocks.size(); i++)
     {
       newGenome.addGeneBlock(geneBlocks.get(i));
-      for (int j = 0; j < geneNeurons.size(); j++)
+      for (GeneNeuron geneNeuron : geneNeurons)
       {
-        if (geneNeurons.get(j).BLOCK_INDEX == i)
+        if (geneNeuron.BLOCK_INDEX == i)
         {
-          newGenome.addGeneNeuron(geneNeurons.get(j));
+          newGenome.addGeneNeuron(geneNeuron);
         }
       }
     }
     return newGenome;
   }
 
+  /**
+   * Randomize a selected neuron.
+   *
+   * @param genome genome to modify
+   * @param index  the index in the neuron list to randomize
+   * @return mutated genome.
+   */
   public static Genome randomizeNeuron(Genome genome, int index)
   {
     ArrayList<GeneBlock> geneBlocks;
@@ -110,9 +117,7 @@ public class Randomizer
     geneNeurons = genome.getGENE_NEURONS();
 
     int sign = (rand.nextBoolean()) ? 1 : -1;
-    ImmutableVector pivot = geneBlocks.get(index).PIVOT;
-    // if(Math.abs(pivot.X)==1) sign=(int)pivot.X;
-    //else if(Math.abs(pivot.Z)==1) sign=(int)pivot.Z;
+
     EnumNeuronInput aInput = EnumNeuronInput.TIME;
     EnumNeuronInput bInput = EnumNeuronInput.CONSTANT;
     EnumNeuronInput cInput = EnumNeuronInput.CONSTANT;
@@ -135,13 +140,13 @@ public class Randomizer
         EnumOperator.ADD, //Binary operator for merging D and E
         EnumOperator.IDENTITY); //Unary operator for after D and E are merged
 
-    for (int i = 0; i < geneBlocks.size(); i++)
+    for (GeneBlock geneBlock : geneBlocks)
     {
-      newGenome.addGeneBlock(geneBlocks.get(i));
+      newGenome.addGeneBlock(geneBlock);
     }
-    for (int j = 0; j < geneNeurons.size(); j++)
+    for (GeneNeuron geneNeuron : geneNeurons)
     {
-      newGenome.addGeneNeuron(geneNeurons.get(j));
+      newGenome.addGeneNeuron(geneNeuron);
     }
     newGenome.addGeneNeuron(randNeuron2);
     newGenome.addGeneNeuron(randNeuron);
