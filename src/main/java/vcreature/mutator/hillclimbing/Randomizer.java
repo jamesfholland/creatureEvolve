@@ -15,6 +15,7 @@ public class Randomizer
   /**
    * Randomizes a block in creature, but keeps sizes below 3 meters.
    * It will also try to make the block more flat than cube shape.
+   *
    * @param genome a genome of a current creature that you want to change
    * @return a new genome with a slight change
    */

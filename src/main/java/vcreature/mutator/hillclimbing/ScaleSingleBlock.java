@@ -1,5 +1,6 @@
 
 package vcreature.mutator.hillclimbing;
+
 import vcreature.genotype.*;
 import vcreature.mainSimulation.MainSim;
 import vcreature.phenotype.Block;
@@ -16,15 +17,16 @@ public class ScaleSingleBlock
   /**
    * Scales a random block in the genome
    * If the Scale makes the creature invalid, we return the given genome.
-   * @param genome genome we are mutating
-   * @return new Genome with scaled block.
+   *
+   * @param genome a genome of a current creature that you want to change
+   * @return a new genome with a scaled block
    */
   public static Genome scaleBlock(Genome genome)
   {
     Random rand = new Random();
     float scaler;
     scaler = rand.nextFloat();
-    scaler=scaler*2;
+    scaler = scaler * 2;
     ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
     ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
     GeneBlock scaledBlock;
@@ -37,14 +39,14 @@ public class ScaleSingleBlock
 
     int pickRandom = MainSim.RANDOM.nextInt(geneBlocks.size());
 
-    for (int i =0; i<geneBlocks.size();i++)
+    for (int i = 0; i < geneBlocks.size(); i++)
     {
       block = geneBlocks.get(i);
-      if(i==pickRandom)
+      if (i == pickRandom)
       {
         scaledSize = new ImmutableVector(block.SIZE.X * scaler,
-                                         block.SIZE.Y * scaler, block.SIZE.Z * scaler);
-        if(GenoTools.isValidBlockSize(scaledSize)) return genome;
+            block.SIZE.Y * scaler, block.SIZE.Z * scaler);
+        if (GenoTools.isValidBlockSize(scaledSize)) return genome;
 
         scaledBlock =
             new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
@@ -57,20 +59,26 @@ public class ScaleSingleBlock
       }
       newGenome.addGeneBlock(scaledBlock);
     }
-    for(GeneNeuron geneNeuron: geneNeurons)
+    for (GeneNeuron geneNeuron : geneNeurons)
     {
       newGenome.addGeneNeuron(geneNeuron);
     }
     return newGenome;
   }
 
-
+  /**
+   * Scales the root block in the genome
+   * If the Scale makes the creature invalid, we return the given genome.
+   *
+   * @param genome a genome of a current creature that you want to change
+   * @return a new genome with a scaled block
+   */
   public static Genome scaleRoot(Genome genome)
   {
     Random rand = new Random();
     float scaler;
     scaler = rand.nextFloat();
-    scaler=scaler*2;
+    scaler = scaler * 2;
 
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
@@ -79,8 +87,10 @@ public class ScaleSingleBlock
     Genome newGenome;
 
     ImmutableVector rootSize = genome.getRootSize();
-    scaledSize = new ImmutableVector(rootSize.getX()*scaler, rootSize.getY()*scaler, rootSize.getZ()*scaler);
-    if(GenoTools.isValidBlockSize(scaledSize)) return genome;
+    scaledSize =
+        new ImmutableVector(rootSize.getX() * scaler, rootSize.getY() * scaler,
+            rootSize.getZ() * scaler);
+    if (GenoTools.isValidBlockSize(scaledSize)) return genome;
 
     newGenome = new Genome(scaledSize, genome.getRootEulerAngles());
     geneBlocks = genome.getGENE_BLOCKS();
@@ -90,7 +100,7 @@ public class ScaleSingleBlock
     {
       newGenome.addGeneBlock(geneBlock);
     }
-    for(GeneNeuron geneNeuron: geneNeurons)
+    for (GeneNeuron geneNeuron : geneNeurons)
     {
       newGenome.addGeneNeuron(geneNeuron);
     }

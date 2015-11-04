@@ -5,10 +5,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Scales a gene a set amount. Can maximize, randomize, or seed the scaling.
+ * Scales a entire Genome random amount.
  */
 public class Scaler
 {
+  /**
+   * This will take a genome and scale it. The max that it can scaled is double itself.
+   * it can also shrink it.
+   *
+   * @param genome a genome of a current creature that you want to change
+   * @return a new genome that has been scaled
+   */
   public static Genome scale(Genome genome)
   {
     Random rand = new Random();
