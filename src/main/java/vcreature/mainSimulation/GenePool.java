@@ -23,12 +23,13 @@ public class GenePool
   static
   {
     GENOMES = GenoFile.loadGenePool();
-    while (GENOMES.size() < MINIMUM_POOL_SIZE)
+    synchronized (GENOMES)
     {
-      synchronized (GENOMES)
+      while (GENOMES.size() < MINIMUM_POOL_SIZE)
       {
         GENOMES.add(SpawnRandomCreatureGenoform.createRandomCreature(MainSim.RANDOM.nextInt(2) + 2));
       }
+      GENOMES.sort(new GenomeComparator());
     }
   }
 
@@ -59,8 +60,8 @@ public class GenePool
     {
       GENOMES.remove(parent1);
       GENOMES.remove(parent2);
-      GENOMES.add(newGenome);
     }
+    GenePool.add(newGenome);
   }
 
   /**
@@ -74,8 +75,8 @@ public class GenePool
     synchronized (GENOMES)
     {
       GENOMES.remove(parent);
-      GENOMES.add(newGenome);
     }
+    GenePool.add(newGenome);
   }
 
   /**
@@ -88,6 +89,7 @@ public class GenePool
     synchronized (GENOMES)
     {
       GENOMES.add(newGenome);
+      GENOMES.sort(new GenomeComparator());
     }
   }
 
@@ -101,7 +103,6 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
-      GENOMES.sort(new GenomeComparator());
       return GENOMES.getLast();
     }
   }
@@ -141,19 +142,20 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
-      GENOMES.sort(new GenomeComparator());
       return GENOMES.getFirst();
     }
   }
 
   public static Genome getOneOfTheBest()
   {
-    GENOMES.sort(new GenomeComparator());
-    if(GENOMES.size()>=10)
-    {
-      return GENOMES.get(MainSim.RANDOM.nextInt(10));
-    }
-    else return GENOMES.getFirst();
-  }
 
+    synchronized (GENOMES)
+    {
+      if (MainSim.RANDOM.nextBoolean() && MainSim.RANDOM.nextBoolean())
+      {
+        return GENOMES.get(GENOMES.size() - MainSim.RANDOM.nextInt(10));
+      }
+      return GENOMES.getFirst();
+    }
+  }
 }
