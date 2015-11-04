@@ -17,14 +17,16 @@ import java.io.File;
 class OpenFile implements ActionListener
 {
   private SimAnimation animation;
+  private JFrame frame;
 
   /**
    * Class Constructor
    * @param animation the instance of SimAnimation the GUI is being running with
    */
-  public OpenFile(SimAnimation animation)
+  public OpenFile(SimAnimation animation, JFrame frame)
   {
     this.animation = animation;
+    this.frame = frame;
   }
 
   /**
@@ -39,6 +41,7 @@ class OpenFile implements ActionListener
     int returnVal = fileChooser.showOpenDialog((Component) e.getSource());
     if (returnVal == JFileChooser.APPROVE_OPTION)
     {
+      new LoadFrame(frame,2000);
       File file = fileChooser.getSelectedFile();
       Genome fileGenome = GenoFile.readGenome(file.getAbsolutePath());
       if(fileGenome != null) //Null means it was an invalid file.

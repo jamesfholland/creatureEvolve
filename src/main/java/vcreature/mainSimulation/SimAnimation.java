@@ -24,6 +24,8 @@ import vcreature.mutator.Manager;
 import vcreature.phenotype.Block;
 import vcreature.phenotype.PhysicsConstants;
 
+import java.util.logging.Level;
+
 /**
  * Created by Tess Daughton on 10/14/15.
  * Joel's code with minor changes
@@ -65,6 +67,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void simpleInitApp()
   {
     // GenoFile.writeGenome(fileGenome);
+    java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
 
     BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
