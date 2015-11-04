@@ -22,7 +22,7 @@ public class GenePool
    */
   private static final LinkedList<Genome> GENOMES;
   private static final int MINIMUM_POOL_SIZE = 1000;
-  
+  private static final Thread GENEMANAGER;
 
   static
   {
@@ -35,6 +35,9 @@ public class GenePool
       }
       GENOMES.sort(new GenomeComparator());
     }
+
+    GENEMANAGER = new Thread(new GeneManager());
+    GENEMANAGER.start();
   }
 
   /**
@@ -170,11 +173,11 @@ public class GenePool
 
   private static void minutelyUpdate()
   {
-    System.out.println(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())
+    System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
                            + ": The best creature: " + GenePool.getBest());
   }
 
-  private static class PoolUpdater implements Runnable
+  private static class GeneManager implements Runnable
   {
 
     private static int minutes = 0;
