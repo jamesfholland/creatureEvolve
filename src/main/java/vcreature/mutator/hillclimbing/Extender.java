@@ -87,20 +87,6 @@ public class Extender
     {
       newGenome.addGeneNeuron(geneNeurons.get(j));
     }
-    if(checkForIntersections(newGenome)) genome=newGenome;
-    else extendLimbs(genome);
     return newGenome;
-  }
-
-  private static  boolean checkForIntersections(Genome genome)
-  {
-    ArrayList<GeneBlock> geneBlocks;
-    geneBlocks=genome.getGENE_BLOCKS();
-
-    for (int i = 0; i < geneBlocks.size(); i++)
-    {
-
-    }
-    return true;
   }
 }

@@ -80,20 +80,7 @@ public class Mover
     {
       newGenome.addGeneNeuron(geneNeurons.get(j));
     }
-    if(checkForIntersections(newGenome)) genome=newGenome;
-    else moveLimbs(genome);
     return newGenome;
   }
 
-  private static  boolean checkForIntersections(Genome genome)
-  {
-    ArrayList<GeneBlock> geneBlocks;
-    geneBlocks=genome.getGENE_BLOCKS();
-
-    for (int i = 0; i < geneBlocks.size(); i++)
-    {
-
-    }
-    return true;
-  }
 }

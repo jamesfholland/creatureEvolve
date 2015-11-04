@@ -8,14 +8,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * This class will randomize genomes or genes within valid specifications.
+ * This class will randomize a block and genes within valid specifications.
  */
 public class Randomizer
 {
   /**
-   * Randomizes a creature, but keeps sizes below 5 meters.
-   * @param genome genome to mutate
-   * @return new genome
+   * Randomizes a block in creature, but keeps sizes below 3 meters.
+   * It will also try to make the block more flat than cube shape.
+   * @param genome a genome of a current creature that you want to change
+   * @return a new genome with a slight change
    */
   public static Genome randomize(Genome genome)
   {
@@ -82,8 +83,6 @@ public class Randomizer
         if(geneNeurons.get(j).BLOCK_INDEX==i)newGenome.addGeneNeuron(geneNeurons.get(j));
       }
     }
-    if(checkForIntersections(newGenome)) genome=newGenome;
-    else randomize(genome);
     return newGenome;
   }
 
@@ -135,17 +134,5 @@ public class Randomizer
     newGenome.addGeneNeuron(randNeuron);
 
     return newGenome;
-  }
-  //Checks if the creature is valid after mutation
-  private static  boolean checkForIntersections(Genome genome)
-  {
-    ArrayList<GeneBlock> geneBlocks;
-    geneBlocks=genome.getGENE_BLOCKS();
-
-    for (int i = 0; i < geneBlocks.size(); i++)
-    {
-
-    }
-    return true;
   }
 }
