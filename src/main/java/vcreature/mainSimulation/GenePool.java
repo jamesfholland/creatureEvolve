@@ -26,7 +26,7 @@ public class GenePool
     {
       synchronized (GENOMES)
       {
-        GENOMES.add(SpawnRandomCreatureGenoform.createCreature(MainSim.RANDOM.nextInt(2) + 2));
+        GENOMES.add(SpawnRandomCreatureGenoform.createRandomCreature(MainSim.RANDOM.nextInt(2) + 2));
       }
     }
   }
