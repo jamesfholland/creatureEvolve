@@ -25,7 +25,6 @@ public class MutationTester extends SimpleApplication implements ActionListener
   private GenomeCreature currentCreature;
   private float elapsedSimulationTime;
   private Manager manager;
-  private float currentFitness = 0;
 
 
   public MutationTester(Manager manager)
@@ -114,15 +113,14 @@ public class MutationTester extends SimpleApplication implements ActionListener
       this.speedSet = true;
     }
     //System.out.println(deltaSeconds);
-    this.currentFitness = currentCreature.updateBrain(elapsedSimulationTime);
+    float currentFitness = currentCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
 
-    if (elapsedSimulationTime < 1 && this.currentFitness > 0.01)
+    if (elapsedSimulationTime < 1 && currentFitness > 0.01)
     {
       currentCreature.remove();
       elapsedSimulationTime = 0;
       currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0.0f));
-      this.currentFitness = 0.0f;
       return;
     }
     if (elapsedSimulationTime > 15)
@@ -132,8 +130,7 @@ public class MutationTester extends SimpleApplication implements ActionListener
 
       try
       {
-        currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(this.currentFitness));
-        this.currentFitness = 0.0f;
+        currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(currentFitness));
       }
       catch (Exception e)
       {
