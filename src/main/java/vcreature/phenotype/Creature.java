@@ -225,7 +225,6 @@ public class Creature
 
     RigidBodyControl controlA = parent.getPhysicsControl();
     RigidBodyControl controlB = block.getPhysicsControl();
-
     HingeJoint joint = new HingeJoint(controlA, controlB, pivotA, pivotB, axisA, axisB);
     joint.setCollisionBetweenLinkedBodys(true);
 
@@ -340,7 +339,7 @@ public class Creature
    * This value is calculated and returned by the bullet physics engine.<br>
    * At simulation time 0.0, the value of every angle will always be zero.
    *
-   * @param idx of the child box.
+   * @param id of the child box.
    * @return the joint angle in radians +- deflection the zero point defined by the
    * block orientations at the time the blocks were joined.
    * Returns 0 if there is no block at index=idx or no joint to parent.
@@ -451,7 +450,6 @@ public class Creature
     }
     //System.out.println("getCurrentHeightOfLowestPoint(): " + currentHeightOfLowestPoint);
     return currentHeightOfLowestPoint;
-
   }
 
   /**
