@@ -23,7 +23,7 @@ public class Randomizer
     ArrayList<GeneBlock> geneBlocks;
 
     Random rand=new Random();
-    float min = .5f;
+    float min = .501f;
     float max = 3f;
 
 
