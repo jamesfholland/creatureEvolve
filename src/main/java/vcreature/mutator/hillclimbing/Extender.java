@@ -10,43 +10,39 @@ import java.util.Random;
 /**
  * Created by Tyler on 11/3/2015.
  */
+
+/**
+ * Takes a block and extends or shortens one of the following to a block:
+ *  -Length
+ *  -Width
+ *  -Height
+ */
 public class Extender
 {
+
+  /**
+   * This will take a genome and then choose a random block from the genome. It will
+   * then adjust the height, width, or length of the random block that was choosen.
+   * It has checks inside of it to make sure it stays within the bounds of the block.
+   * @param genome a genome of a current creature that you want to change
+   * @return a new genome with a slight change
+   */
   protected static Genome extendLimbs(Genome genome)
   {
-
-    float min = .5f;
-    float max = 3f;
-
     if(genome.getGENE_BLOCKS().size() == 0) return genome;
-    GeneBlock limb;
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
     Random rand = new Random();
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
 
-
-    int xSign = (rand.nextBoolean()) ? 1 : -1;
-    int ySign =(rand.nextBoolean()) ? 1 : -1;
-    int zSign = (rand.nextBoolean()) ? 1 : -1;
-
-//    ImmutableVector randPivot= new ImmutableVector(1, 0, 0);;
-//
-//    int randomFace=rand.nextInt(2);
-//    if(randomFace==0) randPivot=new ImmutableVector(xSign,ySign,zSign*rand.nextFloat());
-//    else if(randomFace==1)randPivot=new ImmutableVector(xSign*rand.nextFloat(),ySign,zSign);
-//    else if(randomFace==2) randPivot=new ImmutableVector(xSign,ySign*rand.nextFloat(),zSign);
-
     int picker = rand.nextInt(3);
     int randomLimb = rand.nextInt(geneBlocks.size());
-    float newSize;
 
     float recalculatedSizeX = geneBlocks.get(randomLimb).SIZE.getX() * rand.nextFloat() * 2;
     float recalculatedSizeY = geneBlocks.get(randomLimb).SIZE.getY() * rand.nextFloat() * 2;
     float recalculatedSizeZ = geneBlocks.get(randomLimb).SIZE.getZ() * rand.nextFloat() * 2;
 
-//    ImmutableVector parentPivot=new ImmutableVector(-randPivot.X,-randPivot.Y,-randPivot.Z);
     ImmutableVector newSizeX =new ImmutableVector(recalculatedSizeX,geneBlocks.get(randomLimb).SIZE.getY(),geneBlocks.get(randomLimb).SIZE.getZ());
     ImmutableVector newSizeY =new ImmutableVector(geneBlocks.get(randomLimb).SIZE.getX(),recalculatedSizeY,geneBlocks.get(randomLimb).SIZE.getZ());
     ImmutableVector newSizeZ =new ImmutableVector(geneBlocks.get(randomLimb).SIZE.getX(),geneBlocks.get(randomLimb).SIZE.getY(),recalculatedSizeZ);
@@ -77,8 +73,6 @@ public class Extender
     {
       return genome;
     }
-    int parentOffset = block.PARENT_OFFSET;
-    ImmutableVector randAngle=new ImmutableVector(0,0,0);//new ImmutableVector(rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2,rand.nextFloat()*(float)Math.PI/2);
     geneBlocks.remove(randomLimb);
     geneBlocks.add(randomLimb, block);
 

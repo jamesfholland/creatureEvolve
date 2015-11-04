@@ -88,6 +88,13 @@ public class Inverter
     return newGenome;
   }
 
+  /**
+   * This takes a neuron and flips the sign, that tell it what direction
+   * that it fires in.
+   *
+   * @param neuron a neuron to be fired with a hinge.
+   * @return a neuron that fires in the oppisite direction of the original.
+   */
   public static GeneNeuron flipNeuron(GeneNeuron neuron)
   {
     return new GeneNeuron(neuron.BLOCK_INDEX, neuron.A_TYPE, neuron.B_TYPE,
