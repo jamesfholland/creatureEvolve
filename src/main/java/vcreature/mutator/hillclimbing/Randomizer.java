@@ -1,6 +1,7 @@
 package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.*;
+import vcreature.mainSimulation.MainSim;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.EnumOperator;
 
@@ -109,7 +110,7 @@ public class Randomizer
   public static Genome randomizeNeuron(Genome genome, int index)
   {
     ArrayList<GeneBlock> geneBlocks;
-    Random rand = new Random();
+    Random rand = MainSim.RANDOM;
     ArrayList<GeneNeuron> geneNeurons;
 
     Genome newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());

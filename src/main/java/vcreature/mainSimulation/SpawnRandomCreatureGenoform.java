@@ -1,55 +1,42 @@
 package vcreature.mainSimulation;
 
 import vcreature.genotype.GeneBlock;
-import vcreature.genotype.GeneNeuron;
 import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 import vcreature.mutator.hillclimbing.Adder;
 import vcreature.mutator.hillclimbing.Randomizer;
-import vcreature.phenotype.EnumNeuronInput;
-import vcreature.phenotype.EnumOperator;
 
 import java.util.Random;
 
-/**
- * Created by Dayloki on 10/15/2015.
- */
 
 public class SpawnRandomCreatureGenoform
 {
-  private static Random rand = new Random();
-  private static float min = .5f;
-  private static float max = 3f;
-  private static Genome genome;
+  private static final Random rand = MainSim.RANDOM;
+  private static final float MIN = .501f;
+  private static final float MAX = 3f;
 
-
-  public SpawnRandomCreatureGenoform(int numberOfBlocks)
-  {
-    createCreature(numberOfBlocks);
-  }
-
-  public Genome getGenome()
-  {
-    return genome;
-  }
-
+  /**
+   * This was terribly not thread safe. I fixed that, but am not sure if this is what we want to use or if I should be using adder?
+   * @param numberOfBlocks
+   * @return
+   */
   public static Genome createCreature(int numberOfBlocks)
   {
     ImmutableVector zeroVector = new ImmutableVector(0f, 0f, 0f);
-    float rootSizeX = rand.nextFloat() * (max - min) + min;
-    float rootSizeY = rand.nextFloat() * (max - min) + min;
-    float rootSizeZ = rand.nextFloat() * (max - min) + min;
+    float rootSizeX = rand.nextFloat() * (MAX - MIN) + MIN;
+    float rootSizeY = rand.nextFloat() * (MAX - MIN) + MIN;
+    float rootSizeZ = rand.nextFloat() * (MAX - MIN) + MIN;
     ImmutableVector rootSize = new ImmutableVector(rootSizeX, rootSizeY, rootSizeZ);
-    genome = new Genome(rootSize, new ImmutableVector(0f, 0f, 0f));
+    Genome genome = new Genome(rootSize, new ImmutableVector(0f, 0f, 0f));
     //Axis legParentAxis = Axis.UNIT_Z;
     //Axis legAxis = Axis.UNIT_Z;
     ImmutableVector legParentAxis = new ImmutableVector(0, 0, 1);
     ImmutableVector legAxis = new ImmutableVector(0, 0, 1);
     //Axis legAxis=new Axis();
 
-    float sizeX = rand.nextFloat() * (max - min) + min;
-    float sizeY = rand.nextFloat() * (max - min) + min;
-    float sizeZ = rand.nextFloat() * (max - min) + min;
+    float sizeX = rand.nextFloat() * (MAX - MIN) + MIN;
+    float sizeY = rand.nextFloat() * (MAX - MIN) + MIN;
+    float sizeZ = rand.nextFloat() * (MAX - MIN) + MIN;
     ImmutableVector pivotC = new ImmutableVector(-1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector pivotD = new ImmutableVector(1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector leg2Size = new ImmutableVector(sizeX, sizeY, sizeZ);
@@ -58,9 +45,9 @@ public class SpawnRandomCreatureGenoform
 
     for (int i = 1; i < numberOfBlocks; i++)
     {
-      sizeX = rand.nextFloat() * (max - min) + min;
-      sizeY = rand.nextFloat() * (max - min) + min;
-      sizeZ = rand.nextFloat() * (max - min) + min;
+      sizeX = rand.nextFloat() * (MAX - MIN) + MIN;
+      sizeY = rand.nextFloat() * (MAX - MIN) + MIN;
+      sizeZ = rand.nextFloat() * (MAX - MIN) + MIN;
       int randomFace = rand.nextInt(2);
       ImmutableVector randPivot = new ImmutableVector(1, -1, 0);
       int xSign = (rand.nextBoolean()) ? 1 : -1;
@@ -131,51 +118,18 @@ public class SpawnRandomCreatureGenoform
     return genome;
   }
 
-  private GeneNeuron randNeuron(int index)
-  {
-    GeneNeuron randNeuron = null;
-    int randNeuronEnum = rand.nextInt(5);
-    EnumNeuronInput aInput = randEnumNeuron();
-    EnumNeuronInput bInput = randEnumNeuron();
-    EnumNeuronInput cInput = randEnumNeuron();
-    EnumNeuronInput dInput = randEnumNeuron();
-    EnumNeuronInput eInput = randEnumNeuron();
-    randNeuron = new GeneNeuron(
-        index, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
-        aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
-        rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), rand.nextInt(10), //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
-        EnumOperator.ADD, //Binary operator for merging A and B
-        EnumOperator.IDENTITY, //Unary operator for after A and B are merged
-        EnumOperator.ADD, //Binary operator for merging D and E
-        EnumOperator.IDENTITY); //Unary operator for after D and E are merged
-    return randNeuron;
-  }
 
-  private EnumNeuronInput randEnumNeuron()
-  {
-    int enumIndex = rand.nextInt(3);
-    switch (enumIndex)
-    {
-      case 0:
-        return EnumNeuronInput.CONSTANT;
-      case 1:
-        return EnumNeuronInput.HEIGHT;
-      case 4:
-        return EnumNeuronInput.JOINT;
-      case 2:
-        return EnumNeuronInput.TIME;
-      case 3:
-        return EnumNeuronInput.TOUCH;
-    }
-    return EnumNeuronInput.CONSTANT;
-  }
-
+  /**
+   * Create a random creature using the Adder mutator.
+   * @param numOfBlocks to form creature from.
+   * @return the random genome
+   */
   public static Genome createRandomCreature(int numOfBlocks)
   {
     ImmutableVector zeroVector = new ImmutableVector(0f, 0f, 0f);
-    float rootSizeX = rand.nextFloat() * (max - min) + min;
-    float rootSizeY = rand.nextFloat() * (max - min) + min;
-    float rootSizeZ = rand.nextFloat() * (max - min) + min;
+    float rootSizeX = rand.nextFloat() * (MAX - MIN) + MIN;
+    float rootSizeY = rand.nextFloat() * (MAX - MIN) + MIN;
+    float rootSizeZ = rand.nextFloat() * (MAX - MIN) + MIN;
     ImmutableVector rootSize = new ImmutableVector(rootSizeX, rootSizeY, rootSizeZ);
     Genome genome = new Genome(rootSize, new ImmutableVector(0f, 0f, 0f));
 
@@ -183,9 +137,9 @@ public class SpawnRandomCreatureGenoform
     ImmutableVector legAxis = new ImmutableVector(0, 0, 1);
     //Axis legAxis=new Axis();
 
-    float sizeX = rand.nextFloat() * (max - min) + min;
-    float sizeY = rand.nextFloat() * (max - min) + min;
-    float sizeZ = rand.nextFloat() * (max - min) + min;
+    float sizeX = rand.nextFloat() * (MAX - MIN) + MIN;
+    float sizeY = rand.nextFloat() * (MAX - MIN) + MIN;
+    float sizeZ = rand.nextFloat() * (MAX - MIN) + MIN;
     ImmutableVector pivotC = new ImmutableVector(-1.0f, -1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector pivotD = new ImmutableVector(1.0f, 1.0f, 0.0f); //Center of hinge in the block's coordinates
     ImmutableVector leg2Size = new ImmutableVector(sizeX, sizeY, sizeZ);
@@ -195,30 +149,8 @@ public class SpawnRandomCreatureGenoform
     {
       genome = Adder.addBlock(genome);
     }
-
     return genome;
   }
 }
-//  {
-//    CollisionResults results = new CollisionResults();
-//    for (int i = 0; i < getNumberOfBodyBlocks() - 1; i++)
-//    {
-//      Block tempBlock = getBlockByID(i);
-//      for (int j = 1; j < getNumberOfBodyBlocks(); j++)
-//      {
-//        Block tempBlock2 = getBlockByID(j);
-//
-//        BoundingBox tempBlock2Volume = new BoundingBox(tempBlock2.getStartCenter(), tempBlock2.getSizeX(), tempBlock2.getSizeY(), tempBlock2.getSize());
-//        System.out.println(tempBlock2.getGeometry().getLocalTranslation().toString());
-//        if(tempBlock.getGeometry()==null) System.out.println("DKLS:JFDSA");
-//        tempBlock.getGeometry().collideWith(tempBlock2Volume, results);
-//        if (results.size() > 0)
-//        {
-//          System.out.println("intersects");
-//          return false;
-//        }
-//      }
-//    }
-//    return true;
-//  }
+
 

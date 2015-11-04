@@ -1,6 +1,11 @@
 package vcreature.mutator.hillclimbing;
 
-import vcreature.genotype.*;
+import vcreature.genotype.Axis;
+import vcreature.genotype.GeneBlock;
+import vcreature.genotype.GeneNeuron;
+import vcreature.genotype.Genome;
+import vcreature.genotype.ImmutableVector;
+import vcreature.mainSimulation.MainSim;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,7 +26,7 @@ public class Adder
   {
     ArrayList<GeneBlock> geneBlocks;
     ArrayList<GeneNeuron> geneNeurons;
-    Random rand = new Random();
+    Random rand = MainSim.RANDOM;
     float min = .501f;
     float max = 3f;
 
