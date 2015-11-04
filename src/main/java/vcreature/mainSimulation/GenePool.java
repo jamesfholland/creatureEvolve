@@ -5,6 +5,9 @@ import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.GenomeComparator;
 
+import javax.swing.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -19,6 +22,7 @@ public class GenePool
    */
   private static final LinkedList<Genome> GENOMES;
   private static final int MINIMUM_POOL_SIZE = 1000;
+  
 
   static
   {
@@ -156,6 +160,48 @@ public class GenePool
         return GENOMES.get(GENOMES.size() - MainSim.RANDOM.nextInt(10));
       }
       return GENOMES.getFirst();
+    }
+  }
+
+  private static void hourlyUpdate()
+  {
+    GenoFile.writeGenome(GenePool.getBest());
+  }
+
+  private static void minutelyUpdate()
+  {
+    System.out.println(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date())
+                           + ": The best creature: " + GenePool.getBest());
+  }
+
+  private static class PoolUpdater implements Runnable
+  {
+
+    private static int minutes = 0;
+    private static boolean interrupted = false;
+    @Override
+    public void run()
+    {
+      while(!interrupted)
+      {
+        try
+        {
+          Thread.sleep(60000); //one minute
+          minutes++;
+          minutelyUpdate();
+          if(minutes > 60)
+          {
+            hourlyUpdate();
+          }
+
+
+        }
+        catch (InterruptedException e)
+        {
+          interrupted = true;
+        }
+      }
+
     }
   }
 }

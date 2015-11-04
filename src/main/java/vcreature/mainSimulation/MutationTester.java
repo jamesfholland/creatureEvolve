@@ -11,24 +11,21 @@ import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
 import vcreature.phenotype.PhysicsConstants;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.logging.Level;
 
 /**
  * MutationTester is the background application for mutations and Genetic merging.
  * It contains the physics space for actual testing.
  */
-class MutationTester extends SimpleApplication implements ActionListener
+class MutationTester extends SimpleApplication
 {
   private PhysicsSpace physicsSpace;
 
   private boolean speedSet = false;
   private final int SPEEDSETTING = 20;
-  private Timer currentBestFitness = new Timer(0,this);
 
-  //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
+
+  //Temporary vectors used on each frame. They here to avoid instantiating new vectors on each frame
   private GenomeCreature currentCreature;
   private float elapsedSimulationTime;
   private Manager manager;
@@ -75,8 +72,6 @@ class MutationTester extends SimpleApplication implements ActionListener
         PhysicsConstants.GROUND_ANGULAR_DAMPINING);
 
     currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(-1));
-    currentBestFitness.setDelay(60000);
-    currentBestFitness.start();
   }
 
 
@@ -123,12 +118,11 @@ class MutationTester extends SimpleApplication implements ActionListener
     {
       e.printStackTrace();
     }
-
   }
 
   /**
    * Sets speeds of headless GUI and bullet physics engine
-   * @param speed
+   * @param speed new speed to run at
    */
   private void setSpeed(int speed)
   {
@@ -136,12 +130,6 @@ class MutationTester extends SimpleApplication implements ActionListener
     physicsSpace.setMaxSubSteps(4 * speed);
     settings.setFrequency(speed * 60);
     this.restart();
-  }
-
-  @Override
-  public void actionPerformed(ActionEvent e)
-  {
-      System.out.println("Best Fitness So Far: "  + GenePool.getBest().getFitness());
   }
 }
 
