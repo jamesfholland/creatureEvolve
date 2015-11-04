@@ -14,22 +14,10 @@ public class Duplicator
 {
 
   private static ArrayList<GeneBlock> geneBlocks;
-  private static ArrayList<GeneNeuron> geneNeurons;
   private static Random rand = new Random();
   private static GeneBlock block;
-  private static GeneBlock duplicateBlock;
   private static ImmutableVector placementPivot;
-  private static ImmutableVector placementPivotParent;
   private static ImmutableVector size;
-  private static GeneNeuron neuron;
-
-  private static Genome newGenome;
-  private static float x;
-  private static float y;
-  private static float z;
-  private static float xp;
-  private static float yp;
-  private static float zp;
 
 
   /**
@@ -50,10 +38,10 @@ public class Duplicator
    */
   public static Genome duplicateLimb(Genome genome)
   {
-    newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
+    Genome newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
     geneBlocks = genome.getGENE_BLOCKS();
     for (GeneBlock geneBlock : geneBlocks) newGenome.addGeneBlock(geneBlock);
-    geneNeurons = genome.getGENE_NEURONS();
+    ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
     int randIndex = rand.nextInt(geneBlocks.size());
     block = geneBlocks.get(randIndex);
     if (geneNeurons.size() == 0)
@@ -64,8 +52,8 @@ public class Duplicator
     {
       randIndex = rand.nextInt(geneNeurons.size());
     }
-    neuron = geneNeurons.get(randIndex);
-    placementPivotParent = findAvailablePivot(block.PARENT_PIVOT);
+    GeneNeuron neuron = geneNeurons.get(randIndex);
+    ImmutableVector placementPivotParent = findAvailablePivot(block.PARENT_PIVOT);
     if (placementPivotParent == null)
     {
       return genome;
@@ -73,35 +61,18 @@ public class Duplicator
     else
     {
       ImmutableVector hingeAxis = findHingeAxis(placementPivotParent);
-      duplicateBlock =
-          new GeneBlock(0, placementPivotParent, placementPivot, size,
-              hingeAxis, hingeAxis, block.EULER_ANGLES);
+      GeneBlock duplicateBlock = new GeneBlock(0, placementPivotParent, placementPivot, size,
+                                               hingeAxis, hingeAxis, block.EULER_ANGLES);
 
       newGenome.addGeneBlock(duplicateBlock);
-      for (int i = 0; i < geneBlocks.size(); i++)
+      for (GeneBlock geneBlock : geneBlocks)
       {
-
-        newGenome.addGeneBlock(geneBlocks.get(i));
-        //      newGenome.addGeneNeuron(neuron);
-
-//        for (int j = 0; j < geneNeurons.size() - 1; j++)
-//        {
-//
-////          if (geneNeurons.get(j).BLOCK_INDEX == i) newGenome
-// .addGeneNeuron(geneNeurons.get(j));
-////          if (i == geneBlocks.size() - 1)
-////          {
-////            if (geneNeurons.get(j).BLOCK_INDEX == randIndex) newGenome
-// .addGeneNeuron(geneNeurons.get(j));
-//          }
+        newGenome.addGeneBlock(geneBlock);
       }
 
 
       for (int j = 0; j < geneNeurons.size(); j++)
       {
-        //if(geneNeurons.get(j) != null)
-        // newGenome.addGeneNeuron(geneNeurons.get(j));
-        //else
 
         GeneNeuron n = geneNeurons.get(j);
         n = new GeneNeuron(n.BLOCK_INDEX, n.A_TYPE, n.B_TYPE, n.C_TYPE,
@@ -184,12 +155,12 @@ public class Duplicator
 
   private static ImmutableVector findAvailablePivot(ImmutableVector randomPivot)
   {
-    x = Math.abs(randomPivot.getX());
-    y = Math.abs(randomPivot.getY());
-    z = Math.abs(randomPivot.getZ());
-    xp = block.PIVOT.getX();
-    yp = block.PIVOT.getY();
-    zp = block.PIVOT.getZ();
+    float x = Math.abs(randomPivot.getX());
+    float y = Math.abs(randomPivot.getY());
+    float z = Math.abs(randomPivot.getZ());
+    float xp = block.PIVOT.getX();
+    float yp = block.PIVOT.getY();
+    float zp = block.PIVOT.getZ();
     ImmutableVector availablePivot = null;
     if (x == 1 && y == 1 || x == 1 && z == 1 || y == 1 && z == 1)
     {
