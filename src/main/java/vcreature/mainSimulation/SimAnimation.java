@@ -153,6 +153,10 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     }
   }
 
+  /**
+   * Called when user sets speed in GUI slider
+   * @param speed
+   */
   public void setSpeed(int speed)
   {
     this.speed = speed;
@@ -174,6 +178,11 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     inputManager.addListener(this, "Toggle Camera Rotation");
   }
 
+  /**
+   * Called when user slides zoom toggle in GUI
+   * Sets zoom value which is later used to either lengthen or diminish the camera perspective vector
+   * @param zoom
+   */
   protected void setZoom(int zoom)
   {
     this.zoom = zoom;
@@ -187,7 +196,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   {
     return currentFitness;
   }
-
 
   /**
    * Use the main event loop to trigger repeating actions.
@@ -226,13 +234,14 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     }
   }
 
+  /**
+   * Used for loading creatures from file / creature selection from gene pool
+   * Sets fileGenome, which is only used inside of simpleUpdate if fileGenome is not null
+   * @param creature
+   */
   public void setCurrentCreature(Genome creature)
   {
     fileGenome = creature;
-
-    //Calling simpleUpdate caused problems with null
-    //pointers when two simultaneous threads (GUI and SimpleApp modified mycreature at once.
-    //simpleUpdate(0.0f);
 
   }
 }
