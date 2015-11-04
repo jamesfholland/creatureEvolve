@@ -44,8 +44,7 @@ public class ScaleSingleBlock
       {
         scaledSize = new ImmutableVector(block.SIZE.X * scaler,
                                          block.SIZE.Y * scaler, block.SIZE.Z * scaler);
-        if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
-        if ( Block.max(scaledSize.getVector3f()) > (Block.min(scaledSize.getVector3f()) * 10)) return genome;
+        if(GenoTools.isValidBlockSize(scaledSize)) return genome;
 
         scaledBlock =
             new GeneBlock(block.PARENT_OFFSET, block.PARENT_PIVOT, block.PIVOT,
@@ -65,6 +64,7 @@ public class ScaleSingleBlock
     return newGenome;
   }
 
+
   public static Genome scaleRoot(Genome genome)
   {
     Random rand = new Random();
@@ -80,16 +80,15 @@ public class ScaleSingleBlock
 
     ImmutableVector rootSize = genome.getRootSize();
     scaledSize = new ImmutableVector(rootSize.getX()*scaler, rootSize.getY()*scaler, rootSize.getZ()*scaler);
-    if(scaledSize.X<0.5f || scaledSize.Y<0.5f || scaledSize.Z< 0.5f) return genome;
-    if ( Block.max(scaledSize.getVector3f()) > Block.min(scaledSize.getVector3f()) * 10) return genome;
+    if(GenoTools.isValidBlockSize(scaledSize)) return genome;
 
     newGenome = new Genome(scaledSize, genome.getRootEulerAngles());
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
 
-    for (int i =0; i<geneBlocks.size();i++)
+    for (GeneBlock geneBlock : geneBlocks)
     {
-      newGenome.addGeneBlock(geneBlocks.get(i));
+      newGenome.addGeneBlock(geneBlock);
     }
     for(GeneNeuron geneNeuron: geneNeurons)
     {
