@@ -29,33 +29,36 @@ public class GenoTools
       if (i + blocks.get(i).PARENT_OFFSET == index)
       {
 
-        for (int j = 0; j < neurons.size(); j++)
+        for (GeneNeuron neuron : neurons)
         {
-          if (neurons.get(j).BLOCK_INDEX == i)
+          if (neuron.BLOCK_INDEX == i)
           {
-            childNeurons.add(neurons.get(j));
+            childNeurons.add(neuron);
           }
         }
         Gene gene = new Gene(blocks, childNeurons, i);
         parent.children.add(gene);
-        //parent.children.add(getAppendage(genome, i));
       }
     }
     return parent;
   }
 
+  /**
+   * Check if a block is an invalid size.
+   *
+   * @param size the size we are testing in meters.
+   * @return true if it is invalid
+   */
   public static boolean isNotValidBlockSize(ImmutableVector size)
   {
-    if (size.X < 0.501f || size.Y < 0.501f || size.Z < 0.501f)
-    {
-      return true;
-    }
-    return (Block.max(size.getVector3f())) > (Block.min(size.getVector3f()) * 9.99);
+    return Block.min(size.getVector3f()) < 0.501f 
+        || Block.max(size.getVector3f()) > (Block.min(size.getVector3f()) * 9.99);
 
   }
 
   /**
    * Inverts X and Z components of a ImmutableVector
+   *
    * @param immutableVector vector we are inverting
    * @return new vector with inversions completed.
    */

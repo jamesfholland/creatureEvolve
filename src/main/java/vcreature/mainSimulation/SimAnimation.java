@@ -34,7 +34,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private float cameraAngle = (float) (Math.PI / 2.0);
 
 
-  //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
+  //Temporary vectors used on each frame. They are here to avoid instantiating new vectors on each frame
   private Vector3f cameraLocation = new Vector3f();
   private boolean isCameraRotating = true;
   private GenomeCreature myCreature;
@@ -43,15 +43,13 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   //  private Genome fileGenome = SpawnCreatureGenoform.creature();
   private Genome fileGenome;
 
-  private Manager manager;
+  private final Manager MANAGER;
   private float currentFitness = 0;
-  private float previousFitness = 0;
-  private float tempFitness = 0;
   private int zoom = 25;
 
   public SimAnimation(Manager manager)
   {
-    this.manager = manager;
+    this.MANAGER = manager;
   }
 
 
@@ -103,7 +101,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
     Block.initStaticMaterials(assetManager);
 
-    myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(-1));
+    myCreature = new GenomeCreature(physicsSpace, rootNode, MANAGER.getNextCreature(-1));
     // myCreature =new GenomeCreature(physicsSpace,rootNode,SpawnCreatureGenoform.makeFlappyBird());
     //genePool.addCreatureToPopulation();
     initLighting();
@@ -210,7 +208,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
       }
       else
       {
-        myCreature = new GenomeCreature(physicsSpace, rootNode, manager.getCurrentGenome());
+        myCreature = new GenomeCreature(physicsSpace, rootNode, MANAGER.getCurrentGenome());
       }
     }
 

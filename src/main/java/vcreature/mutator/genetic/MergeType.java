@@ -6,7 +6,7 @@ import vcreature.mutator.genetic.MergeTypes.*;
 import java.util.ArrayList;
 
 /**
- * Created by jholland on 10/31/15.
+ * This enum contains the types of genetic manipulations that can occur.
  */
 public enum MergeType
 {
@@ -81,7 +81,17 @@ public enum MergeType
         }
       };
 
+  /**
+   * This performs the action associated with the Genetic merger type.
+   * @param parent1 first genome
+   * @param parent2 second genome
+   * @return the merged genome performed according to the mutation type.
+   */
   public abstract ArrayList<Genome> merge(Genome parent1, Genome parent2);
 
+  /**
+   * Allows cyclical mutation changes.
+   * @return next mutation type needed.
+   */
   public abstract MergeType next();
 }

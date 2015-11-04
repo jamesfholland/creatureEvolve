@@ -12,14 +12,15 @@ import vcreature.mutator.Manager;
 import vcreature.phenotype.PhysicsConstants;
 
 /**
- * Created by Tess Daughton on 10/28/15.
+ * MutationTester is the background application for mutations and Genetic merging.
+ * It contains the physics space for actual testing.
  */
 public class MutationTester extends SimpleApplication implements ActionListener
 {
   private PhysicsSpace physicsSpace;
-  private boolean isCameraRotating = true;
 
   private boolean speedSet = false;
+  private final int SPEEDSETTING = 20;
 
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private GenomeCreature currentCreature;
@@ -89,23 +90,20 @@ public class MutationTester extends SimpleApplication implements ActionListener
     {
       System.out.format("Creature Fitness (Maximium height of lowest point) = %.3f meters]\n", currentCreature
           .getFitness());
-
       System.exit(0);
     }
   }
 
   /**
    * Use the main event loop to trigger repeating actions.
+   * @param deltaSeconds change in simulation time seconds.
    */
   @Override
   public void simpleUpdate(float deltaSeconds)
   {
     if (!this.speedSet)
     {
-      //this.createCanvas();
-      //this.startCanvas();
-      this.setSpeed(20);
-
+      this.setSpeed(SPEEDSETTING);
       this.speedSet = true;
     }
     //System.out.println(deltaSeconds);
@@ -136,7 +134,7 @@ public class MutationTester extends SimpleApplication implements ActionListener
     }
   }
 
-  public void setSpeed(int speed)
+  private void setSpeed(int speed)
   {
     this.speed = speed;
     physicsSpace.setMaxSubSteps(4 * speed);

@@ -1,8 +1,5 @@
 package vcreature.mutator.genetic.MergeTypes;
 
-/**
- * Created by Dayloki on 11/2/2015.
- */
 
 import vcreature.genotype.Gene;
 import vcreature.genotype.GeneBlock;
@@ -17,6 +14,14 @@ import java.util.ArrayList;
  */
 public class Chimera
 {
+  /**
+   * Merges two parents into one parent by extracting limbs from one and sticking onto the other.
+   * Does this both ways and creates 2 children.
+   *
+   * @param parent1 first parent genome
+   * @param parent2 second parent genome
+   * @return list of both children's genomes
+   */
   public static ArrayList<Genome> makeChimera(Genome parent1, Genome parent2)
   {
     ArrayList<Genome> children = new ArrayList<>();
@@ -51,9 +56,9 @@ public class Chimera
       }
     }
 
-    //for (int i = 0; i <parent2.getGENE_NEURONS().size() ; i++) {child1.addGeneNeuron(parent2.getGENE_NEURONS().get(i));}
     children.add(child1);
 
+    //child 2
     for (Gene aGenes2 : genes2)
     {
       child2.addGeneBlock(aGenes2.geneBlock);

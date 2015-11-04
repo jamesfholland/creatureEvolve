@@ -256,26 +256,6 @@ public class ProtoBlock
   }
 
   /**
-   * Gets the height of this block
-   *
-   * @return height of block in meters.
-   */
-  public float getHeight()
-  {
-    float height = -1 * center.y + size.y;
-    float tempHeight;
-    for (ProtoBlock child : children)
-    {
-      tempHeight = child.getHeight();
-      if (tempHeight > height)
-      {
-        height = tempHeight;
-      }
-    }
-    return height;
-  }
-
-  /**
    * Adds this ProtoBlock and children to a creature. If and only if this block is in the existingBlocks list.
    *
    * @param creature       the creature we are being added to.

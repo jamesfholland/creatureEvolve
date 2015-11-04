@@ -4,31 +4,8 @@ import vcreature.genotype.*;
 import vcreature.phenotype.EnumNeuronInput;
 import vcreature.phenotype.EnumOperator;
 
-/**
- * Created by Dayloki on 10/15/2015.
- */
 public class SpawnCreatureGenoform
 {
-  Genome genome;
-
-  public SpawnCreatureGenoform(String creatureName)
-  {
-    //superTableMonster2();
-    makeFlappyBird();
-    //if(creatureName.equals("FlappyBird")) makeFlappyBird();
-    //else if(creatureName.equals("superTableMonster")) superTableMonster();
-//    if(creatureName.equals("TableMonster2Legs")) makeTableMonster();
-//    else if(creatureName.equals("TableMonster4Legs")) makeFourLeggedTableMonster();
-//    else if(creatureName.equals("TableMonster4LegsFlat")) makeFourLeggedTableMonsterFlat();
-//    else if(creatureName.equals("Squid")) makeSquid();
-//    else if(creatureName.equals("FlappyBird")) makeFlappyBird();
-  }
-
-  public Genome getGenome()
-  {
-    return genome;
-  }
-
   public static Genome makeFlappyBird()
   {
     Genome genome = new Genome(new ImmutableVector(2.0f, 1.5f, 1.5f), new ImmutableVector(0f, 0f, 0f));
@@ -105,9 +82,9 @@ public class SpawnCreatureGenoform
     return genome;
   }
 
-  public void superTableMonster()
+  public static Genome superTableMonster()
   {
-    genome = new Genome(new ImmutableVector(5f, .5f, 5f), new ImmutableVector(0f, 0f, 0f));
+    Genome genome = new Genome(new ImmutableVector(5f, .5f, 5f), new ImmutableVector(0f, 0f, 0f));
     ImmutableVector zeroVector = new ImmutableVector(0f, 0f, 0f);
 
     for (int i = 1; i < 10; i++)
@@ -169,6 +146,8 @@ public class SpawnCreatureGenoform
 
     //genome.addGeneBlock(leg1);
     genome.addGeneBlock(leg2);
+
+    return genome;
   }
 
 

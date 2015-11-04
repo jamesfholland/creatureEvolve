@@ -6,10 +6,6 @@ import vcreature.mainSimulation.MainSim;
 import java.util.ArrayList;
 
 /**
- * Created by Tyler on 11/3/2015.
- */
-
-/**
  * Takes a block and extends or shortens one of the following to a block:
  * -Length
  * -Width

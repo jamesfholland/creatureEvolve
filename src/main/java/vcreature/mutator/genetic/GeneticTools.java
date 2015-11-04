@@ -1,9 +1,5 @@
 package vcreature.mutator.genetic;
 
-/**
- * Created by Dayloki on 10/29/2015.
- */
-
 import vcreature.genotype.Gene;
 import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
@@ -12,10 +8,18 @@ import vcreature.genotype.Genome;
 import java.util.ArrayList;
 
 /**
- * This class will just have tools that the genetic algorithm will use
+ * This class contains tools that the genetic algorithm will use
  */
 public class GeneticTools
 {
+  /**
+   * Puts 2 genomes into 2 lists.
+   * This would have been better done as a 2 calls for each genome since the lists are distinct.
+   * @param parent1 first genome
+   * @param parent2 second genome
+   * @return ArrayList of lists containing the genes of both parents
+   * index 1 is parent1 index 2 is parent 2.
+   */
   public static ArrayList<ArrayList<Gene>> getParentsGenes(Genome parent1, Genome parent2)
   {
     ArrayList<GeneBlock> geneBlocks1 = parent1.getGENE_BLOCKS();

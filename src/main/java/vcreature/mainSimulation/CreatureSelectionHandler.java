@@ -8,9 +8,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-/**
- * Created by Tess Daughton on 11/2/15.
- */
 public class CreatureSelectionHandler implements ActionListener
 {
   private ArrayList<JButton> creatures;
@@ -27,6 +24,10 @@ public class CreatureSelectionHandler implements ActionListener
 
   }
 
+  /**
+   * Selects a creature to display from the genepool.
+   * @param e ActionEvent unused.
+   */
   public void actionPerformed(ActionEvent e)
   {
     LinkedList<Genome> genepoolCopy = GenePool.getCopy();

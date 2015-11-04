@@ -1,9 +1,5 @@
 package vcreature.mutator.genetic.MergeTypes;
 
-/**
- * Created by Dayloki on 10/28/2015.
- */
-
 import vcreature.genotype.Gene;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.MainSim;
@@ -12,13 +8,20 @@ import vcreature.mutator.genetic.GeneticTools;
 import java.util.ArrayList;
 
 /**
- * Starting from one end of one parent genome, copy
- * gene by gene until some random crossover point is
- * reached. At that crossover point, start copying from the second
- * parent and continue until the end of the genome.
+ * This class handles cutting and splicing at one point in a pair of genomes.
  */
 public class SingleCrossover
 {
+  /**
+   * Starting from one end of one parent genome, copy
+   * gene by gene until some random crossover point is
+   * reached. At that crossover point, start copying from the second
+   * parent and continue until the end of the genome.
+   *
+   * @param parent1 first genome
+   * @param parent2 second genome
+   * @return list of children genomes
+   */
   public static ArrayList<Genome> singleCrossOver(Genome parent1, Genome parent2)
   {
 
