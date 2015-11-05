@@ -22,8 +22,9 @@ class CreatureSelectionHandler implements ActionListener
   /**
    * Class Constructor takes the list of creatures in the Gene Pool
    * and the relevant instance of SimAnimation running the GUI
-   * @param creatures   list of creatures in the Gene Pool
-   * @param animation   instance of SimAnimation running GUI
+   *
+   * @param creatures list of creatures in the Gene Pool
+   * @param animation instance of SimAnimation running GUI
    */
   public CreatureSelectionHandler(ArrayList<JButton> creatures, SimAnimation animation)
   {
@@ -34,7 +35,7 @@ class CreatureSelectionHandler implements ActionListener
       button.addActionListener(this);
     }
     this.animation = animation;
-    time = new Timer(0,this);
+    time = new Timer(0, this);
     time.setDelay(5000);
     time.start();
 
@@ -42,20 +43,22 @@ class CreatureSelectionHandler implements ActionListener
 
   /**
    * Selects a creature to display from the genepool.
+   *
    * @param e ActionEvent unused.
    */
   public void actionPerformed(ActionEvent e)
   {
     genepoolCopy = GenePool.getCopy();
-    for (int j = 0; j < creatures.size() - 1; j++)
+    for (JButton button : creatures)
     {
-      String genomeName = genepoolCopy.get(j).getFileName();
-      creatures.get(j).setText(genomeName);
-      if (e.getSource() == creatures.get(j))
+      String genomeName = genepoolCopy.getLast().getFileName();
+      button.setText(genomeName);
+      if (e.getSource() == button)
       {
-        animation.setCurrentCreature(genepoolCopy.get(j));
-        creatures.get(j).setText("Current Creature View");
+        animation.setCurrentCreature(genepoolCopy.getLast());
+        button.setText("Current Creature View");
       }
+      genepoolCopy.removeLast();
     }
   }
 }

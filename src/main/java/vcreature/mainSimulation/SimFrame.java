@@ -11,8 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by Tess Daughton on 10/18/2015
@@ -118,13 +120,13 @@ public class SimFrame extends JFrame implements ActionListener
     creatureSelectorTitle.setFont(font);
     creatureSelectionPanel.add(creatureSelectorTitle);
     creatureSelectionPanel.add(switchBackView);
-    creatureSelectionPanel.setPreferredSize(new Dimension(200, 700));
-    creatureSelectionPanel.setSize(new Dimension(200, 700));
+    creatureSelectionPanel.setPreferredSize(new Dimension(200, 4000));
+    creatureSelectionPanel.setSize(new Dimension(200, 4000));
 
-
-    for (Genome genome : GenePool.getCopy())
+    LinkedList<Genome> genomes = GenePool.getCopy();
+    for (int i = GenePool.getCopy().size()-1; i>=0; i--)
     {
-      creature = new JButton(genome.getFileName());
+      creature = new JButton(genomes.get(i).getFileName());
       creatures.add(creature);
       creatureSelectionPanel.add(creature);
     }
