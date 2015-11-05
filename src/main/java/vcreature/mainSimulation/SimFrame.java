@@ -67,12 +67,13 @@ public class SimFrame extends JFrame implements ActionListener
     super();
     this.manager = manager;
     animation = new SimAnimation(manager);
+    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setPreferredSize((new Dimension(1200, 1000)));
+    setSize(new Dimension(1200, 1000));
     this.addCreatureSelectionPane();
     this.addControlPane();
     this.addAppPane();
-    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    setPreferredSize(new Dimension(1400, 1200));
-    setSize(new Dimension(1400, 1200));
+
     pack();
     setVisible(true);
     fitnessTracker = new Timer(0, this);
@@ -100,15 +101,12 @@ public class SimFrame extends JFrame implements ActionListener
       creatures.add(creature);
       creatureSelectionPanel.add(creature);
     }
-    creatureSelector = new JScrollPane();
-    creatureSelector.setViewportView(creatureSelectionPanel);
+    creatureSelector = new JScrollPane(creatureSelectionPanel);
     creatureSelector.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-    creatureSelector.setVisible(true);
-
     creatureSelector.setPreferredSize(new Dimension(200, 700));
     new CreatureSelectionHandler(creatures, animation, this);
-    this.add(creatureSelectionPanel);
+    add(creatureSelector, BorderLayout.LINE_END);
   }
 
   /**
@@ -139,9 +137,9 @@ public class SimFrame extends JFrame implements ActionListener
     modeChange.addActionListener(this);
     modeChange.setPreferredSize(new Dimension(350, 100));
     modeChange.setSize(new Dimension(350, 100));
-    appPane.add(title);
+    appPane.add(title, BorderLayout.PAGE_START);
     appPane.add(modeChange);
-    appPane.add(ctx.getCanvas(), BorderLayout.CENTER);
+    appPane.add(ctx.getCanvas());
     add(appPane, BorderLayout.CENTER);
   }
 
@@ -206,6 +204,7 @@ public class SimFrame extends JFrame implements ActionListener
     controlPane.add(fitnessPerMin);
     controlPane.add(currentBestFitness);
     controlPane.add(chooseFile);
+    controlPane.setPreferredSize(new Dimension(1200,100));
     add(controlPane, BorderLayout.PAGE_END);
   }
 
