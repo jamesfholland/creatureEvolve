@@ -103,6 +103,7 @@ public class Genome
 
   /**
    * Synchronized List, in case the list is read while inserting.
+   * @param geneNeuron  neuron to add into list
    */
   public void addGeneNeuron(GeneNeuron geneNeuron)
   {
