@@ -89,7 +89,7 @@ class GeneticManager
       GenePool.add(SpawnRandomCreatureGenoform.createRandomCreature(4));
       buildQueue(currentTestee.GENOME);
     }
-    else if (lastFitness > currentTestee.PARENT2.getFitness() && currentTestee.PARENT2.getFitness() != -1)
+    else if (lastFitness > currentTestee.PARENT2.getFitness())
     {
       System.out.println("Better Child replacing weaker parent2: "
                              + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
