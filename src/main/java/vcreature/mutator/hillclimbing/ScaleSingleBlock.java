@@ -35,7 +35,8 @@ public class ScaleSingleBlock
 
     newGenome = new Genome(genome.getRootSize(), genome.getRootEulerAngles());
 
-    int pickRandom = (geneBlocks.size() > 0) ? MainSim.RANDOM.nextInt(geneBlocks.size()) : 0;
+    if(geneBlocks.size() > 0) return Adder.addBlock(genome);
+    int pickRandom = MainSim.RANDOM.nextInt(geneBlocks.size());
     for (int i = 0; i < geneBlocks.size(); i++)
     {
       block = geneBlocks.get(i);

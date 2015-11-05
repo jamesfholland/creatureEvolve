@@ -22,7 +22,9 @@ public class Subtracter
    */
   public static Genome subtractBlock(Genome genome)
   {
-    int index = (genome.getGENE_BLOCKS().size() > 0) ? MainSim.RANDOM.nextInt(genome.getGENE_BLOCKS().size()) : 0;
+    Random rand = new Random();
+    if(genome.getGENE_BLOCKS().size() > 0) return Adder.addBlock(genome);
+    int index = MainSim.RANDOM.nextInt(genome.getGENE_BLOCKS().size());
     Genome newGenome = subtractBlock(genome, index);
     return newGenome;
   }

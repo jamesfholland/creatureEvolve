@@ -68,8 +68,8 @@ class Inverter
         new Genome(genome.getRootSize(), genome.getRootEulerAngles());
     ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
     ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
-    int index = (geneBlocks.size() > 0) ? MainSim.RANDOM.nextInt(geneBlocks.size()) : 0;
-
+    if(geneBlocks.size() > 0) return Adder.addBlock(genome);
+    int index = MainSim.RANDOM.nextInt(geneBlocks.size());
     for (int i = 0; i < geneBlocks.size(); i++)
     {
       newGenome.addGeneBlock(geneBlocks.get(i));
