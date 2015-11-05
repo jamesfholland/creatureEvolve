@@ -76,11 +76,20 @@ public class GenomeCreature extends Creature
     this.placeOnGround();
   }
 
+  /**
+   * Removes genes that are not in the phenome.
+   *
+   * @return a clean genome from the root
+   */
   public Genome getCleanGenome()
   {
     return root.createCleanGenomeFromRoot();
   }
 
+  /**
+   * returns a genome
+   * @return a genome
+   */
   public Genome getGenome()
   {
     return genome;

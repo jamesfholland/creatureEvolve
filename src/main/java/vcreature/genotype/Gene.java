@@ -7,10 +7,26 @@ import java.util.ArrayList;
  */
 public class Gene
 {
+  /**
+   * The block corrospnding
+   */
   public final GeneBlock geneBlock;
+  /**
+   * list of corrosping geneneu
+   */
   public final ArrayList<GeneNeuron> geneNeurons = new ArrayList<>();
+  /**
+   * list of corrsponding children to the gene
+   */
   public final ArrayList<Gene> children = new ArrayList<>();
 
+  /**
+   * Creates a new gene for us to use to make a creature
+   *
+   * @param blocks an arraylist of blocks
+   * @param neurons an arraylist of neurons
+   * @param index an index of a block
+   */
   public Gene(ArrayList<GeneBlock> blocks, ArrayList<GeneNeuron> neurons, int index)
   {
     this.geneBlock = blocks.get(index);

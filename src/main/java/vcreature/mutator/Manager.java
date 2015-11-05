@@ -236,5 +236,4 @@ public class Manager
   {
     HILLCLIMB, GENETICALGORITHM
   }
-
 }
