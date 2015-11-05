@@ -18,6 +18,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.system.AppSettings;
 import com.jme3.texture.Texture;
+import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
@@ -42,8 +43,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
 
-  //  private Genome fileGenome = SpawnCreatureGenoform.creature();
-  private Genome fileGenome;
+  private Genome fileGenome = SpawnCreatureGenoform.creature();
+  //private Genome fileGenome;
 
   private final Manager MANAGER;
   private float currentFitness = 0;
@@ -66,7 +67,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   @Override
   public void simpleInitApp()
   {
-    // GenoFile.writeGenome(fileGenome);
+    //GenoFile.writeGenome(fileGenome);
     java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
 
     BulletAppState bulletAppState = new BulletAppState();
