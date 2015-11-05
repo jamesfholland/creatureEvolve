@@ -57,7 +57,7 @@ public class Adder
     int xSign = (rand.nextBoolean()) ? 1 : -1;
     int ySign = (rand.nextBoolean()) ? 1 : -1;
     int zSign = (rand.nextBoolean()) ? 1 : -1;
-    ImmutableVector randPivot = new ImmutableVector(0, 0, 0);
+    ImmutableVector randPivot;
     int randomFace = rand.nextInt(3);
 
     if (randomFace == 0)
