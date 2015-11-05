@@ -1,11 +1,10 @@
 package vcreature.mutator;
 
-import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
 import vcreature.mainSimulation.SpawnRandomCreatureGenoform;
+import vcreature.mutator.genetic.MegaMutate;
 import vcreature.mutator.genetic.MergeType;
-import vcreature.mutator.hillclimbing.Symmetrizer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -80,11 +79,17 @@ class GeneticManager
       GenePool.add(SpawnRandomCreatureGenoform.createRandomCreature(4));
       buildQueue(currentTestee.GENOME);
     }
-    else if(lastFitness > currentTestee.PARENT2.getFitness() && currentTestee.PARENT2.getFitness() != -1)
+    else if (lastFitness > currentTestee.PARENT2.getFitness() && currentTestee.PARENT2.getFitness() != -1)
     {
-    System.out.println("Better Child replacing weaker parent2: "
-                           + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
-    GenePool.replace(currentTestee.GENOME, currentTestee.PARENT2);
+      System.out.println("Better Child replacing weaker parent2: "
+                             + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
+      GenePool.replace(currentTestee.GENOME, currentTestee.PARENT2);
+    }
+    else
+    {
+      System.out.println("Better Child replacing weaker parent2: "
+                             + currentTestee.PARENT2.getFitness() + "with random ");
+      GenePool.replace(currentTestee.GENOME, MegaMutate.megaMutate(GenePool.getOneOfTheBest()));
     }
   }
 
