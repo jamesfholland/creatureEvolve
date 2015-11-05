@@ -144,7 +144,7 @@ public class Manager
         switch (currentHeuristic)
         {
           case GENETICALGORITHM:
-            if ((System.currentTimeMillis() - startTime) > 2000 * 60)
+            if ((System.currentTimeMillis() - startTime) > 15000 * 60)
             {
               switchToHILL(fitness);
               returnFitness = -1;

@@ -1,11 +1,9 @@
 package vcreature.mainSimulation;
 
-import sun.applet.Main;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.GenomeComparator;
 
-import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -195,6 +193,7 @@ public class GenePool
           if(minutes > 60)
           {
             hourlyUpdate();
+            minutes = 0;
           }
         }
         catch (InterruptedException e)
