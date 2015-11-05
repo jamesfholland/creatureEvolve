@@ -167,7 +167,6 @@ public class GenePool
 
   public static Genome getOneOfTheWorst()
   {
-
     synchronized (GENOMES)
     {
         return GENOMES.get(MainSim.RANDOM.nextInt(90));
