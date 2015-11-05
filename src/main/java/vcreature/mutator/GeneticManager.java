@@ -46,6 +46,8 @@ class GeneticManager
     if(bestChild != null)
     {
       GenePool.replace(bestChild, currentTestee.PARENT2);
+      if( bestChild.getFitness() == -1) System.out.println("Replacing parent2 with Random");
+      else System.out.println("Replacing with fitness: " + bestChild.getFitness());
     }
     bestChild = MegaMutate.megaMutate(GenePool.getOneOfTheBest());
     testQueue = new LinkedList<>();
@@ -93,8 +95,6 @@ class GeneticManager
     }
     else if (lastFitness > currentTestee.PARENT2.getFitness())
     {
-      System.out.println("Better Child replacing weaker parent2: "
-                             + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
       if(bestChild.getFitness() < lastFitness)
       {
         bestChild = currentTestee.GENOME;

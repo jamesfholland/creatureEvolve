@@ -3,6 +3,7 @@ package vcreature.mutator.hillclimbing;
 import vcreature.genotype.GeneBlock;
 import vcreature.genotype.GeneNeuron;
 import vcreature.genotype.Genome;
+import vcreature.mainSimulation.MainSim;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,8 +22,8 @@ public class Subtracter
    */
   public static Genome subtractBlock(Genome genome)
   {
-    Random rand = new Random();
-    Genome newGenome = subtractBlock(genome, rand.nextInt(genome.getGENE_BLOCKS().size()));
+    int index = (genome.getGENE_BLOCKS().size() > 0) ? MainSim.RANDOM.nextInt(genome.getGENE_BLOCKS().size()) : 0;
+    Genome newGenome = subtractBlock(genome, index);
     return newGenome;
   }
 

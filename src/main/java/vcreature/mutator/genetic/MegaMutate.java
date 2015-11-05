@@ -7,9 +7,17 @@ import vcreature.mutator.hillclimbing.Mutators;
 /**
  * Created by Dayloki on 11/4/2015.
  */
+
+/**
+ * Mutates genome 10 times
+ */
 public class MegaMutate
 {
-
+  /**
+   * This method will mutate a single genome 10 times.
+   * @param genome
+   * @return the genome mutated 10 times
+   */
   public static Genome megaMutate(Genome genome)
   {
     Genome mutatedCreature=genome;
