@@ -90,8 +90,8 @@ public class SimFrame extends JFrame implements ActionListener
     creatureSelectorTitle = new JLabel("Gene Pool Creatures");
     creatureSelectorTitle.setFont(new Font("Serif", Font.BOLD, 20));
     creatureSelectionPanel.add(creatureSelectorTitle);
-    creatureSelectionPanel.setPreferredSize(new Dimension(300, 1000));
-    creatureSelectionPanel.setSize(new Dimension(300, 1000));
+    creatureSelectionPanel.setPreferredSize(new Dimension(200, 1000));
+    creatureSelectionPanel.setSize(new Dimension(200, 1000));
 
 
     for (Genome genome : GenePool.getCopy())
@@ -102,12 +102,11 @@ public class SimFrame extends JFrame implements ActionListener
     }
     creatureSelector = new JScrollPane();
     creatureSelector.setViewportView(creatureSelectionPanel);
-    creatureSelector.setVerticalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-    creatureSelector.setVerticalScrollBar(new JScrollBar());
     creatureSelector.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    creatureSelector.setVisible(true);
 
-
-    creatureSelector.setPreferredSize(new Dimension(300, 700));
+    creatureSelector.setPreferredSize(new Dimension(200, 700));
     new CreatureSelectionHandler(creatures, animation, this);
     this.add(creatureSelectionPanel);
   }
