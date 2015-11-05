@@ -18,8 +18,6 @@ public class MainSim
 
   public static void main(final String[] args)
   {
-    System.out.println("Starting Simulation");
-
     java.awt.EventQueue.invokeLater(new Runnable()
     {
       @Override
@@ -55,7 +53,6 @@ public class MainSim
         mutationTester.start(JmeContext.Type.Headless);
         if (args.length == 0) // if the user enters ANY command line argument, the GUI will NOT run
         {
-          System.out.println("Starting GUI");
           //GUI version
           new SimFrame(manager);
         }

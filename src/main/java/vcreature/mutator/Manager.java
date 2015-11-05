@@ -54,6 +54,10 @@ public class Manager
     geneticManager = new GeneticManager();
   }
 
+  /**
+   * Handles the switching of threshholds from the gui.
+   * @param threshhold new threshhold to get under
+   */
   public void setSwitchingThreshhold(float threshhold)
   {
     this.switchingThreshhold = threshhold;
@@ -181,7 +185,6 @@ public class Manager
     //We switched now reset time.
     if (returnFitness == -1)
     {
-      System.out.println("Switched to " + currentHeuristic.name());
       deltaFitness = 0;
       startTime = System.currentTimeMillis();
     }

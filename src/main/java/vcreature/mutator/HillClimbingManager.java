@@ -80,8 +80,6 @@ class HillClimbingManager
     currentTestee.setFitness(lastFitness);
     if (lastFitness > parentGenome.getFitness())
     {
-      System.out.println("Better Child replacing parent parent: "
-                             + parentGenome.getFitness() + "fitness: " + lastFitness);
       GenePool.replace(currentTestee, parentGenome);
       buildQueue(currentTestee);
     }
