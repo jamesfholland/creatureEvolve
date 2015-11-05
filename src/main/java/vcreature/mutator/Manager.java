@@ -79,7 +79,7 @@ public class Manager
   /**
    * Gets the next creature, depending on hill climbing.
    * @param lastFitness the minumum fitness of the previous creature.
-   * @return
+   * @return a new next creature
    */
   public Genome getNextCreature(float lastFitness)
   {

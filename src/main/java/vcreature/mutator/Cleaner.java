@@ -11,10 +11,10 @@ import vcreature.genotype.GenomeCreature;
 public class Cleaner
 {
   /**
-   * Removes genes that are not in the phenome.
+   * Removes genes that are not in the phenome
    *
-   * @param genome
-   * @return
+   * @param genome a genome
+   * @return a clean genome
    */
   public static Genome cleanGenome(Genome genome)
   {
