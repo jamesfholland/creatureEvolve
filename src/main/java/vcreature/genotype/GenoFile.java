@@ -14,6 +14,11 @@ public class GenoFile
    */
   private static final String GENE_POOL_LOCATION = "GenePool/";
 
+  static
+  {
+    (new File(SAVE_LOCATION)).mkdir();
+  }
+
   /**
    * Simply pass a Genome and it will write it to the creatures folder.
    * It will overwrite if a name collision occurs, but this should be extremely rare
