@@ -28,13 +28,13 @@ public class Manager
   private HillClimbingManager hillClimbingManager;
   private float deltaFitness = 0.0f;
 
-  public Manager()
+  public Manager(MutationType type)
   {
+    currentMutationType = type;
     initializeGenetics();
     initializeHillClimbing();
     currentGenome = GenePool.getWorst();
     startTime = System.currentTimeMillis();
-
   }
 
   private void initializeHillClimbing()
@@ -180,7 +180,7 @@ public class Manager
 
   public void setCurrentMutationType(MutationType mutationType)
   {
-    currentMutationType = mutationType;
+      currentMutationType = mutationType;
   }
 
   private void switchToHILL(float fitness)
@@ -204,6 +204,5 @@ public class Manager
   {
     HILLCLIMB, GENETICALGORITHM
   }
-
 
 }

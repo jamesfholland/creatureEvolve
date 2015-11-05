@@ -54,6 +54,5 @@ public class LoadFrame extends JWindow
     setVisible(true);
     Thread splashThread = new Thread(waitRunner,"SplashThread");
     splashThread.start();
-
   }
 }

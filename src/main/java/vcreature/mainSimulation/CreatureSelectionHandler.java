@@ -50,7 +50,7 @@ class CreatureSelectionHandler implements ActionListener
       if (e.getSource() == creatures.get(j))
       {
         animation.setCurrentCreature(genepoolCopy.get(j));
-        new LoadFrame(frame,2000).setVisible(true);
+       // new LoadFrame(frame,2000).setVisible(true);
         creatures.get(j).setText("Current Creature View");
       }
     }

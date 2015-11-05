@@ -3,6 +3,7 @@ package vcreature.mainSimulation;
 import com.jme3.system.AppSettings;
 import com.jme3.system.JmeContext;
 import vcreature.mutator.Manager;
+import vcreature.mutator.hillclimbing.Symmetrizer;
 
 import java.util.Random;
 
@@ -24,7 +25,28 @@ public class MainSim
       @Override
       public void run()
       { //starting up headless Simple Application for testing creatures inside of
-        Manager manager = new Manager();
+        Manager manager;
+
+
+        if (args.length > 0)
+        {
+          if (args[0].equalsIgnoreCase("hill"))
+          {
+            manager = new Manager(Manager.MutationType.HILL);
+          }
+          else if (args[0].equalsIgnoreCase("genetic"))
+          {
+            manager = new Manager(Manager.MutationType.GENETIC);
+          }
+          else
+          {
+            manager = new Manager(Manager.MutationType.GENETICHILL);
+          }
+        }
+        else
+        {
+          manager = new Manager(Manager.MutationType.GENETICHILL);
+        }
         MutationTester mutationTester = new MutationTester(manager);
         AppSettings settings = new AppSettings(true);
         settings.setResolution(1024, 768);

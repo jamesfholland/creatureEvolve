@@ -70,6 +70,9 @@ public class SimFrame extends JFrame implements ActionListener
     this.addCreatureSelectionPane();
     this.addControlPane();
     this.addAppPane();
+    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setPreferredSize(new Dimension(1400, 1200));
+    setSize(new Dimension(1400, 1200));
     pack();
     setVisible(true);
     fitnessTracker = new Timer(0, this);
@@ -87,21 +90,25 @@ public class SimFrame extends JFrame implements ActionListener
     creatureSelectorTitle = new JLabel("Gene Pool Creatures");
     creatureSelectorTitle.setFont(new Font("Serif", Font.BOLD, 20));
     creatureSelectionPanel.add(creatureSelectorTitle);
+    creatureSelectionPanel.setPreferredSize(new Dimension(300, 1000));
+    creatureSelectionPanel.setSize(new Dimension(300, 1000));
+
+
     for (Genome genome : GenePool.getCopy())
     {
       creature = new JButton(genome.getFileName());
       creatures.add(creature);
       creatureSelectionPanel.add(creature);
     }
-    new CreatureSelectionHandler(creatures, animation, this);
-    creatureSelector = new JScrollPane(creatureSelectionPanel);
+    creatureSelector = new JScrollPane();
+    creatureSelector.setViewportView(creatureSelectionPanel);
+    creatureSelector.setVerticalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    creatureSelector.setVerticalScrollBar(new JScrollBar());
     creatureSelector.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    setPreferredSize(new Dimension(1400, 1200));
-    setSize(new Dimension(1400, 1200));
-    creatureSelector.setSize(new Dimension(200, 865));
-    creatureSelectionPanel.setPreferredSize(new Dimension(200, 865));
-    creatureSelectionPanel.setSize(new Dimension(200, 865));
+
+
+    creatureSelector.setPreferredSize(new Dimension(300, 700));
+    new CreatureSelectionHandler(creatures, animation, this);
     this.add(creatureSelectionPanel);
   }
 
@@ -122,7 +129,7 @@ public class SimFrame extends JFrame implements ActionListener
     animation.startCanvas();
     ctx = (JmeCanvasContext) animation.getContext();
     ctx.setSystemListener(animation);
-    ctx.getCanvas().setPreferredSize(new Dimension(1000, 735));
+    ctx.getCanvas().setPreferredSize(new Dimension(900, 635));
     appPane.setPreferredSize(new Dimension(1200, 800));
     appPane.setSize(new Dimension(1200, 800));
     appPane.setBackground(Color.BLACK);
@@ -138,6 +145,7 @@ public class SimFrame extends JFrame implements ActionListener
     appPane.add(ctx.getCanvas(), BorderLayout.CENTER);
     add(appPane, BorderLayout.CENTER);
   }
+
 
   /**
    * Creates a Jpanel that contains user controls
@@ -182,7 +190,7 @@ public class SimFrame extends JFrame implements ActionListener
     });
 
     userThreshold.setEditable(true);
-    userThreshold.setText("15.00");
+    userThreshold.setText("1.00");
     userThreshold.addActionListener(this);
     chooseFile.addActionListener(new OpenFile(animation,this)); //event handling for User selected file creature
     threshold = new JLabel("Fitness Threshold: ");
@@ -223,7 +231,16 @@ public class SimFrame extends JFrame implements ActionListener
       JTextField tf = (JTextField) e.getSource();
       String userValue = tf.getText();
       tf.setText(userValue);
-      new LoadFrame(this,1000).setVisible(true);
+      try
+      {
+        manager.setSwitchingThreshhold(Float.parseFloat(userValue));
+      }
+      catch (Exception exception)
+      {
+        manager.setSwitchingThreshhold(1.00f);
+        tf.setText("1.00");
+      }
+      //new LoadFrame(this,1000).setVisible(true);
 
     }
     if (source instanceof JComboBox)
@@ -231,7 +248,7 @@ public class SimFrame extends JFrame implements ActionListener
       System.out.println("JComboBox");
       JComboBox cb = (JComboBox) source;
       String thread = (String) cb.getSelectedItem();
-      new LoadFrame(this,2000).setVisible(true);
+      //new LoadFrame(this,2000).setVisible(true);
 
       if (thread.equals("Hill Climbing"))
       {

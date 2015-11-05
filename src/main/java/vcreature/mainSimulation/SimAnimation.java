@@ -67,7 +67,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void simpleInitApp()
   {
     // GenoFile.writeGenome(fileGenome);
-    java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
+    //java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
 
     BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);

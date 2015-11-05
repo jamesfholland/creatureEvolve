@@ -11,6 +11,9 @@ import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
 import vcreature.phenotype.PhysicsConstants;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 
 /**
@@ -47,8 +50,7 @@ class MutationTester extends SimpleApplication
   @Override
   public void simpleInitApp()
   {
-    java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
-
+    //java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
     BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
@@ -113,8 +115,7 @@ class MutationTester extends SimpleApplication
         currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(currentFitness));
       }
       previousFitness = currentFitness;
-    }
-    catch (Exception e)
+    } catch (Exception e)
     {
       e.printStackTrace();
     }
@@ -122,6 +123,8 @@ class MutationTester extends SimpleApplication
 
   /**
    * Sets speeds of headless GUI and bullet physics engine
+   *
+   * @param speed
    * @param speed new speed to run at
    */
   private void setSpeed(int speed)
@@ -130,6 +133,21 @@ class MutationTester extends SimpleApplication
     physicsSpace.setMaxSubSteps(4 * speed);
     settings.setFrequency(speed * 60);
     this.restart();
+  }
+
+
+  public void setMode(String mode)
+  {
+    if (mode.equalsIgnoreCase("hill"))
+    {
+      manager.setCurrentMutationType(Manager.MutationType.HILL);
+    }
+    else if (mode.equalsIgnoreCase("genetic"))
+    {
+      manager.setCurrentMutationType(Manager.MutationType.GENETIC);
+    }
+    else
+      manager.setCurrentMutationType(Manager.MutationType.GENETICHILL);
   }
 }
 
