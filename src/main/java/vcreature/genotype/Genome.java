@@ -103,6 +103,7 @@ public class Genome
 
   /**
    * Synchronized List, in case the list is read while inserting.
+   * @param geneNeuron  neuron to add into list
    */
   public void addGeneNeuron(GeneNeuron geneNeuron)
   {
@@ -111,6 +112,7 @@ public class Genome
 
   /**
    * Return an copy of our GeneBlocks.
+   * @return arraylist of geneblocks
    */
   public ArrayList<GeneBlock> getGENE_BLOCKS()
   {
@@ -122,6 +124,7 @@ public class Genome
 
   /**
    * Return an copy of our GeneBlocks.
+   * @return arraylist of GeneNeurons
    */
   public ArrayList<GeneNeuron> getGENE_NEURONS()
   {
@@ -132,6 +135,7 @@ public class Genome
   }
 
   /**
+   *Gets root size of Genome
    * @return The Vector3f form of the root size.
    */
   public ImmutableVector getRootSize()
@@ -140,6 +144,7 @@ public class Genome
   }
 
   /**
+   * Gets the euler angles of Genome
    * @return The Vector3f form of the root euler angles.
    */
   public ImmutableVector getRootEulerAngles()
@@ -160,6 +165,7 @@ public class Genome
   /**
    * Get the fitness in meters of the creature.
    * A fitness of -1 indicates the creature has not been tested.
+   * @return float of fittness
    */
   public float getFitness()
   {

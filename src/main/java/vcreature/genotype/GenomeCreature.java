@@ -11,13 +11,18 @@ import java.util.LinkedList;
 
 /**
  * This class creates a creature based on a genome.
- * Unfinished.
  */
 public class GenomeCreature extends Creature
 {
   private Genome genome;
   private ProtoBlock root;
 
+  /**
+   * Creates a instance of genomecreature
+   * @param physicsSpace  the physics space
+   * @param jMonkeyRootNode root node
+   * @param genome  genome you want to convert
+   */
   public GenomeCreature(PhysicsSpace physicsSpace, Node jMonkeyRootNode, Genome genome)
   {
     super(physicsSpace, jMonkeyRootNode);
