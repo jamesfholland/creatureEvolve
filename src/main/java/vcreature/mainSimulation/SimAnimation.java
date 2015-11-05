@@ -187,7 +187,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   /**
    * Called when user slides zoom toggle in GUI
    * Sets zoom value which is later used to either lengthen or diminish the camera perspective vector
-   * @param zoom
+   * @param zoom how much we want to zoom in or out.
    */
   protected void setZoom(int zoom)
   {

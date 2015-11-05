@@ -120,8 +120,7 @@ class MutationTester extends SimpleApplication
   /**
    * Sets speeds of headless GUI and bullet physics engine
    *
-   * @param speed
-   * @param speed new speed to run at
+   * @param speed how fast we want the simulation to run
    */
   private void setSpeed(int speed)
   {

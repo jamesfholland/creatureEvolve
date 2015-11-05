@@ -25,7 +25,7 @@ class GeneticManager
 
   public Genome getNextGenome(float lastFitness)
   {
-    if (lastFitness == -1)
+    if (lastFitness == -1 || currentTestee == null)
     {
       buildQueue(GenePool.getBest());
     }
