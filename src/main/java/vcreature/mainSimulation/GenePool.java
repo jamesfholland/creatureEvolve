@@ -160,7 +160,7 @@ public class GenePool
     {
       if (MainSim.RANDOM.nextBoolean() && MainSim.RANDOM.nextBoolean())
       {
-        return GENOMES.get(GENOMES.size() - MainSim.RANDOM.nextInt(10));
+        return GENOMES.get(GENOMES.size() - MainSim.RANDOM.nextInt(10)-1);
       }
       return GENOMES.getFirst();
     }
