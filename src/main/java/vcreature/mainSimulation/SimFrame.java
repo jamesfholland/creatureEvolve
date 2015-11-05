@@ -3,15 +3,12 @@ package vcreature.mainSimulation;
 import com.jme3.system.JmeCanvasContext;
 import vcreature.genotype.Genome;
 import vcreature.mutator.Manager;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -40,6 +37,8 @@ public class SimFrame extends JFrame implements ActionListener
   private JLabel fitnessPerMin;
   private JLabel currentBestFitness;
   private JLabel threshold;
+  private JLabel displayedCreatureFitness;
+
   private JTextField userThreshold = new JTextField();
   private String[] modes = {"Genetic/Hill Climbing", "Hill Climbing", "Genetic Algorithm"};
   private JComboBox modeChange = new JComboBox<String>(modes);
@@ -52,7 +51,7 @@ public class SimFrame extends JFrame implements ActionListener
   private JButton creature;
   private JLabel creatureSelectorTitle;
   private Manager manager;
-
+  private Font font = new Font("Serif", Font.BOLD, 20);
 
   /**
    * Class Constructor:
@@ -68,8 +67,9 @@ public class SimFrame extends JFrame implements ActionListener
     this.manager = manager;
     animation = new SimAnimation(manager);
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    setPreferredSize((new Dimension(1200, 1000)));
+    setPreferredSize((new Dimension(1200, 900)));
     setSize(new Dimension(1200, 1000));
+    setMinimumSize(new Dimension(1200, 900));
     this.addCreatureSelectionPane();
     this.addControlPane();
     this.addAppPane();
@@ -91,8 +91,8 @@ public class SimFrame extends JFrame implements ActionListener
     creatureSelectorTitle = new JLabel("Gene Pool Creatures");
     creatureSelectorTitle.setFont(new Font("Serif", Font.BOLD, 20));
     creatureSelectionPanel.add(creatureSelectorTitle);
-    creatureSelectionPanel.setPreferredSize(new Dimension(200, 1000));
-    creatureSelectionPanel.setSize(new Dimension(200, 1000));
+    creatureSelectionPanel.setPreferredSize(new Dimension(200, 1100));
+    creatureSelectionPanel.setSize(new Dimension(200, 1100));
 
 
     for (Genome genome : GenePool.getCopy())
@@ -103,8 +103,8 @@ public class SimFrame extends JFrame implements ActionListener
     }
     creatureSelector = new JScrollPane(creatureSelectionPanel);
     creatureSelector.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-    creatureSelector.setPreferredSize(new Dimension(200, 700));
+    creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    creatureSelector.setPreferredSize(new Dimension(200, 750));
     new CreatureSelectionHandler(creatures, animation, this);
     add(creatureSelector, BorderLayout.LINE_END);
   }
@@ -189,12 +189,24 @@ public class SimFrame extends JFrame implements ActionListener
     userThreshold.setEditable(true);
     userThreshold.setText("1.00");
     userThreshold.addActionListener(this);
-    chooseFile.addActionListener(new OpenFile(animation,this)); //event handling for User selected file creature
+    chooseFile.addActionListener(new OpenFile(animation, this)); //event handling for User selected file creature
     threshold = new JLabel("Fitness Threshold: ");
     zoomLabel = new JLabel("Zoom: ");
     speedLabel = new JLabel("Speed: ");
     fitnessPerMin = new JLabel(("Fitness/Min: " + df.format((manager.getFitnessPerMinute()))));
     currentBestFitness = new JLabel("Current Top Fitness: " + df.format(GenePool.getBest().getFitness()));
+    displayedCreatureFitness = new JLabel("Current Creature View Fitness: 0.00");
+
+
+    threshold.setFont(font);
+    userThreshold.setFont(font);
+    zoomLabel.setFont(font);
+    speedLabel.setFont(font);
+    fitnessPerMin.setFont(font);
+    currentBestFitness.setFont(font);
+    displayedCreatureFitness.setFont(font);
+    chooseFile.setFont(font);
+
     controlPane.add(threshold);
     controlPane.add(userThreshold);
     controlPane.add(zoomLabel);
@@ -203,8 +215,9 @@ public class SimFrame extends JFrame implements ActionListener
     controlPane.add(speed);
     controlPane.add(fitnessPerMin);
     controlPane.add(currentBestFitness);
+    controlPane.add(displayedCreatureFitness);
     controlPane.add(chooseFile);
-    controlPane.setPreferredSize(new Dimension(1200,100));
+    controlPane.setPreferredSize(new Dimension(1200,90));
     add(controlPane, BorderLayout.PAGE_END);
   }
 
@@ -223,6 +236,8 @@ public class SimFrame extends JFrame implements ActionListener
     Object source = e.getSource();
     fitnessPerMin.setText("Fitness/Min: " + df.format(manager.getFitnessPerMinute()));
     currentBestFitness.setText("Current Top Fitness: " + df.format(GenePool.getBest().getFitness()));
+    displayedCreatureFitness.setText(("Current Creature View Fitness: " + df.format(animation.getCurrentCreatureFitness())));
+
 
     if (source instanceof JTextField)
     {

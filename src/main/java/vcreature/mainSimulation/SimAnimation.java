@@ -46,7 +46,6 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private Genome fileGenome;
 
   private final Manager MANAGER;
-  private float currentFitness = 0;
   private int zoom = 25;
 
   public SimAnimation(Manager manager)
@@ -67,7 +66,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void simpleInitApp()
   {
     // GenoFile.writeGenome(fileGenome);
-    //java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
+    java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
 
     BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
@@ -192,21 +191,12 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   }
 
   /**
-   * Gets the fitness of the creature
-   * @return fitness in meters
-   */
-  public float getCurrentFitness()
-  {
-    return currentFitness;
-  }
-
-  /**
    * Use the main event loop to trigger repeating actions.
    */
   @Override
   public void simpleUpdate(float deltaSeconds)
   {
-    this.currentFitness = myCreature.updateBrain(elapsedSimulationTime);
+    myCreature.updateBrain(elapsedSimulationTime);
     elapsedSimulationTime += deltaSeconds;
     if (elapsedSimulationTime > 15)
     {
@@ -245,7 +235,12 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void setCurrentCreature(Genome creature)
   {
     fileGenome = creature;
+  }
 
+  public float getCurrentCreatureFitness()
+  {
+    if (myCreature==null) return 0.00f;
+    return myCreature.getFitness();
   }
 }
 
