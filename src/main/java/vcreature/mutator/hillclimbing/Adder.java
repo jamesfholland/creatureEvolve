@@ -32,7 +32,7 @@ public class Adder
 
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
-    int index = rand.nextInt(geneBlocks.size());
+    int index = (geneBlocks.size() > 0) ? MainSim.RANDOM.nextInt(geneBlocks.size()) : 0;
 
 
     // GeneBlock block=geneBlocks.get(index);
