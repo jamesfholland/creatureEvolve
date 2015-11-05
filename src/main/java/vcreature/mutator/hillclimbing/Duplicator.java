@@ -39,8 +39,10 @@ class Duplicator
       newGenome.addGeneBlock(geneBlock);
     }
     ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
-    if(geneBlocks.size() > 0) return Adder.addBlock(genome);
-    int randIndex = MainSim.RANDOM.nextInt(geneBlocks.size());    GeneBlock block = geneBlocks.get(randIndex);
+    if(geneBlocks.size() <= 0) return Adder.addBlock(genome);
+    int randIndex = MainSim.RANDOM.nextInt(geneBlocks.size());
+
+    GeneBlock block = geneBlocks.get(randIndex);
     if (geneNeurons.size() == 0)
     {
       randIndex = 0;
