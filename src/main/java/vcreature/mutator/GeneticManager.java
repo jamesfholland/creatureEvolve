@@ -60,7 +60,6 @@ class GeneticManager
         testQueue.offer(new GenomeTracker(Cleaner.cleanGenome(child), parent, mate));
       }
     }
-    System.out.println("Queue done");
   }
 
   /**
