@@ -32,7 +32,7 @@ public class Randomizer
 
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
-    if(geneBlocks.size() > 0) return Adder.addBlock(genome);
+    if(geneBlocks.size() <= 0) return Adder.addBlock(genome);
     int index = MainSim.RANDOM.nextInt(geneBlocks.size());
     GeneBlock block = geneBlocks.get(index);
     GeneBlock randBlock;
