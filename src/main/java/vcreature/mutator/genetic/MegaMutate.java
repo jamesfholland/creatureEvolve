@@ -15,7 +15,7 @@ public class MegaMutate
 {
   /**
    * This method will mutate a single genome 10 times.
-   * @param genome
+   * @param genome a genome to be mutated
    * @return the genome mutated 10 times
    */
   public static Genome megaMutate(Genome genome)
