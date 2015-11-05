@@ -1,18 +1,17 @@
 package vcreature.mutator;
 
-import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
 import vcreature.mainSimulation.SpawnRandomCreatureGenoform;
+import vcreature.mutator.genetic.MegaMutate;
 import vcreature.mutator.genetic.MergeType;
-import vcreature.mutator.hillclimbing.Symmetrizer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
  * Manages genetic merger classes. Will choose which class to use in
- * different situations
+ * different situations.
  */
 class GeneticManager
 {
@@ -28,6 +27,7 @@ class GeneticManager
   public Genome getNextGenome(float lastFitness)
   {
 
+    System.out.println("Mergetype: " + mergeType.name() +"Fitness: " + lastFitness);
     if (lastFitness == -1)
     {
       buildQueue(GenePool.getBest());
@@ -39,7 +39,7 @@ class GeneticManager
     if (testQueue.isEmpty())
     {
       mergeType = mergeType.next(); //Cycle through mergeTypes.
-      buildQueue(GenePool.getRandom());
+      buildQueue(GenePool.getOneOfTheBest());
     }
     currentTestee = testQueue.poll();
     return currentTestee.GENOME;
@@ -54,18 +54,26 @@ class GeneticManager
       ArrayList<Genome> children = mergeType.merge(parent, mate);
       for (Genome child : children)
       {
-        Genome symChild = Symmetrizer.basicSymmetrize(child);
-        testQueue.offer(new GenomeTracker(symChild, parent, mate));
-        testQueue.offer(new GenomeTracker(child, parent, mate));
+        testQueue.offer(new GenomeTracker(Cleaner.cleanGenome(child), parent, mate));
       }
     }
   }
 
+  /**
+   * returns the minimum fitness between two parents
+   * @return minimum fitness between two parents.
+   */
   public float getFitnessBar()
   {
     return Math.min(currentTestee.PARENT1.getFitness(), currentTestee.PARENT2.getFitness());
   }
 
+  /**
+   * Determins what happens what to the creature when it is being tested,
+   * by finalizing the results. If creature is better it will replace parents, or
+   * if parent two is weaker it will replace it with a random creature
+   * @param lastFitness the last fitness that a creature had
+   */
   public void finalize(float lastFitness)
   {
     currentTestee.GENOME.setFitness(lastFitness);
@@ -80,15 +88,19 @@ class GeneticManager
 
       GenePool.add(SpawnRandomCreatureGenoform.createRandomCreature(4));
       buildQueue(currentTestee.GENOME);
-      GenoFile.writeGenome(currentTestee.GENOME);
     }
-    //Parent1 is currently the best so not bothering checking.
-    //else if(lastFitness > currentTestee.PARENT2.getFitness() && currentTestee.PARENT2.getFitness() != -1)
-    //{
-    //System.out.println("Better Child replacing weaker parent2: "
-    //                       + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
-    //GenePool.replace(currentTestee.GENOME, currentTestee.PARENT2);
-    //}
+    else if (lastFitness > currentTestee.PARENT2.getFitness() && currentTestee.PARENT2.getFitness() != -1)
+    {
+      System.out.println("Better Child replacing weaker parent2: "
+                             + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
+      GenePool.replace(currentTestee.GENOME, currentTestee.PARENT2);
+    }
+    else
+    {
+      System.out.println("Better Child replacing weaker parent2: "
+                             + currentTestee.PARENT2.getFitness() + "with random ");
+      GenePool.replace(currentTestee.GENOME, MegaMutate.megaMutate(GenePool.getOneOfTheBest()));
+    }
   }
 
 

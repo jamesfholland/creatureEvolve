@@ -80,9 +80,7 @@ public class Block
   //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
   private Vector3f tmpVec3 = new Vector3f(); //
   
-  
-  
-  
+
   /**
    * Creates a box
    * @param physicsSpace

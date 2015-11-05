@@ -10,6 +10,12 @@ import vcreature.genotype.GenomeCreature;
  */
 public class Cleaner
 {
+  /**
+   * Removes genes that are not in the phenome.
+   *
+   * @param genome
+   * @return
+   */
   public static Genome cleanGenome(Genome genome)
   {
     PhysicsSpace physicsSpace = new PhysicsSpace();
@@ -17,6 +23,4 @@ public class Cleaner
     GenomeCreature creature = new GenomeCreature(physicsSpace, node, genome);
     return creature.getCleanGenome();
   }
-
-
 }

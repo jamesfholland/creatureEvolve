@@ -4,6 +4,8 @@ import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.GenomeComparator;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -17,18 +19,23 @@ public class GenePool
    * Get a copy or add a synchronized method to do what you need.
    */
   private static final LinkedList<Genome> GENOMES;
-  private static final int MINIMUM_POOL_SIZE = 1000;
+  private static final int MINIMUM_POOL_SIZE = 100;
+  private static final Thread GENEMANAGER;
 
   static
   {
     GENOMES = GenoFile.loadGenePool();
-    while (GENOMES.size() < MINIMUM_POOL_SIZE)
+    synchronized (GENOMES)
     {
-      synchronized (GENOMES)
+      while (GENOMES.size() < MINIMUM_POOL_SIZE)
       {
         GENOMES.add(SpawnRandomCreatureGenoform.createRandomCreature(MainSim.RANDOM.nextInt(2) + 2));
       }
+      GENOMES.sort(new GenomeComparator());
     }
+
+    GENEMANAGER = new Thread(new GeneManager());
+    GENEMANAGER.start();
   }
 
   /**
@@ -58,8 +65,9 @@ public class GenePool
     {
       GENOMES.remove(parent1);
       GENOMES.remove(parent2);
-      GENOMES.add(newGenome);
+      GenePool.add(newGenome);
     }
+
   }
 
   /**
@@ -73,7 +81,7 @@ public class GenePool
     synchronized (GENOMES)
     {
       GENOMES.remove(parent);
-      GENOMES.add(newGenome);
+      GenePool.add(newGenome);
     }
   }
 
@@ -87,6 +95,7 @@ public class GenePool
     synchronized (GENOMES)
     {
       GENOMES.add(newGenome);
+      GENOMES.sort(new GenomeComparator());
     }
   }
 
@@ -100,7 +109,6 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
-      GENOMES.sort(new GenomeComparator());
       return GENOMES.getLast();
     }
   }
@@ -140,8 +148,60 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
-      GENOMES.sort(new GenomeComparator());
       return GENOMES.getFirst();
+    }
+  }
+
+  public static Genome getOneOfTheBest()
+  {
+
+    synchronized (GENOMES)
+    {
+      if (MainSim.RANDOM.nextBoolean() && MainSim.RANDOM.nextBoolean())
+      {
+        return GENOMES.get(GENOMES.size() - MainSim.RANDOM.nextInt(10)-1);
+      }
+      return GENOMES.getFirst();
+    }
+  }
+
+  private static void hourlyUpdate()
+  {
+    GenoFile.writeGenome(GenePool.getBest());
+  }
+
+  private static void minutelyUpdate()
+  {
+    System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
+                           + ": The best creature: " + GenePool.getBest().getFitness());
+  }
+
+  private static class GeneManager implements Runnable
+  {
+    private static int minutes = 0;
+    private static boolean interrupted = false;
+    @Override
+    public void run()
+    {
+      while(!interrupted)
+      {
+        try
+        {
+          Thread.sleep(60000); //one minute
+          minutes++;
+          minutelyUpdate();
+          if(minutes > 60)
+          {
+            hourlyUpdate();
+            minutes = 0;
+          }
+        }
+        catch (InterruptedException e)
+        {
+          interrupted = true;
+        }
+      }
+
     }
   }
 }

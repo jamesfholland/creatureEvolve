@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Manager
 {
-  private float switchingThreshhold = 0.001f;
+  private float switchingThreshhold = 1.0f;
 
   private long startTime;
 
@@ -28,13 +28,13 @@ public class Manager
   private HillClimbingManager hillClimbingManager;
   private float deltaFitness = 0.0f;
 
-  public Manager()
+  public Manager(MutationType type)
   {
+    currentMutationType = type;
     initializeGenetics();
     initializeHillClimbing();
     currentGenome = GenePool.getWorst();
     startTime = System.currentTimeMillis();
-
   }
 
   private void initializeHillClimbing()
@@ -144,7 +144,7 @@ public class Manager
         switch (currentHeuristic)
         {
           case GENETICALGORITHM:
-            if ((System.currentTimeMillis() - startTime) > 2000 * 60)
+            if ((System.currentTimeMillis() - startTime) > 15000 * 60)
             {
               switchToHILL(fitness);
               returnFitness = -1;
@@ -180,7 +180,7 @@ public class Manager
 
   public void setCurrentMutationType(MutationType mutationType)
   {
-    currentMutationType = mutationType;
+      currentMutationType = mutationType;
   }
 
   private void switchToHILL(float fitness)
@@ -204,6 +204,5 @@ public class Manager
   {
     HILLCLIMB, GENETICALGORITHM
   }
-
 
 }

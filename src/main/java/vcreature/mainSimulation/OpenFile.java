@@ -41,7 +41,7 @@ class OpenFile implements ActionListener
     int returnVal = fileChooser.showOpenDialog((Component) e.getSource());
     if (returnVal == JFileChooser.APPROVE_OPTION)
     {
-      new LoadFrame(frame,2000);
+      //new LoadFrame(frame,2000);
       File file = fileChooser.getSelectedFile();
       Genome fileGenome = GenoFile.readGenome(file.getAbsolutePath());
       if(fileGenome != null) //Null means it was an invalid file.

@@ -18,7 +18,6 @@ import com.jme3.scene.Geometry;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.system.AppSettings;
 import com.jme3.texture.Texture;
-import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
@@ -43,8 +42,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private GenomeCreature myCreature;
   private float elapsedSimulationTime;
 
-  private Genome fileGenome = SpawnCreatureGenoform.creature();
-  //private Genome fileGenome;
+  //  private Genome fileGenome = SpawnCreatureGenoform.creature();
+  private Genome fileGenome;
 
   private final Manager MANAGER;
   private float currentFitness = 0;
@@ -67,8 +66,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   @Override
   public void simpleInitApp()
   {
-    //GenoFile.writeGenome(fileGenome);
-    java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
+    // GenoFile.writeGenome(fileGenome);
+    //java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
 
     BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
@@ -80,9 +79,9 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     this.speed = 4;
     AppSettings settings = new AppSettings(true);
     setSettings(settings);
-    settings.setResolution(1024, 768);
+    settings.setResolution(800, 600);
     this.setPauseOnLostFocus(false);
-    //Set up inmovable floor
+    //Set up immovable floor
     com.jme3.scene.shape.Box floor = new com.jme3.scene.shape.Box(50f, 0.1f, 50f);
     Material floor_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
     Texture floorTexture = assetManager.loadTexture("Textures/FloorTile.png");

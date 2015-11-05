@@ -4,6 +4,7 @@ package vcreature.mutator;
 import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
+import vcreature.mainSimulation.MainSim;
 import vcreature.mutator.hillclimbing.Mutators;
 
 import java.util.LinkedList;
@@ -47,7 +48,8 @@ class HillClimbingManager
     }
     if (testQueue.isEmpty())
     {
-      buildQueue(GenePool.getWorst());
+      if(MainSim.RANDOM.nextBoolean())buildQueue(GenePool.getWorst());
+      else buildQueue(GenePool.getOneOfTheBest());
     }
     currentTestee = testQueue.poll();
 
@@ -56,12 +58,10 @@ class HillClimbingManager
 
   private void buildQueue(Genome genome)
   {
-    //genome= SpawnCreatureGenoform.makeTylerMonster();
     parentGenome = genome;
     testQueue = new LinkedList<>();
     for (Mutators mutator : Mutators.values())
     {
-      // testQueue.add(mutator.mutate(genome));
       testQueue.add(mutator.mutate(genome));
     }
   }
@@ -80,7 +80,6 @@ class HillClimbingManager
                              + parentGenome.getFitness() + "fitness: " + lastFitness);
       GenePool.replace(currentTestee, parentGenome);
       buildQueue(currentTestee);
-      GenoFile.writeGenome(currentTestee);
     }
   }
 }

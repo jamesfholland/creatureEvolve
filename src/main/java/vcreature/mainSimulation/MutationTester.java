@@ -6,6 +6,7 @@ import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.scene.Geometry;
 import com.jme3.system.AppSettings;
+import vcreature.genotype.GenoTools;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
 import vcreature.phenotype.PhysicsConstants;
@@ -19,15 +20,15 @@ import java.util.logging.Level;
  * MutationTester is the background application for mutations and Genetic merging.
  * It contains the physics space for actual testing.
  */
-class MutationTester extends SimpleApplication implements ActionListener
+class MutationTester extends SimpleApplication
 {
   private PhysicsSpace physicsSpace;
 
   private boolean speedSet = false;
   private final int SPEEDSETTING = 20;
-  private Timer currentBestFitness = new Timer(0,this);
 
-  //Temporary vectors used on each frame. They here to avoid instanciating new vectors on each frame
+
+  //Temporary vectors used on each frame. They here to avoid instantiating new vectors on each frame
   private GenomeCreature currentCreature;
   private float elapsedSimulationTime;
   private Manager manager;
@@ -49,8 +50,7 @@ class MutationTester extends SimpleApplication implements ActionListener
   @Override
   public void simpleInitApp()
   {
-    java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
-
+    //java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
     BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
@@ -74,8 +74,6 @@ class MutationTester extends SimpleApplication implements ActionListener
         PhysicsConstants.GROUND_ANGULAR_DAMPINING);
 
     currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(-1));
-    currentBestFitness.setDelay(60000);
-    currentBestFitness.start();
   }
 
 
@@ -97,7 +95,7 @@ class MutationTester extends SimpleApplication implements ActionListener
       }
 
       //System.out.println(deltaSeconds);
-      float currentFitness = currentCreature.updateBrain(elapsedSimulationTime);
+      float currentFitness = GenoTools.round2decimals(currentCreature.updateBrain(elapsedSimulationTime));
       elapsedSimulationTime += deltaSeconds;
 
       if (elapsedSimulationTime < 4f && currentFitness > 1.0f)
@@ -117,17 +115,17 @@ class MutationTester extends SimpleApplication implements ActionListener
         currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(currentFitness));
       }
       previousFitness = currentFitness;
-    }
-    catch (Exception e)
+    } catch (Exception e)
     {
       e.printStackTrace();
     }
-
   }
 
   /**
    * Sets speeds of headless GUI and bullet physics engine
+   *
    * @param speed
+   * @param speed new speed to run at
    */
   private void setSpeed(int speed)
   {
@@ -137,10 +135,19 @@ class MutationTester extends SimpleApplication implements ActionListener
     this.restart();
   }
 
-  @Override
-  public void actionPerformed(ActionEvent e)
+
+  public void setMode(String mode)
   {
-      System.out.println("Best Fitness So Far: "  + GenePool.getBest().getFitness());
+    if (mode.equalsIgnoreCase("hill"))
+    {
+      manager.setCurrentMutationType(Manager.MutationType.HILL);
+    }
+    else if (mode.equalsIgnoreCase("genetic"))
+    {
+      manager.setCurrentMutationType(Manager.MutationType.GENETIC);
+    }
+    else
+      manager.setCurrentMutationType(Manager.MutationType.GENETICHILL);
   }
 }
 
