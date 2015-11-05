@@ -17,6 +17,7 @@ class GeneticManager
 {
   private GenomeTracker currentTestee = null;
   private LinkedList<GenomeTracker> testQueue;
+  private Genome bestChild;
 
   GeneticManager()
   {
@@ -42,6 +43,11 @@ class GeneticManager
 
   private void buildQueue(Genome parent)
   {
+    if(bestChild != null)
+    {
+      GenePool.replace(bestChild, currentTestee.PARENT2);
+    }
+    bestChild = MegaMutate.megaMutate(GenePool.getOneOfTheBest());
     testQueue = new LinkedList<>();
     Genome mate = GenePool.getOneOfTheWorst();
     for(MergeType mergeType : MergeType.values())
@@ -89,13 +95,10 @@ class GeneticManager
     {
       System.out.println("Better Child replacing weaker parent2: "
                              + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
-      GenePool.replace(currentTestee.GENOME, currentTestee.PARENT2);
-    }
-    else
-    {
-      System.out.println("Better Child replacing weaker parent2: "
-                             + currentTestee.PARENT2.getFitness() + "with random ");
-      GenePool.replace(currentTestee.GENOME, MegaMutate.megaMutate(GenePool.getOneOfTheBest()));
+      if(bestChild.getFitness() < lastFitness)
+      {
+        bestChild = currentTestee.GENOME;
+      }
     }
   }
 

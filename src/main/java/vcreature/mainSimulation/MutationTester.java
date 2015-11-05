@@ -21,7 +21,7 @@ class MutationTester extends SimpleApplication
   private PhysicsSpace physicsSpace;
 
   private boolean speedSet = false;
-  private final int SPEEDSETTING = 20;
+  private final int SPEEDSETTING = 40;
 
 
   //Temporary vectors used on each frame. They here to avoid instantiating new vectors on each frame
