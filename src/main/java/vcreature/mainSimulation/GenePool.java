@@ -153,6 +153,10 @@ public class GenePool
     }
   }
 
+  /**
+   * Gets one of the top 10 creatures
+   * @return random top 10 creaute
+   */
   public static Genome getOneOfTheBest()
   {
 
@@ -166,6 +170,10 @@ public class GenePool
     }
   }
 
+  /**
+   * Get the bottom 90 creatures
+   * @return random bottom 90
+   */
   public static Genome getOneOfTheWorst()
   {
     synchronized (GENOMES)

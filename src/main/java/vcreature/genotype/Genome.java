@@ -132,6 +132,7 @@ public class Genome
   }
 
   /**
+   *Gets root size of Genome
    * @return The Vector3f form of the root size.
    */
   public ImmutableVector getRootSize()
@@ -140,6 +141,7 @@ public class Genome
   }
 
   /**
+   * Gets the euler angles of Genome
    * @return The Vector3f form of the root euler angles.
    */
   public ImmutableVector getRootEulerAngles()
