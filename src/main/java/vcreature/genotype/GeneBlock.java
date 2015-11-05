@@ -67,7 +67,7 @@ public final class GeneBlock
    */
   public final ImmutableVector HINGE_AXIS;
   /**
-   *
+   * The angle of rotations for the block.
    */
   public final ImmutableVector EULER_ANGLES;
 
