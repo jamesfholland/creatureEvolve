@@ -20,6 +20,7 @@ public class GenePool
    */
   private static final LinkedList<Genome> GENOMES;
   private static final int MINIMUM_POOL_SIZE = 100;
+  private static final int BEST_CUTOFF = 10;
   private static final Thread GENEMANAGER;
 
   static
@@ -161,7 +162,7 @@ public class GenePool
       {
         return GENOMES.getLast();
       }
-      return GENOMES.get(GENOMES.size() - MainSim.RANDOM.nextInt(10)-1);
+      return GENOMES.get(GENOMES.size() - MainSim.RANDOM.nextInt(BEST_CUTOFF)-1);
     }
   }
 
@@ -169,7 +170,7 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
-        return GENOMES.get(MainSim.RANDOM.nextInt(90));
+        return GENOMES.get(MainSim.RANDOM.nextInt(GENOMES.size() - BEST_CUTOFF));
     }
   }
 
