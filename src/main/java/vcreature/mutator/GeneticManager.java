@@ -43,14 +43,14 @@ class GeneticManager
 
   private void buildQueue(Genome parent)
   {
-    if(bestChild != null)
+    if (bestChild != null)
     {
       GenePool.replace(bestChild, currentTestee.PARENT2);
     }
     bestChild = MegaMutate.megaMutate(GenePool.getOneOfTheBest());
     testQueue = new LinkedList<>();
     Genome mate = GenePool.getOneOfTheWorst();
-    for(MergeType mergeType : MergeType.values())
+    for (MergeType mergeType : MergeType.values())
     {
       ArrayList<Genome> children = mergeType.merge(parent, mate);
       for (Genome child : children)
@@ -62,6 +62,7 @@ class GeneticManager
 
   /**
    * returns the minimum fitness between two parents
+   *
    * @return minimum fitness between two parents.
    */
   public float getFitnessBar()
@@ -73,6 +74,7 @@ class GeneticManager
    * Determins what happens what to the creature when it is being tested,
    * by finalizing the results. If creature is better it will replace parents, or
    * if parent two is weaker it will replace it with a random creature
+   *
    * @param lastFitness the last fitness that a creature had
    */
   public void finalize(float lastFitness)
@@ -89,7 +91,7 @@ class GeneticManager
     }
     else if (lastFitness > currentTestee.PARENT2.getFitness())
     {
-      if(bestChild.getFitness() < lastFitness)
+      if (bestChild.getFitness() < lastFitness)
       {
         bestChild = currentTestee.GENOME;
       }

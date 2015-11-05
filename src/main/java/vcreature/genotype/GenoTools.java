@@ -70,6 +70,7 @@ public class GenoTools
 
   /**
    * Rounds a float to 2 decimal places.
+   *
    * @param number float to round
    * @return rounded float
    */

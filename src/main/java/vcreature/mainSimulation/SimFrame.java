@@ -3,6 +3,7 @@ package vcreature.mainSimulation;
 import com.jme3.system.JmeCanvasContext;
 import vcreature.genotype.Genome;
 import vcreature.mutator.Manager;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -11,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -52,7 +52,7 @@ public class SimFrame extends JFrame implements ActionListener
   private JButton chooseFile = new JButton("Load Creature From File");
   private JLabel switchBack1 = new JLabel("Switch back to");
   private JLabel switchBack2 = new JLabel("current mutation view");
-  private JButton switchBackView =  new JButton();
+  private JButton switchBackView = new JButton();
   private JPanel creatureSelectionPanel;
   private ArrayList<JButton> creatures = new ArrayList<>();
   private JButton creature;
@@ -124,7 +124,7 @@ public class SimFrame extends JFrame implements ActionListener
     creatureSelectionPanel.setSize(new Dimension(200, 4000));
 
     LinkedList<Genome> genomes = GenePool.getCopy();
-    for (int i = GenePool.getCopy().size()-1; i>=0; i--)
+    for (int i = GenePool.getCopy().size() - 1; i >= 0; i--)
     {
       creature = new JButton(genomes.get(i).getFileName());
       creatures.add(creature);
@@ -246,7 +246,7 @@ public class SimFrame extends JFrame implements ActionListener
     controlPane.add(currentBestFitness);
     controlPane.add(displayedCreatureFitness);
     controlPane.add(chooseFile);
-    controlPane.setPreferredSize(new Dimension(1000,90));
+    controlPane.setPreferredSize(new Dimension(1000, 90));
     add(controlPane, BorderLayout.PAGE_END);
   }
 

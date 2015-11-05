@@ -15,6 +15,7 @@ public class GeneticTools
   /**
    * Puts 2 genomes into 2 lists.
    * This would have been better done as a 2 calls for each genome since the lists are distinct.
+   *
    * @param parent1 first genome
    * @param parent2 second genome
    * @return ArrayList of lists containing the genes of both parents

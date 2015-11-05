@@ -1,7 +1,9 @@
 package vcreature.mutator.genetic;
 
 import vcreature.genotype.Genome;
-import vcreature.mutator.genetic.MergeTypes.*;
+import vcreature.mutator.genetic.MergeTypes.Chimera;
+import vcreature.mutator.genetic.MergeTypes.CutAndSplice;
+import vcreature.mutator.genetic.MergeTypes.SingleCrossover;
 
 import java.util.ArrayList;
 
@@ -55,6 +57,7 @@ public enum MergeType
 
   /**
    * This performs the action associated with the Genetic merger type.
+   *
    * @param parent1 first genome
    * @param parent2 second genome
    * @return the merged genome performed according to the mutation type.
@@ -63,6 +66,7 @@ public enum MergeType
 
   /**
    * Allows cyclical mutation changes.
+   *
    * @return next mutation type needed.
    */
   public abstract MergeType next();

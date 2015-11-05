@@ -162,7 +162,7 @@ public class GenePool
       {
         return GENOMES.getLast();
       }
-      return GENOMES.get(GENOMES.size() - MainSim.RANDOM.nextInt(BEST_CUTOFF)-1);
+      return GENOMES.get(GENOMES.size() - MainSim.RANDOM.nextInt(BEST_CUTOFF) - 1);
     }
   }
 
@@ -170,7 +170,7 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
-        return GENOMES.get(MainSim.RANDOM.nextInt(GENOMES.size() - BEST_CUTOFF));
+      return GENOMES.get(MainSim.RANDOM.nextInt(GENOMES.size() - BEST_CUTOFF));
     }
   }
 
@@ -192,17 +192,18 @@ public class GenePool
   {
     private static int minutes = 0;
     private static boolean interrupted = false;
+
     @Override
     public void run()
     {
-      while(!interrupted)
+      while (!interrupted)
       {
         try
         {
           Thread.sleep(60000); //one minute
           minutes++;
           minutelyUpdate();
-          if(minutes > 60)
+          if (minutes > 60)
           {
             hourlyUpdate();
             minutes = 0;

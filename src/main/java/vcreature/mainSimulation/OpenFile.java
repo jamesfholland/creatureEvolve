@@ -20,6 +20,7 @@ class OpenFile implements ActionListener
 
   /**
    * Class Constructor
+   *
    * @param animation the instance of SimAnimation the GUI is being running with
    */
   public OpenFile(SimAnimation animation, JFrame frame)
@@ -32,6 +33,7 @@ class OpenFile implements ActionListener
    * opens a JFileChooser
    * Converts user selected file into genome, which is then passed into the instance of
    * SimAnimation and loaded upon next internal call of simpleUpdate
+   *
    * @param e a file is choosen
    */
   public void actionPerformed(ActionEvent e)
@@ -43,7 +45,7 @@ class OpenFile implements ActionListener
       //new LoadFrame(frame,2000);
       File file = fileChooser.getSelectedFile();
       Genome fileGenome = GenoFile.readGenome(file.getAbsolutePath());
-      if(fileGenome != null) //Null means it was an invalid file.
+      if (fileGenome != null) //Null means it was an invalid file.
       {
         animation.setCurrentCreature(fileGenome);
       }

@@ -45,7 +45,8 @@ public class CutAndSplice
         {
           child1.addGeneNeuron(gene.geneNeurons.get(j));
         }
-      } else
+      }
+      else
       {
         Gene gene = genes1.get(i);
         child2.addGeneBlock(gene.geneBlock);
@@ -66,7 +67,8 @@ public class CutAndSplice
         {
           child1.addGeneNeuron(gene.geneNeurons.get(j));
         }
-      } else
+      }
+      else
       {
         Gene gene = genes2.get(i);
         child2.addGeneBlock(gene.geneBlock);

@@ -23,7 +23,10 @@ public class Subtracter
   public static Genome subtractBlock(Genome genome)
   {
     Random rand = new Random();
-    if(genome.getGENE_BLOCKS().size() <= 0) return Adder.addBlock(genome);
+    if (genome.getGENE_BLOCKS().size() <= 0)
+    {
+      return Adder.addBlock(genome);
+    }
     int index = MainSim.RANDOM.nextInt(genome.getGENE_BLOCKS().size());
     Genome newGenome = subtractBlock(genome, index);
     return newGenome;
@@ -31,7 +34,10 @@ public class Subtracter
 
   public static Genome subtractBlock(Genome genome, int index)
   {
-    if(genome.getGENE_BLOCKS().size()<2) return genome;
+    if (genome.getGENE_BLOCKS().size() < 2)
+    {
+      return genome;
+    }
     ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
     ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
     geneBlocks.remove(index);
@@ -46,7 +52,7 @@ public class Subtracter
       }
       for (int j = 0; j < geneNeurons.size() - 1; j++)
       {
-          newGenome.addGeneNeuron(geneNeurons.get(j));
+        newGenome.addGeneNeuron(geneNeurons.get(j));
       }
     }
     return newGenome;

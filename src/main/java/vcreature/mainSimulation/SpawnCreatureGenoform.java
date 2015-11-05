@@ -11,6 +11,7 @@ public class SpawnCreatureGenoform
 {
   /**
    * A basic creature template unused except for making seeds.
+   *
    * @return the genome of our creature.
    */
   public static Genome creature()

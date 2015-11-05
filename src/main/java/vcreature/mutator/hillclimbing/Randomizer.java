@@ -32,7 +32,10 @@ public class Randomizer
 
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
-    if(geneBlocks.size() <= 0) return Adder.addBlock(genome);
+    if (geneBlocks.size() <= 0)
+    {
+      return Adder.addBlock(genome);
+    }
     int index = MainSim.RANDOM.nextInt(geneBlocks.size());
     GeneBlock block = geneBlocks.get(index);
     GeneBlock randBlock;
@@ -44,7 +47,8 @@ public class Randomizer
     if (sizeX > 1f && sizeY > 1f)
     {
       sizeZ = rand.nextFloat() + min;
-    } else
+    }
+    else
     {
       sizeZ = rand.nextFloat() * (max - min) + min;
     }
@@ -59,10 +63,12 @@ public class Randomizer
     if (randomFace == 0)
     {
       randPivot = new ImmutableVector(xSign, ySign, zSign * rand.nextFloat());
-    } else if (randomFace == 1)
+    }
+    else if (randomFace == 1)
     {
       randPivot = new ImmutableVector(xSign * rand.nextFloat(), ySign, zSign);
-    } else if (randomFace == 2)
+    }
+    else if (randomFace == 2)
     {
       randPivot = new ImmutableVector(xSign, ySign * rand.nextFloat(), zSign);
     }
@@ -71,9 +77,10 @@ public class Randomizer
     if (randomFace == 0)
     {
       randBlock = new GeneBlock(parentOffset, randPivot, parentPivot, size,
-              Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
-              randAngle);
-    } else
+                                Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
+                                randAngle);
+    }
+    else
     {
       randBlock = new GeneBlock(parentOffset, randPivot, parentPivot, size, Axis.UNIT_X.getImmutableVector(), Axis.UNIT_X.getImmutableVector(), randAngle);
     }
@@ -115,21 +122,21 @@ public class Randomizer
     EnumNeuronInput dInput = EnumNeuronInput.CONSTANT;
     EnumNeuronInput eInput = EnumNeuronInput.CONSTANT;
     GeneNeuron randNeuron2 = new GeneNeuron(
-            index, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
-            aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
-            0, 0, 6, -1 * sign * Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
-            EnumOperator.ADD, //Binary operator for merging A and B
-            EnumOperator.IDENTITY, //Unary operator for after A and B are merged
-            EnumOperator.ADD, //Binary operator for merging D and E
-            EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+        index, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+        aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
+        0, 0, 6, -1 * sign * Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+        EnumOperator.ADD, //Binary operator for merging A and B
+        EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+        EnumOperator.ADD, //Binary operator for merging D and E
+        EnumOperator.IDENTITY); //Unary operator for after D and E are merged
     GeneNeuron randNeuron = new GeneNeuron(
-            index, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
-            aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
-            0, 0, 5, sign * Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
-            EnumOperator.ADD, //Binary operator for merging A and B
-            EnumOperator.IDENTITY, //Unary operator for after A and B are merged
-            EnumOperator.ADD, //Binary operator for merging D and E
-            EnumOperator.IDENTITY); //Unary operator for after D and E are merged
+        index, //This is the list index of leg1 the corresponding block. As long as we generate lists in the same order this should work fine.
+        aInput, bInput, cInput, dInput, eInput, //EnumNeuronInput types
+        0, 0, 5, sign * Float.MAX_VALUE, 0, //are the float values that correspond to each type. If the type is not Constant, then it will be ignored.
+        EnumOperator.ADD, //Binary operator for merging A and B
+        EnumOperator.IDENTITY, //Unary operator for after A and B are merged
+        EnumOperator.ADD, //Binary operator for merging D and E
+        EnumOperator.IDENTITY); //Unary operator for after D and E are merged
 
     for (GeneBlock geneBlock : geneBlocks)
     {

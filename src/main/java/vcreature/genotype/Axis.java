@@ -30,6 +30,7 @@ public enum Axis
 
   /**
    * return Immutible vector form of given axises
+   *
    * @return A immutible vector of an axis
    */
   public abstract ImmutableVector getImmutableVector();

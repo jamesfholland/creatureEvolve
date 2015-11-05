@@ -56,6 +56,7 @@ public class Manager
 
   /**
    * Handles the switching of threshholds from the gui.
+   *
    * @param threshhold new threshhold to get under
    */
   public void setSwitchingThreshhold(float threshhold)
@@ -65,6 +66,7 @@ public class Manager
 
   /**
    * Gets the current genome that the algorithms are using
+   *
    * @return The current genome
    */
   public Genome getCurrentGenome()
@@ -82,6 +84,7 @@ public class Manager
 
   /**
    * Gets the next creature, depending on hill climbing.
+   *
    * @param lastFitness the minumum fitness of the previous creature.
    * @return a new next creature
    */
@@ -195,6 +198,7 @@ public class Manager
   /**
    * determined from the last switch to current switch.
    * resets every time between genetic and hill climbing
+   *
    * @return fitness per minute
    */
   public float getFitnessPerMinute()
@@ -209,7 +213,7 @@ public class Manager
    */
   public void setCurrentMutationType(MutationType mutationType)
   {
-      currentMutationType = mutationType;
+    currentMutationType = mutationType;
   }
 
   private void switchToHILL(float fitness)

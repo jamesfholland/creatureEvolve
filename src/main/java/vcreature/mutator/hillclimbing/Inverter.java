@@ -58,6 +58,7 @@ class Inverter
   /**
    * Takes a random neuron from a given neuron and flips the sign of the power from that neuron
    * This method will also clean the genome before removing all recessive traits.
+   *
    * @param genome the genome you want to alter
    * @return the same genome except for one of the neurons having opposite power.
    */
@@ -68,7 +69,10 @@ class Inverter
         new Genome(genome.getRootSize(), genome.getRootEulerAngles());
     ArrayList<GeneBlock> geneBlocks = genome.getGENE_BLOCKS();
     ArrayList<GeneNeuron> geneNeurons = genome.getGENE_NEURONS();
-    if(geneBlocks.size() <= 0) return Adder.addBlock(genome);
+    if (geneBlocks.size() <= 0)
+    {
+      return Adder.addBlock(genome);
+    }
     int index = MainSim.RANDOM.nextInt(geneBlocks.size());
     for (int i = 0; i < geneBlocks.size(); i++)
     {

@@ -88,6 +88,7 @@ public class GenomeCreature extends Creature
 
   /**
    * returns a genome
+   *
    * @return a genome
    */
   public Genome getGenome()

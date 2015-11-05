@@ -27,7 +27,7 @@ import vcreature.phenotype.PhysicsConstants;
 import java.util.logging.Level;
 
 /**
- *  Sim Animation simulates the animation inside of the GUI
+ * Sim Animation simulates the animation inside of the GUI
  **/
 public class SimAnimation extends SimpleApplication implements ActionListener
 {
@@ -143,8 +143,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   /**
    * Basically the "actionPerformed" of SimpleApplication
    *
-   * @param name name of action being performed
-   * @param isPressed was the mouse pressed
+   * @param name         name of action being performed
+   * @param isPressed    was the mouse pressed
    * @param timePerFrame seconds per frame unused.
    */
   public void onAction(String name, boolean isPressed, float timePerFrame)
@@ -163,6 +163,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
   /**
    * Called when user sets speed in GUI slider
+   *
    * @param speed the speed that the animation runs
    */
   public void setSpeed(int speed)
@@ -189,6 +190,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   /**
    * Called when user slides zoom toggle in GUI
    * Sets zoom value which is later used to either lengthen or diminish the camera perspective vector
+   *
    * @param zoom how much we want to zoom in or out.
    */
   protected void setZoom(int zoom)
@@ -198,6 +200,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
   /**
    * Use the main event loop to trigger repeating actions.
+   *
    * @param deltaSeconds the change in seconds
    */
   @Override
@@ -237,6 +240,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   /**
    * Used for loading creatures from file / creature selection from gene pool
    * Sets fileGenome, which is only used inside of simpleUpdate if fileGenome is not null
+   *
    * @param creature a creature that the genome is going to use.
    */
   public void setCurrentCreature(Genome creature)
@@ -247,17 +251,21 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
   /**
    * Get the fitness of the current creature being displayed
-   * @return  fitness of myCreature
+   *
+   * @return fitness of myCreature
    */
   public float getCurrentCreatureFitness()
   {
-    if (myCreature==null) return 0.00f;
+    if (myCreature == null)
+    {
+      return 0.00f;
+    }
     return myCreature.getFitness();
   }
 
   public void switchToMyCreatureView()
   {
-    myCreature=tempCreature;
+    myCreature = tempCreature;
   }
 }
 

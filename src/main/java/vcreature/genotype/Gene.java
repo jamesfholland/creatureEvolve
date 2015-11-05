@@ -23,9 +23,9 @@ public class Gene
   /**
    * Creates a new gene for us to use to make a creature
    *
-   * @param blocks an arraylist of blocks
+   * @param blocks  an arraylist of blocks
    * @param neurons an arraylist of neurons
-   * @param index an index of a block
+   * @param index   an index of a block
    */
   public Gene(ArrayList<GeneBlock> blocks, ArrayList<GeneNeuron> neurons, int index)
   {

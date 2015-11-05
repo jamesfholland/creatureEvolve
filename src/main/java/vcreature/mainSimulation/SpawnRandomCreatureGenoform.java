@@ -4,7 +4,6 @@ import vcreature.genotype.GeneBlock;
 import vcreature.genotype.Genome;
 import vcreature.genotype.ImmutableVector;
 import vcreature.mutator.hillclimbing.Adder;
-import vcreature.mutator.hillclimbing.Randomizer;
 
 import java.util.Random;
 
@@ -17,6 +16,7 @@ public class SpawnRandomCreatureGenoform
 
   /**
    * Create a random creature using the Adder mutator.
+   *
    * @param numOfBlocks to form creature from.
    * @return the random genome
    */

@@ -10,6 +10,7 @@ import vcreature.genotype.GenoTools;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
 import vcreature.phenotype.PhysicsConstants;
+
 import java.util.logging.Level;
 
 /**
@@ -67,7 +68,7 @@ class MutationTester extends SimpleApplication
     floor_phy.setFriction(PhysicsConstants.GROUND_SLIDING_FRICTION);
     floor_phy.setRestitution(PhysicsConstants.GROUND_BOUNCINESS);
     floor_phy.setDamping(PhysicsConstants.GROUND_LINEAR_DAMPINING,
-        PhysicsConstants.GROUND_ANGULAR_DAMPINING);
+                         PhysicsConstants.GROUND_ANGULAR_DAMPINING);
 
     currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(-1));
   }
@@ -111,7 +112,8 @@ class MutationTester extends SimpleApplication
         currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(currentFitness));
       }
       previousFitness = currentFitness;
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       e.printStackTrace();
     }
@@ -132,7 +134,8 @@ class MutationTester extends SimpleApplication
 
   /**
    * Sets the mode the manager will run in
-   * @param mode  Hill climbing, Genetic Algorithm or combination of both
+   *
+   * @param mode Hill climbing, Genetic Algorithm or combination of both
    */
   public void setMode(String mode)
   {
@@ -145,7 +148,9 @@ class MutationTester extends SimpleApplication
       manager.setCurrentMutationType(Manager.MutationType.GENETIC);
     }
     else
+    {
       manager.setCurrentMutationType(Manager.MutationType.GENETICHILL);
+    }
   }
 }
 

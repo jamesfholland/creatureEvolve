@@ -3,7 +3,6 @@ package vcreature.mainSimulation;
 import com.jme3.system.AppSettings;
 import com.jme3.system.JmeContext;
 import vcreature.mutator.Manager;
-import vcreature.mutator.hillclimbing.Symmetrizer;
 
 import java.util.Random;
 

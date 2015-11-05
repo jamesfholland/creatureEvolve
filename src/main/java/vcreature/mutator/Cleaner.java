@@ -27,6 +27,6 @@ public class Cleaner
 
     creature.remove();
 
-    return  cleaned;
+    return cleaned;
   }
 }

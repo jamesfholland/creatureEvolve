@@ -208,6 +208,7 @@ public class ProtoBlock
 
   /**
    * Add a neuron to this block.
+   *
    * @param neuron Adds a ProtoNeuron to the block.
    */
   public void addNeuron(Neuron neuron)

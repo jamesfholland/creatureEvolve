@@ -1,10 +1,6 @@
 package vcreature.mutator.hillclimbing;
 
-import vcreature.genotype.Axis;
-import vcreature.genotype.GeneBlock;
-import vcreature.genotype.GeneNeuron;
-import vcreature.genotype.Genome;
-import vcreature.genotype.ImmutableVector;
+import vcreature.genotype.*;
 import vcreature.mainSimulation.MainSim;
 
 import java.util.ArrayList;
@@ -32,7 +28,10 @@ public class Adder
 
     geneBlocks = genome.getGENE_BLOCKS();
     geneNeurons = genome.getGENE_NEURONS();
-    if(geneBlocks.size() <= 0) return (genome);
+    if (geneBlocks.size() <= 0)
+    {
+      return (genome);
+    }
     int index = MainSim.RANDOM.nextInt(geneBlocks.size());
 
     // GeneBlock block=geneBlocks.get(index);
@@ -75,13 +74,13 @@ public class Adder
 
     ImmutableVector parentPivot = new ImmutableVector(-randPivot.X, -randPivot.Y, -randPivot.Z);
 
-    if (randomFace==0)
+    if (randomFace == 0)
     {
       randBlock = new GeneBlock(parentOffset, randPivot, parentPivot, size,
                                 Axis.UNIT_X.getImmutableVector(), Axis.UNIT_X.getImmutableVector(),
                                 randAngle);
     }
-    else if(randomFace == 1)
+    else if (randomFace == 1)
     {
       randBlock = new GeneBlock(parentOffset, randPivot, parentPivot, size,
                                 Axis.UNIT_Y.getImmutableVector(), Axis.UNIT_Y.getImmutableVector(),
@@ -90,8 +89,8 @@ public class Adder
     else
     {
       randBlock = new GeneBlock(parentOffset, randPivot, parentPivot, size,
-          Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
-          randAngle);
+                                Axis.UNIT_Z.getImmutableVector(), Axis.UNIT_Z.getImmutableVector(),
+                                randAngle);
     }
 
     geneBlocks.add(randBlock);

@@ -1,7 +1,6 @@
 package vcreature.mutator;
 
 
-import vcreature.genotype.GenoFile;
 import vcreature.genotype.Genome;
 import vcreature.mainSimulation.GenePool;
 import vcreature.mainSimulation.MainSim;
@@ -41,8 +40,14 @@ class HillClimbingManager
     }
     if (testQueue.isEmpty())
     {
-      if(MainSim.RANDOM.nextBoolean())buildQueue(GenePool.getWorst());
-      else buildQueue(GenePool.getOneOfTheBest());
+      if (MainSim.RANDOM.nextBoolean())
+      {
+        buildQueue(GenePool.getWorst());
+      }
+      else
+      {
+        buildQueue(GenePool.getOneOfTheBest());
+      }
     }
     currentTestee = testQueue.poll();
 
@@ -61,6 +66,7 @@ class HillClimbingManager
 
   /**
    * Get fitness of what a creature has to meet
+   *
    * @return getting the bar of what are fitness has to meet
    */
   public float getFitnessBar()
@@ -72,7 +78,7 @@ class HillClimbingManager
    * Determins what happens what to the creature when it is being tested,
    * by finalizing the results. If creature is better it will replace parents, or
    * if parent two is weaker it will replace it with a random creature
-
+   *
    * @param lastFitness the last fitness of a genome
    */
   public void finalize(float lastFitness)
