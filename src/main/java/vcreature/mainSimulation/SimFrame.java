@@ -251,7 +251,6 @@ public class SimFrame extends JFrame implements ActionListener
   }
 
 
-  @Override
   /**
    * Updates the fitness per minute and the current best fitness labels
    * Both the userThreshold textfield and the jcombobox for mode change rely on this action listener,
@@ -260,6 +259,7 @@ public class SimFrame extends JFrame implements ActionListener
    * If it was the mode change, it switches the current selected item in the JComboBox and sets the relevant
    * MutationType inside of Manager
    */
+  @Override
   public void actionPerformed(ActionEvent e)
   {
     Object source = e.getSource();
