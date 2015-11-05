@@ -10,7 +10,7 @@ import vcreature.mutator.hillclimbing.Mutators;
 import java.util.LinkedList;
 
 /**
- * This will manage finding mutated genomes.
+ * This will manage finding mutated genomes, from hill climbing.
  */
 class HillClimbingManager
 {
@@ -19,13 +19,6 @@ class HillClimbingManager
 
   private LinkedList<Genome> testQueue = new LinkedList<>();
 
-  /**
-   * Sets up the mutation manager. Currently always seeds with FlappyBird.
-   * In the future will be handed a GenEpoOl, that it picks a creature from.
-   */
-  public HillClimbingManager()
-  {
-  }
 
   /**
    * This returns the next mutant based on the current creature we are hill
@@ -66,11 +59,22 @@ class HillClimbingManager
     }
   }
 
+  /**
+   * Get fitness of what a creature has to meet
+   * @return getting the bar of what are fitness has to meet
+   */
   public float getFitnessBar()
   {
     return parentGenome.getFitness();
   }
 
+  /**
+   * Determins what happens what to the creature when it is being tested,
+   * by finalizing the results. If creature is better it will replace parents, or
+   * if parent two is weaker it will replace it with a random creature
+
+   * @param lastFitness the last fitness of a genome
+   */
   public void finalize(float lastFitness)
   {
     currentTestee.setFitness(lastFitness);

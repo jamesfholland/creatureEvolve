@@ -7,12 +7,13 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * This class handles switching between Genetics and HillClimbing.
+ * This class handles switching between Genetics and HillClimbing. If it meets
+ * certain requirements such as not improving in a given amount of time,
+ * or not meeting a certain threshold
  */
 public class Manager
 {
   private float switchingThreshhold = 1.0f;
-
   private long startTime;
 
   private Genome currentGenome;
@@ -28,6 +29,10 @@ public class Manager
   private HillClimbingManager hillClimbingManager;
   private float deltaFitness = 0.0f;
 
+  /**
+   *
+   * @param type Either Gentic or Hill Climbing, or HillClimbing/Gentic
+   */
   public Manager(MutationType type)
   {
     currentMutationType = type;
