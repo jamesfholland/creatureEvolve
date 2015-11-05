@@ -159,9 +159,18 @@ public class GenePool
     {
       if (MainSim.RANDOM.nextBoolean() && MainSim.RANDOM.nextBoolean())
       {
-        return GENOMES.get(GENOMES.size() - MainSim.RANDOM.nextInt(10)-1);
+        return GENOMES.getLast();
       }
-      return GENOMES.getFirst();
+      return GENOMES.get(GENOMES.size() - MainSim.RANDOM.nextInt(10)-1);
+    }
+  }
+
+  public static Genome getOneOfTheWorst()
+  {
+
+    synchronized (GENOMES)
+    {
+        return GENOMES.get(MainSim.RANDOM.nextInt(90));
     }
   }
 
@@ -201,7 +210,6 @@ public class GenePool
           interrupted = true;
         }
       }
-
     }
   }
 }
