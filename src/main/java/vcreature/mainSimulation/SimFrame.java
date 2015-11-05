@@ -9,6 +9,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -46,6 +48,9 @@ public class SimFrame extends JFrame implements ActionListener
   private Timer fitnessTracker;
   private DecimalFormat df = new DecimalFormat("#0.00");
   private JButton chooseFile = new JButton("Load Creature From File");
+  private JLabel switchBack1 = new JLabel("Switch back to");
+  private JLabel switchBack2 = new JLabel("current mutation view");
+  private JButton switchBackView =  new JButton();
   private JPanel creatureSelectionPanel;
   private ArrayList<JButton> creatures = new ArrayList<>();
   private JButton creature;
@@ -89,8 +94,30 @@ public class SimFrame extends JFrame implements ActionListener
   {
     creatureSelectionPanel = new JPanel();
     creatureSelectorTitle = new JLabel("Gene Pool Creatures");
-    creatureSelectorTitle.setFont(new Font("Serif", Font.BOLD, 20));
+    switchBackView.setLayout(new BorderLayout());
+    switchBackView.setSize(new Dimension(10, 80));
+    switchBack1.setForeground(Color.RED);
+    switchBack2.setForeground(Color.RED);
+    switchBackView.add(BorderLayout.NORTH, switchBack1);
+    switchBackView.add(BorderLayout.SOUTH, switchBack2);
+
+    switchBackView.setFont(new Font("Serif", Font.BOLD, 15));
+    switchBackView.addItemListener(new ItemListener()
+    {
+      @Override
+      public void itemStateChanged(ItemEvent e)
+      {
+        JButton source = (JButton) e.getSource();
+        if (source.isSelected())
+        {
+          animation.switchToMyCreatureView();
+        }
+      }
+    });
+
+    creatureSelectorTitle.setFont(font);
     creatureSelectionPanel.add(creatureSelectorTitle);
+    creatureSelectionPanel.add(switchBackView);
     creatureSelectionPanel.setPreferredSize(new Dimension(200, 700));
     creatureSelectionPanel.setSize(new Dimension(200, 700));
 
@@ -105,7 +132,7 @@ public class SimFrame extends JFrame implements ActionListener
     creatureSelector.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     creatureSelector.setPreferredSize(new Dimension(200, 500));
-    new CreatureSelectionHandler(creatures, animation, this);
+    new CreatureSelectionHandler(creatures, animation);
     add(creatureSelector, BorderLayout.LINE_END);
   }
 
@@ -132,8 +159,8 @@ public class SimFrame extends JFrame implements ActionListener
     appPane.setBackground(Color.BLACK);
     modeChange.setFont(new Font("Serif", Font.BOLD, 16));
     modeChange.setOpaque(true);
-    modeChange.setBackground(Color.BLACK);
-    modeChange.setForeground(Color.WHITE);
+    modeChange.setBackground(Color.WHITE);
+    modeChange.setForeground(Color.BLACK);
     modeChange.addActionListener(this);
     modeChange.setPreferredSize(new Dimension(300, 20));
     modeChange.setSize(new Dimension(350, 20));
@@ -253,15 +280,12 @@ public class SimFrame extends JFrame implements ActionListener
         manager.setSwitchingThreshhold(1.00f);
         tf.setText("1.00");
       }
-      //new LoadFrame(this,1000).setVisible(true);
 
     }
     if (source instanceof JComboBox)
     {
-      System.out.println("JComboBox");
       JComboBox cb = (JComboBox) source;
       String thread = (String) cb.getSelectedItem();
-      //new LoadFrame(this,2000).setVisible(true);
 
       if (thread.equals("Hill Climbing"))
       {

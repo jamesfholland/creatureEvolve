@@ -39,6 +39,8 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private Vector3f cameraLocation = new Vector3f();
   private boolean isCameraRotating = true;
   private GenomeCreature myCreature;
+  private GenomeCreature tempCreature;
+
   private float elapsedSimulationTime;
 
   //  private Genome fileGenome = SpawnCreatureGenoform.creature();
@@ -239,13 +241,23 @@ public class SimAnimation extends SimpleApplication implements ActionListener
    */
   public void setCurrentCreature(Genome creature)
   {
+    tempCreature = myCreature;
     fileGenome = creature;
   }
 
+  /**
+   * Get the fitness of the current creature being displayed
+   * @return  fitness of myCreature
+   */
   public float getCurrentCreatureFitness()
   {
     if (myCreature==null) return 0.00f;
     return myCreature.getFitness();
+  }
+
+  public void switchToMyCreatureView()
+  {
+    myCreature=tempCreature;
   }
 }
 
