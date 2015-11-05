@@ -67,9 +67,9 @@ public class SimFrame extends JFrame implements ActionListener
     this.manager = manager;
     animation = new SimAnimation(manager);
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    setPreferredSize((new Dimension(1200, 900)));
-    setSize(new Dimension(1200, 1000));
-    setMinimumSize(new Dimension(1200, 900));
+    setPreferredSize((new Dimension(1000, 768)));
+    setSize(new Dimension(1000, 768));
+    setMinimumSize(new Dimension(1000, 768));
     this.addCreatureSelectionPane();
     this.addControlPane();
     this.addAppPane();
@@ -91,8 +91,8 @@ public class SimFrame extends JFrame implements ActionListener
     creatureSelectorTitle = new JLabel("Gene Pool Creatures");
     creatureSelectorTitle.setFont(new Font("Serif", Font.BOLD, 20));
     creatureSelectionPanel.add(creatureSelectorTitle);
-    creatureSelectionPanel.setPreferredSize(new Dimension(200, 1100));
-    creatureSelectionPanel.setSize(new Dimension(200, 1100));
+    creatureSelectionPanel.setPreferredSize(new Dimension(200, 700));
+    creatureSelectionPanel.setSize(new Dimension(200, 700));
 
 
     for (Genome genome : GenePool.getCopy())
@@ -119,23 +119,23 @@ public class SimFrame extends JFrame implements ActionListener
   {
     appPane = new JPanel();
     JLabel title = new JLabel("Creature Evolve");
-    title.setFont(new Font("Serif", Font.BOLD, 90));
+    title.setFont(new Font("Serif", Font.BOLD, 60));
     title.setForeground(Color.white);
     title.setBackground(Color.black);
     animation.createCanvas();
     animation.startCanvas();
     ctx = (JmeCanvasContext) animation.getContext();
     ctx.setSystemListener(animation);
-    ctx.getCanvas().setPreferredSize(new Dimension(900, 635));
-    appPane.setPreferredSize(new Dimension(1200, 800));
-    appPane.setSize(new Dimension(1200, 800));
+    ctx.getCanvas().setPreferredSize(new Dimension(700, 500));
+    appPane.setPreferredSize(new Dimension(700, 500));
+    appPane.setSize(new Dimension(800, 700));
     appPane.setBackground(Color.BLACK);
     modeChange.setFont(new Font("Serif", Font.BOLD, 20));
     modeChange.setOpaque(true);
     modeChange.setBackground(Color.BLACK);
     modeChange.setForeground(Color.DARK_GRAY);
     modeChange.addActionListener(this);
-    modeChange.setPreferredSize(new Dimension(350, 100));
+    modeChange.setPreferredSize(new Dimension(300, 100));
     modeChange.setSize(new Dimension(350, 100));
     appPane.add(title, BorderLayout.PAGE_START);
     appPane.add(modeChange);
@@ -217,7 +217,7 @@ public class SimFrame extends JFrame implements ActionListener
     controlPane.add(currentBestFitness);
     controlPane.add(displayedCreatureFitness);
     controlPane.add(chooseFile);
-    controlPane.setPreferredSize(new Dimension(1200,90));
+    controlPane.setPreferredSize(new Dimension(1000,90));
     add(controlPane, BorderLayout.PAGE_END);
   }
 
