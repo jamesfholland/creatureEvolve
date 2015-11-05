@@ -28,6 +28,7 @@ class GeneticManager
   public Genome getNextGenome(float lastFitness)
   {
 
+    System.out.println("Mergetype: " + mergeType.name() +"Fitness: " + lastFitness);
     if (lastFitness == -1)
     {
       buildQueue(GenePool.getBest());
@@ -54,9 +55,7 @@ class GeneticManager
       ArrayList<Genome> children = mergeType.merge(parent, mate);
       for (Genome child : children)
       {
-        Genome symChild = Symmetrizer.basicSymmetrize(child);
-        testQueue.offer(new GenomeTracker(symChild, parent, mate));
-        testQueue.offer(new GenomeTracker(child, parent, mate));
+        testQueue.offer(new GenomeTracker(Cleaner.cleanGenome(child), parent, mate));
       }
     }
   }
@@ -81,13 +80,12 @@ class GeneticManager
       GenePool.add(SpawnRandomCreatureGenoform.createRandomCreature(4));
       buildQueue(currentTestee.GENOME);
     }
-    //Parent1 is currently the best so not bothering checking.
-    //else if(lastFitness > currentTestee.PARENT2.getFitness() && currentTestee.PARENT2.getFitness() != -1)
-    //{
-    //System.out.println("Better Child replacing weaker parent2: "
-    //                       + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
-    //GenePool.replace(currentTestee.GENOME, currentTestee.PARENT2);
-    //}
+    else if(lastFitness > currentTestee.PARENT2.getFitness() && currentTestee.PARENT2.getFitness() != -1)
+    {
+    System.out.println("Better Child replacing weaker parent2: "
+                           + currentTestee.PARENT2.getFitness() + "fitness: " + lastFitness);
+    GenePool.replace(currentTestee.GENOME, currentTestee.PARENT2);
+    }
   }
 
 
