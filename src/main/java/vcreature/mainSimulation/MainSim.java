@@ -13,8 +13,15 @@ import java.util.Random;
  */
 public class MainSim
 {
+  /**
+   * A shared Random object across all classes that use random.
+   */
   public static final Random RANDOM = new Random(System.currentTimeMillis());
 
+  /**
+   * This starts the entire application. If GUI mode, it spawns two applications for viewing the
+   * @param args hill starts headless hill-climbing. both starts headless genetic/hill climbing
+   */
   public static void main(final String[] args)
   {
     java.awt.EventQueue.invokeLater(new Runnable()
