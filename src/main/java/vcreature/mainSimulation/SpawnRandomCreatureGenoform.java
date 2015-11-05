@@ -16,7 +16,8 @@ public class SpawnRandomCreatureGenoform
   private static final float MAX = 3f;
 
   /**
-   * This was terribly not thread safe. I fixed that, but am not sure if this is what we want to use or if I should be using adder?
+   * This was terribly not thread safe. I fixed that, but am not sure if this
+   * is what we want to use or if I should be using adder?
    * @param numberOfBlocks in creature.
    * @return genome of random creature
    */

@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
- * Created by Tess Daughton on 11/1/15.
  * Event Handler called on user click of Jbutton "Load Creature" inside SimAnimation instance
  * Used to allow the user to select a creature to load from file
  */

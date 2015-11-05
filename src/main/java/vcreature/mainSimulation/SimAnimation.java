@@ -27,8 +27,7 @@ import vcreature.phenotype.PhysicsConstants;
 import java.util.logging.Level;
 
 /**
- * Created by Tess Daughton on 10/14/15.
- * Joel's code with minor changes
+ *  Sim Animation simulates the animation inside of the GUI
  **/
 public class SimAnimation extends SimpleApplication implements ActionListener
 {
@@ -48,6 +47,11 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private final Manager MANAGER;
   private int zoom = 25;
 
+  /**
+   * Sets the manager that the GUI is using
+   *
+   * @param manager picking a manger to use
+   */
   public SimAnimation(Manager manager)
   {
     this.MANAGER = manager;
@@ -157,7 +161,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
   /**
    * Called when user sets speed in GUI slider
-   * @param speed
+   * @param speed the speed that the animation runs
    */
   public void setSpeed(int speed)
   {
@@ -192,6 +196,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
 
   /**
    * Use the main event loop to trigger repeating actions.
+   * @param deltaSeconds the change in seconds
    */
   @Override
   public void simpleUpdate(float deltaSeconds)
@@ -230,7 +235,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   /**
    * Used for loading creatures from file / creature selection from gene pool
    * Sets fileGenome, which is only used inside of simpleUpdate if fileGenome is not null
-   * @param creature
+   * @param creature a creature that the genome is going to use.
    */
   public void setCurrentCreature(Genome creature)
   {
