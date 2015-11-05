@@ -39,3 +39,9 @@ Reading them can only be done in the GUI.
 
 ##### Preset GenePools  
 Creating a folder called GenePool and filling with existing *.geno files will cause future runs to use these as starting seeds.
+
+##### Compilation  
+We used a build tool called gradle. Install a recent version of gradle EG version 2.8.  
+gradle idea    This builds intellij files.
+gradle run     This executes in hill/genetic mode
+gradle jar     This compiles a jar file.
