@@ -34,10 +34,6 @@ public class MainSim
           {
             manager = new Manager(Manager.MutationType.HILL);
           }
-          else if (args[0].equalsIgnoreCase("genetic"))
-          {
-            manager = new Manager(Manager.MutationType.GENETIC);
-          }
           else
           {
             manager = new Manager(Manager.MutationType.GENETICHILL);
