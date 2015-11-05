@@ -46,6 +46,7 @@ class Duplicator
     if (geneNeurons.size() == 0)
     {
       randIndex = 0;
+      return Adder.addBlock(genome);
     }
     else
     {
