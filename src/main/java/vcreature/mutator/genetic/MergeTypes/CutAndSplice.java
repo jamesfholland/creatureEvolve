@@ -16,6 +16,7 @@ public class CutAndSplice
    * Picks a unique location on each parent and cuts both parents there.
    * The first half of parent 1 and the second half of parent 2 will be put together and the
    * second half of parent 1 and first half of parent 2 will make the second child
+   *
    * @param parent1 first parent
    * @param parent2 second parent
    * @return List of child Genomes, always two.
@@ -28,8 +29,8 @@ public class CutAndSplice
 
     ArrayList<Gene> genes1 = GeneticTools.getParentsGenes(parent1, parent2).get(0);
     ArrayList<Gene> genes2 = GeneticTools.getParentsGenes(parent1, parent2).get(1);
-    int crossoverPoint1 = MainSim.RANDOM.nextInt(genes1.size());
-    int crossoverPoint2 = MainSim.RANDOM.nextInt(genes2.size());
+    int crossoverPoint1 = genes1.size() > 0 ? MainSim.RANDOM.nextInt(genes1.size()) : 0;
+    int crossoverPoint2 = genes2.size() > 0 ? MainSim.RANDOM.nextInt(genes2.size()) : 0;
 
     child1 = new Genome(parent1.getRootSize(), parent1.getRootEulerAngles());
     child2 = new Genome(parent2.getRootSize(), parent2.getRootEulerAngles());
@@ -44,8 +45,7 @@ public class CutAndSplice
         {
           child1.addGeneNeuron(gene.geneNeurons.get(j));
         }
-      }
-      else
+      } else
       {
         Gene gene = genes1.get(i);
         child2.addGeneBlock(gene.geneBlock);
@@ -66,8 +66,7 @@ public class CutAndSplice
         {
           child1.addGeneNeuron(gene.geneNeurons.get(j));
         }
-      }
-      else
+      } else
       {
         Gene gene = genes2.get(i);
         child2.addGeneBlock(gene.geneBlock);
