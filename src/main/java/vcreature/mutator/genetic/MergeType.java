@@ -38,34 +38,6 @@ public enum MergeType
           return CHIMERA;
         }
       },
-  SWAPBLOCKSANDNEURONS()
-      {
-        @Override
-        public ArrayList<Genome> merge(Genome parent1, Genome parent2)
-        {
-          return SwapBlocksAndNeurons.swapBlocksAndNeurons(parent1, parent2);
-        }
-
-        @Override
-        public MergeType next()
-        {
-          return SWAPBLOCKSANDNEURONS;
-        }
-      },
-  SWAPLEGS()
-      {
-        @Override
-        public ArrayList<Genome> merge(Genome parent1, Genome parent2)
-        {
-          return SwapLegs.swapThoseLegs(parent1, parent2);
-        }
-
-        @Override
-        public MergeType next()
-        {
-          return SWAPLEGS;
-        }
-      },
   CHIMERA()
       {
         @Override

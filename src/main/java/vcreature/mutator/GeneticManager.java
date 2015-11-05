@@ -17,17 +17,13 @@ class GeneticManager
 {
   private GenomeTracker currentTestee = null;
   private LinkedList<GenomeTracker> testQueue;
-  private MergeType mergeType;
 
   GeneticManager()
   {
-    mergeType = MergeType.CUTANDSPLICE;
   }
 
   public Genome getNextGenome(float lastFitness)
   {
-
-    System.out.println("Mergetype: " + mergeType.name() +"Fitness: " + lastFitness);
     if (lastFitness == -1)
     {
       buildQueue(GenePool.getBest());
@@ -38,7 +34,6 @@ class GeneticManager
     }
     if (testQueue.isEmpty())
     {
-      mergeType = mergeType.next(); //Cycle through mergeTypes.
       buildQueue(GenePool.getOneOfTheBest());
     }
     currentTestee = testQueue.poll();
@@ -48,8 +43,8 @@ class GeneticManager
   private void buildQueue(Genome parent)
   {
     testQueue = new LinkedList<>();
-    LinkedList<Genome> pool = GenePool.getCopy();
-    for (Genome mate : pool)
+    Genome mate = GenePool.getOneOfTheWorst();
+    for(MergeType mergeType : MergeType.values())
     {
       ArrayList<Genome> children = mergeType.merge(parent, mate);
       for (Genome child : children)
@@ -57,6 +52,7 @@ class GeneticManager
         testQueue.offer(new GenomeTracker(Cleaner.cleanGenome(child), parent, mate));
       }
     }
+    System.out.println("Queue done");
   }
 
   /**
