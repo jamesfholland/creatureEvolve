@@ -30,8 +30,10 @@ public class Manager
   private float deltaFitness = 0.0f;
 
   /**
+   * This will determine whether a creature will have a hill climbing, Genetic algorithm,
+   * or hill climbing/genetic algorithm be used on it.
    *
-   * @param type Either Gentic or Hill Climbing, or HillClimbing/Gentic
+   * @param type Gentic Algorithm or Hill Climbing, or HillClimbing/Genetic Algorithm
    */
   public Manager(MutationType type)
   {
@@ -57,6 +59,10 @@ public class Manager
     this.switchingThreshhold = threshhold;
   }
 
+  /**
+   * Gets the current genome that the algorithms are using
+   * @return The current genome
+   */
   public Genome getCurrentGenome()
   {
     genomeLock.lock();
@@ -70,6 +76,11 @@ public class Manager
     }
   }
 
+  /**
+   * Gets the next creature, depending on hill climbing.
+   * @param lastFitness the minumum fitness of the previous creature.
+   * @return
+   */
   public Genome getNextCreature(float lastFitness)
   {
     genomeLock.lock();
@@ -178,11 +189,21 @@ public class Manager
     return returnFitness;
   }
 
+  /**
+   * determined from the last switch to current switch.
+   * resets every time between genetic and hill climbing
+   * @return fitness per minute
+   */
   public float getFitnessPerMinute()
   {
     return (deltaFitness) * 1000 / (System.currentTimeMillis() - startTime);
   }
 
+  /**
+   * sets the mutation type between genetic algorithm, hill climbing, or genetic hill climbing
+   *
+   * @param mutationType Genetic algorithm, hill climbing, or genetic hill climbing
+   */
   public void setCurrentMutationType(MutationType mutationType)
   {
       currentMutationType = mutationType;
@@ -200,6 +221,12 @@ public class Manager
     currentHeuristic = HeuristicMode.GENETICALGORITHM;
   }
 
+  /**
+   * The different types of mutations represented through enums
+   * -HILL
+   * -GENETIC
+   * -GENETICHILL
+   */
   public enum MutationType
   {
     HILL, GENETIC, GENETICHILL
