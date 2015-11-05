@@ -10,10 +10,6 @@ import vcreature.genotype.GenoTools;
 import vcreature.genotype.GenomeCreature;
 import vcreature.mutator.Manager;
 import vcreature.phenotype.PhysicsConstants;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.logging.Level;
 
 /**
@@ -50,7 +46,7 @@ class MutationTester extends SimpleApplication
   @Override
   public void simpleInitApp()
   {
-    //java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
+    java.util.logging.Logger.getLogger("").setLevel(Level.OFF);
     BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
@@ -135,7 +131,10 @@ class MutationTester extends SimpleApplication
     this.restart();
   }
 
-
+  /**
+   * Sets the mode the manager will run in
+   * @param mode  Hill climbing, Genetic Algorithm or combination of both
+   */
   public void setMode(String mode)
   {
     if (mode.equalsIgnoreCase("hill"))

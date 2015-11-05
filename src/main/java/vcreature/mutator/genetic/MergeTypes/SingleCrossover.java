@@ -30,7 +30,7 @@ public class SingleCrossover
     ArrayList<Gene> genes1 = GeneticTools.getParentsGenes(parent1, parent2).get(0);
     ArrayList<Gene> genes2 = GeneticTools.getParentsGenes(parent1, parent2).get(1);
     int smallestGeneSize = genes1.size() < genes2.size() ? genes1.size() : genes2.size();
-    int crossoverPoint = MainSim.RANDOM.nextInt(smallestGeneSize);
+    int crossoverPoint = smallestGeneSize > 0 ? MainSim.RANDOM.nextInt(smallestGeneSize) : 0;
     Genome child1 = new Genome(parent1.getRootSize(), parent1.getRootEulerAngles());
     //Child 1 will be made here
     for (int i = 0; i < crossoverPoint; i++)
