@@ -43,7 +43,7 @@ class GeneticManager
 
   private void buildQueue(Genome parent)
   {
-    if (bestChild != null)
+    if (bestChild != null && currentTestee.PARENT2.getFitness() < bestChild.getFitness())
     {
       GenePool.replace(bestChild, currentTestee.PARENT2);
     }
