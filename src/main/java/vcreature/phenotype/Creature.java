@@ -299,6 +299,8 @@ public class Creature
     geometry.removeFromParent();
 
     body.remove(block);
+
+    physicsSpace.distributeEvents();
   }
 
   /**
