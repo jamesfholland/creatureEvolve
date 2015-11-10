@@ -110,6 +110,7 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
+      GENOMES.sort(new GenomeComparator());
       return GENOMES.getLast();
     }
   }
@@ -149,6 +150,7 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
+      GENOMES.sort(new GenomeComparator());
       return GENOMES.getFirst();
     }
   }
