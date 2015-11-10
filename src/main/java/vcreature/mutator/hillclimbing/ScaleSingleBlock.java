@@ -2,7 +2,6 @@ package vcreature.mutator.hillclimbing;
 
 import vcreature.genotype.*;
 import vcreature.mainSimulation.MainSim;
-
 import java.util.ArrayList;
 import java.util.Random;
 
