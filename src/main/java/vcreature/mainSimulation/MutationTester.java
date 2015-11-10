@@ -127,7 +127,7 @@ class MutationTester extends SimpleApplication
   private void setSpeed(int speed)
   {
     this.speed = speed;
-    physicsSpace.setMaxSubSteps(4 * speed);
+    physicsSpace.setMaxSubSteps(speed);
     settings.setFrequency(speed * 60);
     this.restart();
   }
