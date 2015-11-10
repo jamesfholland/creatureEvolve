@@ -103,6 +103,8 @@ public class GenePool
     synchronized (GENOMES)
     {
       GenoFile.writeGenome(newGenome);
+      System.out.println(System.currentTimeMillis()
+                             + ",add,"+ newGenome.getFileName());
       GENOMES.add(newGenome);
       GENOMES.sort(new GenomeComparator());
     }
