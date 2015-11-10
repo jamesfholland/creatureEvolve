@@ -297,7 +297,6 @@ public class Creature
 
     Geometry geometry = block.getGeometry();
     geometry.removeFromParent();
-
     body.remove(block);
 
     physicsSpace.distributeEvents();
@@ -341,7 +340,7 @@ public class Creature
    * This value is calculated and returned by the bullet physics engine.<br>
    * At simulation time 0.0, the value of every angle will always be zero.
    *
-   * @param id of the child box.
+   * @param idx of the child box.
    * @return the joint angle in radians +- deflection the zero point defined by the
    * block orientations at the time the blocks were joined.
    * Returns 0 if there is no block at index=idx or no joint to parent.
