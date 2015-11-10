@@ -42,7 +42,6 @@ Creating a folder called GenePool and filling with existing *.geno files will ca
 
 ##### Compilation  
 We used a build tool called gradle. Install a recent version of gradle EG version 2.8.  
-This tool will pull JMonkeyEngine dependencies and required libraries for your machine and also compile the project.  
 gradle idea    This builds intellij files.
 gradle run     This executes in hill/genetic mode
 gradle jar     This compiles a jar file.
