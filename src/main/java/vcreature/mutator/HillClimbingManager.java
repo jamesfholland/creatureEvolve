@@ -88,11 +88,11 @@ class HillClimbingManager
   public void finalize(float lastFitness)
   {
     currentTestee.setFitness(lastFitness);
+    System.out.println(System.currentTimeMillis()
+                           + "," +currentTestee.mergeMutationType+","+ currentTestee.getFileName()+","+parentGenome.getFileName() + ",noParent");
 
     if (lastFitness > parentGenome.getFitness())
     {
-      System.out.println(System.currentTimeMillis()
-              + "," +currentTestee.mergeMutationType+","+ currentTestee.getFileName()+","+parentGenome.getFileName() + ",noParent");
       GenePool.replace(currentTestee, parentGenome);
       buildQueue(currentTestee);
     }

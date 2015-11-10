@@ -47,7 +47,10 @@ class GeneticManager
     {
       GenePool.replace(bestChild, currentTestee.PARENT2);
     }
+
     bestChild = MegaMutate.megaMutate(GenePool.getOneOfTheBest());
+    bestChild.mergeMutationType = "MegaMutate";
+
     testQueue = new LinkedList<>();
     Genome mate = GenePool.getOneOfTheWorst();
     for (MergeType mergeType : MergeType.values())
@@ -55,7 +58,9 @@ class GeneticManager
       ArrayList<Genome> children = mergeType.merge(parent, mate);
       for (Genome child : children)
       {
-        testQueue.offer(new GenomeTracker(Cleaner.cleanGenome(child), parent, mate));
+        Genome cleanChild = Cleaner.cleanGenome(child);
+        cleanChild.mergeMutationType = mergeType.name();
+        testQueue.offer(new GenomeTracker(cleanChild, parent, mate));
       }
     }
   }
@@ -80,6 +85,13 @@ class GeneticManager
   public void finalize(float lastFitness)
   {
     currentTestee.GENOME.setFitness(lastFitness);
+
+
+    System.out.println(System.currentTimeMillis()
+                           + "," +currentTestee.GENOME.mergeMutationType+","
+                           + currentTestee.GENOME.getFileName()+","+currentTestee.PARENT1.getFileName()
+                           + "," + currentTestee.PARENT2.getFileName());
+
     if (lastFitness > currentTestee.PARENT1.getFitness() &&
         lastFitness > currentTestee.PARENT2.getFitness())
     {
