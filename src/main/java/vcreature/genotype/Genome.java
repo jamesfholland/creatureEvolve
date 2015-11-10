@@ -44,6 +44,8 @@ public class Genome
    */
   private float fitness = -1;
 
+  public String mergeMutationType = "Random";
+
   /**
    * Creates a genome based on a root and its angles.
    *
