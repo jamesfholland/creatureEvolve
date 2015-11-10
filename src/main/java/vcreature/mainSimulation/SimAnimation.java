@@ -218,6 +218,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
       }
       else
       {
+
         myCreature = new GenomeCreature(physicsSpace, rootNode, MANAGER.getCurrentGenome());
       }
     }

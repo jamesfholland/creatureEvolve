@@ -6,6 +6,8 @@ import vcreature.mainSimulation.GenePool;
 import vcreature.mainSimulation.MainSim;
 import vcreature.mutator.hillclimbing.Mutators;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -60,7 +62,9 @@ class HillClimbingManager
     testQueue = new LinkedList<>();
     for (Mutators mutator : Mutators.values())
     {
+
       testQueue.add(mutator.mutate(genome));
+      testQueue.get(testQueue.size()-1).mergeMutationType=mutator.name();
     }
   }
 
@@ -84,8 +88,11 @@ class HillClimbingManager
   public void finalize(float lastFitness)
   {
     currentTestee.setFitness(lastFitness);
+
     if (lastFitness > parentGenome.getFitness())
     {
+      System.out.println(System.currentTimeMillis()
+              + "," +currentTestee.mergeMutationType+","+ currentTestee.getFileName()+","+parentGenome.getFileName() + ",noParent");
       GenePool.replace(currentTestee, parentGenome);
       buildQueue(currentTestee);
     }

@@ -100,6 +100,7 @@ class MutationTester extends SimpleApplication
         currentCreature.remove();
         previousFitness = -1;
         elapsedSimulationTime = 0;
+
         currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(0.0f));
         return;
       }
@@ -108,7 +109,6 @@ class MutationTester extends SimpleApplication
         currentCreature.remove();
         elapsedSimulationTime = 0;
         previousFitness = -1;
-
         currentCreature = new GenomeCreature(physicsSpace, rootNode, manager.getNextCreature(currentFitness));
       }
       previousFitness = currentFitness;

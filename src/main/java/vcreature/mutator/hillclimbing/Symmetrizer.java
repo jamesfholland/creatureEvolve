@@ -36,6 +36,7 @@ public class Symmetrizer
       newGenome.addGeneNeuron(tempNeuron);
       newGenome.addGeneNeuron(newNeuron);
     }
-    return newGenome;
+    return genome;
+    //return newGenome;
   }
 }
