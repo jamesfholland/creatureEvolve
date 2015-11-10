@@ -169,7 +169,7 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   public void setSpeed(int speed)
   {
     this.speed = speed;
-    physicsSpace.setMaxSubSteps(4 * speed);
+    physicsSpace.setMaxSubSteps(speed);
     settings.setFrequency(speed * 60);
     this.restart();
   }
