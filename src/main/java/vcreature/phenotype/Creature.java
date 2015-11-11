@@ -4,6 +4,8 @@ import com.jme3.math.Vector3f;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.scene.Node;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+
 import com.jme3.bullet.joints.HingeJoint;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -298,9 +300,14 @@ public class Creature
     Geometry geometry = block.getGeometry();
     geometry.removeFromParent();
     body.remove(block);
-
-    physicsSpace.distributeEvents();
-  }
+    try
+    {
+      physicsSpace.distributeEvents();
+    }catch(ConcurrentModificationException e)
+    {
+      System.out.println(e.toString());
+    }
+    }
 
   /**
    *

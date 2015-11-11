@@ -62,7 +62,6 @@ class HillClimbingManager
     testQueue = new LinkedList<>();
     for (Mutators mutator : Mutators.values())
     {
-
       testQueue.add(mutator.mutate(genome));
       testQueue.get(testQueue.size()-1).mergeMutationType=mutator.name();
     }
