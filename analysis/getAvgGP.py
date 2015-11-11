@@ -16,7 +16,6 @@ totalFitness = 0
 
 for lineString in lines:
   line = lineString.split(",")
-  fitness = float(line[2])
   time = int(line[0])
   if(starttime < time):
     if(totalCreatures != 0):
@@ -27,12 +26,14 @@ for lineString in lines:
 
     
   if(line[1] == "add"):
+    fitness = float(line[2])
     totalCreatures += 1
     if(fitness > best):
       best = fitness
     if(fitness != -1):
       totalFitness = totalFitness + fitness
   if(line[1] == "remove"):
+    fitness = float(line[2])
     totalCreatures -= 1
     if(fitness != -1):
       totalFitness = totalFitness - fitness
