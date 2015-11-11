@@ -40,12 +40,10 @@ public class SimAnimation extends SimpleApplication implements ActionListener
   private boolean isCameraRotating = true;
   private GenomeCreature myCreature;
   private GenomeCreature tempCreature;
-
   private float elapsedSimulationTime;
 
   //  private Genome fileGenome = SpawnCreatureGenoform.creature();
   private Genome fileGenome;
-
   private final Manager MANAGER;
   private int zoom = 25;
 
@@ -77,14 +75,15 @@ public class SimAnimation extends SimpleApplication implements ActionListener
     BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     physicsSpace = bulletAppState.getPhysicsSpace();
-
     physicsSpace.setGravity(PhysicsConstants.GRAVITY);
     physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
     physicsSpace.setMaxSubSteps(4);
     this.speed = 4;
     AppSettings settings = new AppSettings(true);
-    setSettings(settings);
+    settings.setAudioRenderer(null);
+    settings.setFrameRate(60);
     settings.setResolution(800, 600);
+    setSettings(settings);
     this.setPauseOnLostFocus(false);
     //Set up immovable floor
     com.jme3.scene.shape.Box floor = new com.jme3.scene.shape.Box(50f, 0.1f, 50f);

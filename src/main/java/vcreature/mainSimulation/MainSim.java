@@ -48,14 +48,6 @@ public class MainSim
           manager = new Manager(Manager.MutationType.GENETICHILL);
         }
         MutationTester mutationTester = new MutationTester(manager);
-        AppSettings settings = new AppSettings(true);
-        settings.setResolution(1024, 768);
-        settings.setSamples(4);
-        settings.setVSync(true);
-        settings.setFrequency(60);
-        settings.setTitle("Creatures Evolution");
-        mutationTester.setShowSettings(false);
-        mutationTester.setSettings(settings);
         mutationTester.start(JmeContext.Type.Headless);
         if (args.length == 0) // if the user enters ANY command line argument, the GUI will NOT run
         {

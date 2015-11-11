@@ -22,7 +22,7 @@ class MutationTester extends SimpleApplication
   private PhysicsSpace physicsSpace;
 
   private boolean speedSet = false;
-  private final int SPEEDSETTING = 40;
+  private final int SPEEDSETTING = 20;
 
 
   //Temporary vectors used on each frame. They here to avoid instantiating new vectors on each frame
@@ -54,8 +54,9 @@ class MutationTester extends SimpleApplication
     physicsSpace.setGravity(PhysicsConstants.GRAVITY);
     physicsSpace.setAccuracy(PhysicsConstants.PHYSICS_UPDATE_RATE);
     AppSettings settings = new AppSettings(true);
+    settings.setAudioRenderer(null);
+    setShowSettings(false);
     setSettings(settings);
-    settings.setResolution(1024, 768);
     this.setPauseOnLostFocus(false);
     com.jme3.scene.shape.Box floor = new com.jme3.scene.shape.Box(50f, 0.1f, 50f);
     Geometry floor_geo = new Geometry("Floor", floor);
