@@ -98,10 +98,6 @@
 1447141792668,add,-1.00,81297864
 1447141792670,add,-1.00,29F8C77F
 1447141792707,add,-1.00,FF7E3C21
-Nov 10, 2015 12:49:52 AM com.jme3.system.JmeDesktopSystem initialize
-INFO: Running on jMonkeyEngine 3.0.10
-Nov 10, 2015 12:49:52 AM com.jme3.system.Natives extractNativeLibs
-INFO: Extraction Directory: /nfs/student/n/ngonzales/cs351/evolveCreature/46Test
 1447141794142,ADDER,0.18,CF8D84A1,-1.00,A3FE428B,noParent
 1447141794143,remove,-1.00,A3FE428B
 1447141794146,add,0.18,CF8D84A1
