@@ -22,6 +22,7 @@ for lineString in lines:
     if(totalCreatures != 0):
       seconds += 1
       print str(seconds)+ ","+ str(best) + "," + str(totalFitness/totalCreatures)
+#      print str(totalCreatures) + "," + str(totalFitness)
     starttime = time + 1000 #add 1000 to last time
 
     
