@@ -1,0 +1,69 @@
+import com.bulletphysics.dynamics.RigidBody;
+import com.jme3.app.SimpleApplication;
+import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.material.Material;
+import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
+import com.jme3.renderer.RenderManager;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
+import com.jme3.math.ColorRGBA;
+import javax.swing.*;
+import java.util.Random;
+
+public class Main extends SimpleApplication
+{
+   Random rand=new Random();
+   public static void main(String[] args){
+      Main app = new Main();
+      app.start();
+   }
+
+   @Override
+   public void simpleInitApp() {
+       /* Initialize the game scene here */
+      Box box=new Box(.48f,.2f,.4f);
+      box.scaleTextureCoordinates(new Vector2f(1f, .5f));
+      Box floor = new Box(10f, 0.1f, 5f);
+      floor.scaleTextureCoordinates(new Vector2f(3, 6));
+
+      Geometry boxGeometry=new Geometry("Box",box);
+      Geometry floorGeometry=new Geometry("Floor",floor);
+      RigidBodyControl boxBody=new RigidBodyControl(2f);
+      RigidBodyControl floorBody=new RigidBodyControl(2f);
+
+      boxGeometry.addControl(boxBody);
+      floorGeometry.addControl(floorBody);
+
+      Material mat = new Material(assetManager,
+              "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
+      mat.setColor("Color", ColorRGBA.Gray);   // set color of material to blue
+      boxGeometry.setMaterial(mat);                   // set the cube's material
+      floorGeometry.setMaterial(mat);
+      BulletAppState bullet =new BulletAppState();
+      stateManager.attach(bullet);
+      bullet.getPhysicsSpace().add(boxBody);
+      rootNode.attachChild(floorGeometry);
+
+      rootNode.attachChild(boxGeometry);
+
+   }
+
+   float x=0;R9FFD
+   float y=0;
+   float z=0;
+
+   @Override
+   public void simpleUpdate(float tpf) {
+       /* Interact with game events in the main loop */
+      x+=.000001;
+      y+=.000001;
+      z+=.000001;
+     // rootNode.rotate(x,y,z);
+   }
+
+   @Override
+   public void simpleRender(RenderManager rm) {
+       /* (optional) Make advanced modifications to frameBuffer and scene graph. */
+   }
