@@ -98,10 +98,6 @@
 1447191933226,add,-1.00,73E16687
 1447191933228,add,-1.00,9028DB8B
 1447191933229,add,-1.00,B69D3E7A
-Nov 10, 2015 2:45:33 PM com.jme3.system.JmeDesktopSystem initialize
-INFO: Running on jMonkeyEngine 3.0.10
-Nov 10, 2015 2:45:33 PM com.jme3.system.Natives extractNativeLibs
-INFO: Extraction Directory: /nfs/student/t/tdaughto/Desktop/b146-26
 1447191934812,ADDER,0.78,77702F60,-1.00,89DE6A91,noParent
 1447191934812,remove,-1.00,89DE6A91
 1447191934815,add,0.78,77702F60
