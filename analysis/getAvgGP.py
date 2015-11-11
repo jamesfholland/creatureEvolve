@@ -8,6 +8,8 @@ print filename
 with open(filename) as f:
   lines = f.readlines()
 
+dictionary = {}
+
 starttime = -1
 seconds = 0
 best = -1
@@ -28,6 +30,7 @@ for lineString in lines:
   if(line[1] == "add"):
     fitness = float(line[2])
     totalCreatures += 1
+    dictionary[line[3]] = fitness
     if(fitness > best):
       best = fitness
     if(fitness != -1):
