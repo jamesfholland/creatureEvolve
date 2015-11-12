@@ -74,9 +74,9 @@ public class SimFrame extends JFrame implements ActionListener
     this.manager = manager;
     animation = new SimAnimation(manager);
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    setPreferredSize((new Dimension(1000, 700)));
-    setSize(new Dimension(1000, 700));
-    setMinimumSize(new Dimension(1000, 700));
+    setPreferredSize((new Dimension(1200, 1000)));
+    setSize(new Dimension(1200, 1000));
+    setMinimumSize(new Dimension(1200, 1000));
     this.addCreatureSelectionPane();
     this.addControlPane();
     this.addAppPane();
@@ -134,7 +134,7 @@ public class SimFrame extends JFrame implements ActionListener
     creatureSelector.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     creatureSelector.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     creatureSelector.setPreferredSize(new Dimension(200, 500));
-    //new CreatureSelectionHandler(creatures, animation);
+    new CreatureSelectionHandler(creatures, animation);
     add(creatureSelector, BorderLayout.LINE_END);
   }
 
@@ -155,9 +155,9 @@ public class SimFrame extends JFrame implements ActionListener
     animation.startCanvas();
     ctx = (JmeCanvasContext) animation.getContext();
     ctx.setSystemListener(animation);
-    ctx.getCanvas().setPreferredSize(new Dimension(700, 400));
-    appPane.setPreferredSize(new Dimension(700, 400));
-    appPane.setSize(new Dimension(800, 500));
+    ctx.getCanvas().setPreferredSize(new Dimension(1000, 800));
+    appPane.setPreferredSize(new Dimension(1000, 800));
+    appPane.setSize(new Dimension(1000, 800));
     appPane.setBackground(Color.BLACK);
     modeChange.setFont(new Font("Serif", Font.BOLD, 16));
     modeChange.setOpaque(true);

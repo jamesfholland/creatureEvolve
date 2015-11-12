@@ -86,7 +86,7 @@ public class GenePool
     synchronized (GENOMES)
     {
       System.out.println(System.currentTimeMillis()
-                             + ",remove,"+ parent.getFileName());
+          + ",remove," + parent.getFileName());
 
       GENOMES.remove(parent);
       GenePool.add(newGenome);
@@ -193,6 +193,7 @@ public class GenePool
       return GENOMES.get(MainSim.RANDOM.nextInt(GENOMES.size() - BEST_CUTOFF));
     }
   }
+
 
   private static void hourlyUpdate()
   {
