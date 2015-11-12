@@ -1,0 +1,5 @@
+###### Heuristics
+To determine average improvement from a heuristic, we tracked all mutations performed. We calculated the number of times a heuristic improved. For hill climbing this is when it was better than its parent and for the genetic algorithm when it is better than both parents.
+The percentage of the time it helped, is the ratio of times it was called to times it helped. The genetic mergers are much lower because of two reasons.
+1. The algorithm always tests each permutation of the merger and keeps the best one. Hill climbing stops after the first improvement. This causes the number "bad" mergers to increase and the rate of "good" merges to drop.
+2. The genetic success discounts when it is better than only one parent. This was quite common, but didn't seem to help the gene pool as whole. Including it would increase the rate and average improvement of genetic mergers.
