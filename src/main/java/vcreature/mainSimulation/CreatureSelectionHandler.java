@@ -50,16 +50,16 @@ class CreatureSelectionHandler implements ActionListener
   public void actionPerformed(ActionEvent e)
   {
     genepoolCopy = GenePool.getCopy();
-    for (JButton button : creatures)
-    {
-      String genomeName = genepoolCopy.getLast().getFileName();
-      button.setText(genomeName);
-      if (e.getSource() == button)
+      for (JButton button : creatures)
       {
-        animation.setCurrentCreature(genepoolCopy.getLast());
-        button.setText("Current Creature View");
+        String genomeName = genepoolCopy.getLast().getFileName();
+        button.setText(genomeName);
+        if (e.getSource() == button)
+        {
+          animation.setCurrentCreature(genepoolCopy.getLast());
+          button.setText("Current Creature View");
+        }
+        genepoolCopy.removeLast();
       }
-      genepoolCopy.removeLast();
     }
-  }
 }
