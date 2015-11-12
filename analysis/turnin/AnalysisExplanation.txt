@@ -1,0 +1,23 @@
+##### Heuristics
+To determine average improvement from a heuristic, we tracked all mutations performed. We calculated the number of times a heuristic improved. For hill climbing this is when it was better than its parent and for the genetic algorithm when it is better than both parents.
+The percentage of the time it helped, is the ratio of times it was called to times it helped. The genetic mergers are much lower because of two reasons.
+1. The algorithm always tests each permutation of the merger and keeps the best one. Hill climbing stops after the first improvement. This causes the number "bad" mergers to increase and the rate of "good" merges to drop.
+2. The genetic success discounts when it is better than only one parent. This was quite common, but didn't seem to help the gene pool as whole. Including it would increase the rate and average improvement of genetic mergers.
+
+##### Hill vs Genetic  
+After analysis, hill climbing was superior to our genetic algorithm. There are several reasons for this. They are documented below.
+1. We didn't put as much effort into the genetic algorithm. Our focus was split between hill climbing and creature validation until the last weeks of the project.  
+2. We failed to implementing a culling aspect to the algorithm. We planned to remove weak creatures, but didn't implement them into our algorithm in time.  
+3. We accidentally left a temporary switching time in the algorithm. We weren't sure when was best to switch back to hill climbing, so we put a temporary trigger to always switch after 15 minutes. We then forgot to change this to a reasonable switching heuristic.
+
+##### Diversity Overview  
+With each generation diversity would only be lost during the genetic algorithm. Hill climbing would maintain a full genepool of unique creatures. Similiarities between creatures are coincidental. During the genetic algorithm, merging creatures will result in a reduction of diversity in the gene pool. To get around this, whenever two parents are replaced, a new randomized creature is added to the pool.
+
+###### Analysis
+To analyze if our diversification was actually occuring, I developed an algorithm that built family trees for each creature in the gene pool. Diversity was planned to be calculated by tracing creature's pedigrees and calculating the percentage of each seed creature a descendant was. This would be summed into the diversity value.
+
+###### HashCode bug
+During the analysis, it became clear that something wasn't working. The diversity was increasing at a linear rate compared to the number of generations. Detailed analysis of the logs showed that our creature hashing method was not computing a unique hash. Multiple creatures were getting the same hash and corrupting our diversity algorithm.
+
+###### Future Fix
+To fix this, a new method of uniquely identifying creatures is required. Either find the bug in the hashcode methods or writing a new method for identifying the creature.

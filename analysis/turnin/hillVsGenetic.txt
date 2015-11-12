@@ -1,5 +1,0 @@
-###### Hill vs Genetic  
-After analysis, hill climbing was superior to our genetic algorithm. There are several reasons for this. They are documented below.
-1. We didn't put as much effort into the genetic algorithm. Our focus was split between hill climbing and creature validation until the last weeks of the project.  
-2. We failed to implementing a culling aspect to the algorithm. We planned to remove weak creatures, but didn't implement them into our algorithm in time.  
-3. We accidentally left a temporary switching time in the algorithm. We weren't sure when was best to switch back to hill climbing, so we put a temporary trigger to always switch after 15 minutes. We then forgot to change this to a reasonable switching heuristic.
