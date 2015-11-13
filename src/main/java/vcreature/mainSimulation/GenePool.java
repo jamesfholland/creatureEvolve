@@ -21,7 +21,7 @@ public class GenePool
   private static final LinkedList<Genome> GENOMES;
   private static final int MINIMUM_POOL_SIZE = 100;
   private static final int BEST_CUTOFF = 10;
-  //private static final Thread GENEMANAGER;
+  private static final Thread GENEMANAGER;
 
   static
   {
@@ -35,8 +35,8 @@ public class GenePool
       GENOMES.sort(new GenomeComparator());
     }
 
-    //GENEMANAGER = new Thread(new GeneManager());
-    //GENEMANAGER.start();
+    GENEMANAGER = new Thread(new GeneManager());
+    GENEMANAGER.start();
   }
 
   /**
@@ -64,10 +64,12 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
-      System.out.println(System.currentTimeMillis()
+      //For analysis
+     /* System.out.println(System.currentTimeMillis()
                              + ",remove,"+ parent1.getFileName());
       System.out.println(System.currentTimeMillis()
                              + ",remove,"+ parent2.getFileName());
+      */
       GENOMES.remove(parent1);
       GENOMES.remove(parent2);
       GenePool.add(newGenome);
@@ -85,9 +87,10 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
-      System.out.println(System.currentTimeMillis()
+      //For analysis
+     /* System.out.println(System.currentTimeMillis()
           + ",remove," + parent.getFileName());
-
+*/
       GENOMES.remove(parent);
       GenePool.add(newGenome);
     }
@@ -102,9 +105,11 @@ public class GenePool
   {
     synchronized (GENOMES)
     {
-      GenoFile.writeGenome(newGenome);
+      //For logging data
+      /*GenoFile.writeGenome(newGenome);
       System.out.println(System.currentTimeMillis()
                              + ",add,"+ newGenome.getFileName());
+      */
       GENOMES.add(newGenome);
       GENOMES.sort(new GenomeComparator());
     }

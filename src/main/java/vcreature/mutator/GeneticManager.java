@@ -86,12 +86,12 @@ class GeneticManager
   {
     currentTestee.GENOME.setFitness(lastFitness);
 
-
-    System.out.println(System.currentTimeMillis()
+  //For analysis
+   /* System.out.println(System.currentTimeMillis()
                            + "," +currentTestee.GENOME.mergeMutationType+","
                            + currentTestee.GENOME.getFileName()+","+currentTestee.PARENT1.getFileName()
                            + "," + currentTestee.PARENT2.getFileName());
-
+  */
     if (lastFitness > currentTestee.PARENT1.getFitness() &&
         lastFitness > currentTestee.PARENT2.getFitness())
     {
