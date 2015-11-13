@@ -74,9 +74,9 @@ public class SimFrame extends JFrame implements ActionListener
     this.manager = manager;
     animation = new SimAnimation(manager);
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    setPreferredSize((new Dimension(1200, 1000)));
-    setSize(new Dimension(1200, 1000));
-    setMinimumSize(new Dimension(1200, 1000));
+    setPreferredSize((new Dimension(900, 700)));
+    setSize(new Dimension(900, 700));
+    setMinimumSize(new Dimension(900, 700));
     this.addCreatureSelectionPane();
     this.addControlPane();
     this.addAppPane();
@@ -155,7 +155,7 @@ public class SimFrame extends JFrame implements ActionListener
     animation.startCanvas();
     ctx = (JmeCanvasContext) animation.getContext();
     ctx.setSystemListener(animation);
-    ctx.getCanvas().setPreferredSize(new Dimension(1000, 800));
+    ctx.getCanvas().setPreferredSize(new Dimension(600, 450));
     appPane.setPreferredSize(new Dimension(1000, 800));
     appPane.setSize(new Dimension(1000, 800));
     appPane.setBackground(Color.BLACK);
