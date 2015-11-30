@@ -1,0 +1,23 @@
+/**
+ * Created by jholland on 11/11/15.
+ */
+public enum MutationType
+{
+  add,
+  remove,
+  CUTANDSPLICE,
+  SINGLECROSSOVER,
+  CHIMERA,
+  ADDER,
+  DUPLICATOR,
+  INVERTER,
+  MOVER,
+  RANDOMIZER,
+  SCALER,
+  EXTENDER,
+  SCALEBLOCK,
+  SCALEROOT,
+  SUBTRACTOR,
+  SYMMETRIZER,
+  NEURONFLIPPER
+}
